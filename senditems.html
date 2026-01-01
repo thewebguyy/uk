@@ -1,258 +1,617 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <title>Send Items In - Creative Merch UK</title>
+  <title>Creative Merch UK - Premium Custom Designs & Party Essentials</title>
   <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Premium designs, custom prints, and party essentials crafted with care">
   
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
+  <!-- Begild font for logo only -->
   <style>
-    .process-step {
-      display: flex;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-      padding-bottom: 2rem;
-      border-bottom: 1px solid var(--color-grey-light);
-    }
-    
-    .process-step:last-child {
-      border-bottom: none;
-    }
-    
-    .step-num {
-      width: 50px;
-      height: 50px;
-      background: var(--color-black);
-      color: var(--color-white);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-      font-weight: 600;
-      flex-shrink: 0;
-    }
-    
-    .info-box {
-      background: var(--color-grey-light);
-      border-radius: var(--radius-lg);
-      padding: 2rem;
-      margin-bottom: 2rem;
-    }
-    
-    .timeline {
-      background: var(--color-white);
-      border: 2px solid var(--color-black);
-      border-radius: var(--radius-lg);
-      padding: 2rem;
-      text-align: center;
+    @font-face {
+      font-family: 'Begild';
+      src: url('https://assets.website-files.com/63c18fb7c1e0e11f8beed02e/63c18fb7c1e0e14935eed057_Begild.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
     }
   </style>
 </head>
 
 <body>
+  <!-- SVG Icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="icon-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+    </symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"/>
+      <path d="m21 21-4.35-4.35"/>
+    </symbol>
+    <symbol id="icon-palette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="13.5" cy="6.5" r=".5"/>
+      <circle cx="17.5" cy="10.5" r=".5"/>
+      <circle cx="8.5" cy="7.5" r=".5"/>
+      <circle cx="6.5" cy="12.5" r=".5"/>
+      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+    </symbol>
+    <symbol id="icon-scissors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="6" cy="6" r="3"/>
+      <circle cx="6" cy="18" r="3"/>
+      <line x1="20" y1="4" x2="8.12" y2="15.88"/>
+      <line x1="14.47" y1="14.48" x2="20" y2="20"/>
+      <line x1="8.12" y1="8.12" x2="12" y2="12"/>
+    </symbol>
+    <symbol id="icon-tool" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+    </symbol>
+    <symbol id="icon-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+    </symbol>
+    <symbol id="icon-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </symbol>
+    <symbol id="icon-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="1" y="3" width="15" height="13"/>
+      <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+      <circle cx="5.5" cy="18.5" r="2.5"/>
+      <circle cx="18.5" cy="18.5" r="2.5"/>
+    </symbol>
+  </svg>
+
   <!-- Announcement Banner -->
   <div class="announcement-banner">
     <div class="announcement-content">
-      <span class="announcement-item">📦 SEND ITEMS IN // CUSTOM TRANSFORMATION</span>
-      <span class="announcement-item">✨ PROFESSIONAL CUSTOMISATION SERVICE</span>
-      <span class="announcement-item">🚚 10-14 BUSINESS DAYS</span>
-      <span class="announcement-item">📦 SEND ITEMS IN // CUSTOM TRANSFORMATION</span>
-      <span class="announcement-item">✨ PROFESSIONAL CUSTOMISATION SERVICE</span>
-      <span class="announcement-item">🚚 10-14 BUSINESS DAYS</span>
+      <span class="announcement-item">FREE DELIVERY OVER £100</span>
+      <span class="announcement-item">CONTACT US</span>
+      <span class="announcement-item">INFO@CUSTOMISEMEUK.COM</span>
+      <span class="announcement-item">07588770901</span>
+      <span class="announcement-item">FREE DELIVERY OVER £100</span>
+      <span class="announcement-item">CONTACT US</span>
+      <span class="announcement-item">INFO@CUSTOMISEMEUK.COM</span>
+      <span class="announcement-item">07588770901</span>
     </div>
   </div>
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg">
-    <div class="container">
-      <a class="navbar-brand" href="index.html">
-        <img src="icon.png" alt="Creative Merch UK" style="height: 40px; width: auto;">
-      </a>
-      <a href="index.html" class="btn btn-outline">Back to Home</a>
+  <!-- Top Bar: Logo, Search, Region/Sign In, Icons -->
+  <div class="top-bar">
+    <div class="container-fluid px-4">
+      <div class="top-bar-content">
+        <!-- Logo - Left -->
+        <a class="navbar-brand" href="index.html">
+          <img src="icon.png" alt="Creative Merch UK" class="logo-image">
+        </a>
+
+        <!-- Search Bar - Center -->
+        <form class="search-bar-form-compact">
+          <svg class="search-icon"><use xlink:href="#icon-search"/></svg>
+          <input type="search" class="search-input" placeholder="Search products...">
+        </form>
+
+        <!-- Right Section: Region + Sign In + Icons -->
+        <div class="top-bar-right">
+          <!-- Region & Sign In Dropdown -->
+          <div class="dropdown">
+            <a href="#" class="region-signin-btn" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="globe_3936475.png" alt="Region" class="icon-img">
+              <span class="signin-text">SIGN IN / SIGN UP</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end region-dropdown">
+              <li><h6 class="dropdown-header">SELECT REGION</h6></li>
+              <li><a class="dropdown-item" href="#"><span class="flag">🇬🇧</span> UNITED KINGDOM</a></li>
+              <li><a class="dropdown-item" href="#"><span class="flag">🇪🇺</span> EUROPE</a></li>
+              <li><a class="dropdown-item" href="#"><span class="flag">🇺🇸</span> AMERICA</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><h6 class="dropdown-header">ACCOUNT</h6></li>
+              <li><a class="dropdown-item" href="account.html">SIGN IN</a></li>
+              <li><a class="dropdown-item" href="account.html">CREATE ACCOUNT</a></li>
+            </ul>
+          </div>
+
+          <!-- Wishlist Icon -->
+          <a href="#wishlist" class="nav-icon-img">
+            <img src="heart_7299748.png" alt="Wishlist" class="icon-img">
+          </a>
+
+          <!-- Cart Icon -->
+          <a href="#cart" class="nav-icon-img" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+            <img src="shopping-bag_4305310.png" alt="Cart" class="icon-img">
+            <span class="badge-cart" id="cart-count" style="display: none;"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shopping Cart Offcanvas -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">YOUR CART</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div id="cart-items"></div>
+      <div id="cart-empty" class="text-center">
+        <p class="text-grey">Your cart is empty</p>
+      </div>
+      <div id="cart-summary" style="display: none;">
+        <div class="d-flex justify-content-between mb-3 pt-3" style="border-top: 1px solid var(--color-grey-light);">
+          <strong>SUBTOTAL:</strong>
+          <strong id="cart-subtotal">£0.00</strong>
+        </div>
+        <button class="btn btn-primary w-100" onclick="window.location.href='checkout.html'">CHECKOUT</button>
+        <button class="btn btn-secondary w-100 mt-2" data-bs-dismiss="offcanvas">CONTINUE SHOPPING</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <nav class="navbar navbar-expand-lg main-nav">
+    <div class="container-fluid px-4">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav">
+          <!-- Shop Mega Menu -->
+          <li class="nav-item dropdown mega-menu">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              SHOP
+            </a>
+            <div class="dropdown-menu mega-dropdown">
+              <div class="container-fluid px-4">
+                <div class="row">
+                  <div class="col-md-3">
+                    <h6 class="mega-title">CATEGORIES</h6>
+                    <a class="dropdown-item" href="shop.html">ALL PRODUCTS</a>
+                    <a class="dropdown-item" href="shop.html?category=apparel">APPAREL</a>
+                    <a class="dropdown-item" href="shop.html?category=stickers">STICKERS & LABELS</a>
+                    <a class="dropdown-item" href="shop.html?category=party-decor">PARTY DECOR</a>
+                    <a class="dropdown-item" href="shop.html?category=accessories">ACCESSORIES</a>
+                  </div>
+                  <div class="col-md-3">
+                    <h6 class="mega-title">APPAREL</h6>
+                    <a class="dropdown-item" href="#">T-Shirts</a>
+                    <a class="dropdown-item" href="#">Hoodies</a>
+                    <a class="dropdown-item" href="#">Hats</a>
+                    <a class="dropdown-item" href="#">Bags</a>
+                  </div>
+                  <div class="col-md-3">
+                    <h6 class="mega-title">PARTY ESSENTIALS</h6>
+                    <a class="dropdown-item" href="#">Banners</a>
+                    <a class="dropdown-item" href="#">Balloons</a>
+                    <a class="dropdown-item" href="#">Table Decor</a>
+                    <a class="dropdown-item" href="#">Party Packs</a>
+                  </div>
+                  <div class="col-md-3">
+                    <h6 class="mega-title">STICKERS & LABELS</h6>
+                    <a class="dropdown-item" href="#">Vinyl Stickers</a>
+                    <a class="dropdown-item" href="#">Custom Labels</a>
+                    <a class="dropdown-item" href="#">Wall Decals</a>
+                    <a class="dropdown-item" href="#">Sticker Packs</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- Design Studio Mega Menu -->
+          <li class="nav-item dropdown mega-menu">
+            <a class="nav-link dropdown-toggle" href="studio.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              DESIGN STUDIO
+            </a>
+            <div class="dropdown-menu mega-dropdown">
+              <div class="container-fluid px-4">
+                <div class="row">
+                  <div class="col-md-4">
+                    <h6 class="mega-title">SERVICES</h6>
+                    <a class="dropdown-item" href="designservice.html">Custom Design</a>
+                    <a class="dropdown-item" href="studio.html">Interactive Studio</a>
+                    <a class="dropdown-item" href="#">Mockup Generation</a>
+                  </div>
+                  <div class="col-md-4">
+                    <h6 class="mega-title">DESIGN TYPES</h6>
+                    <a class="dropdown-item" href="#">Logo Design</a>
+                    <a class="dropdown-item" href="#">Apparel Graphics</a>
+                    <a class="dropdown-item" href="#">Branding</a>
+                  </div>
+                  <div class="col-md-4">
+                    <h6 class="mega-title">RESOURCES</h6>
+                    <a class="dropdown-item" href="#">Design Templates</a>
+                    <a class="dropdown-item" href="#">Style Guide</a>
+                    <a class="dropdown-item" href="#">FAQs</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- Premium Services Mega Menu -->
+          <li class="nav-item dropdown mega-menu">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              PREMIUM SERVICES
+            </a>
+            <div class="dropdown-menu mega-dropdown">
+              <div class="container-fluid px-4">
+                <div class="row">
+                  <div class="col-md-4">
+                    <h6 class="mega-title">SERVICES</h6>
+                    <a class="dropdown-item" href="senditems.html">Send Items In</a>
+                    <a class="dropdown-item" href="#installation">Installation</a>
+                    <a class="dropdown-item" href="#workshops">Workshops</a>
+                    <a class="dropdown-item" href="#subscriptions">Subscriptions</a>
+                  </div>
+                  <div class="col-md-4">
+                    <h6 class="mega-title">INSTALLATION</h6>
+                    <a class="dropdown-item" href="#">Wall Vinyls</a>
+                    <a class="dropdown-item" href="#">Event Setup</a>
+                    <a class="dropdown-item" href="#">UK Coverage</a>
+                  </div>
+                  <div class="col-md-4">
+                    <h6 class="mega-title">WORKSHOPS</h6>
+                    <a class="dropdown-item" href="#">Design Basics</a>
+                    <a class="dropdown-item" href="#">DIY Party Decor</a>
+                    <a class="dropdown-item" href="#">Printing Techniques</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
 
-  <!-- Send Items In Service -->
+  <!-- Hero Section - Full Width Edge to Edge -->
+  <section class="hero-section">
+    <div class="hero-carousel">
+      <div class="hero-slide active">
+        <img src="shopproducts.png" alt="Shop Products">
+      </div>
+      <div class="hero-slide">
+        <img src="shopservices.png" alt="Shop Services">
+      </div>
+      <div class="hero-slide">
+        <img src="subscriptions.png" alt="Subscriptions">
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products - 4 Only -->
   <section class="section">
     <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-10">
-          <div class="text-center mb-5">
-            <h1>Send Items In</h1>
-            <p class="text-grey-dark">Transform your personal items with our professional customisation service</p>
+      <h2 class="section-title">SHOP OUR COLLECTION</h2>
+      <p class="section-subtitle">Discover premium custom designs and party essentials</p>
+      
+      <div class="product-grid-four">
+        <!-- Product 1 -->
+        <div class="product-card">
+          <a href="product.html?id=1">
+            <div class="product-image">
+              <span>Product Image</span>
+            </div>
+          </a>
+          <div class="product-info">
+            <h3 class="product-title">
+              <a href="product.html?id=1" style="text-decoration: none; color: inherit;">CUSTOM T-SHIRT DESIGN</a>
+            </h3>
+            <p class="product-price">£24.99</p>
+            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(1, 'Custom T-Shirt Design', 24.99)">ADD TO CART</button>
           </div>
+        </div>
 
-          <!-- What is this service? -->
-          <div class="info-box">
-            <h3 class="mb-3">What is this service?</h3>
-            <p class="text-grey-dark mb-0">
-              The "Send Items In" service allows you to send your personal items to us for customisation. 
-              Whether it's a jacket, shoes, or another item – we'll transform it to your specifications with 
-              professional-grade techniques and materials.
-            </p>
+        <!-- Product 2 -->
+        <div class="product-card">
+          <a href="product.html?id=2">
+            <div class="product-image">
+              <span>Product Image</span>
+            </div>
+          </a>
+          <div class="product-info">
+            <h3 class="product-title">
+              <a href="product.html?id=2" style="text-decoration: none; color: inherit;">VINYL STICKER PACK</a>
+            </h3>
+            <p class="product-price">£9.99</p>
+            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(2, 'Vinyl Sticker Pack', 9.99)">ADD TO CART</button>
           </div>
+        </div>
 
-          <!-- Instructions -->
-          <h3 class="mb-4">How It Works</h3>
-          
-          <div class="mb-5">
-            <div class="process-step">
-              <div class="step-num">1</div>
-              <div>
-                <h5 class="mb-2">Fill out the customisation form</h5>
-                <p class="text-grey-dark mb-0">Complete our detailed form with your customisation request, including design preferences, colors, and any specific instructions.</p>
-              </div>
+        <!-- Product 3 -->
+        <div class="product-card">
+          <a href="product.html?id=3">
+            <div class="product-image">
+              <span>Product Image</span>
             </div>
-
-            <div class="process-step">
-              <div class="step-num">2</div>
-              <div>
-                <h5 class="mb-2">Receive a consultation</h5>
-                <p class="text-grey-dark mb-0">Our team will review your request and schedule a consultation call to discuss the feasibility, techniques, and timeline for your project.</p>
-              </div>
-            </div>
-
-            <div class="process-step">
-              <div class="step-num">3</div>
-              <div>
-                <h5 class="mb-2">Get confirmation and price estimate</h5>
-                <p class="text-grey-dark mb-0">Receive a detailed quote including customisation costs, materials, and shipping. We'll provide a transparent breakdown of all expenses.</p>
-              </div>
-            </div>
-
-            <div class="process-step">
-              <div class="step-num">4</div>
-              <div>
-                <h5 class="mb-2">Sign protection and liability contracts</h5>
-                <p class="text-grey-dark mb-0">Review and sign our protection agreement that outlines the terms, insurance coverage, and liability terms for your item while in our care.</p>
-              </div>
-            </div>
-
-            <div class="process-step">
-              <div class="step-num">5</div>
-              <div>
-                <h5 class="mb-2">Send your item to our studio</h5>
-                <p class="text-grey-dark mb-0">Ship your item using our provided shipping label and tracking information. We'll notify you once it arrives at our studio.</p>
-              </div>
-            </div>
-
-            <div class="process-step">
-              <div class="step-num">6</div>
-              <div>
-                <h5 class="mb-2">We begin the customisation process</h5>
-                <p class="text-grey-dark mb-0">Our skilled craftspeople will transform your item according to your specifications. We'll send you progress updates along the way.</p>
-              </div>
-            </div>
-
-            <div class="process-step">
-              <div class="step-num">7</div>
-              <div>
-                <h5 class="mb-2">Receive your customised item</h5>
-                <p class="text-grey-dark mb-0">Once complete, we'll carefully package and ship your customised item back to you with full tracking and insurance.</p>
-              </div>
-            </div>
+          </a>
+          <div class="product-info">
+            <h3 class="product-title">
+              <a href="product.html?id=3" style="text-decoration: none; color: inherit;">PARTY BANNER SET</a>
+            </h3>
+            <p class="product-price">£19.99</p>
+            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(3, 'Party Banner Set', 19.99)">ADD TO CART</button>
           </div>
+        </div>
 
-          <!-- Processing Time -->
-          <div class="timeline">
-            <h3 class="mb-3">Processing Time</h3>
-            <p class="text-grey-dark mb-4">The entire process takes a minimum of:</p>
-            <div style="font-size: 2.5rem; font-weight: 600; margin-bottom: 1rem;">
-              10–14 <span style="font-size: 1.5rem;">Business Days</span>
+        <!-- Product 4 -->
+        <div class="product-card">
+          <a href="product.html?id=4">
+            <div class="product-image">
+              <span>Product Image</span>
             </div>
-            <p class="text-grey-dark mb-0" style="font-size: 0.875rem;">
-              *Excluding weekends and holidays. Complex customisations may require additional time.
-            </p>
+          </a>
+          <div class="product-info">
+            <h3 class="product-title">
+              <a href="product.html?id=4" style="text-decoration: none; color: inherit;">CUSTOM LABELS</a>
+            </h3>
+            <p class="product-price">£14.99</p>
+            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(4, 'Custom Labels', 14.99)">ADD TO CART</button>
           </div>
+        </div>
+      </div>
 
-          <!-- Important Information -->
-          <div class="row g-4 mt-5">
-            <div class="col-md-6">
-              <div class="p-4" style="background: var(--color-grey-light); border-radius: var(--radius-md); height: 100%;">
-                <h5 class="mb-3">✓ What We Can Customise</h5>
-                <ul class="text-grey-dark" style="font-size: 0.875rem;">
-                  <li>Apparel (jackets, jeans, shirts, hoodies)</li>
-                  <li>Footwear (sneakers, boots)</li>
-                  <li>Bags and accessories</li>
-                  <li>Hats and headwear</li>
-                  <li>Denim and leather goods</li>
-                </ul>
-              </div>
-            </div>
+      <div class="text-center mt-4">
+        <a href="shop.html" class="btn btn-primary">
+          <span>VIEW ALL PRODUCTS</span>
+          <svg class="icon-sm"><use xlink:href="#icon-star"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
 
-            <div class="col-md-6">
-              <div class="p-4" style="background: var(--color-grey-light); border-radius: var(--radius-md); height: 100%;">
-                <h5 class="mb-3">✓ Insurance & Protection</h5>
-                <ul class="text-grey-dark" style="font-size: 0.875rem;">
-                  <li>Full insurance coverage during customisation</li>
-                  <li>Secure storage in our studio</li>
-                  <li>Trackable shipping both ways</li>
-                  <li>Quality guarantee on all work</li>
-                  <li>Documented before/after photos</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- CTA -->
-          <div class="text-center mt-5">
-            <a href="contact.html?service=send-items" class="btn btn-primary btn-lg px-5">
-              Start Your Customisation Request
-            </a>
-            <p class="text-grey-dark mt-3" style="font-size: 0.875rem;">
-              Have questions? <a href="contact.html">Contact us</a> for a free consultation
-            </p>
-          </div>
-
-          <!-- FAQ Section -->
-          <div class="mt-5">
-            <h3 class="mb-4">Frequently Asked Questions</h3>
-            
-            <div class="mb-3">
-              <details style="background: var(--color-grey-light); padding: 1rem; border-radius: var(--radius-md);">
-                <summary style="cursor: pointer; font-weight: 600;">What if I'm not happy with the result?</summary>
-                <p class="text-grey-dark mt-2 mb-0">We offer one round of revisions at no extra cost. If you're still not satisfied, we'll work with you to find a solution or provide a full refund.</p>
-              </details>
-            </div>
-
-            <div class="mb-3">
-              <details style="background: var(--color-grey-light); padding: 1rem; border-radius: var(--radius-md);">
-                <summary style="cursor: pointer; font-weight: 600;">Is my item insured during the process?</summary>
-                <p class="text-grey-dark mt-2 mb-0">Yes! All items are fully insured from the moment we receive them until they're delivered back to you.</p>
-              </details>
-            </div>
-
-            <div class="mb-3">
-              <details style="background: var(--color-grey-light); padding: 1rem; border-radius: var(--radius-md);">
-                <summary style="cursor: pointer; font-weight: 600;">Can I send high-value items like designer pieces?</summary>
-                <p class="text-grey-dark mt-2 mb-0">Absolutely! We specialize in customising premium and luxury items. Our insurance covers items up to £5,000 in value.</p>
-              </details>
-            </div>
-
-            <div class="mb-3">
-              <details style="background: var(--color-grey-light); padding: 1rem; border-radius: var(--radius-md);">
-                <summary style="cursor: pointer; font-weight: 600;">How much does customisation typically cost?</summary>
-                <p class="text-grey-dark mt-2 mb-0">Costs vary based on complexity, materials, and techniques. Simple embroidery starts at £40, while complex hand-painted designs can range from £150-£400+.</p>
-              </details>
-            </div>
+  <!-- Custom Design Services Section -->
+  <section class="design-services-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <h2 class="section-title text-start">CUSTOM DESIGN SERVICES</h2>
+          <p class="design-description">Work with our design team to create something truly unique. From concept to execution, we bring your vision to life with professional-grade results.</p>
+          <ul class="design-features">
+            <li>Bespoke design consultation</li>
+            <li>Professional mockups & proofs</li>
+            <li>Unlimited revisions</li>
+            <li>Fast turnaround times</li>
+          </ul>
+          <a href="designservice.html" class="btn btn-primary btn-lg">START YOUR PROJECT</a>
+        </div>
+        <div class="col-md-6">
+          <div class="studio-visual">
+            <p class="studio-label">STUDIO AVAILABLE</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Premium Services Section -->
+  <section id="premium-services" class="service-section">
+    <div class="container">
+      <h2 class="section-title">PREMIUM SERVICES</h2>
+      <p class="section-subtitle">Professional services tailored to your needs</p>
+
+      <div class="row g-4">
+        <!-- Send Items In -->
+        <div class="col-md-4">
+          <div class="service-card">
+            <div class="service-icon">
+              <svg><use xlink:href="#icon-scissors"/></svg>
+            </div>
+            <h3 class="service-title">SEND ITEMS IN</h3>
+            <p class="service-description">Transform your personal items with professional customization. Send us your pieces and we'll create something unique.</p>
+            <ul class="text-start mb-3">
+              <li>Expert customization</li>
+              <li>Full insurance coverage</li>
+              <li>10-14 day turnaround</li>
+              <li>Quality guarantee</li>
+            </ul>
+            <a href="senditems.html" class="btn btn-outline">
+              <span>LEARN MORE</span>
+              <svg class="icon-sm"><use xlink:href="#icon-scissors"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Installation Services -->
+        <div class="col-md-4" id="installation">
+          <div class="service-card">
+            <div class="service-icon">
+              <svg><use xlink:href="#icon-tool"/></svg>
+            </div>
+            <h3 class="service-title">INSTALLATION SERVICES</h3>
+            <p class="service-description">Professional installation for wall vinyls, party setups, and large-scale projects across the UK.</p>
+            <ul class="text-start mb-3">
+              <li>UK-wide coverage</li>
+              <li>Expert installation team</li>
+              <li>Perfect results guaranteed</li>
+              <li>Event setup available</li>
+            </ul>
+            <a href="contact.html?service=installation" class="btn btn-outline">
+              <span>REQUEST QUOTE</span>
+              <svg class="icon-sm"><use xlink:href="#icon-tool"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Creative Workshops -->
+        <div class="col-md-4" id="workshops">
+          <div class="service-card">
+            <div class="service-icon">
+              <svg><use xlink:href="#icon-users"/></svg>
+            </div>
+            <h3 class="service-title">CREATIVE WORKSHOPS</h3>
+            <p class="service-description">Join our hands-on workshops to learn design techniques, DIY party decor, and custom printing skills.</p>
+            <ul class="text-start mb-3">
+              <li>Beginner to advanced levels</li>
+              <li>Small group sessions</li>
+              <li>All materials included</li>
+              <li>Take home your creations</li>
+            </ul>
+            <a href="contact.html?service=workshop" class="btn btn-outline">
+              <span>BOOK WORKSHOP</span>
+              <svg class="icon-sm"><use xlink:href="#icon-users"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Subscriptions -->
+  <section id="subscriptions" class="section" style="background: var(--color-grey-light);">
+    <div class="container">
+      <h2 class="section-title">SUBSCRIPTION PLANS</h2>
+      <p class="section-subtitle">Regular deliveries and exclusive benefits</p>
+
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-5">
+          <div class="service-card">
+            <h3 class="service-title">MONTHLY ESSENTIALS</h3>
+            <p class="service-description">Curated party supplies and custom items delivered monthly</p>
+            <ul class="text-start mb-3">
+              <li>15% discount on all orders</li>
+              <li>Priority customer support</li>
+              <li>Free shipping included</li>
+              <li>Cancel anytime</li>
+            </ul>
+            <a href="contact.html?service=subscribe-monthly" class="btn btn-primary w-100">
+              <span>SUBSCRIBE NOW</span>
+              <svg class="icon-sm"><use xlink:href="#icon-star"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="col-md-5">
+          <div class="service-card">
+            <h3 class="service-title">BUSINESS PACKAGE</h3>
+            <p class="service-description">Bulk ordering and custom designs for businesses and event planners</p>
+            <ul class="text-start mb-3">
+              <li>Dedicated account manager</li>
+              <li>Wholesale pricing</li>
+              <li>Custom design services</li>
+              <li>Flexible delivery schedule</li>
+            </ul>
+            <a href="contact.html?service=business" class="btn btn-primary w-100">
+              <span>CONTACT SALES</span>
+              <svg class="icon-sm"><use xlink:href="#icon-truck"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="newsletter-section">
+    <div class="container">
+      <div class="text-center mb-4">
+        <h2>JOIN OUR COMMUNITY</h2>
+        <p class="text-grey-dark">Get exclusive access to new designs, special offers, and creative inspiration</p>
+      </div>
+      <form class="newsletter-form">
+        <input type="email" class="form-control" placeholder="Enter your email address" required>
+        <button type="submit" class="btn btn-primary">SUBSCRIBE</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
   <footer>
     <div class="container">
-      <div class="text-center">
-        <p class="text-grey-dark">© 2026 Creative Merch UK. All rights reserved.</p>
+      <div class="row">
+        <!-- About -->
+        <div class="col-md-4 footer-section">
+          <h3 class="footer-title">ABOUT US</h3>
+          <p class="text-grey-dark">Creative Merch UK offers premium designs, custom prints, and party essentials crafted with care. We're dedicated to helping you create memorable moments and standout branding.</p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="col-md-4 footer-section">
+          <h3 class="footer-title">QUICK LINKS</h3>
+          <ul class="footer-links">
+            <li><a href="shop.html">SHOP</a></li>
+            <li><a href="studio.html">STUDIO</a></li>
+            <li><a href="designservice.html">DESIGN SERVICE</a></li>
+            <li><a href="senditems.html">SEND ITEMS IN</a></li>
+            <li><a href="contact.html">CONTACT</a></li>
+            <li><a href="account.html">ACCOUNT</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="col-md-4 footer-section">
+          <h3 class="footer-title">CONTACT US</h3>
+          <p class="text-grey-dark">
+            <strong>EMAIL:</strong><br>
+            <a href="mailto:info@customisemeuk.com">info@customisemeuk.com</a>
+          </p>
+          <p class="text-grey-dark mb-3">
+            <strong>PHONE:</strong><br>
+            <a href="tel:07588770901">07588770901</a>
+          </p>
+          <p class="text-grey-dark mb-3">
+            <strong>INSTAGRAM:</strong><br>
+            <a href="https://www.instagram.com/customisemeuk" target="_blank">@customisemeuk</a>
+          </p>
+          <div class="social-links">
+            <a href="https://www.instagram.com/customisemeuk" target="_blank" class="social-link">
+              <svg><use xlink:href="#icon-instagram"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-4 pt-4" style="border-top: 1px solid var(--color-grey-light);">
+        <p class="text-grey-dark mb-0">© 2026 Creative Merch UK. All rights reserved.</p>
       </div>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/cart.js"></script>
+  
+  <script>
+    // Hero Carousel Functionality - Auto-slide only
+    let currentSlideIndex = 0;
+    let slideInterval;
+
+    function showSlide(n) {
+      const slides = document.querySelectorAll('.hero-slide');
+      
+      if (n >= slides.length) currentSlideIndex = 0;
+      if (n < 0) currentSlideIndex = slides.length - 1;
+      
+      slides.forEach(slide => slide.classList.remove('active'));
+      slides[currentSlideIndex].classList.add('active');
+    }
+
+    function startAutoSlide() {
+      slideInterval = setInterval(() => {
+        currentSlideIndex++;
+        showSlide(currentSlideIndex);
+      }, 5000); // Change slide every 5 seconds
+    }
+
+    // Initialize carousel
+    document.addEventListener('DOMContentLoaded', () => {
+      showSlide(currentSlideIndex);
+      startAutoSlide();
+    });
+  </script>
 </body>
+
 </html>

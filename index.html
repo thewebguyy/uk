@@ -40,18 +40,18 @@
       <circle cx="11" cy="11" r="8"/>
       <path d="m21 21-4.35-4.35"/>
     </symbol>
-    <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-      <circle cx="12" cy="7" r="4"/>
+    <symbol id="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="2" y1="12" x2="22" y2="12"/>
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
     </symbol>
-    <symbol id="icon-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    <symbol id="icon-shopping-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <path d="M16 10a4 4 0 0 1-8 0"/>
     </symbol>
-    <symbol id="icon-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <rect x="1" y="3" width="15" height="13"/>
-      <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
-      <circle cx="5.5" cy="18.5" r="2.5"/>
-      <circle cx="18.5" cy="18.5" r="2.5"/>
+    <symbol id="icon-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
     </symbol>
     <symbol id="icon-palette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <circle cx="13.5" cy="6.5" r=".5"/>
@@ -76,6 +76,15 @@
       <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
       <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
     </symbol>
+    <symbol id="icon-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </symbol>
+    <symbol id="icon-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="1" y="3" width="15" height="13"/>
+      <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+      <circle cx="5.5" cy="18.5" r="2.5"/>
+      <circle cx="18.5" cy="18.5" r="2.5"/>
+    </symbol>
   </svg>
 
   <!-- Announcement Banner -->
@@ -92,30 +101,27 @@
     </div>
   </div>
 
-  <!-- Top Bar: Logo, Search, Icons -->
+  <!-- Top Bar: Logo, Search, Region, Icons -->
   <div class="top-bar">
-    <div class="container-fluid px-4">
+    <div class="container">
       <div class="top-bar-content">
-        <!-- Logo - Left -->
+        <!-- Logo -->
         <a class="navbar-brand" href="index.html">
           <img src="icon.png" alt="Creative Merch UK" class="logo-image">
         </a>
 
-        <!-- Search Bar - Center -->
+        <!-- Search Bar -->
         <form class="search-bar-form-compact">
           <svg class="search-icon"><use xlink:href="#icon-search"/></svg>
           <input type="search" class="search-input" placeholder="Search products...">
         </form>
 
         <!-- Right Icons -->
-        <div class="top-bar-right">
-          <!-- Sign In/Sign Up Button -->
-          <a href="account.html" class="btn-signin">SIGN IN / SIGN UP</a>
-
+        <div class="d-flex align-items-center gap-3">
           <!-- Region Selector -->
           <div class="dropdown">
-            <a href="#" class="nav-icon-img" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="globe_3936475.png" alt="Region" class="icon-img">
+            <a href="#" class="nav-icon" data-bs-toggle="dropdown" aria-expanded="false">
+              <svg class="icon"><use xlink:href="#icon-globe"/></svg>
             </a>
             <ul class="dropdown-menu dropdown-menu-end region-dropdown">
               <li><a class="dropdown-item" href="#"><span class="flag">🇬🇧</span> UNITED KINGDOM</a></li>
@@ -124,15 +130,12 @@
             </ul>
           </div>
 
-          <!-- Wishlist -->
-          <a href="#wishlist" class="nav-icon-img">
-            <img src="heart_7299748.png" alt="Wishlist" class="icon-img">
+          <a href="#wishlist" class="nav-icon">
+            <svg class="icon"><use xlink:href="#icon-heart"/></svg>
           </a>
-
-          <!-- Cart -->
-          <a href="#cart" class="nav-icon-img" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
-            <img src="shopping-bag_4305310.png" alt="Cart" class="icon-img">
-            <span class="badge-cart" id="cart-count" style="display: none;">1</span>
+          <a href="#cart" class="nav-icon" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+            <svg class="icon"><use xlink:href="#icon-shopping-bag"/></svg>
+            <span class="badge-cart" id="cart-count">0</span>
           </a>
         </div>
       </div>
@@ -163,8 +166,8 @@
 
   <!-- Main Navigation -->
   <nav class="navbar navbar-expand-lg main-nav">
-    <div class="container-fluid px-4">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -172,7 +175,7 @@
         <ul class="navbar-nav">
           <!-- Shop Mega Menu -->
           <li class="nav-item dropdown mega-menu">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="shopDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               SHOP
             </a>
             <div class="dropdown-menu mega-dropdown">
@@ -214,7 +217,7 @@
 
           <!-- Design Studio Mega Menu -->
           <li class="nav-item dropdown mega-menu">
-            <a class="nav-link dropdown-toggle" href="studio.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="studio.html" id="studioDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               DESIGN STUDIO
             </a>
             <div class="dropdown-menu mega-dropdown">
@@ -245,7 +248,7 @@
 
           <!-- Premium Services Mega Menu -->
           <li class="nav-item dropdown mega-menu">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               PREMIUM SERVICES
             </a>
             <div class="dropdown-menu mega-dropdown">

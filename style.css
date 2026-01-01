@@ -132,7 +132,7 @@ p {
 }
 
 /* ============================================
-   TOP BAR (Logo, Search, Icons)
+   TOP BAR (Logo, Search, Icons) - IMPROVED ALIGNMENT
    ============================================ */
 .top-bar {
   position: fixed;
@@ -148,7 +148,7 @@ p {
 
 .top-bar-content {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: 200px 1fr auto;
   align-items: center;
   gap: 2rem;
 }
@@ -165,40 +165,10 @@ p {
 .logo-image {
   height: 50px !important;
   width: auto;
-  margin-right: 1rem;
-}
-
-.top-bar-right {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
 }
 
 /* ============================================
-   SIGN IN/SIGN UP BUTTON
-   ============================================ */
-.btn-signin {
-  font-family: var(--font-primary);
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--color-black);
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--color-black);
-  border-radius: var(--radius-sm);
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-
-.btn-signin:hover {
-  background: var(--color-black);
-  color: var(--color-white);
-}
-
-/* ============================================
-   COMPACT SEARCH BAR
+   COMPACT SEARCH BAR - CENTERED
    ============================================ */
 .search-bar-form-compact {
   display: flex;
@@ -208,8 +178,8 @@ p {
   max-width: 500px;
   background: var(--color-grey-light);
   padding: 0.5rem 1rem;
-  border-radius: 2px; /* Sharper edges */
-  margin: 0 auto;
+  border-radius: 2px;
+  margin: 0 auto; /* Center it */
 }
 
 .search-icon {
@@ -234,12 +204,50 @@ p {
 }
 
 /* ============================================
-   IMAGE ICONS (Globe, Heart, Shopping Bag)
+   TOP BAR RIGHT - BIGGER ICONS, MORE LEFT
    ============================================ */
+.top-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  justify-self: end;
+  margin-right: 1rem;
+}
+
+/* Region & Sign In Button */
+.region-signin-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-black);
+  text-decoration: none;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+
+.region-signin-btn:hover {
+  opacity: 0.7;
+}
+
+.signin-text {
+  display: inline-block;
+}
+
+/* Icon Images - Bigger (32px) */
+.icon-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
 .nav-icon-img {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  position: relative;
   transition: opacity 0.2s ease;
 }
 
@@ -247,46 +255,42 @@ p {
   opacity: 0.7;
 }
 
-.icon-img {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-}
-
 /* ============================================
-   CART BADGE (Larger, only shows when > 0)
+   CART BADGE - HIDE WHEN 0, BIGGER & VISIBLE WHEN >0
    ============================================ */
 .badge-cart {
   position: absolute;
   top: -6px;
   right: -6px;
-  background: var(--color-black);
-  color: var(--color-white);
-  font-size: 0.65rem;
+  background: transparent;
+  color: var(--color-black);
+  font-size: 0.875rem;
   font-weight: 600;
-  padding: 2px 6px;
-  min-width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 0;
+  min-width: auto;
+  height: auto;
+  border-radius: 0;
+  display: none; /* Hidden by default */
+}
+
+.badge-cart.has-items {
+  display: block; /* Show when items exist */
 }
 
 /* ============================================
-   MAIN NAVIGATION (Standalone)
+   MAIN NAVIGATION (Standalone) - CENTERED PROPERLY
    ============================================ */
 .main-nav {
   background: var(--color-white);
   padding: 0.75rem 0;
-  margin-top: 100px; /* Account for banner + top bar */
+  margin-top: 100px;
   box-shadow: var(--shadow-sm);
   position: relative;
   z-index: 9997;
 }
 
-.main-nav .navbar-collapse {
-  justify-content: center;
+.navbar-nav {
+  gap: 0;
 }
 
 .nav-link {
@@ -294,7 +298,7 @@ p {
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--color-black) !important;
-  padding: 0.75rem 1.5rem !important;
+  padding: 0.75rem 2rem !important;
   transition: color 0.2s ease;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -320,7 +324,7 @@ p {
   border-radius: 0;
   margin-top: 0;
   padding: 2rem 0;
-  background: rgba(255, 255, 255, 0.95); /* Slightly transparent */
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   box-shadow: var(--shadow-lg);
 }
@@ -358,7 +362,16 @@ p {
   backdrop-filter: blur(10px);
   border: none;
   box-shadow: var(--shadow-md);
-  min-width: 200px;
+  min-width: 220px;
+}
+
+.region-dropdown .dropdown-header {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-grey);
+  padding: 0.5rem 1rem;
 }
 
 .region-dropdown .dropdown-item {
@@ -439,7 +452,7 @@ p {
 .hero-carousel {
   position: relative;
   width: 100%;
-  height: 750px; /* Increased from 600px */
+  height: 750px;
   overflow: hidden;
 }
 
@@ -521,6 +534,62 @@ p {
   font-size: 1.125rem;
   font-weight: 600;
   color: var(--color-black);
+}
+
+/* ============================================
+   CUSTOM DESIGN SERVICES SECTION
+   ============================================ */
+.design-services-section {
+  padding: var(--spacing-xl) 0;
+  background: var(--color-grey-light);
+}
+
+.design-description {
+  font-size: 1rem;
+  color: var(--color-grey-dark);
+  margin-bottom: 2rem;
+  line-height: 1.8;
+}
+
+.design-features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+.design-features li {
+  padding: 0.75rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  color: var(--color-grey-dark);
+  font-size: 0.95rem;
+}
+
+.design-features li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--color-black);
+  font-weight: 700;
+}
+
+.studio-visual {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: 4rem 2rem;
+  text-align: center;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.studio-label {
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-grey);
 }
 
 /* ============================================
@@ -715,6 +784,10 @@ footer {
   text-align: center;
 }
 
+.text-start {
+  text-align: left;
+}
+
 .mb-1 { margin-bottom: var(--spacing-xs); }
 .mb-2 { margin-bottom: var(--spacing-sm); }
 .mb-3 { margin-bottom: var(--spacing-md); }
@@ -730,30 +803,8 @@ footer {
 .gap-3 { gap: var(--spacing-md); }
 
 /* ============================================
-   RESPONSIVE - MOBILE
+   RESPONSIVE - IMPROVED MOBILE
    ============================================ */
-@media (max-width: 992px) {
-  /* Mobile Menu Fix */
-  .main-nav .navbar-collapse {
-    background: var(--color-white);
-    padding: 1rem;
-    margin-top: 1rem;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-  }
-  
-  .nav-link {
-    padding: 1rem !important;
-    border-bottom: 1px solid var(--color-grey-light);
-  }
-  
-  .mega-dropdown {
-    position: static !important;
-    width: 100%;
-    padding: 1rem;
-  }
-}
-
 @media (max-width: 768px) {
   .hero-carousel {
     height: 500px;
@@ -764,8 +815,8 @@ footer {
     gap: 1rem;
   }
   
-  .logo-image {
-    height: 40px !important;
+  .navbar-brand {
+    text-align: center;
   }
   
   .search-bar-form-compact {
@@ -773,18 +824,12 @@ footer {
   }
   
   .top-bar-right {
-    justify-content: space-between;
-    width: 100%;
+    justify-self: center;
+    margin-right: 0;
   }
   
-  .btn-signin {
-    font-size: 0.65rem;
-    padding: 0.4rem 0.8rem;
-  }
-  
-  .icon-img {
-    width: 24px;
-    height: 24px;
+  .signin-text {
+    display: none;
   }
   
   .section {
@@ -800,8 +845,31 @@ footer {
     flex-direction: column;
   }
   
+  .logo-image {
+    height: 40px !important;
+  }
+  
   .mega-dropdown {
     padding: 1rem 0;
+  }
+  
+  .design-services-section .row {
+    flex-direction: column;
+  }
+  
+  .studio-visual {
+    min-height: 200px;
+    margin-top: 2rem;
+  }
+  
+  /* Fix navbar toggler */
+  .navbar-toggler {
+    border: 1px solid var(--color-grey);
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .navbar-toggler:focus {
+    box-shadow: none;
   }
 }
 
