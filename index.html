@@ -86,22 +86,33 @@
     </symbol>
   </svg>
 
-  <!-- Announcement Banner (Grey) -->
+  <!-- Announcement Banner -->
   <div class="announcement-banner">
     <div class="announcement-content">
-      <span class="announcement-item">✨ Free UK Shipping on Orders Over £50</span>
-      <span class="announcement-item">🎨 Custom Designs Available</span>
-      <span class="announcement-item">🎉 Party Essentials Made to Order</span>
-      <span class="announcement-item">✨ Free UK Shipping on Orders Over £50</span>
-      <span class="announcement-item">🎨 Custom Designs Available</span>
-      <span class="announcement-item">🎉 Party Essentials Made to Order</span>
+      <span class="announcement-item">FREE UK SHIPPING ON ORDERS OVER £50</span>
+      <span class="announcement-item">CUSTOM DESIGNS AVAILABLE</span>
+      <span class="announcement-item">PARTY ESSENTIALS MADE TO ORDER</span>
+      <span class="announcement-item">FREE UK SHIPPING ON ORDERS OVER £50</span>
+      <span class="announcement-item">CUSTOM DESIGNS AVAILABLE</span>
+      <span class="announcement-item">PARTY ESSENTIALS MADE TO ORDER</span>
+    </div>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-bar-container">
+    <div class="container">
+      <form class="search-bar-form">
+        <svg class="search-icon"><use xlink:href="#icon-search"/></svg>
+        <input type="search" class="search-input" placeholder="Search products, categories, or services...">
+        <button type="submit" class="search-button">SEARCH</button>
+      </form>
     </div>
   </div>
 
   <!-- Shopping Cart Offcanvas -->
   <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title">Your Cart</h5>
+      <h5 class="offcanvas-title">YOUR CART</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
@@ -111,11 +122,11 @@
       </div>
       <div id="cart-summary" style="display: none;">
         <div class="d-flex justify-content-between mb-3 pt-3" style="border-top: 1px solid var(--color-grey-light);">
-          <strong>Subtotal:</strong>
+          <strong>SUBTOTAL:</strong>
           <strong id="cart-subtotal">£0.00</strong>
         </div>
-        <button class="btn btn-primary w-100" onclick="window.location.href='checkout.html'">Checkout</button>
-        <button class="btn btn-secondary w-100 mt-2" data-bs-dismiss="offcanvas">Continue Shopping</button>
+        <button class="btn btn-primary w-100" onclick="window.location.href='checkout.html'">CHECKOUT</button>
+        <button class="btn btn-secondary w-100 mt-2" data-bs-dismiss="offcanvas">CONTINUE SHOPPING</button>
       </div>
     </div>
   </div>
@@ -124,7 +135,7 @@
   <nav class="navbar navbar-expand-lg">
     <div class="container">
       <a class="navbar-brand" href="index.html">
-        <img src="icon.png" alt="Creative Merch UK" style="height: 40px; width: auto;">
+        <img src="icon.png" alt="Creative Merch UK" class="logo-image">
       </a>
       
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -135,43 +146,38 @@
         <ul class="navbar-nav mx-auto">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle active" href="#" id="shopDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Shop
+              SHOP
             </a>
             <ul class="dropdown-menu" aria-labelledby="shopDropdown">
-              <li><a class="dropdown-item" href="shop.html">All Products</a></li>
+              <li><a class="dropdown-item" href="shop.html">ALL PRODUCTS</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="shop.html?category=apparel">Shop Apparel</a></li>
-              <li><a class="dropdown-item" href="shop.html?category=stickers">Stickers, Labels & Vinyls</a></li>
-              <li><a class="dropdown-item" href="shop.html?category=party-decor">Party Decor</a></li>
+              <li><a class="dropdown-item" href="shop.html?category=apparel">APPAREL</a></li>
+              <li><a class="dropdown-item" href="shop.html?category=stickers">STICKERS, LABELS & VINYLS</a></li>
+              <li><a class="dropdown-item" href="shop.html?category=party-decor">PARTY DECOR</a></li>
+              <li><a class="dropdown-item" href="shop.html?category=accessories">ACCESSORIES</a></li>
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="studio.html">Studio</a>
+            <a class="nav-link" href="studio.html">DESIGN STUDIO</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="designservice.html">Design Service</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="senditems.html">Send Items In</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#installation">Installation</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#workshops">Workshops</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#subscriptions">Subscriptions</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              PREMIUM SERVICES
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+              <li><a class="dropdown-item" href="designservice.html">DESIGN SERVICE</a></li>
+              <li><a class="dropdown-item" href="senditems.html">SEND ITEMS IN</a></li>
+              <li><a class="dropdown-item" href="#installation">INSTALLATION</a></li>
+              <li><a class="dropdown-item" href="#workshops">WORKSHOPS</a></li>
+              <li><a class="dropdown-item" href="#subscriptions">SUBSCRIPTIONS</a></li>
+            </ul>
           </li>
         </ul>
 
         <div class="d-flex align-items-center gap-3">
-          <a href="#search" class="nav-icon">
-            <svg class="icon"><use xlink:href="#icon-search"/></svg>
-          </a>
           <a href="account.html" class="nav-icon d-none d-lg-flex">
             <svg class="icon"><use xlink:href="#icon-user"/></svg>
-            <span>Sign In</span>
+            <span>SIGN IN</span>
           </a>
           <a href="#wishlist" class="nav-icon">
             <svg class="icon"><use xlink:href="#icon-heart"/></svg>
@@ -185,11 +191,43 @@
     </div>
   </nav>
 
-  <!-- Hero Section with Placeholder -->
+  <!-- Hero Section with Animated Images -->
   <section class="hero-section">
     <div class="container">
-      <div class="hero-placeholder">
-        <span>PREMIUM DESIGNS • CUSTOM PRINTS • PARTY ESSENTIALS</span>
+      <div class="hero-carousel">
+        <div class="hero-slide active">
+          <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=1200&h=600&fit=crop" alt="Custom T-Shirts">
+          <div class="hero-overlay">
+            <h1>PREMIUM CUSTOM APPAREL</h1>
+            <p>Transform your style with bespoke designs</p>
+            <a href="shop.html?category=apparel" class="btn btn-primary btn-lg">SHOP APPAREL</a>
+          </div>
+        </div>
+        <div class="hero-slide">
+          <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1200&h=600&fit=crop" alt="Party Decorations">
+          <div class="hero-overlay">
+            <h1>PARTY ESSENTIALS</h1>
+            <p>Make every celebration unforgettable</p>
+            <a href="shop.html?category=party-decor" class="btn btn-primary btn-lg">SHOP PARTY DECOR</a>
+          </div>
+        </div>
+        <div class="hero-slide">
+          <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=1200&h=600&fit=crop" alt="Custom Stickers">
+          <div class="hero-overlay">
+            <h1>CUSTOM STICKERS & LABELS</h1>
+            <p>Perfect for branding and personalization</p>
+            <a href="shop.html?category=stickers" class="btn btn-primary btn-lg">SHOP STICKERS</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-nav">
+        <button class="hero-nav-btn" onclick="changeSlide(-1)">❮</button>
+        <button class="hero-nav-btn" onclick="changeSlide(1)">❯</button>
+      </div>
+      <div class="hero-dots">
+        <span class="dot active" onclick="currentSlide(0)"></span>
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
       </div>
     </div>
   </section>
@@ -197,7 +235,7 @@
   <!-- Featured Products -->
   <section class="section">
     <div class="container">
-      <h2 class="section-title">Shop Our Collection</h2>
+      <h2 class="section-title">SHOP OUR COLLECTION</h2>
       <p class="section-subtitle">Discover premium custom designs and party essentials</p>
       
       <!-- Category List -->
@@ -205,13 +243,13 @@
         <div class="col-md-8">
           <ul style="list-style: none; padding: 0; text-align: center;">
             <li style="display: inline-block; margin: 0 1.5rem;">
-              <a href="shop.html?category=apparel" style="font-size: 1.125rem; color: var(--color-black); text-decoration: none; font-weight: 500;">Apparel</a>
+              <a href="shop.html?category=apparel" style="font-size: 1.125rem; color: var(--color-black); text-decoration: none; font-weight: 500;">APPAREL</a>
             </li>
             <li style="display: inline-block; margin: 0 1.5rem;">
-              <a href="shop.html?category=accessories" style="font-size: 1.125rem; color: var(--color-black); text-decoration: none; font-weight: 500;">Accessories</a>
+              <a href="shop.html?category=accessories" style="font-size: 1.125rem; color: var(--color-black); text-decoration: none; font-weight: 500;">ACCESSORIES</a>
             </li>
             <li style="display: inline-block; margin: 0 1.5rem;">
-              <a href="shop.html?category=party-events" style="font-size: 1.125rem; color: var(--color-black); text-decoration: none; font-weight: 500;">Party & Events</a>
+              <a href="shop.html?category=party-events" style="font-size: 1.125rem; color: var(--color-black); text-decoration: none; font-weight: 500;">PARTY & EVENTS</a>
             </li>
           </ul>
         </div>
@@ -227,10 +265,10 @@
           </a>
           <div class="product-info">
             <h3 class="product-title">
-              <a href="product.html?id=1" style="text-decoration: none; color: inherit;">Custom T-Shirt Design</a>
+              <a href="product.html?id=1" style="text-decoration: none; color: inherit;">CUSTOM T-SHIRT DESIGN</a>
             </h3>
             <p class="product-price">£24.99</p>
-            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(1, 'Custom T-Shirt Design', 24.99)">Add to Cart</button>
+            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(1, 'Custom T-Shirt Design', 24.99)">ADD TO CART</button>
           </div>
         </div>
 
@@ -243,10 +281,10 @@
           </a>
           <div class="product-info">
             <h3 class="product-title">
-              <a href="product.html?id=2" style="text-decoration: none; color: inherit;">Vinyl Sticker Pack</a>
+              <a href="product.html?id=2" style="text-decoration: none; color: inherit;">VINYL STICKER PACK</a>
             </h3>
             <p class="product-price">£9.99</p>
-            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(2, 'Vinyl Sticker Pack', 9.99)">Add to Cart</button>
+            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(2, 'Vinyl Sticker Pack', 9.99)">ADD TO CART</button>
           </div>
         </div>
 
@@ -259,10 +297,10 @@
           </a>
           <div class="product-info">
             <h3 class="product-title">
-              <a href="product.html?id=3" style="text-decoration: none; color: inherit;">Party Banner Set</a>
+              <a href="product.html?id=3" style="text-decoration: none; color: inherit;">PARTY BANNER SET</a>
             </h3>
             <p class="product-price">£19.99</p>
-            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(3, 'Party Banner Set', 19.99)">Add to Cart</button>
+            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(3, 'Party Banner Set', 19.99)">ADD TO CART</button>
           </div>
         </div>
 
@@ -275,10 +313,10 @@
           </a>
           <div class="product-info">
             <h3 class="product-title">
-              <a href="product.html?id=4" style="text-decoration: none; color: inherit;">Custom Labels</a>
+              <a href="product.html?id=4" style="text-decoration: none; color: inherit;">CUSTOM LABELS</a>
             </h3>
             <p class="product-price">£14.99</p>
-            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(4, 'Custom Labels', 14.99)">Add to Cart</button>
+            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(4, 'Custom Labels', 14.99)">ADD TO CART</button>
           </div>
         </div>
 
@@ -291,10 +329,10 @@
           </a>
           <div class="product-info">
             <h3 class="product-title">
-              <a href="product.html?id=5" style="text-decoration: none; color: inherit;">Apparel Bundle</a>
+              <a href="product.html?id=5" style="text-decoration: none; color: inherit;">APPAREL BUNDLE</a>
             </h3>
             <p class="product-price">£49.99</p>
-            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(5, 'Apparel Bundle', 49.99)">Add to Cart</button>
+            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(5, 'Apparel Bundle', 49.99)">ADD TO CART</button>
           </div>
         </div>
 
@@ -307,17 +345,17 @@
           </a>
           <div class="product-info">
             <h3 class="product-title">
-              <a href="product.html?id=6" style="text-decoration: none; color: inherit;">Party Decor Set</a>
+              <a href="product.html?id=6" style="text-decoration: none; color: inherit;">PARTY DECOR SET</a>
             </h3>
             <p class="product-price">£34.99</p>
-            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(6, 'Party Decor Set', 34.99)">Add to Cart</button>
+            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(6, 'Party Decor Set', 34.99)">ADD TO CART</button>
           </div>
         </div>
       </div>
 
       <div class="text-center mt-4">
         <a href="shop.html" class="btn btn-primary">
-          <span>View All Products</span>
+          <span>VIEW ALL PRODUCTS</span>
           <svg class="icon-sm"><use xlink:href="#icon-star"/></svg>
         </a>
       </div>
@@ -327,7 +365,7 @@
   <!-- Services Section -->
   <section id="design-studio" class="service-section">
     <div class="container">
-      <h2 class="section-title">Our Services</h2>
+      <h2 class="section-title">OUR SERVICES</h2>
       <p class="section-subtitle">Professional design and installation services tailored to you</p>
 
       <div class="row g-4">
@@ -337,7 +375,7 @@
             <div class="service-icon">
               <svg><use xlink:href="#icon-palette"/></svg>
             </div>
-            <h3 class="service-title">Design Studio</h3>
+            <h3 class="service-title">DESIGN STUDIO</h3>
             <p class="service-description">Work with our expert designers to create custom prints, apparel, and branding that stands out.</p>
             <ul class="text-start mb-3">
               <li>Bespoke design consultation</li>
@@ -345,8 +383,8 @@
               <li>Unlimited revisions</li>
               <li>Fast turnaround</li>
             </ul>
-            <a href="design-service.html" class="btn btn-outline">
-              <span>Start Your Project</span>
+            <a href="designservice.html" class="btn btn-outline">
+              <span>START YOUR PROJECT</span>
               <svg class="icon-sm"><use xlink:href="#icon-palette"/></svg>
             </a>
           </div>
@@ -358,7 +396,7 @@
             <div class="service-icon">
               <svg><use xlink:href="#icon-tool"/></svg>
             </div>
-            <h3 class="service-title">Installation Services</h3>
+            <h3 class="service-title">INSTALLATION SERVICES</h3>
             <p class="service-description">Professional installation for wall vinyls, party setups, and large-scale projects across the UK.</p>
             <ul class="text-start mb-3">
               <li>UK-wide coverage</li>
@@ -367,7 +405,7 @@
               <li>Event setup available</li>
             </ul>
             <a href="contact.html?service=installation" class="btn btn-outline">
-              <span>Request Quote</span>
+              <span>REQUEST QUOTE</span>
               <svg class="icon-sm"><use xlink:href="#icon-tool"/></svg>
             </a>
           </div>
@@ -379,7 +417,7 @@
             <div class="service-icon">
               <svg><use xlink:href="#icon-users"/></svg>
             </div>
-            <h3 class="service-title">Creative Workshops</h3>
+            <h3 class="service-title">CREATIVE WORKSHOPS</h3>
             <p class="service-description">Join our hands-on workshops to learn design techniques, DIY party decor, and custom printing skills.</p>
             <ul class="text-start mb-3">
               <li>Beginner to advanced levels</li>
@@ -388,7 +426,7 @@
               <li>Take home your creations</li>
             </ul>
             <a href="contact.html?service=workshop" class="btn btn-outline">
-              <span>Book Workshop</span>
+              <span>BOOK WORKSHOP</span>
               <svg class="icon-sm"><use xlink:href="#icon-users"/></svg>
             </a>
           </div>
@@ -400,13 +438,13 @@
   <!-- Subscriptions -->
   <section id="subscriptions" class="section" style="background: var(--color-grey-light);">
     <div class="container">
-      <h2 class="section-title">Subscription Plans</h2>
+      <h2 class="section-title">SUBSCRIPTION PLANS</h2>
       <p class="section-subtitle">Regular deliveries and exclusive benefits</p>
 
       <div class="row g-4 justify-content-center">
         <div class="col-md-5">
           <div class="service-card">
-            <h3 class="service-title">Monthly Essentials</h3>
+            <h3 class="service-title">MONTHLY ESSENTIALS</h3>
             <p class="service-description">Curated party supplies and custom items delivered monthly</p>
             <ul class="text-start mb-3">
               <li>15% discount on all orders</li>
@@ -415,7 +453,7 @@
               <li>Cancel anytime</li>
             </ul>
             <a href="contact.html?service=subscribe-monthly" class="btn btn-primary w-100">
-              <span>Subscribe Now</span>
+              <span>SUBSCRIBE NOW</span>
               <svg class="icon-sm"><use xlink:href="#icon-star"/></svg>
             </a>
           </div>
@@ -423,7 +461,7 @@
 
         <div class="col-md-5">
           <div class="service-card">
-            <h3 class="service-title">Business Package</h3>
+            <h3 class="service-title">BUSINESS PACKAGE</h3>
             <p class="service-description">Bulk ordering and custom designs for businesses and event planners</p>
             <ul class="text-start mb-3">
               <li>Dedicated account manager</li>
@@ -432,7 +470,7 @@
               <li>Flexible delivery schedule</li>
             </ul>
             <a href="contact.html?service=business" class="btn btn-primary w-100">
-              <span>Contact Sales</span>
+              <span>CONTACT SALES</span>
               <svg class="icon-sm"><use xlink:href="#icon-truck"/></svg>
             </a>
           </div>
@@ -445,12 +483,12 @@
   <section class="newsletter-section">
     <div class="container">
       <div class="text-center mb-4">
-        <h2>Join Our Community</h2>
+        <h2>JOIN OUR COMMUNITY</h2>
         <p class="text-grey-dark">Get exclusive access to new designs, special offers, and creative inspiration</p>
       </div>
       <form class="newsletter-form">
         <input type="email" class="form-control" placeholder="Enter your email address" required>
-        <button type="submit" class="btn btn-primary">Subscribe</button>
+        <button type="submit" class="btn btn-primary">SUBSCRIBE</button>
       </form>
     </div>
   </section>
@@ -461,32 +499,32 @@
       <div class="row">
         <!-- About -->
         <div class="col-md-4 footer-section">
-          <h3 class="footer-title">About Us</h3>
+          <h3 class="footer-title">ABOUT US</h3>
           <p class="text-grey-dark">Creative Merch UK offers premium designs, custom prints, and party essentials crafted with care. We're dedicated to helping you create memorable moments and standout branding.</p>
         </div>
 
         <!-- Quick Links -->
         <div class="col-md-4 footer-section">
-          <h3 class="footer-title">Quick Links</h3>
+          <h3 class="footer-title">QUICK LINKS</h3>
           <ul class="footer-links">
-            <li><a href="shop.html">Shop</a></li>
-            <li><a href="studio.html">Studio</a></li>
-            <li><a href="design-service.html">Design Service</a></li>
-            <li><a href="send-items.html">Send Items In</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="account.html">Account</a></li>
+            <li><a href="shop.html">SHOP</a></li>
+            <li><a href="studio.html">STUDIO</a></li>
+            <li><a href="designservice.html">DESIGN SERVICE</a></li>
+            <li><a href="senditems.html">SEND ITEMS IN</a></li>
+            <li><a href="contact.html">CONTACT</a></li>
+            <li><a href="account.html">ACCOUNT</a></li>
           </ul>
         </div>
 
         <!-- Contact -->
         <div class="col-md-4 footer-section">
-          <h3 class="footer-title">Contact Us</h3>
+          <h3 class="footer-title">CONTACT US</h3>
           <p class="text-grey-dark">
-            <strong>Email:</strong><br>
+            <strong>EMAIL:</strong><br>
             <a href="mailto:hello@customisemeuk.com">hello@customisemeuk.com</a>
           </p>
           <p class="text-grey-dark mb-3">
-            <strong>Instagram:</strong><br>
+            <strong>INSTAGRAM:</strong><br>
             <a href="https://www.instagram.com/customisemeuk" target="_blank">@customisemeuk</a>
           </p>
           <div class="social-links">
@@ -505,6 +543,53 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/cart.js"></script>
+  
+  <script>
+    // Hero Carousel Functionality
+    let currentSlideIndex = 0;
+    let slideInterval;
+
+    function showSlide(n) {
+      const slides = document.querySelectorAll('.hero-slide');
+      const dots = document.querySelectorAll('.dot');
+      
+      if (n >= slides.length) currentSlideIndex = 0;
+      if (n < 0) currentSlideIndex = slides.length - 1;
+      
+      slides.forEach(slide => slide.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
+      
+      slides[currentSlideIndex].classList.add('active');
+      dots[currentSlideIndex].classList.add('active');
+    }
+
+    function changeSlide(n) {
+      clearInterval(slideInterval);
+      currentSlideIndex += n;
+      showSlide(currentSlideIndex);
+      startAutoSlide();
+    }
+
+    function currentSlide(n) {
+      clearInterval(slideInterval);
+      currentSlideIndex = n;
+      showSlide(currentSlideIndex);
+      startAutoSlide();
+    }
+
+    function startAutoSlide() {
+      slideInterval = setInterval(() => {
+        currentSlideIndex++;
+        showSlide(currentSlideIndex);
+      }, 5000); // Change slide every 5 seconds
+    }
+
+    // Initialize carousel
+    document.addEventListener('DOMContentLoaded', () => {
+      showSlide(currentSlideIndex);
+      startAutoSlide();
+    });
+  </script>
 </body>
 
 </html>
