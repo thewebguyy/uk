@@ -7,11 +7,10 @@ Binary Plus Color Strategy Implementation
    CORE SYSTEM VARIABLES
    ============================================ */
 :root {
-  /* Binary Plus Color System */
+  /* Black and Grey Color System */
   --system-black: #000000;
   --system-white: #FFFFFF;
-  --system-green: #00FF00;
-  --system-gray: #94A3B8;
+  --system-gray: #6B7280;
   
   /* Typography System */
   --font-industrial: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -159,7 +158,7 @@ h6, .h6 { font-size: 1rem; }
   right: 0;
   height: 40px;
   background: var(--system-black);
-  color: var(--system-green);
+  color: var(--system-white);
   font-family: var(--font-technical);
   font-size: 0.875rem;
   letter-spacing: 0.1em;
@@ -185,7 +184,7 @@ h6, .h6 { font-size: 1rem; }
 .system-ticker-item::before {
   content: '▸';
   margin-right: 0.5rem;
-  color: var(--system-green);
+  color: var(--system-white);
 }
 
 @keyframes ticker-scroll {
@@ -206,7 +205,7 @@ h6, .h6 { font-size: 1rem; }
 .system-status-dot {
   width: 8px;
   height: 8px;
-  background: var(--system-green);
+  background: var(--system-gray);
   animation: pulse 2s ease-in-out infinite;
 }
 
@@ -216,27 +215,27 @@ h6, .h6 { font-size: 1rem; }
 }
 
 /* ============================================
-   ACTION COLOR (System Green)
+   ACCENT COLORS (Black and Grey)
    ============================================ */
-.system-action {
-  color: var(--system-green) !important;
+.system-accent {
+  color: var(--system-gray) !important;
 }
 
-.system-action-bg {
-  background: var(--system-green) !important;
-  color: var(--system-black) !important;
+.system-accent-bg {
+  background: var(--system-gray) !important;
+  color: var(--system-white) !important;
 }
 
-.system-action-border {
-  border-color: var(--system-green) !important;
+.system-accent-border {
+  border-color: var(--system-gray) !important;
 }
 
 /* Ready Signal */
 .system-ready {
   display: inline-block;
   padding: 0.5rem 1rem;
-  background: var(--system-green);
-  color: var(--system-black);
+  background: var(--system-black);
+  color: var(--system-white);
   font-family: var(--font-technical);
   font-weight: 700;
   font-size: 0.875rem;
@@ -245,7 +244,7 @@ h6, .h6 { font-size: 1rem; }
 }
 
 /* ============================================
-   BUTTONS - BRUTAL STYLE
+   BUTTONS - BORDERLESS STYLE
    ============================================ */
 .btn,
 .system-btn {
@@ -255,7 +254,7 @@ h6, .h6 { font-size: 1rem; }
   letter-spacing: 0.05em;
   text-transform: uppercase;
   padding: 1rem 2rem;
-  border: var(--border-weight) solid var(--system-black);
+  border: none;
   background: var(--system-white);
   color: var(--system-black);
   cursor: pointer;
@@ -266,7 +265,7 @@ h6, .h6 { font-size: 1rem; }
 
 .btn:hover,
 .system-btn:hover {
-  background: var(--system-black);
+  background: var(--system-gray);
   color: var(--system-white);
 }
 
@@ -278,21 +277,20 @@ h6, .h6 { font-size: 1rem; }
 
 .btn-primary:hover,
 .system-btn-primary:hover {
-  background: var(--system-white);
-  color: var(--system-black);
+  background: var(--system-gray);
+  color: var(--system-white);
 }
 
 .btn-action,
 .system-btn-action {
-  background: var(--system-green);
-  color: var(--system-black);
-  border-color: var(--system-black);
+  background: var(--system-black);
+  color: var(--system-white);
 }
 
 .btn-action:hover,
 .system-btn-action:hover {
-  background: var(--system-black);
-  color: var(--system-green);
+  background: var(--system-gray);
+  color: var(--system-white);
 }
 
 /* ============================================
@@ -365,8 +363,8 @@ h6, .h6 { font-size: 1rem; }
 .form-control:focus,
 .system-input:focus {
   outline: none;
-  border-color: var(--system-green);
-  box-shadow: inset 0 0 0 1px var(--system-green) !important;
+  border-color: var(--system-gray);
+  box-shadow: inset 0 0 0 1px var(--system-gray) !important;
 }
 
 .form-label,
@@ -381,17 +379,16 @@ h6, .h6 { font-size: 1rem; }
 }
 
 /* ============================================
-   CART BADGE - ACTION COLOR
+   CART BADGE - GREY ACCENT
    ============================================ */
 .cart-count,
 .wishlist-count {
-  background: var(--system-green);
-  color: var(--system-black);
+  background: var(--system-gray);
+  color: var(--system-white);
   font-family: var(--font-technical);
   font-weight: 700;
   padding: 0.25rem 0.5rem;
   font-size: 0.75rem;
-  border: var(--border-weight) solid var(--system-black);
   margin-left: 0.5rem;
 }
 
@@ -503,10 +500,9 @@ footer a:hover {
 }
 
 .badge {
-  background: var(--system-green) !important;
-  color: var(--system-black) !important;
+  background: var(--system-gray) !important;
+  color: var(--system-white) !important;
   font-family: var(--font-technical);
-  border: var(--border-weight) solid var(--system-black);
 }
 
 /* ============================================
@@ -540,7 +536,7 @@ footer a:hover {
 }
 
 .cat-list-item a:hover {
-  color: var(--system-green);
+  color: var(--system-gray);
 }
 
 /* ============================================
@@ -565,7 +561,7 @@ footer a:hover {
 .system-loading {
   display: inline-block;
   font-family: var(--font-technical);
-  color: var(--system-green);
+  color: var(--system-gray);
 }
 
 .system-loading::after {
@@ -583,7 +579,7 @@ footer a:hover {
    ACCESSIBILITY - MAINTAIN WCAG COMPLIANCE
    ============================================ */
 :focus-visible {
-  outline: 2px solid var(--system-green);
+  outline: 2px solid var(--system-gray);
   outline-offset: 2px;
 }
 
