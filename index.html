@@ -105,8 +105,18 @@
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
-      <p class="text-center text-grey">Your cart is empty</p>
-      <button class="btn btn-primary w-100 mt-3">Continue Shopping</button>
+      <div id="cart-items"></div>
+      <div id="cart-empty" class="text-center">
+        <p class="text-grey">Your cart is empty</p>
+      </div>
+      <div id="cart-summary" style="display: none;">
+        <div class="d-flex justify-content-between mb-3 pt-3" style="border-top: 1px solid var(--color-grey-light);">
+          <strong>Subtotal:</strong>
+          <strong id="cart-subtotal">£0.00</strong>
+        </div>
+        <button class="btn btn-primary w-100" onclick="window.location.href='checkout.html'">Checkout</button>
+        <button class="btn btn-secondary w-100 mt-2" data-bs-dismiss="offcanvas">Continue Shopping</button>
+      </div>
     </div>
   </div>
 
@@ -114,7 +124,7 @@
   <nav class="navbar navbar-expand-lg">
     <div class="container">
       <a class="navbar-brand" href="index.html">
-        <img src="icon.png" alt="Creative Merch UK" style="height: 40px; width: auto;">
+        <img src="logo.png" alt="Creative Merch UK" style="height: 40px; width: auto;">
       </a>
       
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -123,8 +133,17 @@
 
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mx-auto">
-          <li class="nav-item">
-            <a class="nav-link active" href="#shop">Shop</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" id="shopDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Shop
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="shopDropdown">
+              <li><a class="dropdown-item" href="shop.html">All Products</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="shop.html?category=apparel">Shop Apparel</a></li>
+              <li><a class="dropdown-item" href="shop.html?category=stickers">Stickers, Labels & Vinyls</a></li>
+              <li><a class="dropdown-item" href="shop.html?category=party-decor">Party Decor</a></li>
+            </ul>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#design-studio">Design Studio</a>
@@ -144,7 +163,7 @@
           <a href="#search" class="nav-icon">
             <svg class="icon"><use xlink:href="#icon-search"/></svg>
           </a>
-          <a href="#account" class="nav-icon d-none d-lg-flex">
+          <a href="account.html" class="nav-icon d-none d-lg-flex">
             <svg class="icon"><use xlink:href="#icon-user"/></svg>
             <span>Sign In</span>
           </a>
@@ -153,7 +172,7 @@
           </a>
           <a href="#cart" class="nav-icon" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
             <svg class="icon"><use xlink:href="#icon-shopping-bag"/></svg>
-            <span class="badge">0</span>
+            <span class="badge" id="cart-count">0</span>
           </a>
         </div>
       </div>
@@ -178,67 +197,97 @@
       <div class="product-grid">
         <!-- Product 1 -->
         <div class="product-card">
-          <div class="product-image">
-            <span>Product Image</span>
-          </div>
+          <a href="product.html?id=1">
+            <div class="product-image">
+              <span>Product Image</span>
+            </div>
+          </a>
           <div class="product-info">
-            <h3 class="product-title">Custom T-Shirt Design</h3>
+            <h3 class="product-title">
+              <a href="product.html?id=1" style="text-decoration: none; color: inherit;">Custom T-Shirt Design</a>
+            </h3>
             <p class="product-price">£24.99</p>
+            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(1, 'Custom T-Shirt Design', 24.99)">Add to Cart</button>
           </div>
         </div>
 
         <!-- Product 2 -->
         <div class="product-card">
-          <div class="product-image">
-            <span>Product Image</span>
-          </div>
+          <a href="product.html?id=2">
+            <div class="product-image">
+              <span>Product Image</span>
+            </div>
+          </a>
           <div class="product-info">
-            <h3 class="product-title">Vinyl Sticker Pack</h3>
+            <h3 class="product-title">
+              <a href="product.html?id=2" style="text-decoration: none; color: inherit;">Vinyl Sticker Pack</a>
+            </h3>
             <p class="product-price">£9.99</p>
+            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(2, 'Vinyl Sticker Pack', 9.99)">Add to Cart</button>
           </div>
         </div>
 
         <!-- Product 3 -->
         <div class="product-card">
-          <div class="product-image">
-            <span>Product Image</span>
-          </div>
+          <a href="product.html?id=3">
+            <div class="product-image">
+              <span>Product Image</span>
+            </div>
+          </a>
           <div class="product-info">
-            <h3 class="product-title">Party Banner Set</h3>
+            <h3 class="product-title">
+              <a href="product.html?id=3" style="text-decoration: none; color: inherit;">Party Banner Set</a>
+            </h3>
             <p class="product-price">£19.99</p>
+            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(3, 'Party Banner Set', 19.99)">Add to Cart</button>
           </div>
         </div>
 
         <!-- Product 4 -->
         <div class="product-card">
-          <div class="product-image">
-            <span>Product Image</span>
-          </div>
+          <a href="product.html?id=4">
+            <div class="product-image">
+              <span>Product Image</span>
+            </div>
+          </a>
           <div class="product-info">
-            <h3 class="product-title">Custom Labels</h3>
+            <h3 class="product-title">
+              <a href="product.html?id=4" style="text-decoration: none; color: inherit;">Custom Labels</a>
+            </h3>
             <p class="product-price">£14.99</p>
+            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(4, 'Custom Labels', 14.99)">Add to Cart</button>
           </div>
         </div>
 
         <!-- Product 5 -->
         <div class="product-card">
-          <div class="product-image">
-            <span>Product Image</span>
-          </div>
+          <a href="product.html?id=5">
+            <div class="product-image">
+              <span>Product Image</span>
+            </div>
+          </a>
           <div class="product-info">
-            <h3 class="product-title">Apparel Bundle</h3>
+            <h3 class="product-title">
+              <a href="product.html?id=5" style="text-decoration: none; color: inherit;">Apparel Bundle</a>
+            </h3>
             <p class="product-price">£49.99</p>
+            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(5, 'Apparel Bundle', 49.99)">Add to Cart</button>
           </div>
         </div>
 
         <!-- Product 6 -->
         <div class="product-card">
-          <div class="product-image">
-            <span>Product Image</span>
-          </div>
+          <a href="product.html?id=6">
+            <div class="product-image">
+              <span>Product Image</span>
+            </div>
+          </a>
           <div class="product-info">
-            <h3 class="product-title">Party Decor Set</h3>
+            <h3 class="product-title">
+              <a href="product.html?id=6" style="text-decoration: none; color: inherit;">Party Decor Set</a>
+            </h3>
             <p class="product-price">£34.99</p>
+            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(6, 'Party Decor Set', 34.99)">Add to Cart</button>
           </div>
         </div>
       </div>
@@ -273,7 +322,7 @@
               <li>Unlimited revisions</li>
               <li>Fast turnaround</li>
             </ul>
-            <a href="#contact" class="btn btn-outline">
+            <a href="contact.html?service=design" class="btn btn-outline">
               <span>Start Your Project</span>
               <svg class="icon-sm"><use xlink:href="#icon-palette"/></svg>
             </a>
@@ -294,7 +343,7 @@
               <li>Perfect results guaranteed</li>
               <li>Event setup available</li>
             </ul>
-            <a href="#contact" class="btn btn-outline">
+            <a href="contact.html?service=installation" class="btn btn-outline">
               <span>Request Quote</span>
               <svg class="icon-sm"><use xlink:href="#icon-tool"/></svg>
             </a>
@@ -315,7 +364,7 @@
               <li>All materials included</li>
               <li>Take home your creations</li>
             </ul>
-            <a href="#contact" class="btn btn-outline">
+            <a href="contact.html?service=workshop" class="btn btn-outline">
               <span>Book Workshop</span>
               <svg class="icon-sm"><use xlink:href="#icon-users"/></svg>
             </a>
@@ -342,7 +391,7 @@
               <li>Free shipping included</li>
               <li>Cancel anytime</li>
             </ul>
-            <a href="#subscribe" class="btn btn-primary w-100">
+            <a href="contact.html?service=subscribe-monthly" class="btn btn-primary w-100">
               <span>Subscribe Now</span>
               <svg class="icon-sm"><use xlink:href="#icon-star"/></svg>
             </a>
@@ -359,7 +408,7 @@
               <li>Custom design services</li>
               <li>Flexible delivery schedule</li>
             </ul>
-            <a href="#contact" class="btn btn-primary w-100">
+            <a href="contact.html?service=business" class="btn btn-primary w-100">
               <span>Contact Sales</span>
               <svg class="icon-sm"><use xlink:href="#icon-truck"/></svg>
             </a>
@@ -431,6 +480,7 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/cart.js"></script>
 </body>
 
 </html>

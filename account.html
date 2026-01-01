@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Account - Creative Merch UK</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Announcement Banner -->
+  <div class="announcement-banner">
+    <div class="announcement-content">
+      <span class="announcement-item">✨ Free UK Shipping on Orders Over £50</span>
+      <span class="announcement-item">🎨 Custom Designs Available</span>
+      <span class="announcement-item">🎉 Party Essentials Made to Order</span>
+      <span class="announcement-item">✨ Free UK Shipping on Orders Over £50</span>
+      <span class="announcement-item">🎨 Custom Designs Available</span>
+      <span class="announcement-item">🎉 Party Essentials Made to Order</span>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="logo.png" alt="Creative Merch UK" style="height: 40px; width: auto;">
+      </a>
+      
+      <a href="index.html" class="btn btn-outline">Back to Shop</a>
+    </div>
+  </nav>
+
+  <!-- Account Section -->
+  <section class="section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+          <div class="text-center mb-5">
+            <h1>Welcome to Creative Merch UK</h1>
+            <p class="text-grey-dark">Sign in to your account or create a new one</p>
+          </div>
+
+          <div class="row g-4">
+            <!-- Sign In -->
+            <div class="col-lg-6">
+              <div class="p-4" style="background: var(--color-grey-light); border-radius: var(--radius-lg); height: 100%;">
+                <h3 class="mb-4">Sign In</h3>
+                <form onsubmit="handleSignIn(event)">
+                  <div class="mb-3">
+                    <label for="signin-email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="signin-email" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="signin-password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="signin-password" required>
+                  </div>
+                  <div class="mb-3">
+                    <a href="#" class="text-grey-dark" style="font-size: 0.875rem;">Forgot password?</a>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100">Sign In</button>
+                </form>
+              </div>
+            </div>
+
+            <!-- Create Account -->
+            <div class="col-lg-6">
+              <div class="p-4" style="background: var(--color-white); border: 1px solid var(--color-grey-light); border-radius: var(--radius-lg); height: 100%;">
+                <h3 class="mb-4">Create Account</h3>
+                <form onsubmit="handleCreateAccount(event)">
+                  <div class="mb-3">
+                    <label for="signup-name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="signup-name" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="signup-email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="signup-email" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="signup-password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="signup-password" required minlength="8">
+                  </div>
+                  <div class="mb-3">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="newsletter" checked>
+                      <label class="form-check-label" for="newsletter" style="font-size: 0.875rem;">
+                        Subscribe to newsletter for exclusive offers
+                      </label>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100">Create Account</button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-5 p-4 text-center" style="background: var(--color-grey-light); border-radius: var(--radius-lg);">
+            <h4>Benefits of Creating an Account</h4>
+            <div class="row g-3 mt-3">
+              <div class="col-md-4">
+                <p class="mb-1"><strong>Track Orders</strong></p>
+                <p class="text-grey-dark" style="font-size: 0.875rem;">View order history and track deliveries</p>
+              </div>
+              <div class="col-md-4">
+                <p class="mb-1"><strong>Save Favorites</strong></p>
+                <p class="text-grey-dark" style="font-size: 0.875rem;">Create wishlists and save designs</p>
+              </div>
+              <div class="col-md-4">
+                <p class="mb-1"><strong>Faster Checkout</strong></p>
+                <p class="text-grey-dark" style="font-size: 0.875rem;">Save addresses and payment methods</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="text-center">
+        <p class="text-grey-dark">© 2026 Creative Merch UK. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    function handleSignIn(event) {
+      event.preventDefault();
+      alert('Sign in functionality would connect to your backend authentication system.');
+      // In production, this would call your authentication API
+    }
+
+    function handleCreateAccount(event) {
+      event.preventDefault();
+      alert('Account creation functionality would connect to your backend system.');
+      // In production, this would call your user registration API
+    }
+  </script>
+</body>
+</html>

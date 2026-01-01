@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Contact Us - Creative Merch UK</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- SVG Icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+    </symbol>
+    <symbol id="icon-shopping-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+    </symbol>
+    <symbol id="icon-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+    </symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+      <polyline points="22,6 12,13 2,6"/>
+    </symbol>
+    <symbol id="icon-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+    </symbol>
+  </svg>
+
+  <!-- Announcement Banner -->
+  <div class="announcement-banner">
+    <div class="announcement-content">
+      <span class="announcement-item">✨ Free UK Shipping on Orders Over £50</span>
+      <span class="announcement-item">🎨 Custom Designs Available</span>
+      <span class="announcement-item">🎉 Party Essentials Made to Order</span>
+      <span class="announcement-item">✨ Free UK Shipping on Orders Over £50</span>
+      <span class="announcement-item">🎨 Custom Designs Available</span>
+      <span class="announcement-item">🎉 Party Essentials Made to Order</span>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="logo.png" alt="Creative Merch UK" style="height: 40px; width: auto;">
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="shopDropdown" role="button" data-bs-toggle="dropdown">Shop</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="shop.html">All Products</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="shop.html?category=apparel">Shop Apparel</a></li>
+              <li><a class="dropdown-item" href="shop.html?category=stickers">Stickers, Labels & Vinyls</a></li>
+              <li><a class="dropdown-item" href="shop.html?category=party-decor">Party Decor</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="index.html#design-studio">Design Studio</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#installation">Installation</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#workshops">Workshops</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#subscriptions">Subscriptions</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center gap-3">
+          <a href="#search" class="nav-icon"><svg class="icon"><use xlink:href="#icon-search"/></svg></a>
+          <a href="account.html" class="nav-icon d-none d-lg-flex">
+            <svg class="icon"><use xlink:href="#icon-user"/></svg><span>Sign In</span>
+          </a>
+          <a href="#wishlist" class="nav-icon"><svg class="icon"><use xlink:href="#icon-heart"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contact Header -->
+  <section class="section" style="background: var(--color-grey-light); padding: 3rem 0;">
+    <div class="container text-center">
+      <h1 id="form-title">Get in Touch</h1>
+      <p class="text-grey-dark" id="form-subtitle">We'd love to hear from you</p>
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <section class="section">
+    <div class="container">
+      <div class="row g-5">
+        <!-- Form -->
+        <div class="col-lg-7">
+          <form id="contact-form" onsubmit="handleSubmit(event)">
+            <div class="mb-3">
+              <label for="name" class="form-label">Name *</label>
+              <input type="text" class="form-control" id="name" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email *</label>
+              <input type="email" class="form-control" id="email" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="phone" class="form-label">Phone</label>
+              <input type="tel" class="form-control" id="phone">
+            </div>
+
+            <div class="mb-3" id="service-field">
+              <label for="service" class="form-label">Service *</label>
+              <select class="form-control" id="service" required>
+                <option value="">Select a service</option>
+                <option value="design">Design Studio</option>
+                <option value="installation">Installation Services</option>
+                <option value="workshop">Workshop Booking</option>
+                <option value="subscribe-monthly">Monthly Subscription</option>
+                <option value="business">Business Package</option>
+                <option value="custom">Custom Request</option>
+                <option value="general">General Inquiry</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="message" class="form-label">Message *</label>
+              <textarea class="form-control" id="message" rows="5" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100">Send Message</button>
+          </form>
+
+          <div id="success-message" style="display: none;" class="mt-4 p-4 text-center" style="background: var(--color-grey-light); border-radius: var(--radius-md);">
+            <h5>Thank you for your message!</h5>
+            <p class="text-grey-dark">We'll get back to you within 24 hours.</p>
+          </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="col-lg-5">
+          <div class="p-4" style="background: var(--color-grey-light); border-radius: var(--radius-lg); height: 100%;">
+            <h3 class="mb-4">Contact Information</h3>
+            
+            <div class="mb-4">
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <svg class="icon"><use xlink:href="#icon-mail"/></svg>
+                <strong>Email</strong>
+              </div>
+              <p class="text-grey-dark mb-0">
+                <a href="mailto:hello@customisemeuk.com">hello@customisemeuk.com</a>
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <svg class="icon"><use xlink:href="#icon-instagram"/></svg>
+                <strong>Instagram</strong>
+              </div>
+              <p class="text-grey-dark mb-0">
+                <a href="https://www.instagram.com/customisemeuk" target="_blank">@customisemeuk</a>
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <h5>Business Hours</h5>
+              <p class="text-grey-dark mb-1">Monday - Friday: 9:00 AM - 6:00 PM</p>
+              <p class="text-grey-dark mb-0">Saturday - Sunday: Closed</p>
+            </div>
+
+            <div>
+              <h5 class="mb-3">What to Expect</h5>
+              <ul class="text-grey-dark">
+                <li>Response within 24 hours</li>
+                <li>Free consultation for custom projects</li>
+                <li>Detailed quotes provided</li>
+                <li>Friendly, professional service</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="text-center">
+        <p class="text-grey-dark">© 2026 Creative Merch UK. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Check URL for service parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const serviceParam = urlParams.get('service');
+    
+    if (serviceParam) {
+      document.getElementById('service').value = serviceParam;
+      
+      // Update form title based on service
+      const titles = {
+        'design': 'Start Your Design Project',
+        'installation': 'Request Installation Quote',
+        'workshop': 'Book a Workshop',
+        'subscribe-monthly': 'Subscribe to Monthly Plan',
+        'business': 'Business Package Inquiry',
+        'custom': 'Custom Design Request'
+      };
+      
+      if (titles[serviceParam]) {
+        document.getElementById('form-title').textContent = titles[serviceParam];
+        document.getElementById('form-subtitle').textContent = 'Fill out the form below and we\'ll get back to you soon';
+      }
+    }
+
+    function handleSubmit(event) {
+      event.preventDefault();
+      
+      // Get form data
+      const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        service: document.getElementById('service').value,
+        message: document.getElementById('message').value
+      };
+
+      // Here you would normally send this to your backend
+      console.log('Form submitted:', formData);
+
+      // Show success message
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('success-message').style.display = 'block';
+
+      // In a real application, you would send this data to your server
+      // fetch('/api/contact', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(formData)
+      // });
+    }
+  </script>
+</body>
+</html>
