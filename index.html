@@ -191,43 +191,17 @@
     </div>
   </nav>
 
-  <!-- Hero Section with Animated Images -->
+  <!-- Hero Section - Full Width Edge to Edge -->
   <section class="hero-section">
-    <div class="container">
-      <div class="hero-carousel">
-        <div class="hero-slide active">
-          <img src="shopproducts.png" alt="Custom T-Shirts">
-          <div class="hero-overlay">
-            <h1>PREMIUM CUSTOM APPAREL</h1>
-            <p>Transform your style with bespoke designs</p>
-            <a href="shop.html?category=apparel" class="btn btn-primary btn-lg">SHOP APPAREL</a>
-          </div>
-        </div>
-        <div class="hero-slide">
-          <img src="shopservices.png" alt="Party Decorations">
-          <div class="hero-overlay">
-            <h1>PARTY ESSENTIALS</h1>
-            <p>Make every celebration unforgettable</p>
-            <a href="shop.html?category=party-decor" class="btn btn-primary btn-lg">SHOP PARTY DECOR</a>
-          </div>
-        </div>
-        <div class="hero-slide">
-          <img src="subscriptions.png" alt="Custom Stickers">
-          <div class="hero-overlay">
-            <h1>CUSTOM STICKERS & LABELS</h1>
-            <p>Perfect for branding and personalization</p>
-            <a href="shop.html?category=stickers" class="btn btn-primary btn-lg">SHOP STICKERS</a>
-          </div>
-        </div>
+    <div class="hero-carousel">
+      <div class="hero-slide active">
+        <img src="shopproducts.png" alt="Shop Products">
       </div>
-      <div class="hero-nav">
-        <button class="hero-nav-btn" onclick="changeSlide(-1)">❮</button>
-        <button class="hero-nav-btn" onclick="changeSlide(1)">❯</button>
+      <div class="hero-slide">
+        <img src="shopservices.png" alt="Shop Services">
       </div>
-      <div class="hero-dots">
-        <span class="dot active" onclick="currentSlide(0)"></span>
-        <span class="dot" onclick="currentSlide(1)"></span>
-        <span class="dot" onclick="currentSlide(2)"></span>
+      <div class="hero-slide">
+        <img src="subscriptions.png" alt="Subscriptions">
       </div>
     </div>
   </section>
@@ -545,36 +519,18 @@
   <script src="js/cart.js"></script>
   
   <script>
-    // Hero Carousel Functionality
+    // Hero Carousel Functionality - Auto-slide only
     let currentSlideIndex = 0;
     let slideInterval;
 
     function showSlide(n) {
       const slides = document.querySelectorAll('.hero-slide');
-      const dots = document.querySelectorAll('.dot');
       
       if (n >= slides.length) currentSlideIndex = 0;
       if (n < 0) currentSlideIndex = slides.length - 1;
       
       slides.forEach(slide => slide.classList.remove('active'));
-      dots.forEach(dot => dot.classList.remove('active'));
-      
       slides[currentSlideIndex].classList.add('active');
-      dots[currentSlideIndex].classList.add('active');
-    }
-
-    function changeSlide(n) {
-      clearInterval(slideInterval);
-      currentSlideIndex += n;
-      showSlide(currentSlideIndex);
-      startAutoSlide();
-    }
-
-    function currentSlide(n) {
-      clearInterval(slideInterval);
-      currentSlideIndex = n;
-      showSlide(currentSlideIndex);
-      startAutoSlide();
     }
 
     function startAutoSlide() {
