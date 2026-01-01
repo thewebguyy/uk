@@ -40,9 +40,10 @@
       <circle cx="11" cy="11" r="8"/>
       <path d="m21 21-4.35-4.35"/>
     </symbol>
-    <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-      <circle cx="12" cy="7" r="4"/>
+    <symbol id="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="2" y1="12" x2="22" y2="12"/>
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
     </symbol>
     <symbol id="icon-shopping-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
@@ -89,23 +90,55 @@
   <!-- Announcement Banner -->
   <div class="announcement-banner">
     <div class="announcement-content">
-      <span class="announcement-item">FREE UK SHIPPING ON ORDERS OVER £50</span>
-      <span class="announcement-item">CUSTOM DESIGNS AVAILABLE</span>
-      <span class="announcement-item">PARTY ESSENTIALS MADE TO ORDER</span>
-      <span class="announcement-item">FREE UK SHIPPING ON ORDERS OVER £50</span>
-      <span class="announcement-item">CUSTOM DESIGNS AVAILABLE</span>
-      <span class="announcement-item">PARTY ESSENTIALS MADE TO ORDER</span>
+      <span class="announcement-item">FREE DELIVERY OVER £100</span>
+      <span class="announcement-item">CONTACT US</span>
+      <span class="announcement-item">INFO@CUSTOMISEMEUK.COM</span>
+      <span class="announcement-item">07588770901</span>
+      <span class="announcement-item">FREE DELIVERY OVER £100</span>
+      <span class="announcement-item">CONTACT US</span>
+      <span class="announcement-item">INFO@CUSTOMISEMEUK.COM</span>
+      <span class="announcement-item">07588770901</span>
     </div>
   </div>
 
-  <!-- Search Bar -->
-  <div class="search-bar-container">
+  <!-- Top Bar: Logo, Search, Region, Icons -->
+  <div class="top-bar">
     <div class="container">
-      <form class="search-bar-form">
-        <svg class="search-icon"><use xlink:href="#icon-search"/></svg>
-        <input type="search" class="search-input" placeholder="Search products, categories, or services...">
-        <button type="submit" class="search-button">SEARCH</button>
-      </form>
+      <div class="top-bar-content">
+        <!-- Logo -->
+        <a class="navbar-brand" href="index.html">
+          <img src="icon.png" alt="Creative Merch UK" class="logo-image">
+        </a>
+
+        <!-- Search Bar -->
+        <form class="search-bar-form-compact">
+          <svg class="search-icon"><use xlink:href="#icon-search"/></svg>
+          <input type="search" class="search-input" placeholder="Search products...">
+        </form>
+
+        <!-- Right Icons -->
+        <div class="d-flex align-items-center gap-3">
+          <!-- Region Selector -->
+          <div class="dropdown">
+            <a href="#" class="nav-icon" data-bs-toggle="dropdown" aria-expanded="false">
+              <svg class="icon"><use xlink:href="#icon-globe"/></svg>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end region-dropdown">
+              <li><a class="dropdown-item" href="#"><span class="flag">🇬🇧</span> UNITED KINGDOM</a></li>
+              <li><a class="dropdown-item" href="#"><span class="flag">🇪🇺</span> EUROPE</a></li>
+              <li><a class="dropdown-item" href="#"><span class="flag">🇺🇸</span> AMERICA</a></li>
+            </ul>
+          </div>
+
+          <a href="#wishlist" class="nav-icon">
+            <svg class="icon"><use xlink:href="#icon-heart"/></svg>
+          </a>
+          <a href="#cart" class="nav-icon" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+            <svg class="icon"><use xlink:href="#icon-shopping-bag"/></svg>
+            <span class="badge-cart" id="cart-count">0</span>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -131,62 +164,120 @@
     </div>
   </div>
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg">
+  <!-- Main Navigation -->
+  <nav class="navbar navbar-expand-lg main-nav">
     <div class="container">
-      <a class="navbar-brand" href="index.html">
-        <img src="icon.png" alt="Creative Merch UK" class="logo-image">
-      </a>
-      
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mx-auto">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle active" href="#" id="shopDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav">
+          <!-- Shop Mega Menu -->
+          <li class="nav-item dropdown mega-menu">
+            <a class="nav-link dropdown-toggle" href="#" id="shopDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               SHOP
             </a>
-            <ul class="dropdown-menu" aria-labelledby="shopDropdown">
-              <li><a class="dropdown-item" href="shop.html">ALL PRODUCTS</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="shop.html?category=apparel">APPAREL</a></li>
-              <li><a class="dropdown-item" href="shop.html?category=stickers">STICKERS, LABELS & VINYLS</a></li>
-              <li><a class="dropdown-item" href="shop.html?category=party-decor">PARTY DECOR</a></li>
-              <li><a class="dropdown-item" href="shop.html?category=accessories">ACCESSORIES</a></li>
-            </ul>
+            <div class="dropdown-menu mega-dropdown">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-3">
+                    <h6 class="mega-title">CATEGORIES</h6>
+                    <a class="dropdown-item" href="shop.html">ALL PRODUCTS</a>
+                    <a class="dropdown-item" href="shop.html?category=apparel">APPAREL</a>
+                    <a class="dropdown-item" href="shop.html?category=stickers">STICKERS & LABELS</a>
+                    <a class="dropdown-item" href="shop.html?category=party-decor">PARTY DECOR</a>
+                    <a class="dropdown-item" href="shop.html?category=accessories">ACCESSORIES</a>
+                  </div>
+                  <div class="col-md-3">
+                    <h6 class="mega-title">APPAREL</h6>
+                    <a class="dropdown-item" href="#">T-Shirts</a>
+                    <a class="dropdown-item" href="#">Hoodies</a>
+                    <a class="dropdown-item" href="#">Hats</a>
+                    <a class="dropdown-item" href="#">Bags</a>
+                  </div>
+                  <div class="col-md-3">
+                    <h6 class="mega-title">PARTY ESSENTIALS</h6>
+                    <a class="dropdown-item" href="#">Banners</a>
+                    <a class="dropdown-item" href="#">Balloons</a>
+                    <a class="dropdown-item" href="#">Table Decor</a>
+                    <a class="dropdown-item" href="#">Party Packs</a>
+                  </div>
+                  <div class="col-md-3">
+                    <h6 class="mega-title">STICKERS & LABELS</h6>
+                    <a class="dropdown-item" href="#">Vinyl Stickers</a>
+                    <a class="dropdown-item" href="#">Custom Labels</a>
+                    <a class="dropdown-item" href="#">Wall Decals</a>
+                    <a class="dropdown-item" href="#">Sticker Packs</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="studio.html">DESIGN STUDIO</a>
+
+          <!-- Design Studio Mega Menu -->
+          <li class="nav-item dropdown mega-menu">
+            <a class="nav-link dropdown-toggle" href="studio.html" id="studioDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              DESIGN STUDIO
+            </a>
+            <div class="dropdown-menu mega-dropdown">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-4">
+                    <h6 class="mega-title">SERVICES</h6>
+                    <a class="dropdown-item" href="designservice.html">Custom Design</a>
+                    <a class="dropdown-item" href="studio.html">Interactive Studio</a>
+                    <a class="dropdown-item" href="#">Mockup Generation</a>
+                  </div>
+                  <div class="col-md-4">
+                    <h6 class="mega-title">DESIGN TYPES</h6>
+                    <a class="dropdown-item" href="#">Logo Design</a>
+                    <a class="dropdown-item" href="#">Apparel Graphics</a>
+                    <a class="dropdown-item" href="#">Branding</a>
+                  </div>
+                  <div class="col-md-4">
+                    <h6 class="mega-title">RESOURCES</h6>
+                    <a class="dropdown-item" href="#">Design Templates</a>
+                    <a class="dropdown-item" href="#">Style Guide</a>
+                    <a class="dropdown-item" href="#">FAQs</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </li>
-          <li class="nav-item dropdown">
+
+          <!-- Premium Services Mega Menu -->
+          <li class="nav-item dropdown mega-menu">
             <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               PREMIUM SERVICES
             </a>
-            <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
-              <li><a class="dropdown-item" href="designservice.html">DESIGN SERVICE</a></li>
-              <li><a class="dropdown-item" href="senditems.html">SEND ITEMS IN</a></li>
-              <li><a class="dropdown-item" href="#installation">INSTALLATION</a></li>
-              <li><a class="dropdown-item" href="#workshops">WORKSHOPS</a></li>
-              <li><a class="dropdown-item" href="#subscriptions">SUBSCRIPTIONS</a></li>
-            </ul>
+            <div class="dropdown-menu mega-dropdown">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-4">
+                    <h6 class="mega-title">SERVICES</h6>
+                    <a class="dropdown-item" href="senditems.html">Send Items In</a>
+                    <a class="dropdown-item" href="#installation">Installation</a>
+                    <a class="dropdown-item" href="#workshops">Workshops</a>
+                    <a class="dropdown-item" href="#subscriptions">Subscriptions</a>
+                  </div>
+                  <div class="col-md-4">
+                    <h6 class="mega-title">INSTALLATION</h6>
+                    <a class="dropdown-item" href="#">Wall Vinyls</a>
+                    <a class="dropdown-item" href="#">Event Setup</a>
+                    <a class="dropdown-item" href="#">UK Coverage</a>
+                  </div>
+                  <div class="col-md-4">
+                    <h6 class="mega-title">WORKSHOPS</h6>
+                    <a class="dropdown-item" href="#">Design Basics</a>
+                    <a class="dropdown-item" href="#">DIY Party Decor</a>
+                    <a class="dropdown-item" href="#">Printing Techniques</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </li>
         </ul>
-
-        <div class="d-flex align-items-center gap-3">
-          <a href="account.html" class="nav-icon d-none d-lg-flex">
-            <svg class="icon"><use xlink:href="#icon-user"/></svg>
-            <span>SIGN IN</span>
-          </a>
-          <a href="#wishlist" class="nav-icon">
-            <svg class="icon"><use xlink:href="#icon-heart"/></svg>
-          </a>
-          <a href="#cart" class="nav-icon" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
-            <svg class="icon"><use xlink:href="#icon-shopping-bag"/></svg>
-            <span class="badge" id="cart-count">0</span>
-          </a>
-        </div>
       </div>
     </div>
   </nav>
@@ -206,30 +297,13 @@
     </div>
   </section>
 
-  <!-- Featured Products -->
+  <!-- Featured Products - 4 Only -->
   <section class="section">
     <div class="container">
       <h2 class="section-title">SHOP OUR COLLECTION</h2>
       <p class="section-subtitle">Discover premium custom designs and party essentials</p>
       
-      <!-- Category List -->
-      <div class="row justify-content-center mb-5">
-        <div class="col-md-8">
-          <ul style="list-style: none; padding: 0; text-align: center;">
-            <li style="display: inline-block; margin: 0 1.5rem;">
-              <a href="shop.html?category=apparel" style="font-size: 1.125rem; color: var(--color-black); text-decoration: none; font-weight: 500;">APPAREL</a>
-            </li>
-            <li style="display: inline-block; margin: 0 1.5rem;">
-              <a href="shop.html?category=accessories" style="font-size: 1.125rem; color: var(--color-black); text-decoration: none; font-weight: 500;">ACCESSORIES</a>
-            </li>
-            <li style="display: inline-block; margin: 0 1.5rem;">
-              <a href="shop.html?category=party-events" style="font-size: 1.125rem; color: var(--color-black); text-decoration: none; font-weight: 500;">PARTY & EVENTS</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      
-      <div class="product-grid">
+      <div class="product-grid-four">
         <!-- Product 1 -->
         <div class="product-card">
           <a href="product.html?id=1">
@@ -293,38 +367,6 @@
             <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(4, 'Custom Labels', 14.99)">ADD TO CART</button>
           </div>
         </div>
-
-        <!-- Product 5 -->
-        <div class="product-card">
-          <a href="product.html?id=5">
-            <div class="product-image">
-              <span>Product Image</span>
-            </div>
-          </a>
-          <div class="product-info">
-            <h3 class="product-title">
-              <a href="product.html?id=5" style="text-decoration: none; color: inherit;">APPAREL BUNDLE</a>
-            </h3>
-            <p class="product-price">£49.99</p>
-            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(5, 'Apparel Bundle', 49.99)">ADD TO CART</button>
-          </div>
-        </div>
-
-        <!-- Product 6 -->
-        <div class="product-card">
-          <a href="product.html?id=6">
-            <div class="product-image">
-              <span>Product Image</span>
-            </div>
-          </a>
-          <div class="product-info">
-            <h3 class="product-title">
-              <a href="product.html?id=6" style="text-decoration: none; color: inherit;">PARTY DECOR SET</a>
-            </h3>
-            <p class="product-price">£34.99</p>
-            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(6, 'Party Decor Set', 34.99)">ADD TO CART</button>
-          </div>
-        </div>
       </div>
 
       <div class="text-center mt-4">
@@ -336,35 +378,35 @@
     </div>
   </section>
 
-  <!-- Services Section -->
-  <section id="design-studio" class="service-section">
+  <!-- Premium Services Section -->
+  <section id="premium-services" class="service-section">
     <div class="container">
-      <h2 class="section-title">OUR SERVICES</h2>
-      <p class="section-subtitle">Professional design and installation services tailored to you</p>
+      <h2 class="section-title">PREMIUM SERVICES</h2>
+      <p class="section-subtitle">Professional services tailored to your needs</p>
 
       <div class="row g-4">
-        <!-- Design Studio -->
+        <!-- Send Items In -->
         <div class="col-md-4">
           <div class="service-card">
             <div class="service-icon">
-              <svg><use xlink:href="#icon-palette"/></svg>
+              <svg><use xlink:href="#icon-scissors"/></svg>
             </div>
-            <h3 class="service-title">DESIGN STUDIO</h3>
-            <p class="service-description">Work with our expert designers to create custom prints, apparel, and branding that stands out.</p>
+            <h3 class="service-title">SEND ITEMS IN</h3>
+            <p class="service-description">Transform your personal items with professional customization. Send us your pieces and we'll create something unique.</p>
             <ul class="text-start mb-3">
-              <li>Bespoke design consultation</li>
-              <li>Professional mockups</li>
-              <li>Unlimited revisions</li>
-              <li>Fast turnaround</li>
+              <li>Expert customization</li>
+              <li>Full insurance coverage</li>
+              <li>10-14 day turnaround</li>
+              <li>Quality guarantee</li>
             </ul>
-            <a href="designservice.html" class="btn btn-outline">
-              <span>START YOUR PROJECT</span>
-              <svg class="icon-sm"><use xlink:href="#icon-palette"/></svg>
+            <a href="senditems.html" class="btn btn-outline">
+              <span>LEARN MORE</span>
+              <svg class="icon-sm"><use xlink:href="#icon-scissors"/></svg>
             </a>
           </div>
         </div>
 
-        <!-- Installation -->
+        <!-- Installation Services -->
         <div class="col-md-4" id="installation">
           <div class="service-card">
             <div class="service-icon">
@@ -385,7 +427,7 @@
           </div>
         </div>
 
-        <!-- Workshops -->
+        <!-- Creative Workshops -->
         <div class="col-md-4" id="workshops">
           <div class="service-card">
             <div class="service-icon">
@@ -495,7 +537,11 @@
           <h3 class="footer-title">CONTACT US</h3>
           <p class="text-grey-dark">
             <strong>EMAIL:</strong><br>
-            <a href="mailto:hello@customisemeuk.com">hello@customisemeuk.com</a>
+            <a href="mailto:info@customisemeuk.com">info@customisemeuk.com</a>
+          </p>
+          <p class="text-grey-dark mb-3">
+            <strong>PHONE:</strong><br>
+            <a href="tel:07588770901">07588770901</a>
           </p>
           <p class="text-grey-dark mb-3">
             <strong>INSTAGRAM:</strong><br>
