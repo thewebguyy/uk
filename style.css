@@ -147,9 +147,9 @@ p {
 }
 
 .top-bar-content {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: space-between;
   gap: 2rem;
 }
 
@@ -165,6 +165,36 @@ p {
 .logo-image {
   height: 50px !important;
   width: auto;
+  margin-right: 1rem;
+}
+
+.top-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* ============================================
+   SIGN IN/SIGN UP BUTTON
+   ============================================ */
+.btn-signin {
+  font-family: var(--font-primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-black);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-black);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-signin:hover {
+  background: var(--color-black);
+  color: var(--color-white);
 }
 
 /* ============================================
@@ -174,11 +204,12 @@ p {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  flex: 1;
+  width: 100%;
   max-width: 500px;
   background: var(--color-grey-light);
   padding: 0.5rem 1rem;
   border-radius: 2px; /* Sharper edges */
+  margin: 0 auto;
 }
 
 .search-icon {
@@ -203,6 +234,46 @@ p {
 }
 
 /* ============================================
+   IMAGE ICONS (Globe, Heart, Shopping Bag)
+   ============================================ */
+.nav-icon-img {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  transition: opacity 0.2s ease;
+}
+
+.nav-icon-img:hover {
+  opacity: 0.7;
+}
+
+.icon-img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+/* ============================================
+   CART BADGE (Larger, only shows when > 0)
+   ============================================ */
+.badge-cart {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: var(--color-black);
+  color: var(--color-white);
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================
    MAIN NAVIGATION (Standalone)
    ============================================ */
 .main-nav {
@@ -212,6 +283,10 @@ p {
   box-shadow: var(--shadow-sm);
   position: relative;
   z-index: 9997;
+}
+
+.main-nav .navbar-collapse {
+  justify-content: center;
 }
 
 .nav-link {
@@ -297,49 +372,6 @@ p {
 .flag {
   font-size: 1.25rem;
   margin-right: 0.5rem;
-}
-
-/* ============================================
-   NAV ICONS
-   ============================================ */
-.nav-icon {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  color: var(--color-black);
-  text-decoration: none;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  transition: color 0.2s ease;
-  position: relative;
-}
-
-.nav-icon:hover {
-  color: var(--color-grey);
-}
-
-.nav-icon svg {
-  width: 20px;
-  height: 20px;
-}
-
-/* ============================================
-   CART BADGE (Black text, no background, thin)
-   ============================================ */
-.badge-cart {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background: transparent;
-  color: var(--color-black);
-  font-size: 0.7rem;
-  font-weight: 300;
-  padding: 0;
-  min-width: auto;
-  height: auto;
-  border-radius: 0;
 }
 
 /* ============================================
@@ -698,21 +730,61 @@ footer {
 .gap-3 { gap: var(--spacing-md); }
 
 /* ============================================
-   RESPONSIVE
+   RESPONSIVE - MOBILE
    ============================================ */
+@media (max-width: 992px) {
+  /* Mobile Menu Fix */
+  .main-nav .navbar-collapse {
+    background: var(--color-white);
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .nav-link {
+    padding: 1rem !important;
+    border-bottom: 1px solid var(--color-grey-light);
+  }
+  
+  .mega-dropdown {
+    position: static !important;
+    width: 100%;
+    padding: 1rem;
+  }
+}
+
 @media (max-width: 768px) {
   .hero-carousel {
     height: 500px;
   }
   
   .top-bar-content {
-    flex-wrap: wrap;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .logo-image {
+    height: 40px !important;
   }
   
   .search-bar-form-compact {
     max-width: 100%;
-    order: 3;
+  }
+  
+  .top-bar-right {
+    justify-content: space-between;
     width: 100%;
+  }
+  
+  .btn-signin {
+    font-size: 0.65rem;
+    padding: 0.4rem 0.8rem;
+  }
+  
+  .icon-img {
+    width: 24px;
+    height: 24px;
   }
   
   .section {
@@ -726,10 +798,6 @@ footer {
   
   .newsletter-form {
     flex-direction: column;
-  }
-  
-  .logo-image {
-    height: 40px !important;
   }
   
   .mega-dropdown {
