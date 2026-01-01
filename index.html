@@ -6,573 +6,418 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="author" content="Creative Merch UK">
-  <meta name="keywords" content="custom prints,party decor,apparel,stickers,labels,vinyls">
   <meta name="description" content="Premium designs, custom prints, and party essentials crafted with care">
+  
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="css/vendor.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
   <link rel="stylesheet" type="text/css" href="style.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 
-<body class="homepage">
+<body>
+  <!-- SVG Icons -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-    <defs>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="instagram" viewBox="0 0 15 15">
-        <path fill="none" stroke="currentColor"
-          d="M11 3.5h1M4.5.5h6a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4h-6a4 4 0 0 1-4-4v-6a4 4 0 0 1 4-4Zm3 10a3 3 0 1 1 0-6a3 3 0 0 1 0 6Z" />
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="calendar" viewBox="0 0 24 24">
-        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-          <rect width="20" height="18" x="2" y="4" rx="4" />
-          <path d="M8 2v4m8-4v4M2 10h20" />
-        </g>
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="shopping-bag" viewBox="0 0 24 24">
-        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-          <path
-            d="M3.977 9.84A2 2 0 0 1 5.971 8h12.058a2 2 0 0 1 1.994 1.84l.803 10A2 2 0 0 1 18.833 22H5.167a2 2 0 0 1-1.993-2.16l.803-10Z" />
-          <path d="M16 11V6a4 4 0 0 0-4-4v0a4 4 0 0 0-4 4v5" />
-        </g>
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="gift" viewBox="0 0 24 24">
-        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-          <rect width="18" height="14" x="3" y="8" rx="2" />
-          <path d="M12 5a3 3 0 1 0-3 3m6 0a3 3 0 1 0-3-3m0 0v17m9-7H3" />
-        </g>
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="arrow-cycle" viewBox="0 0 24 24">
-        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-          <path
-            d="M22 12c0 6-4.39 10-9.806 10C7.792 22 4.24 19.665 3 16m-1-4C2 6 6.39 2 11.806 2C16.209 2 19.76 4.335 21 8" />
-          <path d="m7 17l-4-1l-1 4M17 7l4 1l1-4" />
-        </g>
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="heart" viewBox="0 0 24 24">
-        <path fill="currentColor"
-          d="M20.16 4.61A6.27 6.27 0 0 0 12 4a6.27 6.27 0 0 0-8.16 9.48l7.45 7.45a1 1 0 0 0 1.42 0l7.45-7.45a6.27 6.27 0 0 0 0-8.87Zm-1.41 7.46L12 18.81l-6.75-6.74a4.28 4.28 0 0 1 3-7.3a4.25 4.25 0 0 1 3 1.25a1 1 0 0 0 1.42 0a4.27 4.27 0 0 1 6 6.05Z" />
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="cart" viewBox="0 0 24 24">
-        <path fill="currentColor"
-          d="M8.5 19a1.5 1.5 0 1 0 1.5 1.5A1.5 1.5 0 0 0 8.5 19ZM19 16H7a1 1 0 0 1 0-2h8.491a3.013 3.013 0 0 0 2.885-2.176l1.585-5.55A1 1 0 0 0 19 5H6.74a3.007 3.007 0 0 0-2.82-2H3a1 1 0 0 0 0 2h.921a1.005 1.005 0 0 1 .962.725l.155.545v.005l1.641 5.742A3 3 0 0 0 7 18h12a1 1 0 0 0 0-2Zm-1.326-9l-1.22 4.274a1.005 1.005 0 0 1-.963.726H8.754l-.255-.892L7.326 7ZM16.5 19a1.5 1.5 0 1 0 1.5 1.5a1.5 1.5 0 0 0-1.5-1.5Z" />
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="search" viewBox="0 0 24 24">
-        <path fill="currentColor"
-          d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z" />
-      </symbol>
-    </defs>
+    <symbol id="icon-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+    </symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"/>
+      <path d="m21 21-4.35-4.35"/>
+    </symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+      <circle cx="12" cy="7" r="4"/>
+    </symbol>
+    <symbol id="icon-shopping-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <path d="M16 10a4 4 0 0 1-8 0"/>
+    </symbol>
+    <symbol id="icon-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+    </symbol>
+    <symbol id="icon-palette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="13.5" cy="6.5" r=".5"/>
+      <circle cx="17.5" cy="10.5" r=".5"/>
+      <circle cx="8.5" cy="7.5" r=".5"/>
+      <circle cx="6.5" cy="12.5" r=".5"/>
+      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+    </symbol>
+    <symbol id="icon-scissors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="6" cy="6" r="3"/>
+      <circle cx="6" cy="18" r="3"/>
+      <line x1="20" y1="4" x2="8.12" y2="15.88"/>
+      <line x1="14.47" y1="14.48" x2="20" y2="20"/>
+      <line x1="8.12" y1="8.12" x2="12" y2="12"/>
+    </symbol>
+    <symbol id="icon-tool" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+    </symbol>
+    <symbol id="icon-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+    </symbol>
+    <symbol id="icon-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </symbol>
+    <symbol id="icon-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="1" y="3" width="15" height="13"/>
+      <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+      <circle cx="5.5" cy="18.5" r="2.5"/>
+      <circle cx="18.5" cy="18.5" r="2.5"/>
+    </symbol>
   </svg>
 
-  <!-- System Status Ticker -->
-  <div class="system-ticker">
-    <div class="system-ticker-content">
-      <span class="system-ticker-item">CREATIVE MERCH UK — SYSTEM ONLINE</span>
-      <span class="system-ticker-item">PREMIUM CUSTOM DESIGNS</span>
-      <span class="system-ticker-item">PARTY ESSENTIALS CRAFTED WITH CARE</span>
-      <span class="system-ticker-item">FREE UK SHIPPING ON ORDERS OVER £50</span>
-      <span class="system-ticker-item">CREATIVE MERCH UK — SYSTEM ONLINE</span>
-      <span class="system-ticker-item">PREMIUM CUSTOM DESIGNS</span>
-      <span class="system-ticker-item">PARTY ESSENTIALS CRAFTED WITH CARE</span>
-      <span class="system-ticker-item">FREE UK SHIPPING ON ORDERS OVER £50</span>
+  <!-- Announcement Banner (Grey) -->
+  <div class="announcement-banner">
+    <div class="announcement-content">
+      <span class="announcement-item">✨ Free UK Shipping on Orders Over £50</span>
+      <span class="announcement-item">🎨 Custom Designs Available</span>
+      <span class="announcement-item">🎉 Party Essentials Made to Order</span>
+      <span class="announcement-item">✨ Free UK Shipping on Orders Over £50</span>
+      <span class="announcement-item">🎨 Custom Designs Available</span>
+      <span class="announcement-item">🎉 Party Essentials Made to Order</span>
     </div>
   </div>
 
-  <div class="preloader text-white fs-6 text-uppercase overflow-hidden"></div>
-
-  <div class="search-popup">
-    <div class="search-popup-container">
-      <form role="search" method="get" class="form-group" action="">
-        <input type="search" id="search-form" class="form-control border-0 border-bottom"
-          placeholder="Type and press enter" value="" name="s" />
-        <button type="submit" class="search-submit border-0 position-absolute bg-white"
-          style="top: 15px;right: 15px;"><svg class="search" width="24" height="24">
-            <use xlink:href="#search"></use>
-          </svg></button>
-      </form>
-
-      <h5 class="cat-list-title">Browse Categories</h5>
-
-      <ul class="cat-list">
-        <li class="cat-list-item">
-          <a href="#apparel" title="Apparel">Apparel</a>
-        </li>
-        <li class="cat-list-item">
-          <a href="#stickers" title="Stickers">Stickers & Labels</a>
-        </li>
-        <li class="cat-list-item">
-          <a href="#vinyls" title="Vinyls">Vinyls</a>
-        </li>
-        <li class="cat-list-item">
-          <a href="#party-decor" title="Party Decor">Party Decor</a>
-        </li>
-      </ul>
-
-    </div>
-  </div>
-
-  <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasCart" aria-labelledby="My Cart">
-    <div class="offcanvas-header justify-content-center">
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  <!-- Shopping Cart Offcanvas -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">Your Cart</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
-      <div class="order-md-last">
-        <h4 class="d-flex justify-content-between align-items-center mb-3">
-          <span class="text-primary">Your cart</span>
-          <span class="badge bg-primary rounded-pill">0</span>
-        </h4>
-        <ul class="list-group mb-3">
-          <li class="list-group-item">
-            <p class="text-center system-ghost">Your cart is empty</p>
+      <p class="text-center text-grey">Your cart is empty</p>
+      <button class="btn btn-primary w-100 mt-3">Continue Shopping</button>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Creative Merch UK</a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#shop">Shop</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#design-studio">Design Studio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#installation">Installation</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#workshops">Workshops</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#subscriptions">Subscriptions</a>
           </li>
         </ul>
 
-        <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to Checkout</button>
-      </div>
-    </div>
-  </div>
-
-  <nav class="navbar navbar-expand-lg bg-light text-uppercase fs-6 p-3 border-bottom align-items-center">
-    <div class="container-fluid">
-      <div class="row justify-content-between align-items-center w-100">
-
-        <div class="col-auto">
-          <a class="navbar-brand" href="index.html">
-            <div class="system-logo">CMUK</div>
+        <div class="d-flex align-items-center gap-3">
+          <a href="#search" class="nav-icon">
+            <svg class="icon"><use xlink:href="#icon-search"/></svg>
+          </a>
+          <a href="#account" class="nav-icon d-none d-lg-flex">
+            <svg class="icon"><use xlink:href="#icon-user"/></svg>
+            <span>Sign In</span>
+          </a>
+          <a href="#wishlist" class="nav-icon">
+            <svg class="icon"><use xlink:href="#icon-heart"/></svg>
+          </a>
+          <a href="#cart" class="nav-icon" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+            <svg class="icon"><use xlink:href="#icon-shopping-bag"/></svg>
+            <span class="badge">0</span>
           </a>
         </div>
-
-        <div class="col-auto">
-          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-            aria-controls="offcanvasNavbar">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
-            aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
-              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                aria-label="Close"></button>
-            </div>
-
-            <div class="offcanvas-body">
-              <ul class="navbar-nav justify-content-end flex-grow-1 gap-1 gap-md-5 pe-3">
-                <li class="nav-item">
-                  <a class="nav-link active" href="#shop">Shop</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#design-studio">Design Studio</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#installation">Installation</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#subscriptions">Subscriptions</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#gallery">Gallery</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-3 col-lg-auto">
-          <ul class="list-unstyled d-flex m-0">
-            <li class="d-none d-lg-block">
-              <a href="#wishlist" class="text-uppercase mx-3">Wishlist <span class="wishlist-count">(0)</span>
-              </a>
-            </li>
-            <li class="d-none d-lg-block">
-              <a href="#cart" class="text-uppercase mx-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
-                aria-controls="offcanvasCart">Cart <span class="cart-count">(0)</span>
-              </a>
-            </li>
-            <li class="d-lg-none">
-              <a href="#wishlist" class="mx-2">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <use xlink:href="#heart"></use>
-                </svg>
-              </a>
-            </li>
-            <li class="d-lg-none">
-              <a href="#cart" class="mx-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
-                aria-controls="offcanvasCart">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <use xlink:href="#cart"></use>
-                </svg>
-              </a>
-            </li>
-            <li class="search-box" class="mx-2">
-              <a href="#search" class="search-button">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <use xlink:href="#search"></use>
-                </svg>
-              </a>
-            </li>
-          </ul>
-        </div>
-
       </div>
-
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <section class="system-section">
+  <!-- Hero Section with Placeholder -->
+  <section class="hero-section">
     <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-6">
-          <div class="system-label mb-3">SYSTEM.STATUS // OPERATIONAL</div>
-          <h1 class="mb-4">PREMIUM DESIGNS<br>CUSTOM PRINTS<br>PARTY ESSENTIALS</h1>
-          <p class="lead mb-4">Crafted with care. Designed to stand out. Built to last.</p>
-          <div class="d-flex gap-3 flex-wrap">
-            <a href="#shop" class="btn-action">EXPLORE SHOP</a>
-            <a href="#design-studio" class="btn">DESIGN STUDIO</a>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="system-ready mt-5 mt-lg-0">READY TO CREATE</div>
-        </div>
+      <div class="hero-placeholder">
+        <span>PREMIUM DESIGNS • CUSTOM PRINTS • PARTY ESSENTIALS</span>
       </div>
     </div>
   </section>
 
-  <div class="system-divider"></div>
-
-  <!-- Categories Section -->
-  <section id="shop" class="categories overflow-hidden system-section">
+  <!-- Featured Products -->
+  <section class="section">
     <div class="container">
-      <div class="row mb-5">
-        <div class="col-12">
-          <h2 class="mb-3">SHOP BY CATEGORY</h2>
-          <p class="system-label">BROWSE OUR COLLECTIONS</p>
+      <h2 class="section-title">Shop Our Collection</h2>
+      <p class="section-subtitle">Discover premium custom designs and party essentials</p>
+      
+      <div class="product-grid">
+        <!-- Product 1 -->
+        <div class="product-card">
+          <div class="product-image">
+            <span>Product Image</span>
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Custom T-Shirt Design</h3>
+            <p class="product-price">£24.99</p>
+          </div>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card">
+          <div class="product-image">
+            <span>Product Image</span>
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Vinyl Sticker Pack</h3>
+            <p class="product-price">£9.99</p>
+          </div>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card">
+          <div class="product-image">
+            <span>Product Image</span>
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Party Banner Set</h3>
+            <p class="product-price">£19.99</p>
+          </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card">
+          <div class="product-image">
+            <span>Product Image</span>
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Custom Labels</h3>
+            <p class="product-price">£14.99</p>
+          </div>
+        </div>
+
+        <!-- Product 5 -->
+        <div class="product-card">
+          <div class="product-image">
+            <span>Product Image</span>
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Apparel Bundle</h3>
+            <p class="product-price">£49.99</p>
+          </div>
+        </div>
+
+        <!-- Product 6 -->
+        <div class="product-card">
+          <div class="product-image">
+            <span>Product Image</span>
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Party Decor Set</h3>
+            <p class="product-price">£34.99</p>
+          </div>
         </div>
       </div>
+
+      <div class="text-center mt-4">
+        <a href="#shop" class="btn btn-primary">
+          <span>View All Products</span>
+          <svg class="icon-sm"><use xlink:href="#icon-star"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="design-studio" class="service-section">
+    <div class="container">
+      <h2 class="section-title">Our Services</h2>
+      <p class="section-subtitle">Professional design and installation services tailored to you</p>
+
       <div class="row g-4">
+        <!-- Design Studio -->
         <div class="col-md-4">
-          <div class="system-container">
-            <div class="system-card-header">
-              <span class="system-meta">CATEGORY.01</span>
+          <div class="service-card">
+            <div class="service-icon">
+              <svg><use xlink:href="#icon-palette"/></svg>
             </div>
-            <div class="system-card-body">
-              <h4 class="mb-3">SHOP APPAREL</h4>
-              <p class="mb-4">Premium custom clothing and accessories designed for impact.</p>
-              <a href="#apparel" class="btn w-100">BROWSE APPAREL</a>
-            </div>
+            <h3 class="service-title">Design Studio</h3>
+            <p class="service-description">Work with our expert designers to create custom prints, apparel, and branding that stands out.</p>
+            <ul class="text-start mb-3">
+              <li>Bespoke design consultation</li>
+              <li>Professional mockups</li>
+              <li>Unlimited revisions</li>
+              <li>Fast turnaround</li>
+            </ul>
+            <a href="#contact" class="btn btn-outline">
+              <span>Start Your Project</span>
+              <svg class="icon-sm"><use xlink:href="#icon-palette"/></svg>
+            </a>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="system-container">
-            <div class="system-card-header">
-              <span class="system-meta">CATEGORY.02</span>
+
+        <!-- Installation -->
+        <div class="col-md-4" id="installation">
+          <div class="service-card">
+            <div class="service-icon">
+              <svg><use xlink:href="#icon-tool"/></svg>
             </div>
-            <div class="system-card-body">
-              <h4 class="mb-3">STICKERS, LABELS & VINYLS</h4>
-              <p class="mb-4">High-quality prints for branding, decoration, and personalization.</p>
-              <a href="#stickers" class="btn w-100">BROWSE PRINTS</a>
-            </div>
+            <h3 class="service-title">Installation Services</h3>
+            <p class="service-description">Professional installation for wall vinyls, party setups, and large-scale projects across the UK.</p>
+            <ul class="text-start mb-3">
+              <li>UK-wide coverage</li>
+              <li>Expert installation team</li>
+              <li>Perfect results guaranteed</li>
+              <li>Event setup available</li>
+            </ul>
+            <a href="#contact" class="btn btn-outline">
+              <span>Request Quote</span>
+              <svg class="icon-sm"><use xlink:href="#icon-tool"/></svg>
+            </a>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="system-container">
-            <div class="system-card-header">
-              <span class="system-meta">CATEGORY.03</span>
+
+        <!-- Workshops -->
+        <div class="col-md-4" id="workshops">
+          <div class="service-card">
+            <div class="service-icon">
+              <svg><use xlink:href="#icon-users"/></svg>
             </div>
-            <div class="system-card-body">
-              <h4 class="mb-3">PARTY DECOR</h4>
-              <p class="mb-4">Make every celebration unforgettable with our custom party essentials.</p>
-              <a href="#party-decor" class="btn w-100">BROWSE DECOR</a>
-            </div>
+            <h3 class="service-title">Creative Workshops</h3>
+            <p class="service-description">Join our hands-on workshops to learn design techniques, DIY party decor, and custom printing skills.</p>
+            <ul class="text-start mb-3">
+              <li>Beginner to advanced levels</li>
+              <li>Small group sessions</li>
+              <li>All materials included</li>
+              <li>Take home your creations</li>
+            </ul>
+            <a href="#contact" class="btn btn-outline">
+              <span>Book Workshop</span>
+              <svg class="icon-sm"><use xlink:href="#icon-users"/></svg>
+            </a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Design Studio Section -->
-  <section id="design-studio" class="system-section" style="background: var(--system-black); color: var(--system-white);">
+  <!-- Subscriptions -->
+  <section id="subscriptions" class="section" style="background: var(--color-grey-light);">
     <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-6">
-          <div class="system-label mb-3" style="color: var(--system-gray);">SERVICE.DESIGN_STUDIO</div>
-          <h2 class="mb-4" style="color: var(--system-white);">CUSTOM DESIGN SERVICES</h2>
-          <p class="mb-4" style="color: var(--system-white);">Work with our design team to create something truly unique. From concept to execution, we bring your vision to life with professional-grade results.</p>
-          <ul class="list-unstyled mb-4">
-            <li class="mb-2" style="color: var(--system-white);">▸ Bespoke design consultation</li>
-            <li class="mb-2" style="color: var(--system-white);">▸ Professional mockups & proofs</li>
-            <li class="mb-2" style="color: var(--system-white);">▸ Unlimited revisions</li>
-            <li class="mb-2" style="color: var(--system-white);">▸ Fast turnaround times</li>
-          </ul>
-          <a href="#contact" class="btn-action">START YOUR PROJECT</a>
+      <h2 class="section-title">Subscription Plans</h2>
+      <p class="section-subtitle">Regular deliveries and exclusive benefits</p>
+
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-5">
+          <div class="service-card">
+            <h3 class="service-title">Monthly Essentials</h3>
+            <p class="service-description">Curated party supplies and custom items delivered monthly</p>
+            <ul class="text-start mb-3">
+              <li>15% discount on all orders</li>
+              <li>Priority customer support</li>
+              <li>Free shipping included</li>
+              <li>Cancel anytime</li>
+            </ul>
+            <a href="#subscribe" class="btn btn-primary w-100">
+              <span>Subscribe Now</span>
+              <svg class="icon-sm"><use xlink:href="#icon-star"/></svg>
+            </a>
+          </div>
         </div>
-        <div class="col-lg-6 text-end">
-          <div class="system-status mt-5 mt-lg-0" style="color: var(--system-white);">
-            <span class="system-status-dot"></span>
-            <span>STUDIO AVAILABLE</span>
+
+        <div class="col-md-5">
+          <div class="service-card">
+            <h3 class="service-title">Business Package</h3>
+            <p class="service-description">Bulk ordering and custom designs for businesses and event planners</p>
+            <ul class="text-start mb-3">
+              <li>Dedicated account manager</li>
+              <li>Wholesale pricing</li>
+              <li>Custom design services</li>
+              <li>Flexible delivery schedule</li>
+            </ul>
+            <a href="#contact" class="btn btn-primary w-100">
+              <span>Contact Sales</span>
+              <svg class="icon-sm"><use xlink:href="#icon-truck"/></svg>
+            </a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Installation Section -->
-  <section id="installation" class="system-section">
+  <!-- Newsletter -->
+  <section class="newsletter-section">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-8 mx-auto text-center">
-          <div class="system-label mb-3">SERVICE.INSTALLATION</div>
-          <h2 class="mb-4">PROFESSIONAL INSTALLATION</h2>
-          <p class="lead mb-5">From wall vinyls to large-scale party setups, our expert installation team ensures perfect results every time. Available across the UK.</p>
-          <a href="#contact" class="btn-primary">REQUEST INSTALLATION QUOTE</a>
-        </div>
+      <div class="text-center mb-4">
+        <h2>Join Our Community</h2>
+        <p class="text-grey-dark">Get exclusive access to new designs, special offers, and creative inspiration</p>
       </div>
-    </div>
-  </section>
-
-  <div class="system-divider"></div>
-
-  <!-- Subscriptions Section -->
-  <section id="subscriptions" class="system-section">
-    <div class="container">
-      <div class="row mb-5">
-        <div class="col-12 text-center">
-          <h2 class="mb-3">SUBSCRIPTION SERVICES</h2>
-          <p class="system-label">REGULAR DELIVERIES // PREMIUM BENEFITS</p>
-        </div>
-      </div>
-      <div class="row g-4">
-        <div class="col-md-6">
-          <div class="system-container h-100">
-            <div class="system-card-header">
-              <span class="system-meta">PLAN.MONTHLY</span>
-            </div>
-            <div class="system-card-body">
-              <h4 class="mb-3">MONTHLY ESSENTIALS</h4>
-              <p class="mb-4">Regular delivery of party essentials and seasonal items. Never run out of celebration supplies.</p>
-              <ul class="list-unstyled mb-4">
-                <li class="mb-2">▸ Curated monthly selection</li>
-                <li class="mb-2">▸ Priority customer support</li>
-                <li class="mb-2">▸ 15% discount on all orders</li>
-                <li class="mb-2">▸ Free shipping included</li>
-              </ul>
-              <a href="#subscribe" class="btn w-100">SUBSCRIBE NOW</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="system-container h-100">
-            <div class="system-card-header">
-              <span class="system-meta">PLAN.BUSINESS</span>
-            </div>
-            <div class="system-card-body">
-              <h4 class="mb-3">BUSINESS PACKAGE</h4>
-              <p class="mb-4">Bulk ordering and custom designs for businesses, event planners, and organizations.</p>
-              <ul class="list-unstyled mb-4">
-                <li class="mb-2">▸ Dedicated account manager</li>
-                <li class="mb-2">▸ Wholesale pricing</li>
-                <li class="mb-2">▸ Custom design services included</li>
-                <li class="mb-2">▸ Flexible delivery schedule</li>
-              </ul>
-              <a href="#contact" class="btn-action w-100">CONTACT SALES</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Gallery Section -->
-  <section id="gallery" class="system-section" style="background: var(--system-white);">
-    <div class="container">
-      <div class="row mb-5">
-        <div class="col-12">
-          <h2 class="mb-3">GALLERY</h2>
-          <p class="system-label">RECENT PROJECTS // CLIENT WORK</p>
-        </div>
-      </div>
-      <div class="row g-3">
-        <div class="col-md-4">
-          <div class="system-border" style="aspect-ratio: 1; background: var(--system-gray); display: flex; align-items: center; justify-content: center;">
-            <span class="system-ghost">PROJECT IMAGE</span>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="system-border" style="aspect-ratio: 1; background: var(--system-gray); display: flex; align-items: center; justify-content: center;">
-            <span class="system-ghost">PROJECT IMAGE</span>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="system-border" style="aspect-ratio: 1; background: var(--system-gray); display: flex; align-items: center; justify-content: center;">
-            <span class="system-ghost">PROJECT IMAGE</span>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="system-border" style="aspect-ratio: 1; background: var(--system-gray); display: flex; align-items: center; justify-content: center;">
-            <span class="system-ghost">PROJECT IMAGE</span>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="system-border" style="aspect-ratio: 1; background: var(--system-gray); display: flex; align-items: center; justify-content: center;">
-            <span class="system-ghost">PROJECT IMAGE</span>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="system-border" style="aspect-ratio: 1; background: var(--system-gray); display: flex; align-items: center; justify-content: center;">
-            <span class="system-ghost">PROJECT IMAGE</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="system-divider"></div>
-
-  <!-- Join Community Section -->
-  <section class="newsletter system-section" style="background: var(--system-white); border-top: var(--border-weight) solid var(--system-black); border-bottom: var(--border-weight) solid var(--system-black);">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-md-8 text-center">
-          <div class="system-label mb-3">COMMUNITY.JOIN</div>
-          <h3 class="mb-4">JOIN OUR COMMUNITY</h3>
-          <p class="mb-5">Get exclusive access to new designs, special offers, and creative inspiration delivered to your inbox.</p>
-          <form id="form" class="d-flex flex-column flex-md-row gap-3">
-            <input type="email" name="email" placeholder="YOUR EMAIL ADDRESS" class="form-control form-control-lg" required>
-            <button class="btn-primary btn-lg text-uppercase" type="submit" style="white-space: nowrap;">SUBSCRIBE</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Instagram Section -->
-  <section class="instagram position-relative system-section">
-    <div class="d-flex justify-content-center w-100 position-absolute bottom-0 z-1 pb-5">
-      <a href="https://www.instagram.com/customisemeuk" target="_blank" class="btn-primary px-5">FOLLOW @CUSTOMISEMEUK</a>
-    </div>
-    <div class="row g-0">
-      <div class="col-6 col-sm-4 col-md-2">
-        <div class="system-border" style="aspect-ratio: 1; background: var(--system-gray); display: flex; align-items: center; justify-content: center;">
-          <span class="system-ghost">INSTAGRAM</span>
-        </div>
-      </div>
-      <div class="col-6 col-sm-4 col-md-2">
-        <div class="system-border" style="aspect-ratio: 1; background: var(--system-gray); display: flex; align-items: center; justify-content: center;">
-          <span class="system-ghost">INSTAGRAM</span>
-        </div>
-      </div>
-      <div class="col-6 col-sm-4 col-md-2">
-        <div class="system-border" style="aspect-ratio: 1; background: var(--system-gray); display: flex; align-items: center; justify-content: center;">
-          <span class="system-ghost">INSTAGRAM</span>
-        </div>
-      </div>
-      <div class="col-6 col-sm-4 col-md-2">
-        <div class="system-border" style="aspect-ratio: 1; background: var(--system-gray); display: flex; align-items: center; justify-content: center;">
-          <span class="system-ghost">INSTAGRAM</span>
-        </div>
-      </div>
-      <div class="col-6 col-sm-4 col-md-2">
-        <div class="system-border" style="aspect-ratio: 1; background: var(--system-gray); display: flex; align-items: center; justify-content: center;">
-          <span class="system-ghost">INSTAGRAM</span>
-        </div>
-      </div>
-      <div class="col-6 col-sm-4 col-md-2">
-        <div class="system-border" style="aspect-ratio: 1; background: var(--system-gray); display: flex; align-items: center; justify-content: center;">
-          <span class="system-ghost">INSTAGRAM</span>
-        </div>
-      </div>
+      <form class="newsletter-form">
+        <input type="email" class="form-control" placeholder="Enter your email address" required>
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+      </form>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer id="footer" class="mt-5">
+  <footer>
     <div class="container">
-      <div class="row d-flex flex-wrap justify-content-between py-5">
-        <div class="col-md-4 col-sm-6 mb-4 mb-md-0">
-          <div class="footer-menu">
-            <h5 class="system-label mb-4">ABOUT US</h5>
-            <p class="mb-4">Creative Merch UK offers premium designs, custom prints, and party essentials crafted with care. We're dedicated to helping you create memorable moments and standout branding.</p>
-            <div class="social-links">
-              <a href="https://www.instagram.com/customisemeuk" target="_blank" class="text-secondary me-3">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <use xlink:href="#instagram"></use>
-                </svg>
-              </a>
-            </div>
-          </div>
+      <div class="row">
+        <!-- About -->
+        <div class="col-md-4 footer-section">
+          <h3 class="footer-title">About Us</h3>
+          <p class="text-grey-dark">Creative Merch UK offers premium designs, custom prints, and party essentials crafted with care. We're dedicated to helping you create memorable moments and standout branding.</p>
         </div>
-        <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
-          <div class="footer-menu">
-            <h5 class="system-label mb-4">QUICK LINKS</h5>
-            <ul class="menu-list list-unstyled">
-              <li class="menu-item mb-2">
-                <a href="#shop" class="item-anchor">Shop</a>
-              </li>
-              <li class="menu-item mb-2">
-                <a href="#design-studio" class="item-anchor">Design Studio</a>
-              </li>
-              <li class="menu-item mb-2">
-                <a href="#installation" class="item-anchor">Installation</a>
-              </li>
-              <li class="menu-item mb-2">
-                <a href="#subscriptions" class="item-anchor">Subscriptions</a>
-              </li>
-              <li class="menu-item mb-2">
-                <a href="#gallery" class="item-anchor">Gallery</a>
-              </li>
-            </ul>
-          </div>
+
+        <!-- Quick Links -->
+        <div class="col-md-4 footer-section">
+          <h3 class="footer-title">Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="#shop">Shop</a></li>
+            <li><a href="#design-studio">Design Studio</a></li>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#workshops">Workshops</a></li>
+            <li><a href="#subscriptions">Subscriptions</a></li>
+          </ul>
         </div>
-        <div class="col-md-4 col-sm-6">
-          <div class="footer-menu">
-            <h5 class="system-label mb-4">CONTACT US</h5>
-            <div class="mb-3">
-              <p class="system-meta mb-2">EMAIL</p>
-              <a href="mailto:hello@customisemeuk.com" class="item-anchor">hello@customisemeuk.com</a>
-            </div>
-            <div class="mb-3">
-              <p class="system-meta mb-2">INSTAGRAM</p>
-              <a href="https://www.instagram.com/customisemeuk" target="_blank" class="item-anchor">@customisemeuk</a>
-            </div>
-            <div class="mt-4">
-              <span class="system-status">
-                <span class="system-status-dot"></span>
-                <span>READY TO ASSIST</span>
-              </span>
-            </div>
+
+        <!-- Contact -->
+        <div class="col-md-4 footer-section">
+          <h3 class="footer-title">Contact Us</h3>
+          <p class="text-grey-dark">
+            <strong>Email:</strong><br>
+            <a href="mailto:hello@customisemeuk.com">hello@customisemeuk.com</a>
+          </p>
+          <p class="text-grey-dark mb-3">
+            <strong>Instagram:</strong><br>
+            <a href="https://www.instagram.com/customisemeuk" target="_blank">@customisemeuk</a>
+          </p>
+          <div class="social-links">
+            <a href="https://www.instagram.com/customisemeuk" target="_blank" class="social-link">
+              <svg><use xlink:href="#icon-instagram"/></svg>
+            </a>
           </div>
         </div>
       </div>
-    </div>
-    <div class="system-border-top py-4">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <p class="system-meta mb-0">© 2026 CREATIVE MERCH UK. ALL RIGHTS RESERVED.</p>
-          </div>
-          <div class="col-md-6 text-md-end">
-            <p class="system-meta mb-0">DESIGNED WITH ▸ IN LONDON</p>
-          </div>
-        </div>
+
+      <div class="text-center mt-4 pt-4" style="border-top: 1px solid var(--color-grey-light);">
+        <p class="text-grey-dark mb-0">© 2026 Creative Merch UK. All rights reserved.</p>
       </div>
     </div>
   </footer>
 
-  <script src="js/jquery.min.js"></script>
-  <script src="js/plugins.js"></script>
-  <script src="js/SmoothScroll.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-  <script src="js/script.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
