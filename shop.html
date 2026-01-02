@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <!-- SVG Icons (same as index.html) -->
+  <!-- SVG Icons -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <circle cx="11" cy="11" r="8"/>
@@ -34,9 +34,6 @@
   <!-- Announcement Banner -->
   <div class="announcement-banner">
     <div class="announcement-content">
-      <span class="announcement-item">✨ Free UK Shipping on Orders Over £50</span>
-      <span class="announcement-item">🎨 Custom Designs Available</span>
-      <span class="announcement-item">🎉 Party Essentials Made to Order</span>
       <span class="announcement-item">✨ Free UK Shipping on Orders Over £50</span>
       <span class="announcement-item">🎨 Custom Designs Available</span>
       <span class="announcement-item">🎉 Party Essentials Made to Order</span>
@@ -69,7 +66,7 @@
   <nav class="navbar navbar-expand-lg">
     <div class="container">
       <a class="navbar-brand" href="index.html">
-        <img src="logo.png" alt="Creative Merch UK" style="height: 40px; width: auto;">
+        <img src="icon.png" alt="Creative Merch UK" style="height: 40px; width: auto;">
       </a>
       
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -86,19 +83,16 @@
               <li><a class="dropdown-item" href="shop.html">All Products</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="shop.html?category=apparel">Shop Apparel</a></li>
-              <li><a class="dropdown-item" href="shop.html?category=stickers">Stickers, Labels & Vinyls</a></li>
+              <li><a class="dropdown-item" href="shop.html?category=stickers">Stickers & Labels</a></li>
               <li><a class="dropdown-item" href="shop.html?category=party-decor">Party Decor</a></li>
             </ul>
           </li>
           <li class="nav-item"><a class="nav-link" href="index.html#design-studio">Design Studio</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.html#installation">Installation</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.html#workshops">Workshops</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.html#subscriptions">Subscriptions</a></li>
         </ul>
 
         <div class="d-flex align-items-center gap-3">
           <a href="#search" class="nav-icon"><svg class="icon"><use xlink:href="#icon-search"/></svg></a>
-          <a href="account.html" class="nav-icon d-none d-lg-flex">
+          <a href="account.html" class="nav-icon d-none d-lg-flex" data-auth-link>
             <svg class="icon"><use xlink:href="#icon-user"/></svg>
             <span>Sign In</span>
           </a>
@@ -116,18 +110,18 @@
   <section class="section" style="background: var(--color-grey-light); padding: 3rem 0;">
     <div class="container">
       <h1 id="category-title">All Products</h1>
-      <p class="text-grey-dark">Browse our full collection</p>
+      <p class="text-grey-dark" id="product-count-text">Loading products...</p>
     </div>
   </section>
 
   <!-- Category Filters -->
   <section class="section" style="padding: 2rem 0;">
     <div class="container">
-      <div class="d-flex gap-2 flex-wrap justify-content-center">
-        <button class="btn btn-outline" onclick="filterCategory('all')">All Products</button>
-        <button class="btn btn-outline" onclick="filterCategory('apparel')">Shop Apparel</button>
-        <button class="btn btn-outline" onclick="filterCategory('stickers')">Stickers & Vinyls</button>
-        <button class="btn btn-outline" onclick="filterCategory('party-decor')">Party Decor</button>
+      <div class="d-flex gap-2 flex-wrap justify-content-center" id="category-filters">
+        <button class="btn btn-outline active" data-category="all">All Products</button>
+        <button class="btn btn-outline" data-category="apparel">Apparel</button>
+        <button class="btn btn-outline" data-category="stickers">Stickers & Labels</button>
+        <button class="btn btn-outline" data-category="party-decor">Party Decor</button>
       </div>
     </div>
   </section>
@@ -135,8 +129,15 @@
   <!-- Products Grid -->
   <section class="section">
     <div class="container">
-      <div class="product-grid" id="products-grid">
-        <!-- Products will be loaded here -->
+      <div id="loading" class="text-center py-5">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-3">Loading products...</p>
+      </div>
+      <div class="product-grid" id="products-grid" style="display: none;"></div>
+      <div id="no-products" class="text-center py-5" style="display: none;">
+        <p class="text-grey-dark">No products found.</p>
       </div>
     </div>
   </section>
@@ -144,94 +145,149 @@
   <!-- Footer -->
   <footer>
     <div class="container">
-      <div class="row">
-        <div class="col-md-4 footer-section">
-          <h3 class="footer-title">About Us</h3>
-          <p class="text-grey-dark">Creative Merch UK offers premium designs, custom prints, and party essentials crafted with care.</p>
-        </div>
-        <div class="col-md-4 footer-section">
-          <h3 class="footer-title">Quick Links</h3>
-          <ul class="footer-links">
-            <li><a href="shop.html">Shop</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </div>
-        <div class="col-md-4 footer-section">
-          <h3 class="footer-title">Contact Us</h3>
-          <p class="text-grey-dark">
-            <strong>Email:</strong><br>
-            <a href="mailto:hello@customisemeuk.com">hello@customisemeuk.com</a>
-          </p>
-        </div>
+      <div class="text-center">
+        <p class="text-grey-dark">© 2026 Creative Merch UK. All rights reserved.</p>
       </div>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/cart.js"></script>
+  <script src="js/api-integration.js"></script>
   
   <script>
-    // Product database
-    const products = [
-      { id: 1, name: 'Custom T-Shirt Design', price: 24.99, category: 'apparel' },
-      { id: 2, name: 'Vinyl Sticker Pack', price: 9.99, category: 'stickers' },
-      { id: 3, name: 'Party Banner Set', price: 19.99, category: 'party-decor' },
-      { id: 4, name: 'Custom Labels', price: 14.99, category: 'stickers' },
-      { id: 5, name: 'Apparel Bundle', price: 49.99, category: 'apparel' },
-      { id: 6, name: 'Party Decor Set', price: 34.99, category: 'party-decor' },
-      { id: 7, name: 'Hoodie Design', price: 39.99, category: 'apparel' },
-      { id: 8, name: 'Wall Vinyl Decals', price: 29.99, category: 'stickers' },
-      { id: 9, name: 'Party Balloons Kit', price: 15.99, category: 'party-decor' },
-      { id: 10, name: 'Custom Hat', price: 19.99, category: 'apparel' },
-      { id: 11, name: 'Sticker Sheets', price: 7.99, category: 'stickers' },
-      { id: 12, name: 'Table Decorations', price: 24.99, category: 'party-decor' }
-    ];
-
     let currentCategory = 'all';
+    const API_URL = 'http://localhost:5000/api';
 
-    function displayProducts(category = 'all') {
+    // Load products from API
+    async function loadProducts(category = 'all') {
+      const loading = document.getElementById('loading');
       const grid = document.getElementById('products-grid');
-      const filteredProducts = category === 'all' 
-        ? products 
-        : products.filter(p => p.category === category);
+      const noProducts = document.getElementById('no-products');
 
-      grid.innerHTML = filteredProducts.map(product => `
-        <div class="product-card">
-          <a href="product.html?id=${product.id}">
-            <div class="product-image">
-              <span>Product Image</span>
+      // Show loading
+      loading.style.display = 'block';
+      grid.style.display = 'none';
+      noProducts.style.display = 'none';
+
+      try {
+        // Build query
+        const params = category !== 'all' ? `?category=${category}` : '';
+        
+        // Fetch from API
+        const response = await fetch(`${API_URL}/products${params}`);
+        const data = await response.json();
+
+        if (data.success && data.data.products.length > 0) {
+          const products = data.data.products;
+          
+          // Update count
+          document.getElementById('product-count-text').textContent = 
+            `${products.length} product${products.length !== 1 ? 's' : ''} found`;
+
+          // Render products
+          grid.innerHTML = products.map(product => `
+            <div class="product-card">
+              <a href="product.html?id=${product._id}">
+                <div class="product-image">
+                  ${product.images && product.images[0] 
+                    ? `<img src="${product.images[0].url}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">` 
+                    : '<span>Product Image</span>'
+                  }
+                </div>
+              </a>
+              <div class="product-info">
+                <h3 class="product-title">
+                  <a href="product.html?id=${product._id}" style="text-decoration: none; color: inherit;">
+                    ${product.name.toUpperCase()}
+                  </a>
+                </h3>
+                <p class="product-price">£${product.price.toFixed(2)}</p>
+                ${product.stock > 0 
+                  ? `<button class="btn btn-primary w-100 btn-sm" onclick="addToCart('${product._id}', '${product.name}', ${product.price})">Add to Cart</button>`
+                  : `<button class="btn btn-secondary w-100 btn-sm" disabled>Out of Stock</button>`
+                }
+              </div>
             </div>
-          </a>
-          <div class="product-info">
-            <h3 class="product-title">
-              <a href="product.html?id=${product.id}" style="text-decoration: none; color: inherit;">${product.name}</a>
-            </h3>
-            <p class="product-price">£${product.price.toFixed(2)}</p>
-            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(${product.id}, '${product.name}', ${product.price})">Add to Cart</button>
+          `).join('');
+
+          grid.style.display = 'grid';
+        } else {
+          noProducts.style.display = 'block';
+          document.getElementById('product-count-text').textContent = 'No products found';
+        }
+
+      } catch (error) {
+        console.error('Error loading products:', error);
+        noProducts.style.display = 'block';
+        document.getElementById('product-count-text').textContent = 'Error loading products';
+        
+        // Show error message
+        grid.innerHTML = `
+          <div class="col-12 text-center py-5">
+            <p class="text-danger">Failed to load products. Please make sure the backend server is running.</p>
+            <button class="btn btn-primary mt-3" onclick="loadProducts('${category}')">Try Again</button>
           </div>
-        </div>
-      `).join('');
+        `;
+        grid.style.display = 'block';
+      } finally {
+        loading.style.display = 'none';
+      }
+    }
+
+    // Filter by category
+    function filterCategory(category) {
+      currentCategory = category;
+      
+      // Update active button
+      document.querySelectorAll('#category-filters button').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.category === category) {
+          btn.classList.add('active');
+        }
+      });
 
       // Update title
       const titles = {
         'all': 'All Products',
-        'apparel': 'Shop Apparel',
-        'stickers': 'Stickers, Labels & Vinyls',
+        'apparel': 'Apparel',
+        'stickers': 'Stickers & Labels',
         'party-decor': 'Party Decor'
       };
       document.getElementById('category-title').textContent = titles[category];
+
+      // Load products
+      loadProducts(category);
+
+      // Update URL
+      const url = new URL(window.location);
+      if (category === 'all') {
+        url.searchParams.delete('category');
+      } else {
+        url.searchParams.set('category', category);
+      }
+      window.history.pushState({}, '', url);
     }
 
-    function filterCategory(category) {
-      currentCategory = category;
-      displayProducts(category);
-      window.history.pushState({}, '', `?category=${category}`);
-    }
+    // Setup category filter buttons
+    document.querySelectorAll('#category-filters button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterCategory(btn.dataset.category);
+      });
+    });
 
     // Check URL for category parameter
     const urlParams = new URLSearchParams(window.location.search);
     const categoryParam = urlParams.get('category') || 'all';
-    displayProducts(categoryParam);
+
+    // Load products on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      if (categoryParam !== 'all') {
+        filterCategory(categoryParam);
+      } else {
+        loadProducts();
+      }
+    });
   </script>
 </body>
 </html>
