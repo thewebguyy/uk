@@ -11,14 +11,41 @@
 </head>
 
 <body>
+  <!-- SVG Icons -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"/>
+      <path d="m21 21-4.35-4.35"/>
+    </symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+      <circle cx="12" cy="7" r="4"/>
+    </symbol>
+    <symbol id="icon-shopping-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <path d="M16 10a4 4 0 0 1-8 0"/>
+    </symbol>
+    <symbol id="icon-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+    </symbol>
+    <symbol id="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="2" y1="12" x2="22" y2="12"/>
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+    </symbol>
     <symbol id="icon-tool" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
     </symbol>
   </svg>
 
+  <!-- Announcement Banner -->
   <div class="announcement-banner">
     <div class="announcement-content">
+      <span class="announcement-item">FREE DELIVERY OVER £100</span>
+      <span class="announcement-item">CONTACT US</span>
+      <span class="announcement-item">INFO@CUSTOMISEMEUK.COM</span>
+      <span class="announcement-item">07588770901</span>
       <span class="announcement-item">FREE DELIVERY OVER £100</span>
       <span class="announcement-item">CONTACT US</span>
       <span class="announcement-item">INFO@CUSTOMISEMEUK.COM</span>
@@ -26,11 +53,154 @@
     </div>
   </div>
 
-  <nav class="navbar navbar-expand-lg">
+  <!-- Top Bar -->
+  <div class="top-bar">
     <div class="container">
-      <a class="navbar-brand" href="index.html">
-        <img src="icon.png" alt="Creative Merch UK" style="height: 40px; width: auto;">
-      </a>
+      <div class="top-bar-content">
+        <a class="navbar-brand" href="index.html">
+          <img src="icon.png" alt="Creative Merch UK" class="logo-image">
+        </a>
+        
+        <form class="search-bar-form-compact">
+          <svg class="search-icon"><use xlink:href="#icon-search"/></svg>
+          <input type="search" class="search-input" placeholder="Search products...">
+        </form>
+        
+        <div class="d-flex align-items-center gap-3">
+          <div class="dropdown">
+            <a href="#" class="nav-icon" data-bs-toggle="dropdown" aria-expanded="false">
+              <svg class="icon"><use xlink:href="#icon-globe"/></svg>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end region-dropdown">
+              <li><a class="dropdown-item" href="#"><span class="flag">🇬🇧</span> UNITED KINGDOM</a></li>
+              <li><a class="dropdown-item" href="#"><span class="flag">🇪🇺</span> EUROPE</a></li>
+              <li><a class="dropdown-item" href="#"><span class="flag">🇺🇸</span> AMERICA</a></li>
+            </ul>
+          </div>
+          <a href="#wishlist" class="nav-icon"><svg class="icon"><use xlink:href="#icon-heart"/></svg></a>
+          <a href="#cart" class="nav-icon" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+            <svg class="icon"><use xlink:href="#icon-shopping-bag"/></svg>
+            <span class="badge-cart" id="cart-count"></span>
+          </a>
+          <a href="account.html" class="nav-icon nav-icon-text">
+            <svg class="icon"><use xlink:href="#icon-user"/></svg>
+            <span class="nav-text">SIGN IN / SIGN UP</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shopping Cart Offcanvas -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">YOUR CART</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div id="cart-items"></div>
+      <div id="cart-empty" class="text-center">
+        <p class="text-grey">Your cart is empty</p>
+      </div>
+      <div id="cart-summary" style="display: none;">
+        <div class="d-flex justify-content-between mb-3 pt-3" style="border-top: 1px solid var(--color-grey-light);">
+          <strong>SUBTOTAL:</strong>
+          <strong id="cart-subtotal">£0.00</strong>
+        </div>
+        <button class="btn btn-primary w-100" onclick="window.location.href='checkout.html'">CHECKOUT</button>
+        <button class="btn btn-secondary w-100 mt-2" data-bs-dismiss="offcanvas">CONTINUE SHOPPING</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <nav class="navbar navbar-expand-lg main-nav">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown mega-menu">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">SHOP</a>
+            <div class="dropdown-menu mega-dropdown">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-3">
+                    <h6 class="mega-title">CATEGORIES</h6>
+                    <a class="dropdown-item" href="shop.html">ALL PRODUCTS</a>
+                    <a class="dropdown-item" href="shop.html?category=apparel">APPAREL</a>
+                    <a class="dropdown-item" href="shop.html?category=stickers">STICKERS & LABELS</a>
+                    <a class="dropdown-item" href="shop.html?category=party-decor">PARTY DECOR</a>
+                    <a class="dropdown-item" href="shop.html?category=accessories">ACCESSORIES</a>
+                  </div>
+                  <div class="col-md-3">
+                    <h6 class="mega-title">APPAREL</h6>
+                    <a class="dropdown-item" href="#">T-Shirts</a>
+                    <a class="dropdown-item" href="#">Hoodies</a>
+                    <a class="dropdown-item" href="#">Hats</a>
+                    <a class="dropdown-item" href="#">Bags</a>
+                  </div>
+                  <div class="col-md-3">
+                    <h6 class="mega-title">PARTY ESSENTIALS</h6>
+                    <a class="dropdown-item" href="#">Banners</a>
+                    <a class="dropdown-item" href="#">Balloons</a>
+                    <a class="dropdown-item" href="#">Table Decor</a>
+                    <a class="dropdown-item" href="#">Party Packs</a>
+                  </div>
+                  <div class="col-md-3">
+                    <h6 class="mega-title">STICKERS & LABELS</h6>
+                    <a class="dropdown-item" href="#">Vinyl Stickers</a>
+                    <a class="dropdown-item" href="#">Custom Labels</a>
+                    <a class="dropdown-item" href="#">Wall Decals</a>
+                    <a class="dropdown-item" href="#">Sticker Packs</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item dropdown mega-menu">
+            <a class="nav-link dropdown-toggle" href="designstudio.html" role="button" data-bs-toggle="dropdown">DESIGN STUDIO</a>
+            <div class="dropdown-menu mega-dropdown">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h6 class="mega-title">SERVICES</h6>
+                    <a class="dropdown-item" href="designservice.html">Custom Design</a>
+                  </div>
+                  <div class="col-md-6">
+                    <h6 class="mega-title">RESOURCES</h6>
+                    <a class="dropdown-item" href="designstudio.html#resources">Design Templates</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item dropdown mega-menu">
+            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">PREMIUM SERVICES</a>
+            <div class="dropdown-menu mega-dropdown">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-4">
+                    <h6 class="mega-title">SERVICES</h6>
+                    <a class="dropdown-item" href="senditems.html">Send Items In</a>
+                    <a class="dropdown-item" href="subscriptions.html">Subscriptions</a>
+                  </div>
+                  <div class="col-md-4">
+                    <h6 class="mega-title">INSTALLATION</h6>
+                    <a class="dropdown-item" href="installation.html">Vinyl Installation</a>
+                  </div>
+                  <div class="col-md-4">
+                    <h6 class="mega-title">WORKSHOPS</h6>
+                    <a class="dropdown-item" href="contact.html?service=workshop">Group Iron on Workshop</a>
+                    <a class="dropdown-item" href="contact.html?service=workshop">Individual Iron on Experience</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
 
@@ -191,5 +361,12 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/cart.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCartDisplay();
+    });
+  </script>
 </body>
 </html>
