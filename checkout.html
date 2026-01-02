@@ -8,30 +8,44 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Stripe.js -->
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 
 <body>
   <!-- Announcement Banner -->
- <div class="announcement-banner">
+  <div class="announcement-banner">
     <div class="announcement-content">
-      <span class="announcement-item">FREE DELIVERY OVER £100</span>
-      <span class="announcement-item">CONTACT US</span>
-      <span class="announcement-item">INFO@CUSTOMISEMEUK.COM</span>
-      <span class="announcement-item">07588770901</span>
-      <span class="announcement-item">FREE DELIVERY OVER £100</span>
-      <span class="announcement-item">CONTACT US</span>
-      <span class="announcement-item">INFO@CUSTOMISEMEUK.COM</span>
-      <span class="announcement-item">07588770901</span>
+      <span class="announcement-item">✨ Free UK Shipping on Orders Over £50</span>
+      <span class="announcement-item">🎨 Custom Designs Available</span>
+      <span class="announcement-item">🎉 Party Essentials Made to Order</span>
+      <span class="announcement-item">✨ Free UK Shipping on Orders Over £50</span>
+      <span class="announcement-item">🎨 Custom Designs Available</span>
+      <span class="announcement-item">🎉 Party Essentials Made to Order</span>
     </div>
   </div>
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg">
+  <!-- Top Bar -->
+  <div class="top-bar">
     <div class="container">
-      <a class="navbar-brand" href="index.html">
-        <img src="icon.png" alt="Creative Merch UK" style="height: 40px; width: auto;">
-      </a>
-      <a href="shop.html" class="btn btn-outline">Continue Shopping</a>
+      <div class="top-bar-content">
+        <a class="navbar-brand" href="index.html">
+          <img src="icon.png" alt="Creative Merch UK" class="logo-image">
+        </a>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Simple Nav for Checkout -->
+  <nav class="navbar navbar-expand-lg main-nav">
+    <div class="container">
+      <div class="d-flex justify-content-between w-100 align-items-center">
+        <h5 class="mb-0">SECURE CHECKOUT</h5>
+        <a href="shop.html" class="btn btn-outline btn-sm">Continue Shopping</a>
+      </div>
     </div>
   </nav>
 
@@ -43,7 +57,7 @@
       <div class="row g-5">
         <!-- Checkout Form -->
         <div class="col-lg-7">
-          <form id="checkout-form" onsubmit="handleCheckout(event)">
+          <form id="checkout-form">
             <!-- Contact Information -->
             <div class="mb-4">
               <h3 class="mb-3">Contact Information</h3>
@@ -63,13 +77,9 @@
             <div class="mb-4">
               <h3 class="mb-3">Shipping Address</h3>
               <div class="row g-3">
-                <div class="col-md-6">
-                  <label for="first-name" class="form-label">First Name *</label>
-                  <input type="text" class="form-control" id="first-name" required>
-                </div>
-                <div class="col-md-6">
-                  <label for="last-name" class="form-label">Last Name *</label>
-                  <input type="text" class="form-control" id="last-name" required>
+                <div class="col-12">
+                  <label for="name" class="form-label">Full Name *</label>
+                  <input type="text" class="form-control" id="name" required>
                 </div>
                 <div class="col-12">
                   <label for="address" class="form-label">Address *</label>
@@ -97,34 +107,30 @@
             <!-- Payment -->
             <div class="mb-4">
               <h3 class="mb-3">Payment</h3>
-              <div class="p-3 mb-3" style="background: var(--color-grey-light); border-radius: var(--radius-md);">
+              <div class="p-3 mb-3" style="background: var(--color-grey-light);">
                 <p class="mb-0"><strong>Secure Payment</strong></p>
-                <p class="text-grey-dark mb-0" style="font-size: 0.875rem;">All transactions are secure and encrypted.</p>
+                <p class="text-grey-dark mb-0" style="font-size: 0.875rem;">All transactions are secure and encrypted with Stripe.</p>
               </div>
               
-              <div class="mb-3">
-                <label for="card-number" class="form-label">Card Number *</label>
-                <input type="text" class="form-control" id="card-number" placeholder="1234 5678 9012 3456" required>
-              </div>
-              <div class="row g-3">
-                <div class="col-md-6">
-                  <label for="expiry" class="form-label">Expiry Date *</label>
-                  <input type="text" class="form-control" id="expiry" placeholder="MM/YY" required>
-                </div>
-                <div class="col-md-6">
-                  <label for="cvv" class="form-label">CVV *</label>
-                  <input type="text" class="form-control" id="cvv" placeholder="123" required>
-                </div>
-              </div>
+              <!-- Stripe Payment Element -->
+              <div id="payment-element" class="mb-3"></div>
+              
+              <!-- Error messages -->
+              <div id="payment-message" class="alert alert-danger" style="display: none;"></div>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-lg w-100">Complete Order</button>
+            <button type="submit" class="btn btn-primary btn-lg w-100" id="submit-button">
+              <span id="button-text">Complete Order</span>
+              <div id="spinner" class="spinner-border spinner-border-sm" style="display: none;" role="status">
+                <span class="visually-hidden">Processing...</span>
+              </div>
+            </button>
           </form>
         </div>
 
         <!-- Order Summary -->
         <div class="col-lg-5">
-          <div class="p-4" style="background: var(--color-grey-light); border-radius: var(--radius-lg); position: sticky; top: 100px;">
+          <div class="p-4" style="background: var(--color-grey-light); position: sticky; top: 120px;">
             <h3 class="mb-4">Order Summary</h3>
             
             <div id="checkout-items" class="mb-4"></div>
@@ -138,6 +144,10 @@
                 <span>Shipping</span>
                 <span id="checkout-shipping">£4.99</span>
               </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span>Tax (VAT 20%)</span>
+                <span id="checkout-tax">£0.00</span>
+              </div>
             </div>
 
             <div class="d-flex justify-content-between mb-4">
@@ -145,9 +155,9 @@
               <strong style="font-size: 1.25rem;" id="checkout-total">£0.00</strong>
             </div>
 
-            <div class="p-3" style="background: var(--color-white); border-radius: var(--radius-md);">
+            <div class="p-3" style="background: var(--color-white);">
               <p class="mb-2" style="font-size: 0.875rem;"><strong>✓</strong> Free shipping on orders over £50</p>
-              <p class="mb-0" style="font-size: 0.875rem;"><strong>✓</strong> Secure checkout</p>
+              <p class="mb-0" style="font-size: 0.875rem;"><strong>✓</strong> Secure checkout with Stripe</p>
             </div>
           </div>
         </div>
@@ -158,7 +168,7 @@
   <footer>
     <div class="container">
       <div class="text-center">
-        <p class="text-grey-dark">© 2026 Creative Merch UK. All rights reserved.</p>
+        <p class="text-grey-dark">© 2026 Customise Me UK. All rights reserved.</p>
       </div>
     </div>
   </footer>
@@ -167,24 +177,105 @@
   <script src="js/cart.js"></script>
   
   <script>
+    const API_URL = 'http://localhost:5000/api';
+    const STRIPE_PUBLIC_KEY = 'pk_test_your_stripe_key'; // Replace with your Stripe public key
+    
+    let stripe;
+    let elements;
+    let clientSecret;
+
+    async function initializeCheckout() {
+      const cart = getCart();
+      
+      if (cart.length === 0) {
+        window.location.href = 'shop.html';
+        return;
+      }
+
+      // Display order summary
+      displayCheckoutSummary();
+
+      // Get authentication token
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        alert('Please sign in to complete your purchase');
+        localStorage.setItem('redirectAfterLogin', 'checkout.html');
+        window.location.href = 'account.html';
+        return;
+      }
+
+      // Prepare order data
+      const shippingAddress = {
+        name: '',
+        email: document.getElementById('email').value || '',
+        phone: '',
+        street: '',
+        apartment: '',
+        city: '',
+        postcode: ''
+      };
+
+      const items = cart.map(item => ({
+        productId: item.id,
+        quantity: item.quantity,
+        customization: item.customization || {}
+      }));
+
+      try {
+        // Create payment intent
+        const response = await fetch(`${API_URL}/payments/create-payment-intent`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ items, shippingAddress })
+        });
+
+        const data = await response.json();
+
+        if (!data.success) {
+          throw new Error(data.message || 'Failed to initialize payment');
+        }
+
+        clientSecret = data.data.clientSecret;
+        const orderId = data.data.orderId;
+        
+        // Store order ID for confirmation
+        sessionStorage.setItem('pendingOrderId', orderId);
+
+        // Initialize Stripe
+        stripe = Stripe(STRIPE_PUBLIC_KEY);
+        elements = stripe.elements({ clientSecret });
+
+        // Create and mount payment element
+        const paymentElement = elements.create('payment');
+        paymentElement.mount('#payment-element');
+
+      } catch (error) {
+        console.error('Checkout initialization error:', error);
+        showMessage('Failed to initialize checkout. Please try again.');
+      }
+    }
+
     function displayCheckoutSummary() {
       const cart = getCart();
       const itemsContainer = document.getElementById('checkout-items');
       const subtotalEl = document.getElementById('checkout-subtotal');
       const shippingEl = document.getElementById('checkout-shipping');
+      const taxEl = document.getElementById('checkout-tax');
       const totalEl = document.getElementById('checkout-total');
-
-      if (cart.length === 0) {
-        window.location.href = 'shop.html';
-        return;
-      }
 
       // Display items
       itemsContainer.innerHTML = cart.map(item => `
         <div class="d-flex justify-content-between mb-3">
           <div>
             <p class="mb-0"><strong>${item.name}</strong></p>
-            <p class="text-grey-dark mb-0" style="font-size: 0.875rem;">Qty: ${item.quantity} × £${item.price.toFixed(2)}</p>
+            <p class="text-grey-dark mb-0" style="font-size: 0.875rem;">
+              Qty: ${item.quantity} × £${item.price.toFixed(2)}
+              ${item.customization?.size ? `<br>Size: ${item.customization.size}` : ''}
+              ${item.customization?.color ? `<br>Color: ${item.customization.color}` : ''}
+            </p>
           </div>
           <p class="mb-0">£${(item.price * item.quantity).toFixed(2)}</p>
         </div>
@@ -193,45 +284,128 @@
       // Calculate totals
       const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
       const shipping = subtotal >= 50 ? 0 : 4.99;
-      const total = subtotal + shipping;
+      const tax = (subtotal + shipping) * 0.20; // 20% VAT
+      const total = subtotal + shipping + tax;
 
       subtotalEl.textContent = '£' + subtotal.toFixed(2);
       shippingEl.textContent = shipping === 0 ? 'FREE' : '£' + shipping.toFixed(2);
+      taxEl.textContent = '£' + tax.toFixed(2);
       totalEl.textContent = '£' + total.toFixed(2);
     }
 
-    function handleCheckout(event) {
-      event.preventDefault();
-      
+    // Handle form submission
+    document.getElementById('checkout-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (!stripe || !elements) {
+        return;
+      }
+
+      setLoading(true);
+
       // Get form data
-      const orderData = {
+      const shippingAddress = {
+        name: document.getElementById('name').value,
         email: document.getElementById('email').value,
-        firstName: document.getElementById('first-name').value,
-        lastName: document.getElementById('last-name').value,
-        address: document.getElementById('address').value,
+        phone: document.getElementById('phone').value,
+        street: document.getElementById('address').value,
         apartment: document.getElementById('apartment').value,
         city: document.getElementById('city').value,
-        postcode: document.getElementById('postcode').value,
-        phone: document.getElementById('phone').value,
-        cart: getCart()
+        postcode: document.getElementById('postcode').value
       };
 
-      console.log('Order submitted:', orderData);
+      try {
+        // Confirm payment with Stripe
+        const { error, paymentIntent } = await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            return_url: `${window.location.origin}/order-confirmation.html`,
+            payment_method_data: {
+              billing_details: {
+                name: shippingAddress.name,
+                email: shippingAddress.email,
+                phone: shippingAddress.phone,
+                address: {
+                  line1: shippingAddress.street,
+                  line2: shippingAddress.apartment,
+                  city: shippingAddress.city,
+                  postal_code: shippingAddress.postcode,
+                  country: 'GB'
+                }
+              }
+            }
+          },
+          redirect: 'if_required'
+        });
 
-      // Clear cart
-      clearCart();
+        if (error) {
+          showMessage(error.message);
+          setLoading(false);
+        } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+          // Payment successful, confirm with backend
+          const orderId = sessionStorage.getItem('pendingOrderId');
+          const token = localStorage.getItem('authToken');
 
-      // Show success message
-      alert('Thank you for your order! You will receive a confirmation email shortly.');
+          const response = await fetch(`${API_URL}/payments/confirm-payment`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+              orderId: orderId,
+              paymentIntentId: paymentIntent.id
+            })
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            // Clear cart
+            clearCart();
+            
+            // Redirect to confirmation page
+            window.location.href = `order-confirmation.html?order=${data.data.orderNumber}`;
+          } else {
+            showMessage('Payment processed but order confirmation failed. Please contact support.');
+            setLoading(false);
+          }
+        }
+      } catch (error) {
+        console.error('Payment error:', error);
+        showMessage('An error occurred. Please try again.');
+        setLoading(false);
+      }
+    });
+
+    function showMessage(message) {
+      const messageDiv = document.getElementById('payment-message');
+      messageDiv.textContent = message;
+      messageDiv.style.display = 'block';
       
-      // Redirect to home
-      window.location.href = 'index.html';
+      setTimeout(() => {
+        messageDiv.style.display = 'none';
+      }, 5000);
+    }
 
-      // In production, this would send to your payment processor and backend
+    function setLoading(isLoading) {
+      const submitButton = document.getElementById('submit-button');
+      const buttonText = document.getElementById('button-text');
+      const spinner = document.getElementById('spinner');
+
+      if (isLoading) {
+        submitButton.disabled = true;
+        buttonText.style.display = 'none';
+        spinner.style.display = 'inline-block';
+      } else {
+        submitButton.disabled = false;
+        buttonText.style.display = 'inline';
+        spinner.style.display = 'none';
+      }
     }
 
     // Initialize on page load
-    document.addEventListener('DOMContentLoaded', displayCheckoutSummary);
+    document.addEventListener('DOMContentLoaded', initializeCheckout);
   </script>
 </body>
 </html>
