@@ -29,10 +29,15 @@
     <symbol id="icon-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
     </symbol>
+    <symbol id="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="2" y1="12" x2="22" y2="12"/>
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+    </symbol>
   </svg>
 
   <!-- Announcement Banner -->
-<div class="announcement-banner">
+  <div class="announcement-banner">
     <div class="announcement-content">
       <span class="announcement-item">FREE DELIVERY OVER £100</span>
       <span class="announcement-item">CONTACT US</span>
@@ -45,10 +50,48 @@
     </div>
   </div>
 
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-content">
+        <a class="navbar-brand" href="index.html">
+          <img src="icon.png" alt="Creative Merch UK" class="logo-image">
+        </a>
+        
+        <form class="search-bar-form-compact" onsubmit="handleSearch(event)">
+          <svg class="search-icon"><use xlink:href="#icon-search"/></svg>
+          <input type="search" class="search-input" placeholder="Search products..." id="search-input">
+        </form>
+        
+        <div class="d-flex align-items-center gap-3">
+          <div class="dropdown">
+            <a href="#" class="nav-icon" data-bs-toggle="dropdown" aria-expanded="false">
+              <svg class="icon"><use xlink:href="#icon-globe"/></svg>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end region-dropdown">
+              <li><a class="dropdown-item" href="#"><span class="flag">🇬🇧</span> UNITED KINGDOM</a></li>
+              <li><a class="dropdown-item" href="#"><span class="flag">🇪🇺</span> EUROPE</a></li>
+              <li><a class="dropdown-item" href="#"><span class="flag">🇺🇸</span> AMERICA</a></li>
+            </ul>
+          </div>
+          <a href="#wishlist" class="nav-icon"><svg class="icon"><use xlink:href="#icon-heart"/></svg></a>
+          <a href="#cart" class="nav-icon" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+            <svg class="icon"><use xlink:href="#icon-shopping-bag"/></svg>
+            <span class="badge-cart" id="cart-count"></span>
+          </a>
+          <a href="account.html" class="nav-icon nav-icon-text">
+            <svg class="icon"><use xlink:href="#icon-user"/></svg>
+            <span class="nav-text">SIGN IN / SIGN UP</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Shopping Cart Offcanvas -->
   <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title">Your Cart</h5>
+      <h5 class="offcanvas-title">YOUR CART</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
@@ -58,55 +101,102 @@
       </div>
       <div id="cart-summary" style="display: none;">
         <div class="d-flex justify-content-between mb-3 pt-3" style="border-top: 1px solid var(--color-grey-light);">
-          <strong>Subtotal:</strong>
+          <strong>SUBTOTAL:</strong>
           <strong id="cart-subtotal">£0.00</strong>
         </div>
-        <button class="btn btn-primary w-100" onclick="window.location.href='checkout.html'">Checkout</button>
-        <button class="btn btn-secondary w-100 mt-2" data-bs-dismiss="offcanvas">Continue Shopping</button>
+        <button class="btn btn-primary w-100" onclick="window.location.href='checkout.html'">CHECKOUT</button>
+        <button class="btn btn-secondary w-100 mt-2" data-bs-dismiss="offcanvas">CONTINUE SHOPPING</button>
       </div>
     </div>
   </div>
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg">
+  <!-- Main Navigation -->
+  <nav class="navbar navbar-expand-lg main-nav">
     <div class="container">
-      <a class="navbar-brand" href="index.html">
-        <img src="icon.png" alt="Creative Merch UK" style="height: 40px; width: auto;">
-      </a>
-      
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
-
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mx-auto">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle active" href="#" id="shopDropdown" role="button" data-bs-toggle="dropdown">
-              Shop
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="shop.html">All Products</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="shop.html?category=apparel">Shop Apparel</a></li>
-              <li><a class="dropdown-item" href="shop.html?category=stickers">Stickers & Labels</a></li>
-              <li><a class="dropdown-item" href="shop.html?category=party-decor">Party Decor</a></li>
-            </ul>
+      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown mega-menu">
+            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">SHOP</a>
+            <div class="dropdown-menu mega-dropdown">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-3">
+                    <h6 class="mega-title">CATEGORIES</h6>
+                    <a class="dropdown-item" href="shop.html">ALL PRODUCTS</a>
+                    <a class="dropdown-item" href="shop.html?category=apparel">APPAREL</a>
+                    <a class="dropdown-item" href="shop.html?category=stickers">STICKERS & LABELS</a>
+                    <a class="dropdown-item" href="shop.html?category=party-decor">PARTY DECOR</a>
+                    <a class="dropdown-item" href="shop.html?category=accessories">ACCESSORIES</a>
+                  </div>
+                  <div class="col-md-3">
+                    <h6 class="mega-title">APPAREL</h6>
+                    <a class="dropdown-item" href="#">T-Shirts</a>
+                    <a class="dropdown-item" href="#">Hoodies</a>
+                    <a class="dropdown-item" href="#">Hats</a>
+                    <a class="dropdown-item" href="#">Bags</a>
+                  </div>
+                  <div class="col-md-3">
+                    <h6 class="mega-title">PARTY ESSENTIALS</h6>
+                    <a class="dropdown-item" href="#">Banners</a>
+                    <a class="dropdown-item" href="#">Balloons</a>
+                    <a class="dropdown-item" href="#">Table Decor</a>
+                    <a class="dropdown-item" href="#">Party Packs</a>
+                  </div>
+                  <div class="col-md-3">
+                    <h6 class="mega-title">STICKERS & LABELS</h6>
+                    <a class="dropdown-item" href="#">Vinyl Stickers</a>
+                    <a class="dropdown-item" href="#">Custom Labels</a>
+                    <a class="dropdown-item" href="#">Wall Decals</a>
+                    <a class="dropdown-item" href="#">Sticker Packs</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </li>
-          <li class="nav-item"><a class="nav-link" href="index.html#design-studio">Design Studio</a></li>
+          <li class="nav-item dropdown mega-menu">
+            <a class="nav-link dropdown-toggle" href="designstudio.html" role="button" data-bs-toggle="dropdown">DESIGN STUDIO</a>
+            <div class="dropdown-menu mega-dropdown">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h6 class="mega-title">SERVICES</h6>
+                    <a class="dropdown-item" href="designservice.html">Custom Design</a>
+                  </div>
+                  <div class="col-md-6">
+                    <h6 class="mega-title">RESOURCES</h6>
+                    <a class="dropdown-item" href="designstudio.html#resources">Design Templates</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item dropdown mega-menu">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">PREMIUM SERVICES</a>
+            <div class="dropdown-menu mega-dropdown">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-4">
+                    <h6 class="mega-title">SERVICES</h6>
+                    <a class="dropdown-item" href="senditems.html">Send Items In</a>
+                    <a class="dropdown-item" href="subscriptions.html">Subscriptions</a>
+                  </div>
+                  <div class="col-md-4">
+                    <h6 class="mega-title">INSTALLATION</h6>
+                    <a class="dropdown-item" href="installation.html">Vinyl Installation</a>
+                  </div>
+                  <div class="col-md-4">
+                    <h6 class="mega-title">WORKSHOPS</h6>
+                    <a class="dropdown-item" href="contact.html?service=workshop">Group Iron on Workshop</a>
+                    <a class="dropdown-item" href="contact.html?service=workshop">Individual Iron on Experience</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
         </ul>
-
-        <div class="d-flex align-items-center gap-3">
-          <a href="#search" class="nav-icon"><svg class="icon"><use xlink:href="#icon-search"/></svg></a>
-          <a href="account.html" class="nav-icon d-none d-lg-flex" data-auth-link>
-            <svg class="icon"><use xlink:href="#icon-user"/></svg>
-            <span>Sign In</span>
-          </a>
-          <a href="#wishlist" class="nav-icon"><svg class="icon"><use xlink:href="#icon-heart"/></svg></a>
-          <a href="#cart" class="nav-icon" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
-            <svg class="icon"><use xlink:href="#icon-shopping-bag"/></svg>
-            <span class="badge" id="cart-count">0</span>
-          </a>
-        </div>
       </div>
     </div>
   </nav>
@@ -114,19 +204,34 @@
   <!-- Shop Header -->
   <section class="section" style="background: var(--color-grey-light); padding: 3rem 0;">
     <div class="container">
-      <h1 id="category-title">All Products</h1>
+      <h1 id="category-title">ALL PRODUCTS</h1>
       <p class="text-grey-dark" id="product-count-text">Loading products...</p>
     </div>
   </section>
 
-  <!-- Category Filters -->
-  <section class="section" style="padding: 2rem 0;">
+  <!-- Filters & Sort -->
+  <section class="section" style="padding: 2rem 0; background: var(--color-white); border-bottom: 1px solid var(--color-grey-light);">
     <div class="container">
-      <div class="d-flex gap-2 flex-wrap justify-content-center" id="category-filters">
-        <button class="btn btn-outline active" data-category="all">All Products</button>
-        <button class="btn btn-outline" data-category="apparel">Apparel</button>
-        <button class="btn btn-outline" data-category="stickers">Stickers & Labels</button>
-        <button class="btn btn-outline" data-category="party-decor">Party Decor</button>
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="d-flex gap-2 flex-wrap" id="category-filters">
+            <button class="btn btn-outline active" data-category="all">ALL</button>
+            <button class="btn btn-outline" data-category="apparel">APPAREL</button>
+            <button class="btn btn-outline" data-category="stickers">STICKERS & LABELS</button>
+            <button class="btn btn-outline" data-category="party-decor">PARTY DECOR</button>
+            <button class="btn btn-outline" data-category="accessories">ACCESSORIES</button>
+          </div>
+        </div>
+        <div class="col-md-4 text-end">
+          <select class="form-control" id="sort-select" style="max-width: 200px; display: inline-block;" onchange="handleSort()">
+            <option value="featured">FEATURED</option>
+            <option value="price-asc">PRICE: LOW TO HIGH</option>
+            <option value="price-desc">PRICE: HIGH TO LOW</option>
+            <option value="name-asc">NAME: A TO Z</option>
+            <option value="name-desc">NAME: Z TO A</option>
+            <option value="newest">NEWEST FIRST</option>
+          </select>
+        </div>
       </div>
     </div>
   </section>
@@ -140,104 +245,177 @@
         </div>
         <p class="mt-3">Loading products...</p>
       </div>
-      <div class="product-grid" id="products-grid" style="display: none;"></div>
+      
+      <div class="product-grid-four" id="products-grid" style="display: none;"></div>
+      
       <div id="no-products" class="text-center py-5" style="display: none;">
-        <p class="text-grey-dark">No products found.</p>
+        <p class="text-grey-dark mb-3">No products found.</p>
+        <button class="btn btn-primary" onclick="filterCategory('all')">VIEW ALL PRODUCTS</button>
+      </div>
+      
+      <div id="error-message" class="text-center py-5" style="display: none;">
+        <p class="text-danger mb-3">Failed to load products. Please try again.</p>
+        <button class="btn btn-primary" onclick="loadProducts()">RETRY</button>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
   <footer>
     <div class="container">
       <div class="text-center">
-        <p class="text-grey-dark">© 2026 Creative Merch UK. All rights reserved.</p>
+        <p class="text-grey-dark">© 2026 Customise Me UK. All rights reserved.</p>
       </div>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/cart.js"></script>
-  <script src="js/api-integration.js"></script>
   
   <script>
-    let currentCategory = 'all';
     const API_URL = 'http://localhost:5000/api';
+    let allProducts = [];
+    let filteredProducts = [];
+    let currentCategory = 'all';
+    let currentSort = 'featured';
+    let searchQuery = '';
 
-    // Load products from API
-    async function loadProducts(category = 'all') {
+    // Load products from MongoDB via API
+    async function loadProducts() {
       const loading = document.getElementById('loading');
       const grid = document.getElementById('products-grid');
       const noProducts = document.getElementById('no-products');
+      const errorMessage = document.getElementById('error-message');
 
-      // Show loading
+      // Reset display
       loading.style.display = 'block';
       grid.style.display = 'none';
       noProducts.style.display = 'none';
+      errorMessage.style.display = 'none';
 
       try {
-        // Build query
-        const params = category !== 'all' ? `?category=${category}` : '';
+        // Fetch from MongoDB API
+        const response = await fetch(`${API_URL}/products`);
         
-        // Fetch from API
-        const response = await fetch(`${API_URL}/products${params}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         const data = await response.json();
 
-        if (data.success && data.data.products.length > 0) {
-          const products = data.data.products;
+        if (data.success && data.data.products) {
+          allProducts = data.data.products;
+          filteredProducts = [...allProducts];
           
-          // Update count
-          document.getElementById('product-count-text').textContent = 
-            `${products.length} product${products.length !== 1 ? 's' : ''} found`;
-
-          // Render products
-          grid.innerHTML = products.map(product => `
-            <div class="product-card">
-              <a href="product.html?id=${product._id}">
-                <div class="product-image">
-                  ${product.images && product.images[0] 
-                    ? `<img src="${product.images[0].url}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">` 
-                    : '<span>Product Image</span>'
-                  }
-                </div>
-              </a>
-              <div class="product-info">
-                <h3 class="product-title">
-                  <a href="product.html?id=${product._id}" style="text-decoration: none; color: inherit;">
-                    ${product.name.toUpperCase()}
-                  </a>
-                </h3>
-                <p class="product-price">£${product.price.toFixed(2)}</p>
-                ${product.stock > 0 
-                  ? `<button class="btn btn-primary w-100 btn-sm" onclick="addToCart('${product._id}', '${product.name}', ${product.price})">Add to Cart</button>`
-                  : `<button class="btn btn-secondary w-100 btn-sm" disabled>Out of Stock</button>`
-                }
-              </div>
-            </div>
-          `).join('');
-
-          grid.style.display = 'grid';
+          // Apply filters and sort
+          applyFilters();
+          applySorting();
+          displayProducts();
         } else {
-          noProducts.style.display = 'block';
-          document.getElementById('product-count-text').textContent = 'No products found';
+          throw new Error(data.message || 'Failed to load products');
         }
-
       } catch (error) {
         console.error('Error loading products:', error);
-        noProducts.style.display = 'block';
-        document.getElementById('product-count-text').textContent = 'Error loading products';
+        loading.style.display = 'none';
+        errorMessage.style.display = 'block';
+      }
+    }
+
+    // Apply category and search filters
+    function applyFilters() {
+      filteredProducts = allProducts.filter(product => {
+        // Category filter
+        const categoryMatch = currentCategory === 'all' || product.category === currentCategory;
         
-        // Show error message
-        grid.innerHTML = `
-          <div class="col-12 text-center py-5">
-            <p class="text-danger">Failed to load products. Please make sure the backend server is running.</p>
-            <button class="btn btn-primary mt-3" onclick="loadProducts('${category}')">Try Again</button>
+        // Search filter
+        const searchMatch = !searchQuery || 
+          product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (product.description && product.description.toLowerCase().includes(searchQuery.toLowerCase()));
+        
+        // Stock filter
+        const inStock = product.stock > 0;
+        
+        return categoryMatch && searchMatch && inStock;
+      });
+    }
+
+    // Apply sorting
+    function applySorting() {
+      switch(currentSort) {
+        case 'price-asc':
+          filteredProducts.sort((a, b) => (a.salePrice || a.price) - (b.salePrice || b.price));
+          break;
+        case 'price-desc':
+          filteredProducts.sort((a, b) => (b.salePrice || b.price) - (a.salePrice || a.price));
+          break;
+        case 'name-asc':
+          filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+          break;
+        case 'name-desc':
+          filteredProducts.sort((a, b) => b.name.localeCompare(a.name));
+          break;
+        case 'newest':
+          filteredProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          break;
+        default:
+          // Featured - keep original order or sort by featured flag
+          filteredProducts.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+      }
+    }
+
+    // Display products
+    function displayProducts() {
+      const loading = document.getElementById('loading');
+      const grid = document.getElementById('products-grid');
+      const noProducts = document.getElementById('no-products');
+      const countText = document.getElementById('product-count-text');
+
+      loading.style.display = 'none';
+
+      if (filteredProducts.length === 0) {
+        noProducts.style.display = 'block';
+        grid.style.display = 'none';
+        countText.textContent = 'No products found';
+        return;
+      }
+
+      // Update count
+      countText.textContent = `${filteredProducts.length} product${filteredProducts.length !== 1 ? 's' : ''} found`;
+
+      // Render products
+      grid.innerHTML = filteredProducts.map(product => {
+        const price = product.salePrice || product.price;
+        const originalPrice = product.salePrice ? product.price : null;
+        const imageUrl = product.images && product.images[0] ? product.images[0].url : '';
+        
+        return `
+          <div class="product-card">
+            <a href="product.html?id=${product._id}">
+              <div class="product-image">
+                ${imageUrl 
+                  ? `<img src="${imageUrl}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">` 
+                  : '<span>Product Image</span>'
+                }
+              </div>
+            </a>
+            <div class="product-info">
+              <h3 class="product-title">
+                <a href="product.html?id=${product._id}" style="text-decoration: none; color: inherit;">
+                  ${product.name.toUpperCase()}
+                </a>
+              </h3>
+              <p class="product-price">
+                ${originalPrice ? `<span class="text-grey" style="text-decoration: line-through; font-size: 0.875rem;">£${originalPrice.toFixed(2)}</span> ` : ''}
+                £${price.toFixed(2)}
+              </p>
+              <button class="btn btn-primary w-100 btn-sm" onclick="addToCart('${product._id}', '${product.name.replace(/'/g, "\\'")}', ${price})">
+                ADD TO CART
+              </button>
+            </div>
           </div>
         `;
-        grid.style.display = 'block';
-      } finally {
-        loading.style.display = 'none';
-      }
+      }).join('');
+
+      grid.style.display = 'grid';
     }
 
     // Filter by category
@@ -254,15 +432,18 @@
 
       // Update title
       const titles = {
-        'all': 'All Products',
-        'apparel': 'Apparel',
-        'stickers': 'Stickers & Labels',
-        'party-decor': 'Party Decor'
+        'all': 'ALL PRODUCTS',
+        'apparel': 'APPAREL',
+        'stickers': 'STICKERS & LABELS',
+        'party-decor': 'PARTY DECOR',
+        'accessories': 'ACCESSORIES'
       };
       document.getElementById('category-title').textContent = titles[category];
 
-      // Load products
-      loadProducts(category);
+      // Apply filters and redisplay
+      applyFilters();
+      applySorting();
+      displayProducts();
 
       // Update URL
       const url = new URL(window.location);
@@ -274,6 +455,22 @@
       window.history.pushState({}, '', url);
     }
 
+    // Handle sort change
+    function handleSort() {
+      currentSort = document.getElementById('sort-select').value;
+      applySorting();
+      displayProducts();
+    }
+
+    // Handle search
+    function handleSearch(event) {
+      event.preventDefault();
+      searchQuery = document.getElementById('search-input').value.trim();
+      applyFilters();
+      applySorting();
+      displayProducts();
+    }
+
     // Setup category filter buttons
     document.querySelectorAll('#category-filters button').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -283,15 +480,18 @@
 
     // Check URL for category parameter
     const urlParams = new URLSearchParams(window.location.search);
-    const categoryParam = urlParams.get('category') || 'all';
+    const categoryParam = urlParams.get('category');
 
-    // Load products on page load
+    // Initialize
     document.addEventListener('DOMContentLoaded', () => {
-      if (categoryParam !== 'all') {
-        filterCategory(categoryParam);
-      } else {
-        loadProducts();
+      if (categoryParam && categoryParam !== 'all') {
+        currentCategory = categoryParam;
+        document.querySelector(`[data-category="${categoryParam}"]`)?.classList.add('active');
+        document.querySelector(`[data-category="all"]`)?.classList.remove('active');
       }
+      
+      loadProducts();
+      updateCartDisplay();
     });
   </script>
 </body>
