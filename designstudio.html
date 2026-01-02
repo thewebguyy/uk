@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Design Studio - Creative Merch UK</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- SVG Icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"/>
+      <path d="m21 21-4.35-4.35"/>
+    </symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+      <circle cx="12" cy="7" r="4"/>
+    </symbol>
+    <symbol id="icon-shopping-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <path d="M16 10a4 4 0 0 1-8 0"/>
+    </symbol>
+    <symbol id="icon-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+    </symbol>
+    <symbol id="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="2" y1="12" x2="22" y2="12"/>
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+    </symbol>
+    <symbol id="icon-palette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="13.5" cy="6.5" r=".5"/>
+      <circle cx="17.5" cy="10.5" r=".5"/>
+      <circle cx="8.5" cy="7.5" r=".5"/>
+      <circle cx="6.5" cy="12.5" r=".5"/>
+      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+    </symbol>
+    <symbol id="icon-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="16" y1="13" x2="8" y2="13"/>
+      <line x1="16" y1="17" x2="8" y2="17"/>
+      <polyline points="10 9 9 9 8 9"/>
+    </symbol>
+    <symbol id="icon-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+      <circle cx="8.5" cy="8.5" r="1.5"/>
+      <polyline points="21 15 16 10 5 21"/>
+    </symbol>
+    <symbol id="icon-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+    </symbol>
+  </svg>
+
+  <!-- Announcement Banner -->
+  <div class="announcement-banner">
+    <div class="announcement-content">
+      <span class="announcement-item">✨ Free UK Shipping on Orders Over £50</span>
+      <span class="announcement-item">🎨 Custom Designs Available</span>
+      <span class="announcement-item">🎉 Party Essentials Made to Order</span>
+      <span class="announcement-item">✨ Free UK Shipping on Orders Over £50</span>
+      <span class="announcement-item">🎨 Custom Designs Available</span>
+      <span class="announcement-item">🎉 Party Essentials Made to Order</span>
+    </div>
+  </div>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-content">
+        <!-- Logo -->
+        <a class="navbar-brand" href="index.html">
+          <img src="icon.png" alt="Creative Merch UK" class="logo-image">
+        </a>
+
+        <!-- Search Bar -->
+        <form class="search-bar-form-compact">
+          <svg class="search-icon"><use xlink:href="#icon-search"/></svg>
+          <input type="search" class="search-input" placeholder="Search products...">
+        </form>
+
+        <!-- Right Icons -->
+        <div class="d-flex align-items-center gap-3">
+          <!-- Region Selector -->
+          <div class="dropdown">
+            <a href="#" class="nav-icon" data-bs-toggle="dropdown" aria-expanded="false">
+              <svg class="icon"><use xlink:href="#icon-globe"/></svg>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end region-dropdown">
+              <li><a class="dropdown-item" href="#"><span class="flag">🇬🇧</span> UNITED KINGDOM</a></li>
+              <li><a class="dropdown-item" href="#"><span class="flag">🇪🇺</span> EUROPE</a></li>
+              <li><a class="dropdown-item" href="#"><span class="flag">🇺🇸</span> AMERICA</a></li>
+            </ul>
+          </div>
+
+          <a href="#wishlist" class="nav-icon">
+            <svg class="icon"><use xlink:href="#icon-heart"/></svg>
+          </a>
+          <a href="#cart" class="nav-icon" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+            <svg class="icon"><use xlink:href="#icon-shopping-bag"/></svg>
+            <span class="badge-cart" id="cart-count"></span>
+          </a>
+          
+          <!-- Sign In / Sign Up -->
+          <a href="account.html" class="nav-icon nav-icon-text">
+            <svg class="icon"><use xlink:href="#icon-user"/></svg>
+            <span class="nav-text">SIGN IN / SIGN UP</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shopping Cart Offcanvas -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">YOUR CART</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div id="cart-items"></div>
+      <div id="cart-empty" class="text-center">
+        <p class="text-grey">Your cart is empty</p>
+      </div>
+      <div id="cart-summary" style="display: none;">
+        <div class="d-flex justify-content-between mb-3 pt-3" style="border-top: 1px solid var(--color-grey-light);">
+          <strong>SUBTOTAL:</strong>
+          <strong id="cart-subtotal">£0.00</strong>
+        </div>
+        <button class="btn btn-primary w-100" onclick="window.location.href='checkout.html'">CHECKOUT</button>
+        <button class="btn btn-secondary w-100 mt-2" data-bs-dismiss="offcanvas">CONTINUE SHOPPING</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <nav class="navbar navbar-expand-lg main-nav">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav">
+          <!-- Shop Mega Menu -->
+          <li class="nav-item dropdown mega-menu">
+            <a class="nav-link dropdown-toggle" href="#" id="shopDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              SHOP
+            </a>
+            <div class="dropdown-menu mega-dropdown">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-3">
+                    <h6 class="mega-title">CATEGORIES</h6>
+                    <a class="dropdown-item" href="shop.html">ALL PRODUCTS</a>
+                    <a class="dropdown-item" href="shop.html?category=apparel">APPAREL</a>
+                    <a class="dropdown-item" href="shop.html?category=stickers">STICKERS & LABELS</a>
+                    <a class="dropdown-item" href="shop.html?category=party-decor">PARTY DECOR</a>
+                    <a class="dropdown-item" href="shop.html?category=accessories">ACCESSORIES</a>
+                  </div>
+                  <div class="col-md-3">
+                    <h6 class="mega-title">APPAREL</h6>
+                    <a class="dropdown-item" href="#">T-Shirts</a>
+                    <a class="dropdown-item" href="#">Hoodies</a>
+                    <a class="dropdown-item" href="#">Hats</a>
+                    <a class="dropdown-item" href="#">Bags</a>
+                  </div>
+                  <div class="col-md-3">
+                    <h6 class="mega-title">PARTY ESSENTIALS</h6>
+                    <a class="dropdown-item" href="#">Banners</a>
+                    <a class="dropdown-item" href="#">Balloons</a>
+                    <a class="dropdown-item" href="#">Table Decor</a>
+                    <a class="dropdown-item" href="#">Party Packs</a>
+                  </div>
+                  <div class="col-md-3">
+                    <h6 class="mega-title">STICKERS & LABELS</h6>
+                    <a class="dropdown-item" href="#">Vinyl Stickers</a>
+                    <a class="dropdown-item" href="#">Custom Labels</a>
+                    <a class="dropdown-item" href="#">Wall Decals</a>
+                    <a class="dropdown-item" href="#">Sticker Packs</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- Design Studio Mega Menu -->
+          <li class="nav-item dropdown mega-menu">
+            <a class="nav-link dropdown-toggle active" href="designstudio.html" id="studioDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              DESIGN STUDIO
+            </a>
+            <div class="dropdown-menu mega-dropdown">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h6 class="mega-title">SERVICES</h6>
+                    <a class="dropdown-item" href="designservice.html">Custom Design</a>
+                    <a class="dropdown-item" href="#logo-design">Logo Design</a>
+                    <a class="dropdown-item" href="#mockup">Mockup Generation</a>
+                  </div>
+                  <div class="col-md-6">
+                    <h6 class="mega-title">RESOURCES</h6>
+                    <a class="dropdown-item" href="#resources">Design Templates</a>
+                    <a class="dropdown-item" href="#resources">Style Guide</a>
+                    <a class="dropdown-item" href="#resources">FAQs</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- Premium Services Mega Menu -->
+          <li class="nav-item dropdown mega-menu">
+            <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              PREMIUM SERVICES
+            </a>
+            <div class="dropdown-menu mega-dropdown">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-4">
+                    <h6 class="mega-title">SERVICES</h6>
+                    <a class="dropdown-item" href="senditems.html">Send Items In</a>
+                    <a class="dropdown-item" href="index.html#installation">Installation</a>
+                    <a class="dropdown-item" href="index.html#workshops">Workshops</a>
+                    <a class="dropdown-item" href="index.html#subscriptions">Subscriptions</a>
+                  </div>
+                  <div class="col-md-4">
+                    <h6 class="mega-title">INSTALLATION</h6>
+                    <a class="dropdown-item" href="#">Wall Vinyls</a>
+                    <a class="dropdown-item" href="#">Event Setup</a>
+                    <a class="dropdown-item" href="#">UK Coverage</a>
+                  </div>
+                  <div class="col-md-4">
+                    <h6 class="mega-title">WORKSHOPS</h6>
+                    <a class="dropdown-item" href="#">Design Basics</a>
+                    <a class="dropdown-item" href="#">DIY Party Decor</a>
+                    <a class="dropdown-item" href="#">Printing Techniques</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="section" style="background: var(--color-grey-light); padding: 4rem 0;">
+    <div class="container text-center">
+      <h1>DESIGN STUDIO</h1>
+      <p class="text-grey-dark" style="max-width: 700px; margin: 0 auto;">
+        Professional design services to bring your vision to life. From custom designs to complete branding solutions.
+      </p>
+    </div>
+  </section>
+
+  <!-- Custom Design Section -->
+  <section id="custom-design" class="section">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <h2 class="section-title text-start">CUSTOM DESIGN</h2>
+          <p class="text-grey-dark" style="font-size: 1rem; line-height: 1.8;">
+            Work with our expert design team to create bespoke designs tailored to your exact specifications. Whether you need a one-off piece or a complete collection, we'll bring your vision to life.
+          </p>
+          <ul class="design-features" style="list-style: none; padding: 0; margin: 2rem 0;">
+            <li style="padding: 0.75rem 0; padding-left: 1.5rem; position: relative;">
+              <span style="position: absolute; left: 0; font-weight: 700;">✓</span>
+              Professional design consultation
+            </li>
+            <li style="padding: 0.75rem 0; padding-left: 1.5rem; position: relative;">
+              <span style="position: absolute; left: 0; font-weight: 700;">✓</span>
+              Unlimited revisions included
+            </li>
+            <li style="padding: 0.75rem 0; padding-left: 1.5rem; position: relative;">
+              <span style="position: absolute; left: 0; font-weight: 700;">✓</span>
+              High-resolution final files
+            </li>
+            <li style="padding: 0.75rem 0; padding-left: 1.5rem; position: relative;">
+              <span style="position: absolute; left: 0; font-weight: 700;">✓</span>
+              Fast turnaround times
+            </li>
+          </ul>
+          <a href="designservice.html" class="btn btn-primary btn-lg">
+            <span>START YOUR PROJECT</span>
+            <svg class="icon-sm"><use xlink:href="#icon-palette"/></svg>
+          </a>
+        </div>
+        <div class="col-lg-6">
+          <div style="background: var(--color-grey-light); padding: 4rem 2rem; text-align: center; min-height: 300px; display: flex; align-items: center; justify-content: center;">
+            <span style="font-size: 1rem; color: var(--color-grey);">CUSTOM DESIGN SHOWCASE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Logo Design Section -->
+  <section id="logo-design" class="section" style="background: var(--color-grey-light);">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6 order-lg-2">
+          <h2 class="section-title text-start">LOGO DESIGN</h2>
+          <p class="text-grey-dark" style="font-size: 1rem; line-height: 1.8;">
+            Create a memorable brand identity with professional logo design. We'll develop a unique logo that represents your brand's values and stands out from the competition.
+          </p>
+          <ul class="design-features" style="list-style: none; padding: 0; margin: 2rem 0;">
+            <li style="padding: 0.75rem 0; padding-left: 1.5rem; position: relative;">
+              <span style="position: absolute; left: 0; font-weight: 700;">✓</span>
+              Multiple concept options
+            </li>
+            <li style="padding: 0.75rem 0; padding-left: 1.5rem; position: relative;">
+              <span style="position: absolute; left: 0; font-weight: 700;">✓</span>
+              Vector files for scalability
+            </li>
+            <li style="padding: 0.75rem 0; padding-left: 1.5rem; position: relative;">
+              <span style="position: absolute; left: 0; font-weight: 700;">✓</span>
+              Brand guidelines included
+            </li>
+            <li style="padding: 0.75rem 0; padding-left: 1.5rem; position: relative;">
+              <span style="position: absolute; left: 0; font-weight: 700;">✓</span>
+              Full commercial rights
+            </li>
+          </ul>
+          <a href="contact.html?service=design" class="btn btn-primary btn-lg">
+            <span>REQUEST QUOTE</span>
+            <svg class="icon-sm"><use xlink:href="#icon-palette"/></svg>
+          </a>
+        </div>
+        <div class="col-lg-6 order-lg-1">
+          <div style="background: var(--color-white); padding: 4rem 2rem; text-align: center; min-height: 300px; display: flex; align-items: center; justify-content: center;">
+            <span style="font-size: 1rem; color: var(--color-grey);">LOGO DESIGN EXAMPLES</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mockup Generation Section -->
+  <section id="mockup" class="section">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <h2 class="section-title text-start">MOCKUP GENERATION</h2>
+          <p class="text-grey-dark" style="font-size: 1rem; line-height: 1.8;">
+            See your designs come to life with professional mockups. Perfect for presentations, marketing materials, or testing design concepts before production.
+          </p>
+          <ul class="design-features" style="list-style: none; padding: 0; margin: 2rem 0;">
+            <li style="padding: 0.75rem 0; padding-left: 1.5rem; position: relative;">
+              <span style="position: absolute; left: 0; font-weight: 700;">✓</span>
+              Photorealistic mockups
+            </li>
+            <li style="padding: 0.75rem 0; padding-left: 1.5rem; position: relative;">
+              <span style="position: absolute; left: 0; font-weight: 700;">✓</span>
+              Multiple product types
+            </li>
+            <li style="padding: 0.75rem 0; padding-left: 1.5rem; position: relative;">
+              <span style="position: absolute; left: 0; font-weight: 700;">✓</span>
+              Custom backgrounds available
+            </li>
+            <li style="padding: 0.75rem 0; padding-left: 1.5rem; position: relative;">
+              <span style="position: absolute; left: 0; font-weight: 700;">✓</span>
+              High-resolution output
+            </li>
+          </ul>
+          <a href="studio.html" class="btn btn-primary btn-lg">
+            <span>TRY STUDIO</span>
+            <svg class="icon-sm"><use xlink:href="#icon-image"/></svg>
+          </a>
+        </div>
+        <div class="col-lg-6">
+          <div style="background: var(--color-grey-light); padding: 4rem 2rem; text-align: center; min-height: 300px; display: flex; align-items: center; justify-content: center;">
+            <span style="font-size: 1rem; color: var(--color-grey);">MOCKUP EXAMPLES</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resources Section -->
+  <section id="resources" class="service-section">
+    <div class="container">
+      <h2 class="section-title">DESIGN RESOURCES</h2>
+      <p class="section-subtitle">Everything you need to create amazing designs</p>
+
+      <div class="row g-4">
+        <!-- Design Templates -->
+        <div class="col-md-4">
+          <div class="service-card">
+            <div class="service-icon">
+              <svg><use xlink:href="#icon-file"/></svg>
+            </div>
+            <h3 class="service-title">DESIGN TEMPLATES</h3>
+            <p class="service-description">Pre-made templates to jumpstart your design projects. Fully customizable and ready to use.</p>
+            <ul class="text-start mb-3">
+              <li>Apparel templates</li>
+              <li>Label templates</li>
+              <li>Party decor templates</li>
+              <li>Editable files (AI, PSD)</li>
+            </ul>
+            <a href="contact.html" class="btn btn-outline">
+              <span>ACCESS TEMPLATES</span>
+              <svg class="icon-sm"><use xlink:href="#icon-file"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Style Guide -->
+        <div class="col-md-4">
+          <div class="service-card">
+            <div class="service-icon">
+              <svg><use xlink:href="#icon-book"/></svg>
+            </div>
+            <h3 class="service-title">STYLE GUIDE</h3>
+            <p class="service-description">Comprehensive guide covering design best practices, color theory, typography, and more.</p>
+            <ul class="text-start mb-3">
+              <li>Design principles</li>
+              <li>Color combinations</li>
+              <li>Typography guidelines</li>
+              <li>Print specifications</li>
+            </ul>
+            <a href="contact.html" class="btn btn-outline">
+              <span>VIEW GUIDE</span>
+              <svg class="icon-sm"><use xlink:href="#icon-book"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- FAQs -->
+        <div class="col-md-4">
+          <div class="service-card">
+            <div class="service-icon">
+              <svg><use xlink:href="#icon-palette"/></svg>
+            </div>
+            <h3 class="service-title">DESIGN FAQs</h3>
+            <p class="service-description">Common questions about our design services, processes, file formats, and turnaround times.</p>
+            <ul class="text-start mb-3">
+              <li>File requirements</li>
+              <li>Revision process</li>
+              <li>Pricing information</li>
+              <li>Timeline expectations</li>
+            </ul>
+            <a href="contact.html" class="btn btn-outline">
+              <span>READ FAQs</span>
+              <svg class="icon-sm"><use xlink:href="#icon-palette"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="section" style="background: var(--color-black); color: var(--color-white); padding: 4rem 0;">
+    <div class="container text-center">
+      <h2 style="color: var(--color-white); margin-bottom: 1rem;">READY TO START YOUR PROJECT?</h2>
+      <p style="color: var(--color-white); opacity: 0.8; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+        Let's work together to create something amazing. Get in touch to discuss your design needs.
+      </p>
+      <a href="contact.html?service=design" class="btn btn-primary btn-lg" style="background: var(--color-white); color: var(--color-black);">
+        <span>GET STARTED</span>
+        <svg class="icon-sm"><use xlink:href="#icon-palette"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <!-- About -->
+        <div class="col-md-4 footer-section">
+          <h3 class="footer-title">ABOUT US</h3>
+          <p class="text-grey-dark">Creative Merch UK offers premium designs, custom prints, and party essentials crafted with care. We're dedicated to helping you create memorable moments and standout branding.</p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="col-md-4 footer-section">
+          <h3 class="footer-title">QUICK LINKS</h3>
+          <ul class="footer-links">
+            <li><a href="shop.html">SHOP</a></li>
+            <li><a href="studio.html">STUDIO</a></li>
+            <li><a href="designstudio.html">DESIGN STUDIO</a></li>
+            <li><a href="designservice.html">DESIGN SERVICE</a></li>
+            <li><a href="senditems.html">SEND ITEMS IN</a></li>
+            <li><a href="contact.html">CONTACT</a></li>
+            <li><a href="account.html">ACCOUNT</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="col-md-4 footer-section">
+          <h3 class="footer-title">CONTACT US</h3>
+          <p class="text-grey-dark">
+            <strong>EMAIL:</strong><br>
+            <a href="mailto:info@customisemeuk.com">info@customisemeuk.com</a>
+          </p>
+          <p class="text-grey-dark mb-3">
+            <strong>PHONE:</strong><br>
+            <a href="tel:07588770901">07588770901</a>
+          </p>
+          <p class="text-grey-dark mb-3">
+            <strong>INSTAGRAM:</strong><br>
+            <a href="https://www.instagram.com/customisemeuk" target="_blank">@customisemeuk</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="text-center mt-4 pt-4" style="border-top: 1px solid var(--color-grey-light);">
+        <p class="text-grey-dark mb-0">© 2026 Customise Me UK. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/cart.js"></script>
+  
+  <script>
+    // Update cart count on load
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCartDisplay();
+    });
+  </script>
+</body>
+</html>
