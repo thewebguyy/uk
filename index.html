@@ -120,7 +120,7 @@
           <input type="search" class="search-input" placeholder="Search products...">
         </form>
 
-        <!-- Right Icons - SIGN IN/SIGN UP MOVED TO THE RIGHT -->
+        <!-- Right Icons -->
         <div class="d-flex align-items-center gap-3">
           <!-- Region Selector -->
           <div class="dropdown">
@@ -142,7 +142,7 @@
             <span class="badge-cart" id="cart-count"></span>
           </a>
           
-          <!-- Sign In / Sign Up - MOVED TO THE END (RIGHT) -->
+          <!-- Sign In / Sign Up -->
           <a href="account.html" class="nav-icon nav-icon-text">
             <svg class="icon"><use xlink:href="#icon-user"/></svg>
             <span class="nav-text">SIGN IN / SIGN UP</span>
@@ -185,7 +185,7 @@
         <ul class="navbar-nav">
           <!-- Shop Mega Menu -->
           <li class="nav-item dropdown mega-menu">
-            <a class="nav-link dropdown-toggle" href="#" id="shopDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="shop.html" id="shopDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               SHOP
             </a>
             <div class="dropdown-menu mega-dropdown">
@@ -201,24 +201,24 @@
                   </div>
                   <div class="col-md-3">
                     <h6 class="mega-title">APPAREL</h6>
-                    <a class="dropdown-item" href="#">T-Shirts</a>
-                    <a class="dropdown-item" href="#">Hoodies</a>
-                    <a class="dropdown-item" href="#">Hats</a>
-                    <a class="dropdown-item" href="#">Bags</a>
+                    <a class="dropdown-item" href="shop.html?category=apparel">T-Shirts</a>
+                    <a class="dropdown-item" href="shop.html?category=apparel">Hoodies</a>
+                    <a class="dropdown-item" href="shop.html?category=apparel">Hats</a>
+                    <a class="dropdown-item" href="shop.html?category=apparel">Bags</a>
                   </div>
                   <div class="col-md-3">
                     <h6 class="mega-title">PARTY ESSENTIALS</h6>
-                    <a class="dropdown-item" href="#">Banners</a>
-                    <a class="dropdown-item" href="#">Balloons</a>
-                    <a class="dropdown-item" href="#">Table Decor</a>
-                    <a class="dropdown-item" href="#">Party Packs</a>
+                    <a class="dropdown-item" href="shop.html?category=party-decor">Banners</a>
+                    <a class="dropdown-item" href="shop.html?category=party-decor">Balloons</a>
+                    <a class="dropdown-item" href="shop.html?category=party-decor">Table Decor</a>
+                    <a class="dropdown-item" href="shop.html?category=party-decor">Party Packs</a>
                   </div>
                   <div class="col-md-3">
                     <h6 class="mega-title">STICKERS & LABELS</h6>
-                    <a class="dropdown-item" href="#">Vinyl Stickers</a>
-                    <a class="dropdown-item" href="#">Custom Labels</a>
-                    <a class="dropdown-item" href="#">Wall Decals</a>
-                    <a class="dropdown-item" href="#">Sticker Packs</a>
+                    <a class="dropdown-item" href="shop.html?category=stickers">Vinyl Stickers</a>
+                    <a class="dropdown-item" href="shop.html?category=stickers">Custom Labels</a>
+                    <a class="dropdown-item" href="shop.html?category=stickers">Wall Decals</a>
+                    <a class="dropdown-item" href="shop.html?category=stickers">Sticker Packs</a>
                   </div>
                 </div>
               </div>
@@ -236,19 +236,23 @@
                   <div class="col-md-6">
                     <h6 class="mega-title">SERVICES</h6>
                     <a class="dropdown-item" href="designservice.html">Custom Design</a>
+                    <a class="dropdown-item" href="designstudio.html#logo-design">Logo Design</a>
+                    <a class="dropdown-item" href="designstudio.html#mockup">Mockup Generation</a>
                   </div>
                   <div class="col-md-6">
                     <h6 class="mega-title">RESOURCES</h6>
                     <a class="dropdown-item" href="designstudio.html#resources">Design Templates</a>
+                    <a class="dropdown-item" href="designstudio.html#resources">Style Guide</a>
+                    <a class="dropdown-item" href="designstudio.html#resources">FAQs</a>
                   </div>
                 </div>
               </div>
             </div>
           </li>
 
-          <!-- Premium Services Mega Menu - UPDATED -->
+          <!-- Premium Services Mega Menu -->
           <li class="nav-item dropdown mega-menu">
-            <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="premiumservices.html" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               PREMIUM SERVICES
             </a>
             <div class="dropdown-menu mega-dropdown">
@@ -261,12 +265,13 @@
                   </div>
                   <div class="col-md-4">
                     <h6 class="mega-title">INSTALLATION</h6>
-                    <a class="dropdown-item" href="installation.html">Vinyl Installation: Windows, Walls and Backdrops</a>
+                    <a class="dropdown-item" href="installation.html">Vinyl Installation</a>
+                    <a class="dropdown-item" href="premiumservices.html#event-setup">Event Setup</a>
                   </div>
                   <div class="col-md-4">
                     <h6 class="mega-title">WORKSHOPS</h6>
-                    <a class="dropdown-item" href="#workshops">Group Iron on Workshop</a>
-                    <a class="dropdown-item" href="#workshops">Individual Iron on Experience</a>
+                    <a class="dropdown-item" href="contact.html?service=workshop">Group Iron On Workshop</a>
+                    <a class="dropdown-item" href="contact.html?service=workshop">Individual Iron On Experience</a>
                   </div>
                 </div>
               </div>
@@ -292,7 +297,7 @@
     </div>
   </section>
 
-  <!-- Featured Products - 4 Only -->
+  <!-- Featured Products - 4 Only (NO ADD TO CART BUTTONS) -->
   <section class="section">
     <div class="container">
       <h2 class="section-title">SHOP OUR COLLECTION</h2>
@@ -311,7 +316,6 @@
               <a href="product.html?id=1" style="text-decoration: none; color: inherit;">CUSTOM T-SHIRT DESIGN</a>
             </h3>
             <p class="product-price">£24.99</p>
-            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(1, 'Custom T-Shirt Design', 24.99)">ADD TO CART</button>
           </div>
         </div>
 
@@ -327,7 +331,6 @@
               <a href="product.html?id=2" style="text-decoration: none; color: inherit;">VINYL STICKER PACK</a>
             </h3>
             <p class="product-price">£9.99</p>
-            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(2, 'Vinyl Sticker Pack', 9.99)">ADD TO CART</button>
           </div>
         </div>
 
@@ -343,7 +346,6 @@
               <a href="product.html?id=3" style="text-decoration: none; color: inherit;">PARTY BANNER SET</a>
             </h3>
             <p class="product-price">£19.99</p>
-            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(3, 'Party Banner Set', 19.99)">ADD TO CART</button>
           </div>
         </div>
 
@@ -359,7 +361,6 @@
               <a href="product.html?id=4" style="text-decoration: none; color: inherit;">CUSTOM LABELS</a>
             </h3>
             <p class="product-price">£14.99</p>
-            <button class="btn btn-primary w-100 btn-sm" onclick="addToCart(4, 'Custom Labels', 14.99)">ADD TO CART</button>
           </div>
         </div>
       </div>
@@ -595,7 +596,7 @@
     </div>
   </section>
 
-  <!-- Footer - UPDATED COPYRIGHT -->
+  <!-- Footer -->
   <footer>
     <div class="container">
       <div class="row">
@@ -679,24 +680,10 @@
       startAutoSlide();
       
       // Update cart count display
-      updateCartDisplay();
-    });
-
-    // Cart count update function
-    function updateCartCount() {
-      const cart = getCart();
-      const count = cart.reduce((total, item) => total + item.quantity, 0);
-      const badge = document.getElementById('cart-count');
-      if (badge) {
-        badge.textContent = count;
-        badge.style.display = count > 0 ? 'flex' : 'none';
+      if (typeof updateCartDisplay === 'function') {
+        updateCartDisplay();
       }
-    }
-
-    // Initialize cart count on page load
-    if (typeof updateCartDisplay === 'function') {
-      updateCartDisplay();
-    }
+    });
   </script>
 </body>
 </html>
