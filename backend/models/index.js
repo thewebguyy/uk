@@ -1,13 +1,13 @@
 /**
- * MONGOOSE MODELS
- * Database schemas with validation
+ * MONGOOSE MODELS - UPDATED
+ * Database schemas with validation and missing fields added
  */
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 // ============================================
-// USER MODEL
+// USER MODEL - WITH PASSWORD RESET FIELDS
 // ============================================
 
 const userSchema = new mongoose.Schema({
@@ -63,6 +63,14 @@ const userSchema = new mongoose.Schema({
   isActive: {
     type: Boolean,
     default: true
+  },
+  passwordResetToken: {
+    type: String,
+    select: false
+  },
+  passwordResetExpires: {
+    type: Date,
+    select: false
   }
 }, {
   timestamps: true
@@ -84,6 +92,8 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
 userSchema.methods.toJSON = function() {
   const obj = this.toObject();
   delete obj.password;
+  delete obj.passwordResetToken;
+  delete obj.passwordResetExpires;
   return obj;
 };
 
@@ -342,8 +352,8 @@ orderSchema.methods.calculateTotals = function() {
     return sum + item.subtotal;
   }, 0);
   
-  // Free shipping over £50
-  this.pricing.shipping = this.pricing.subtotal >= 50 ? 0 : 4.99;
+  // Free shipping over £100 (updated threshold)
+  this.pricing.shipping = this.pricing.subtotal >= 100 ? 0 : 4.99;
   
   // 20% VAT
   this.pricing.tax = (this.pricing.subtotal + this.pricing.shipping) * 0.20;
@@ -398,6 +408,68 @@ const contactSchema = new mongoose.Schema({
 const Contact = mongoose.model('Contact', contactSchema);
 
 // ============================================
+// NEWSLETTER MODEL (NEW)
+// ============================================
+
+const newsletterSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    trim: true
+  },
+  subscribed: {
+    type: Boolean,
+    default: true
+  },
+  subscribedAt: {
+    type: Date,
+    default: Date.now
+  },
+  unsubscribedAt: Date
+}, {
+  timestamps: true
+});
+
+const Newsletter = mongoose.model('Newsletter', newsletterSchema);
+
+// ============================================
+// DESIGN CONFIGURATION MODEL (NEW)
+// ============================================
+
+const designConfigSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  sessionId: String, // For guest users
+  productId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Product'
+  },
+  name: String,
+  configuration: {
+    rotation: Number,
+    zoom: Number,
+    color: String,
+    material: String,
+    size: String,
+    customText: String,
+    customImage: String
+  },
+  screenshot: String, // Base64 or URL
+  isSaved: {
+    type: Boolean,
+    default: false
+  }
+}, {
+  timestamps: true
+});
+
+const DesignConfig = mongoose.model('DesignConfig', designConfigSchema);
+
+// ============================================
 // EXPORTS
 // ============================================
 
@@ -405,5 +477,7 @@ module.exports = {
   User,
   Product,
   Order,
-  Contact
+  Contact,
+  Newsletter,
+  DesignConfig
 };

@@ -1,6 +1,6 @@
 /**
- * CREATIVE MERCH UK - BACKEND SERVER
- * Production-ready Node.js/Express server
+ * CREATIVE MERCH UK - BACKEND SERVER (UPDATED)
+ * Production-ready Node.js/Express server with all routes
  */
 
 const express = require('express');
@@ -59,10 +59,13 @@ if (process.env.NODE_ENV === 'development') {
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  max: 100,
   message: 'Too many requests from this IP, please try again later.'
 });
 app.use('/api/', limiter);
+
+// Serve uploaded files statically
+app.use('/uploads', express.static('uploads'));
 
 // ============================================
 // DATABASE CONNECTION
@@ -106,6 +109,10 @@ const orderRoutes = require('./routes/order.routes');
 const contactRoutes = require('./routes/contact.routes');
 const paymentRoutes = require('./routes/payment.routes');
 const userRoutes = require('./routes/user.routes');
+const newsletterRoutes = require('./routes/newsletter.routes');
+const wishlistRoutes = require('./routes/wishlist.routes');
+const reviewsRoutes = require('./routes/reviews.routes');
+const designRoutes = require('./routes/design.routes');
 
 // Mount routes
 app.use('/api/auth', authRoutes);
@@ -114,6 +121,10 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/newsletter', newsletterRoutes);
+app.use('/api/wishlist', wishlistRoutes);
+app.use('/api/reviews', reviewsRoutes);
+app.use('/api/designs', designRoutes);
 
 // ============================================
 // ERROR HANDLING
@@ -156,6 +167,17 @@ app.listen(PORT, () => {
 ║   Status: RUNNING ✅                       ║
 ╚════════════════════════════════════════════╝
   `);
+  console.log('\n📋 Available Routes:');
+  console.log('   - /api/auth (Authentication)');
+  console.log('   - /api/products (Product Catalog)');
+  console.log('   - /api/orders (Order Management)');
+  console.log('   - /api/payments (Stripe Integration)');
+  console.log('   - /api/users (User Management)');
+  console.log('   - /api/contact (Contact Forms)');
+  console.log('   - /api/newsletter (Newsletter)');
+  console.log('   - /api/wishlist (Wishlist)');
+  console.log('   - /api/reviews (Product Reviews)');
+  console.log('   - /api/designs (Design Configs)\n');
 });
 
 // Graceful shutdown
