@@ -1,156 +1,215 @@
 /**
- * AUTHENTICATION MIDDLEWARE
- * JWT verification, role checking, and related utilities.
- *
- * Improvements:
- * - Added JSDoc comments for better documentation.
- * - Improved error handling with more specific messages and logging (using console.error; replace with a proper logger in production).
- * - Used async/await consistently.
- * - Added support for refresh tokens in a separate middleware (basic implementation; assumes refresh token logic in auth routes).
- * - Enhanced rate limiter: Added periodic cleanup of the Map to prevent memory leaks in long-running processes.
- * - Suggested using a distributed rate limiter (e.g., with Redis) for production via comments.
- * - Ensured strict equality checks and optional chaining.
- * - Added HTTPS enforcement check (optional, can be enabled).
- * - Integrated Helmet usage recommendation in comments for security headers.
- * - For ownership check, added flexibility for resource loading if not pre-set.
+ * ENHANCED AUTHENTICATION MIDDLEWARE
+ * JWT verification, role checking, login attempt tracking, and session management
  */
 
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
-
-// Recommendation: Use Helmet for security headers (npm install helmet)
-// app.use(helmet());
-
-// Recommendation: Enforce HTTPS in production
-// const enforceHttps = (req, res, next) => {
-//   if (req.secure || req.headers['x-forwarded-proto'] === 'https') {
-//     return next();
-//   }
-//   res.redirect(`https://${req.hostname}${req.url}`);
-// };
+const config = require('../config/config');
+const logger = require('../services/logger.service');
+const { AuthenticationError, AuthorizationError } = require('./errorHandler');
 
 // ============================================
-// VERIFY JWT TOKEN
+// LOGIN ATTEMPT TRACKING
+// ============================================
+
+// In-memory tracking (use Redis in production for distributed systems)
+const loginAttempts = new Map();
+
+// Cleanup old attempts every hour
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, data] of loginAttempts.entries()) {
+    if (now - data.lastAttempt > config.security.accountLockoutDuration) {
+      loginAttempts.delete(key);
+    }
+  }
+}, 60 * 60 * 1000);
+
+/**
+ * Track failed login attempt
+ */
+const trackLoginAttempt = (identifier) => {
+  const key = identifier.toLowerCase();
+  const now = Date.now();
+  
+  if (!loginAttempts.has(key)) {
+    loginAttempts.set(key, {
+      count: 1,
+      lastAttempt: now,
+      lockedUntil: null
+    });
+    return { isLocked: false, remainingAttempts: config.security.maxLoginAttempts - 1 };
+  }
+  
+  const attempt = loginAttempts.get(key);
+  
+  // Check if account is locked
+  if (attempt.lockedUntil && now < attempt.lockedUntil) {
+    const remainingTime = Math.ceil((attempt.lockedUntil - now) / 60000); // minutes
+    logger.logSecurity('LOCKED_ACCOUNT_LOGIN_ATTEMPT', { identifier: key });
+    return {
+      isLocked: true,
+      remainingTime,
+      message: `Account is locked. Try again in ${remainingTime} minutes.`
+    };
+  }
+  
+  // Reset if lockout period has passed
+  if (attempt.lockedUntil && now >= attempt.lockedUntil) {
+    attempt.count = 0;
+    attempt.lockedUntil = null;
+  }
+  
+  // Increment attempt count
+  attempt.count++;
+  attempt.lastAttempt = now;
+  
+  // Lock account if max attempts exceeded
+  if (attempt.count >= config.security.maxLoginAttempts) {
+    attempt.lockedUntil = now + config.security.accountLockoutDuration;
+    const lockoutMinutes = Math.ceil(config.security.accountLockoutDuration / 60000);
+    
+    logger.logSecurity('ACCOUNT_LOCKED', {
+      identifier: key,
+      attempts: attempt.count,
+      lockoutMinutes
+    });
+    
+    return {
+      isLocked: true,
+      remainingTime: lockoutMinutes,
+      message: `Too many failed attempts. Account locked for ${lockoutMinutes} minutes.`
+    };
+  }
+  
+  loginAttempts.set(key, attempt);
+  
+  return {
+    isLocked: false,
+    remainingAttempts: config.security.maxLoginAttempts - attempt.count
+  };
+};
+
+/**
+ * Reset login attempts on successful login
+ */
+const resetLoginAttempts = (identifier) => {
+  const key = identifier.toLowerCase();
+  loginAttempts.delete(key);
+};
+
+/**
+ * Check if account is locked
+ */
+const isAccountLocked = (identifier) => {
+  const key = identifier.toLowerCase();
+  const attempt = loginAttempts.get(key);
+  
+  if (!attempt || !attempt.lockedUntil) {
+    return { isLocked: false };
+  }
+  
+  const now = Date.now();
+  if (now < attempt.lockedUntil) {
+    const remainingTime = Math.ceil((attempt.lockedUntil - now) / 60000);
+    return {
+      isLocked: true,
+      remainingTime,
+      message: `Account is locked. Try again in ${remainingTime} minutes.`
+    };
+  }
+  
+  // Lockout period has passed
+  attempt.count = 0;
+  attempt.lockedUntil = null;
+  loginAttempts.set(key, attempt);
+  
+  return { isLocked: false };
+};
+
+// ============================================
+// JWT TOKEN VERIFICATION
 // ============================================
 
 /**
- * Middleware to authenticate JWT token.
- * @param {Object} req - Express request object.
- * @param {Object} res - Express response object.
- * @param {Function} next - Next middleware function.
+ * Verify and decode JWT token
+ */
+const verifyToken = (token, secret = config.jwt.secret) => {
+  try {
+    return jwt.verify(token, secret);
+  } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      throw new AuthenticationError('Token expired');
+    }
+    if (error.name === 'JsonWebTokenError') {
+      throw new AuthenticationError('Invalid token');
+    }
+    throw error;
+  }
+};
+
+/**
+ * Generate access token
+ */
+const generateAccessToken = (userId) => {
+  return jwt.sign(
+    { id: userId, type: 'access' },
+    config.jwt.secret,
+    { expiresIn: config.jwt.expiresIn }
+  );
+};
+
+/**
+ * Generate refresh token
+ */
+const generateRefreshToken = (userId) => {
+  return jwt.sign(
+    { id: userId, type: 'refresh' },
+    config.jwt.refreshSecret,
+    { expiresIn: config.jwt.refreshExpiresIn }
+  );
+};
+
+// ============================================
+// AUTHENTICATION MIDDLEWARE
+// ============================================
+
+/**
+ * Main authentication middleware
  */
 const authenticateToken = async (req, res, next) => {
   try {
-    // Get token from header
+    // Extract token from header
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
 
     if (!token) {
-      return res.status(401).json({
-        success: false,
-        message: 'Access token required'
-      });
+      throw new AuthenticationError('Access token required');
     }
 
-    // Verify token (synchronous, but can be made async with promisify if needed)
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // Verify token
+    const decoded = verifyToken(token);
+    
+    // Validate token type
+    if (decoded.type !== 'access') {
+      throw new AuthenticationError('Invalid token type');
+    }
 
-    // Get user from database (select minimal fields)
-    const user = await User.findById(decoded.id).select('email name role isActive -_id');
+    // Get user from database
+    const user = await User.findById(decoded.id).select('email name role isActive');
 
     if (!user) {
-      return res.status(401).json({
-        success: false,
-        message: 'User not found'
-      });
+      logger.logSecurity('TOKEN_USER_NOT_FOUND', { userId: decoded.id });
+      throw new AuthenticationError('User not found');
     }
 
     if (!user.isActive) {
-      return res.status(401).json({
-        success: false,
-        message: 'Account is deactivated'
-      });
+      logger.logSecurity('INACTIVE_USER_ACCESS_ATTEMPT', { userId: decoded.id });
+      throw new AuthenticationError('Account is deactivated');
     }
 
     // Attach user to request
-    req.user = {
-      id: decoded.id, // Already a string from decoded
-      email: user.email,
-      name: user.name,
-      role: user.role
-    };
-
-    next();
-  } catch (error) {
-    console.error('Authentication error:', error); // Replace with logger.error in production
-
-    if (error.name === 'JsonWebTokenError') {
-      return res.status(401).json({
-        success: false,
-        message: 'Invalid token'
-      });
-    }
-    if (error.name === 'TokenExpiredError') {
-      return res.status(401).json({
-        success: false,
-        message: 'Token expired'
-      });
-    }
-
-    return res.status(500).json({
-      success: false,
-      message: 'Authentication error',
-      error: error.message // Avoid exposing full error in production
-    });
-  }
-};
-
-// ============================================
-// REFRESH TOKEN HANDLING (BASIC)
-// ============================================
-
-/**
- * Middleware to verify and refresh access token using refresh token.
- * Assumes refresh token is stored in HTTP-only cookie or separate header.
- * @param {Object} req - Express request object.
- * @param {Object} res - Express response object.
- * @param {Function} next - Next middleware function.
- */
-const refreshToken = async (req, res, next) => {
-  try {
-    const refreshToken = req.cookies.refreshToken; // Assuming stored in HTTP-only cookie
-
-    if (!refreshToken) {
-      return res.status(401).json({
-        success: false,
-        message: 'Refresh token required'
-      });
-    }
-
-    // Verify refresh token
-    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET); // Use separate secret
-
-    const user = await User.findById(decoded.id).select('email name role isActive -_id');
-
-    if (!user || !user.isActive) {
-      return res.status(401).json({
-        success: false,
-        message: 'Invalid refresh token'
-      });
-    }
-
-    // Generate new access token
-    const newAccessToken = jwt.sign(
-      { id: user._id.toString() },
-      process.env.JWT_SECRET,
-      { expiresIn: '15m' } // Short-lived
-    );
-
-    // Optionally rotate refresh token here (generate new one and invalidate old)
-
-    // Set new access token in response header or cookie
-    res.setHeader('Authorization', `Bearer ${newAccessToken}`);
-
     req.user = {
       id: user._id.toString(),
       email: user.email,
@@ -158,13 +217,68 @@ const refreshToken = async (req, res, next) => {
       role: user.role
     };
 
+    logger.logAuth('TOKEN_VALIDATED', user._id.toString(), true);
     next();
   } catch (error) {
-    console.error('Refresh token error:', error);
-    return res.status(401).json({
-      success: false,
-      message: 'Invalid or expired refresh token'
+    logger.logAuth('TOKEN_VALIDATION_FAILED', null, false, { error: error.message });
+    next(error);
+  }
+};
+
+// ============================================
+// REFRESH TOKEN HANDLING
+// ============================================
+
+/**
+ * Refresh access token using refresh token
+ */
+const refreshAccessToken = async (req, res, next) => {
+  try {
+    const refreshToken = req.cookies?.refreshToken || req.body.refreshToken;
+
+    if (!refreshToken) {
+      throw new AuthenticationError('Refresh token required');
+    }
+
+    // Verify refresh token
+    const decoded = verifyToken(refreshToken, config.jwt.refreshSecret);
+    
+    // Validate token type
+    if (decoded.type !== 'refresh') {
+      throw new AuthenticationError('Invalid token type');
+    }
+
+    // Get user
+    const user = await User.findById(decoded.id).select('email name role isActive');
+
+    if (!user || !user.isActive) {
+      throw new AuthenticationError('Invalid refresh token');
+    }
+
+    // Generate new access token
+    const newAccessToken = generateAccessToken(user._id.toString());
+
+    // Optionally rotate refresh token
+    const newRefreshToken = generateRefreshToken(user._id.toString());
+
+    logger.logAuth('TOKEN_REFRESHED', user._id.toString(), true);
+
+    res.json({
+      success: true,
+      data: {
+        accessToken: newAccessToken,
+        refreshToken: newRefreshToken,
+        user: {
+          id: user._id,
+          email: user.email,
+          name: user.name,
+          role: user.role
+        }
+      }
     });
+  } catch (error) {
+    logger.logAuth('TOKEN_REFRESH_FAILED', null, false, { error: error.message });
+    next(error);
   }
 };
 
@@ -173,10 +287,7 @@ const refreshToken = async (req, res, next) => {
 // ============================================
 
 /**
- * Optional authentication middleware.
- * @param {Object} req - Express request object.
- * @param {Object} res - Express response object.
- * @param {Function} next - Next middleware function.
+ * Optional authentication - doesn't fail if no token
  */
 const optionalAuth = async (req, res, next) => {
   try {
@@ -188,12 +299,12 @@ const optionalAuth = async (req, res, next) => {
       return next();
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded.id).select('email name role isActive -_id');
+    const decoded = verifyToken(token);
+    const user = await User.findById(decoded.id).select('email name role isActive');
 
     if (user && user.isActive) {
       req.user = {
-        id: decoded.id,
+        id: user._id.toString(),
         email: user.email,
         name: user.name,
         role: user.role
@@ -204,111 +315,65 @@ const optionalAuth = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.error('Optional auth error:', error);
     req.user = null;
     next();
   }
 };
 
 // ============================================
-// CHECK ADMIN ROLE
+// ROLE-BASED ACCESS CONTROL
 // ============================================
 
 /**
- * Middleware to check if user is admin.
- * @param {Object} req - Express request object.
- * @param {Object} res - Express response object.
- * @param {Function} next - Next middleware function.
+ * Check if user is admin
  */
 const isAdmin = (req, res, next) => {
   if (!req.user) {
-    return res.status(401).json({
-      success: false,
-      message: 'Authentication required'
-    });
+    throw new AuthenticationError('Authentication required');
   }
 
   if (req.user.role !== 'admin') {
-    return res.status(403).json({
-      success: false,
-      message: 'Admin access required'
+    logger.logSecurity('UNAUTHORIZED_ADMIN_ACCESS', {
+      userId: req.user.id,
+      role: req.user.role
     });
+    throw new AuthorizationError('Admin access required');
   }
 
   next();
 };
 
-// ============================================
-// CHECK CUSTOMER OR ADMIN
-// ============================================
-
 /**
- * Middleware to check if user is customer or admin.
- * @param {Object} req - Express request object.
- * @param {Object} res - Express response object.
- * @param {Function} next - Next middleware function.
+ * Check if user is customer or admin
  */
 const isCustomerOrAdmin = (req, res, next) => {
   if (!req.user) {
-    return res.status(401).json({
-      success: false,
-      message: 'Authentication required'
-    });
+    throw new AuthenticationError('Authentication required');
   }
 
-  if (req.user.role !== 'customer' && req.user.role !== 'admin') {
-    return res.status(403).json({
-      success: false,
-      message: 'Access denied'
-    });
+  if (!['customer', 'admin'].includes(req.user.role)) {
+    throw new AuthorizationError('Access denied');
   }
 
   next();
 };
 
-// ============================================
-// CHECK RESOURCE OWNERSHIP
-// ============================================
-
 /**
- * Middleware to check resource ownership.
- * @param {string} [resourceField='user'] - Field name for owner ID in resource.
- * @returns {Function} Middleware function.
+ * Check multiple roles
  */
-const checkOwnership = (resourceField = 'user') => {
-  return async (req, res, next) => {
+const hasRole = (...roles) => {
+  return (req, res, next) => {
     if (!req.user) {
-      return res.status(401).json({
-        success: false,
-        message: 'Authentication required'
+      throw new AuthenticationError('Authentication required');
+    }
+
+    if (!roles.includes(req.user.role)) {
+      logger.logSecurity('UNAUTHORIZED_ROLE_ACCESS', {
+        userId: req.user.id,
+        requiredRoles: roles,
+        userRole: req.user.role
       });
-    }
-
-    if (req.user.role === 'admin') {
-      return next();
-    }
-
-    // If req.resource not set, attempt to load it (example for a param-based resource)
-    let resource = req.resource;
-    if (!resource && req.params.id) {
-      // Example: Load from a model, adjust based on your models
-      // resource = await SomeModel.findById(req.params.id);
-    }
-
-    if (!resource) {
-      return res.status(404).json({
-        success: false,
-        message: 'Resource not found'
-      });
-    }
-
-    const ownerId = resource[resourceField]?._id?.toString() || resource[resourceField]?.toString();
-
-    if (!ownerId || ownerId !== req.user.id) {
-      return res.status(403).json({
-        success: false,
-        message: 'Not authorized to access this resource'
-      });
+      throw new AuthorizationError(`Access denied. Required roles: ${roles.join(', ')}`);
     }
 
     next();
@@ -316,58 +381,40 @@ const checkOwnership = (resourceField = 'user') => {
 };
 
 // ============================================
-// RATE LIMIT BY USER
+// RESOURCE OWNERSHIP
 // ============================================
 
-// Recommendation: For production, use a library like 'rate-limiter-flexible' with Redis for distributed limiting.
-// This in-memory version is for development only and includes periodic cleanup.
-
 /**
- * User-based rate limiter middleware.
- * @param {number} [maxRequests=100] - Max requests per window.
- * @param {number} [windowMs=15 * 60 * 1000] - Time window in ms.
- * @returns {Function} Middleware function.
+ * Check resource ownership
  */
-const userRateLimit = (maxRequests = 100, windowMs = 15 * 60 * 1000) => {
-  const requests = new Map();
-
-  // Periodic cleanup every hour to remove inactive users
-  setInterval(() => {
-    const now = Date.now();
-    for (const [userId, userRequests] of requests.entries()) {
-      const validRequests = userRequests.filter(timestamp => now - timestamp < windowMs);
-      if (validRequests.length === 0) {
-        requests.delete(userId);
-      } else {
-        requests.set(userId, validRequests);
-      }
-    }
-  }, 60 * 60 * 1000); // Every hour
-
-  return (req, res, next) => {
+const checkOwnership = (resourceField = 'user') => {
+  return async (req, res, next) => {
     if (!req.user) {
-      return next(); // No limiting for unauth
+      throw new AuthenticationError('Authentication required');
     }
 
-    const userId = req.user.id;
-    const now = Date.now();
-
-    if (!requests.has(userId)) {
-      requests.set(userId, []);
+    // Admins can access everything
+    if (req.user.role === 'admin') {
+      return next();
     }
 
-    const userRequests = requests.get(userId);
-    const validRequests = userRequests.filter(timestamp => now - timestamp < windowMs);
+    // Check ownership
+    const resource = req.resource;
 
-    if (validRequests.length >= maxRequests) {
-      return res.status(429).json({
-        success: false,
-        message: 'Too many requests, please try again later'
+    if (!resource) {
+      throw new NotFoundError('Resource not found');
+    }
+
+    const ownerId = resource[resourceField]?._id?.toString() || resource[resourceField]?.toString();
+
+    if (!ownerId || ownerId !== req.user.id) {
+      logger.logSecurity('UNAUTHORIZED_RESOURCE_ACCESS', {
+        userId: req.user.id,
+        resourceId: resource._id,
+        resourceType: resource.constructor.modelName
       });
+      throw new AuthorizationError('Not authorized to access this resource');
     }
-
-    validRequests.push(now);
-    requests.set(userId, validRequests);
 
     next();
   };
@@ -379,10 +426,20 @@ const userRateLimit = (maxRequests = 100, windowMs = 15 * 60 * 1000) => {
 
 module.exports = {
   authenticateToken,
-  refreshToken,
+  refreshAccessToken,
   optionalAuth,
   isAdmin,
   isCustomerOrAdmin,
+  hasRole,
   checkOwnership,
-  userRateLimit
+  
+  // Token utilities
+  generateAccessToken,
+  generateRefreshToken,
+  verifyToken,
+  
+  // Login attempt tracking
+  trackLoginAttempt,
+  resetLoginAttempts,
+  isAccountLocked
 };

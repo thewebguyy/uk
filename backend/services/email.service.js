@@ -1,37 +1,23 @@
 /**
  * EMAIL SERVICE
- * Handles all transactional emails
+ * Handles all transactional emails including error alerts
  */
 
 const nodemailer = require('nodemailer');
+const config = require('../config/config');
 
 // ============================================
 // EMAIL TRANSPORTER CONFIGURATION
 // ============================================
 
 const createTransporter = () => {
-  // For production, use your email service
-  // This example uses Gmail (you can also use SendGrid, Mailgun, etc.)
   return nodemailer.createTransporter({
     service: 'gmail',
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASSWORD
+      user: config.email.user,
+      pass: config.email.password
     }
   });
-
-  // Alternative: Using SMTP directly
-  /*
-  return nodemailer.createTransporter({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    secure: true,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASSWORD
-    }
-  });
-  */
 };
 
 // ============================================
@@ -69,12 +55,12 @@ const emailTemplates = {
               <li>Get exclusive offers</li>
               <li>Access our design studio</li>
             </ul>
-            <a href="${process.env.FRONTEND_URL}/shop" class="button">START SHOPPING</a>
-            <p>If you have any questions, feel free to reach out to us at <a href="mailto:info@customisemeuk.com">info@customisemeuk.com</a></p>
+            <a href="${config.urls.frontend}/shop" class="button">START SHOPPING</a>
+            <p>If you have any questions, feel free to reach out to us at <a href="mailto:${config.email.adminEmail}">${config.email.adminEmail}</a></p>
           </div>
           <div class="footer">
             <p>© 2026 Creative Merch UK. All rights reserved.</p>
-            <p>📧 info@customisemeuk.com | 📱 07588770901</p>
+            <p>📧 ${config.email.adminEmail} | 📱 07588770901</p>
           </div>
         </div>
       </body>
@@ -137,11 +123,11 @@ const emailTemplates = {
               ${order.shippingAddress.country}
             </p>
 
-            <a href="${process.env.FRONTEND_URL}/orders/${order._id}" class="button">VIEW ORDER</a>
+            <a href="${config.urls.frontend}/orders/${order._id}" class="button">VIEW ORDER</a>
           </div>
           <div class="footer">
             <p>© 2026 Creative Merch UK. All rights reserved.</p>
-            <p>📧 info@customisemeuk.com | 📱 07588770901</p>
+            <p>📧 ${config.email.adminEmail} | 📱 07588770901</p>
           </div>
         </div>
       </body>
@@ -178,7 +164,7 @@ const emailTemplates = {
           </div>
           <div class="footer">
             <p>© 2026 Creative Merch UK. All rights reserved.</p>
-            <p>📧 info@customisemeuk.com | 📱 07588770901</p>
+            <p>📧 ${config.email.adminEmail} | 📱 07588770901</p>
           </div>
         </div>
       </body>
@@ -220,7 +206,65 @@ const emailTemplates = {
           </div>
           <div class="footer">
             <p>© 2026 Creative Merch UK. All rights reserved.</p>
-            <p>📧 info@customisemeuk.com | 📱 07588770901</p>
+            <p>📧 ${config.email.adminEmail} | 📱 07588770901</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `
+  }),
+
+  errorAlert: (errorInfo) => ({
+    subject: `🚨 ERROR ALERT - ${errorInfo.message}`,
+    html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <style>
+          body { font-family: monospace; line-height: 1.6; color: #000; }
+          .container { max-width: 800px; margin: 0 auto; padding: 20px; background: #fff; }
+          .header { background: #dc2626; color: #fff; padding: 20px; text-align: center; }
+          .content { padding: 20px; background: #f5f5f5; }
+          .error-box { background: #fee; border-left: 4px solid #dc2626; padding: 15px; margin: 10px 0; }
+          .info-box { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 15px; margin: 10px 0; }
+          .code { background: #1f2937; color: #f9fafb; padding: 15px; border-radius: 4px; overflow-x: auto; }
+          pre { margin: 0; white-space: pre-wrap; word-wrap: break-word; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h1>🚨 APPLICATION ERROR</h1>
+            <p style="margin: 0;">Creative Merch UK Backend</p>
+          </div>
+          <div class="content">
+            <div class="error-box">
+              <h2>Error Message</h2>
+              <p><strong>${errorInfo.message}</strong></p>
+            </div>
+
+            ${errorInfo.url ? `
+            <div class="info-box">
+              <h3>Request Information</h3>
+              <p><strong>URL:</strong> ${errorInfo.method} ${errorInfo.url}</p>
+              <p><strong>IP:</strong> ${errorInfo.ip || 'N/A'}</p>
+              <p><strong>User:</strong> ${errorInfo.user || 'Anonymous'}</p>
+              <p><strong>Time:</strong> ${new Date().toISOString()}</p>
+            </div>
+            ` : ''}
+
+            ${errorInfo.stack ? `
+            <div class="error-box">
+              <h3>Stack Trace</h3>
+              <div class="code">
+                <pre>${errorInfo.stack}</pre>
+              </div>
+            </div>
+            ` : ''}
+
+            <p style="margin-top: 20px; padding: 15px; background: #fef3c7; border-radius: 4px;">
+              <strong>⚠️ Action Required:</strong> Please investigate this error immediately.
+            </p>
           </div>
         </div>
       </body>
@@ -235,10 +279,15 @@ const emailTemplates = {
 
 const sendEmail = async (to, subject, html) => {
   try {
+    if (!config.email.user || !config.email.password) {
+      console.warn('Email credentials not configured. Skipping email send.');
+      return { success: false, message: 'Email not configured' };
+    }
+
     const transporter = createTransporter();
 
     const mailOptions = {
-      from: `"Creative Merch UK" <${process.env.EMAIL_USER}>`,
+      from: config.email.from,
       to,
       subject,
       html
@@ -275,12 +324,17 @@ const sendPasswordResetEmail = async (user, resetUrl) => {
   return await sendEmail(user.email, template.subject, template.html);
 };
 
+const sendErrorAlertEmail = async (errorInfo) => {
+  const template = emailTemplates.errorAlert(errorInfo);
+  return await sendEmail(config.email.adminEmail, template.subject, template.html);
+};
+
 // ============================================
 // ADMIN NOTIFICATION EMAILS
 // ============================================
 
 const sendAdminNotification = async (type, data) => {
-  const adminEmail = process.env.ADMIN_EMAIL || 'info@customisemeuk.com';
+  const adminEmail = config.email.adminEmail;
   
   let subject, html;
 
@@ -292,7 +346,7 @@ const sendAdminNotification = async (type, data) => {
         <p><strong>Order:</strong> ${data.orderNumber}</p>
         <p><strong>Customer:</strong> ${data.shippingAddress.name}</p>
         <p><strong>Total:</strong> £${data.pricing.total.toFixed(2)}</p>
-        <a href="${process.env.ADMIN_URL}/orders/${data._id}">View Order</a>
+        <a href="${config.urls.admin}/orders/${data._id}">View Order</a>
       `;
       break;
 
@@ -320,5 +374,6 @@ module.exports = {
   sendOrderConfirmationEmail,
   sendContactConfirmationEmail,
   sendPasswordResetEmail,
+  sendErrorAlertEmail,
   sendAdminNotification
 };

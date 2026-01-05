@@ -1,7 +1,7 @@
 {
   "name": "creative-merch-uk-backend",
   "version": "1.0.0",
-  "description": "Professional backend API for Creative Merch UK e-commerce platform",
+  "description": "Professional backend API for Creative Merch UK e-commerce platform with comprehensive security",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -16,27 +16,38 @@
     "api",
     "mongodb",
     "express",
-    "nodejs"
+    "nodejs",
+    "security"
   ],
   "author": "Creative Merch UK",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "csurf": "^1.11.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-mongo-sanitize": "^2.2.0",
     "express-rate-limit": "^6.7.0",
+    "express-session": "^1.17.3",
+    "express-validator": "^7.0.1",
     "google-auth-library": "^9.0.0",
     "helmet": "^7.0.0",
+    "hpp": "^0.2.3",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.3",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.1",
+    "rate-limit-redis": "^3.0.1",
+    "redis": "^4.6.5",
     "stripe": "^12.0.0",
-    "validator": "^13.9.0"
+    "validator": "^13.9.0",
+    "winston": "^3.8.2",
+    "winston-daily-rotate-file": "^4.7.1",
+    "xss-clean": "^0.1.4"
   },
   "devDependencies": {
     "nodemon": "^2.0.22",
