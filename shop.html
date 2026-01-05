@@ -8,6 +8,163 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    .filter-sidebar {
+      position: sticky;
+      top: 160px;
+      height: calc(100vh - 180px);
+      overflow-y: auto;
+      padding: 2rem;
+      background: var(--color-grey-light);
+      border-radius: 0px;
+    }
+    
+    .filter-section {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--color-grey);
+    }
+    
+    .filter-section:last-child {
+      border-bottom: none;
+    }
+    
+    .filter-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+    
+    .filter-option {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+    
+    .filter-option:hover {
+      color: var(--color-black);
+    }
+    
+    .filter-option input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+    
+    .filter-option label {
+      cursor: pointer;
+      font-size: 0.875rem;
+      flex: 1;
+    }
+    
+    .price-range {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    
+    .price-input {
+      flex: 1;
+      padding: 0.5rem;
+      border: 1px solid var(--color-grey);
+      border-radius: 0px;
+      font-size: 0.875rem;
+    }
+    
+    .products-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--color-grey-light);
+    }
+    
+    .products-count {
+      font-size: 0.875rem;
+      color: var(--color-grey-dark);
+    }
+    
+    .sort-dropdown {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .sort-select {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--color-grey);
+      border-radius: 0px;
+      font-size: 0.875rem;
+      background: var(--color-white);
+      cursor: pointer;
+    }
+    
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    
+    .clear-filters {
+      background: none;
+      border: none;
+      color: var(--color-grey);
+      font-size: 0.875rem;
+      text-decoration: underline;
+      cursor: pointer;
+      padding: 0;
+      margin-top: 1rem;
+    }
+    
+    .clear-filters:hover {
+      color: var(--color-black);
+    }
+    
+    .mobile-filter-toggle {
+      display: none;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    
+    @media (max-width: 991px) {
+      .filter-sidebar {
+        display: none;
+        position: fixed;
+        top: 140px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1000;
+        height: calc(100vh - 140px);
+      }
+      
+      .filter-sidebar.show {
+        display: block;
+      }
+      
+      .mobile-filter-toggle {
+        display: block;
+      }
+      
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -34,19 +191,26 @@
       <line x1="2" y1="12" x2="22" y2="12"/>
       <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
     </symbol>
+    <symbol id="icon-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+    </symbol>
   </svg>
 
-  <!-- Announcement Banner -->
+  <!-- Animated Announcement Banner -->
   <div class="announcement-banner">
     <div class="announcement-content">
       <span class="announcement-item">FREE DELIVERY OVER £100</span>
       <span class="announcement-item">CONTACT US</span>
       <span class="announcement-item">INFO@CUSTOMISEMEUK.COM</span>
       <span class="announcement-item">07588770901</span>
+      <span class="announcement-item">NEW ARRIVALS WEEKLY</span>
+      <span class="announcement-item">CUSTOM DESIGNS AVAILABLE</span>
       <span class="announcement-item">FREE DELIVERY OVER £100</span>
       <span class="announcement-item">CONTACT US</span>
       <span class="announcement-item">INFO@CUSTOMISEMEUK.COM</span>
       <span class="announcement-item">07588770901</span>
+      <span class="announcement-item">NEW ARRIVALS WEEKLY</span>
+      <span class="announcement-item">CUSTOM DESIGNS AVAILABLE</span>
     </div>
   </div>
 
@@ -60,7 +224,7 @@
         
         <form class="search-bar-form-compact" onsubmit="handleSearch(event)">
           <svg class="search-icon"><use xlink:href="#icon-search"/></svg>
-          <input type="search" class="search-input" placeholder="Search products..." id="search-input">
+          <input type="search" class="search-input" id="search-input" placeholder="Search products...">
         </form>
         
         <div class="d-flex align-items-center gap-3">
@@ -119,7 +283,7 @@
       <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item dropdown mega-menu">
-            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">SHOP</a>
+            <a class="nav-link dropdown-toggle active" href="shop.html">SHOP</a>
             <div class="dropdown-menu mega-dropdown">
               <div class="container">
                 <div class="row">
@@ -133,31 +297,31 @@
                   </div>
                   <div class="col-md-3">
                     <h6 class="mega-title">APPAREL</h6>
-                    <a class="dropdown-item" href="#">T-Shirts</a>
-                    <a class="dropdown-item" href="#">Hoodies</a>
-                    <a class="dropdown-item" href="#">Hats</a>
-                    <a class="dropdown-item" href="#">Bags</a>
+                    <a class="dropdown-item" href="shop.html?category=apparel&type=tshirts">T-Shirts</a>
+                    <a class="dropdown-item" href="shop.html?category=apparel&type=hoodies">Hoodies</a>
+                    <a class="dropdown-item" href="shop.html?category=apparel&type=hats">Hats</a>
+                    <a class="dropdown-item" href="shop.html?category=apparel&type=bags">Bags</a>
                   </div>
                   <div class="col-md-3">
                     <h6 class="mega-title">PARTY ESSENTIALS</h6>
-                    <a class="dropdown-item" href="#">Banners</a>
-                    <a class="dropdown-item" href="#">Balloons</a>
-                    <a class="dropdown-item" href="#">Table Decor</a>
-                    <a class="dropdown-item" href="#">Party Packs</a>
+                    <a class="dropdown-item" href="shop.html?category=party-decor&type=banners">Banners</a>
+                    <a class="dropdown-item" href="shop.html?category=party-decor&type=balloons">Balloons</a>
+                    <a class="dropdown-item" href="shop.html?category=party-decor&type=table">Table Decor</a>
+                    <a class="dropdown-item" href="shop.html?category=party-decor&type=packs">Party Packs</a>
                   </div>
                   <div class="col-md-3">
                     <h6 class="mega-title">STICKERS & LABELS</h6>
-                    <a class="dropdown-item" href="#">Vinyl Stickers</a>
-                    <a class="dropdown-item" href="#">Custom Labels</a>
-                    <a class="dropdown-item" href="#">Wall Decals</a>
-                    <a class="dropdown-item" href="#">Sticker Packs</a>
+                    <a class="dropdown-item" href="shop.html?category=stickers&type=vinyl">Vinyl Stickers</a>
+                    <a class="dropdown-item" href="shop.html?category=stickers&type=custom">Custom Labels</a>
+                    <a class="dropdown-item" href="shop.html?category=stickers&type=wall">Wall Decals</a>
+                    <a class="dropdown-item" href="shop.html?category=stickers&type=packs">Sticker Packs</a>
                   </div>
                 </div>
               </div>
             </div>
           </li>
           <li class="nav-item dropdown mega-menu">
-            <a class="nav-link dropdown-toggle" href="designstudio.html" role="button" data-bs-toggle="dropdown">DESIGN STUDIO</a>
+            <a class="nav-link dropdown-toggle" href="designstudio.html">DESIGN STUDIO</a>
             <div class="dropdown-menu mega-dropdown">
               <div class="container">
                 <div class="row">
@@ -174,7 +338,7 @@
             </div>
           </li>
           <li class="nav-item dropdown mega-menu">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">PREMIUM SERVICES</a>
+            <a class="nav-link dropdown-toggle" href="premiumservices.html">PREMIUM SERVICES</a>
             <div class="dropdown-menu mega-dropdown">
               <div class="container">
                 <div class="row">
@@ -201,69 +365,171 @@
     </div>
   </nav>
 
-  <!-- Shop Header -->
-  <section class="section" style="background: var(--color-grey-light); padding: 3rem 0;">
-    <div class="container">
-      <h1 id="category-title">ALL PRODUCTS</h1>
-      <p class="text-grey-dark" id="product-count-text">Loading products...</p>
-    </div>
-  </section>
-
-  <!-- Filters & Sort -->
-  <section class="section" style="padding: 2rem 0; background: var(--color-white); border-bottom: 1px solid var(--color-grey-light);">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-8">
-          <div class="d-flex gap-2 flex-wrap" id="category-filters">
-            <button class="btn btn-outline active" data-category="all">ALL</button>
-            <button class="btn btn-outline" data-category="apparel">APPAREL</button>
-            <button class="btn btn-outline" data-category="stickers">STICKERS & LABELS</button>
-            <button class="btn btn-outline" data-category="party-decor">PARTY DECOR</button>
-            <button class="btn btn-outline" data-category="accessories">ACCESSORIES</button>
-          </div>
-        </div>
-        <div class="col-md-4 text-end">
-          <select class="form-control" id="sort-select" style="max-width: 200px; display: inline-block;" onchange="handleSort()">
-            <option value="featured">FEATURED</option>
-            <option value="price-asc">PRICE: LOW TO HIGH</option>
-            <option value="price-desc">PRICE: HIGH TO LOW</option>
-            <option value="name-asc">NAME: A TO Z</option>
-            <option value="name-desc">NAME: Z TO A</option>
-            <option value="newest">NEWEST FIRST</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Products Grid -->
+  <!-- Shop Content -->
   <section class="section">
     <div class="container">
-      <div id="loading" class="text-center py-5">
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
+      <div class="text-center mb-4">
+        <h1>SHOP ALL PRODUCTS</h1>
+        <p class="text-grey-dark">Discover our complete collection of custom designs and party essentials</p>
+      </div>
+
+      <!-- Mobile Filter Toggle -->
+      <button class="btn btn-outline mobile-filter-toggle" onclick="toggleMobileFilters()">
+        <svg class="icon-sm"><use xlink:href="#icon-filter"/></svg>
+        <span>FILTERS & SORT</span>
+      </button>
+
+      <div class="row">
+        <!-- Filter Sidebar -->
+        <div class="col-lg-3" id="filter-sidebar">
+          <div class="filter-sidebar">
+            <h3 style="font-size: 1.25rem; margin-bottom: 1.5rem;">FILTERS</h3>
+            
+            <!-- Category Filter -->
+            <div class="filter-section">
+              <div class="filter-title">CATEGORY</div>
+              <div class="filter-option">
+                <input type="checkbox" id="cat-all" checked onchange="filterProducts()">
+                <label for="cat-all">All Products</label>
+              </div>
+              <div class="filter-option">
+                <input type="checkbox" id="cat-apparel" onchange="filterProducts()">
+                <label for="cat-apparel">Apparel</label>
+              </div>
+              <div class="filter-option">
+                <input type="checkbox" id="cat-stickers" onchange="filterProducts()">
+                <label for="cat-stickers">Stickers & Labels</label>
+              </div>
+              <div class="filter-option">
+                <input type="checkbox" id="cat-party" onchange="filterProducts()">
+                <label for="cat-party">Party Decor</label>
+              </div>
+              <div class="filter-option">
+                <input type="checkbox" id="cat-accessories" onchange="filterProducts()">
+                <label for="cat-accessories">Accessories</label>
+              </div>
+            </div>
+
+            <!-- Price Filter -->
+            <div class="filter-section">
+              <div class="filter-title">PRICE RANGE</div>
+              <div class="price-range">
+                <input type="number" class="price-input" placeholder="Min" id="price-min" onchange="filterProducts()">
+                <span>-</span>
+                <input type="number" class="price-input" placeholder="Max" id="price-max" onchange="filterProducts()">
+              </div>
+            </div>
+
+            <!-- Size Filter (for apparel) -->
+            <div class="filter-section">
+              <div class="filter-title">SIZE</div>
+              <div class="filter-option">
+                <input type="checkbox" id="size-xs" onchange="filterProducts()">
+                <label for="size-xs">XS</label>
+              </div>
+              <div class="filter-option">
+                <input type="checkbox" id="size-s" onchange="filterProducts()">
+                <label for="size-s">S</label>
+              </div>
+              <div class="filter-option">
+                <input type="checkbox" id="size-m" onchange="filterProducts()">
+                <label for="size-m">M</label>
+              </div>
+              <div class="filter-option">
+                <input type="checkbox" id="size-l" onchange="filterProducts()">
+                <label for="size-l">L</label>
+              </div>
+              <div class="filter-option">
+                <input type="checkbox" id="size-xl" onchange="filterProducts()">
+                <label for="size-xl">XL</label>
+              </div>
+            </div>
+
+            <!-- Color Filter -->
+            <div class="filter-section">
+              <div class="filter-title">COLOR</div>
+              <div class="filter-option">
+                <input type="checkbox" id="color-black" onchange="filterProducts()">
+                <label for="color-black">Black</label>
+              </div>
+              <div class="filter-option">
+                <input type="checkbox" id="color-white" onchange="filterProducts()">
+                <label for="color-white">White</label>
+              </div>
+              <div class="filter-option">
+                <input type="checkbox" id="color-grey" onchange="filterProducts()">
+                <label for="color-grey">Grey</label>
+              </div>
+              <div class="filter-option">
+                <input type="checkbox" id="color-navy" onchange="filterProducts()">
+                <label for="color-navy">Navy</label>
+              </div>
+              <div class="filter-option">
+                <input type="checkbox" id="color-red" onchange="filterProducts()">
+                <label for="color-red">Red</label>
+              </div>
+            </div>
+
+            <button class="clear-filters" onclick="clearFilters()">Clear All Filters</button>
+          </div>
         </div>
-        <p class="mt-3">Loading products...</p>
-      </div>
-      
-      <div class="product-grid-four" id="products-grid" style="display: none;"></div>
-      
-      <div id="no-products" class="text-center py-5" style="display: none;">
-        <p class="text-grey-dark mb-3">No products found.</p>
-        <button class="btn btn-primary" onclick="filterCategory('all')">VIEW ALL PRODUCTS</button>
-      </div>
-      
-      <div id="error-message" class="text-center py-5" style="display: none;">
-        <p class="text-danger mb-3">Failed to load products. Please try again.</p>
-        <button class="btn btn-primary" onclick="loadProducts()">RETRY</button>
+
+        <!-- Products Grid -->
+        <div class="col-lg-9">
+          <div class="products-header">
+            <div class="products-count" id="product-count">Showing 12 of 12 products</div>
+            <div class="sort-dropdown">
+              <label for="sort-select" style="font-size: 0.875rem;">Sort by:</label>
+              <select class="sort-select" id="sort-select" onchange="sortProducts()">
+                <option value="featured">Featured</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="name-az">Name: A to Z</option>
+                <option value="name-za">Name: Z to A</option>
+                <option value="newest">Newest First</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="product-grid" id="products-container">
+            <!-- Products will be dynamically loaded here -->
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- Footer -->
   <footer>
     <div class="container">
-      <div class="text-center">
-        <p class="text-grey-dark">© 2026 Customise Me UK. All rights reserved.</p>
+      <div class="row">
+        <div class="col-md-4 footer-section">
+          <h3 class="footer-title">ABOUT US</h3>
+          <p class="text-grey-dark">Creative Merch UK offers premium designs, custom prints, and party essentials crafted with care.</p>
+        </div>
+        <div class="col-md-4 footer-section">
+          <h3 class="footer-title">QUICK LINKS</h3>
+          <ul class="footer-links">
+            <li><a href="shop.html">SHOP</a></li>
+            <li><a href="designstudio.html">DESIGN STUDIO</a></li>
+            <li><a href="senditems.html">SEND ITEMS IN</a></li>
+            <li><a href="contact.html">CONTACT</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 footer-section">
+          <h3 class="footer-title">CONTACT US</h3>
+          <p class="text-grey-dark">
+            <strong>EMAIL:</strong><br>
+            <a href="mailto:info@customisemeuk.com">info@customisemeuk.com</a>
+          </p>
+          <p class="text-grey-dark">
+            <strong>PHONE:</strong><br>
+            <a href="tel:07588770901">07588770901</a>
+          </p>
+        </div>
+      </div>
+      <div class="text-center mt-4 pt-4" style="border-top: 1px solid var(--color-grey-light);">
+        <p class="text-grey-dark mb-0">© 2026 Customise Me UK. All rights reserved.</p>
       </div>
     </div>
   </footer>
@@ -272,226 +538,209 @@
   <script src="js/cart.js"></script>
   
   <script>
-    const API_URL = 'http://localhost:5000/api';
-    let allProducts = [];
-    let filteredProducts = [];
-    let currentCategory = 'all';
-    let currentSort = 'featured';
-    let searchQuery = '';
+    // Sample product data - In production, this would come from your backend
+    const allProducts = [
+      { id: 1, name: "Custom T-Shirt Design", category: "apparel", price: 24.99, sizes: ["S", "M", "L", "XL"], colors: ["black", "white", "grey"], image: "" },
+      { id: 2, name: "Vinyl Sticker Pack", category: "stickers", price: 9.99, sizes: [], colors: [], image: "" },
+      { id: 3, name: "Party Banner Set", category: "party-decor", price: 19.99, sizes: [], colors: ["black", "white"], image: "" },
+      { id: 4, name: "Custom Labels", category: "stickers", price: 14.99, sizes: [], colors: [], image: "" },
+      { id: 5, name: "Custom Hoodie", category: "apparel", price: 39.99, sizes: ["S", "M", "L", "XL"], colors: ["black", "grey", "navy"], image: "" },
+      { id: 6, name: "Wall Decals", category: "stickers", price: 12.99, sizes: [], colors: [], image: "" },
+      { id: 7, name: "Table Decor Pack", category: "party-decor", price: 24.99, sizes: [], colors: ["black", "white", "red"], image: "" },
+      { id: 8, name: "Custom Tote Bag", category: "accessories", price: 16.99, sizes: [], colors: ["black", "white", "navy"], image: "" },
+      { id: 9, name: "Birthday Banner", category: "party-decor", price: 22.99, sizes: [], colors: [], image: "" },
+      { id: 10, name: "Baseball Cap", category: "apparel", price: 18.99, sizes: [], colors: ["black", "white", "grey", "navy"], image: "" },
+      { id: 11, name: "Balloon Set", category: "party-decor", price: 15.99, sizes: [], colors: ["black", "white", "red"], image: "" },
+      { id: 12, name: "Sticker Sheets", category: "stickers", price: 7.99, sizes: [], colors: [], image: "" }
+    ];
 
-    // Load products from MongoDB via API
-    async function loadProducts() {
-      const loading = document.getElementById('loading');
-      const grid = document.getElementById('products-grid');
-      const noProducts = document.getElementById('no-products');
-      const errorMessage = document.getElementById('error-message');
+    let displayedProducts = [...allProducts];
 
-      // Reset display
-      loading.style.display = 'block';
-      grid.style.display = 'none';
-      noProducts.style.display = 'none';
-      errorMessage.style.display = 'none';
-
-      try {
-        // Fetch from MongoDB API
-        const response = await fetch(`${API_URL}/products`);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-
-        if (data.success && data.data.products) {
-          allProducts = data.data.products;
-          filteredProducts = [...allProducts];
-          
-          // Apply filters and sort
-          applyFilters();
-          applySorting();
-          displayProducts();
-        } else {
-          throw new Error(data.message || 'Failed to load products');
-        }
-      } catch (error) {
-        console.error('Error loading products:', error);
-        loading.style.display = 'none';
-        errorMessage.style.display = 'block';
-      }
-    }
-
-    // Apply category and search filters
-    function applyFilters() {
-      filteredProducts = allProducts.filter(product => {
-        // Category filter
-        const categoryMatch = currentCategory === 'all' || product.category === currentCategory;
-        
-        // Search filter
-        const searchMatch = !searchQuery || 
-          product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (product.description && product.description.toLowerCase().includes(searchQuery.toLowerCase()));
-        
-        // Stock filter
-        const inStock = product.stock > 0;
-        
-        return categoryMatch && searchMatch && inStock;
-      });
-    }
-
-    // Apply sorting
-    function applySorting() {
-      switch(currentSort) {
-        case 'price-asc':
-          filteredProducts.sort((a, b) => (a.salePrice || a.price) - (b.salePrice || b.price));
-          break;
-        case 'price-desc':
-          filteredProducts.sort((a, b) => (b.salePrice || b.price) - (a.salePrice || a.price));
-          break;
-        case 'name-asc':
-          filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
-          break;
-        case 'name-desc':
-          filteredProducts.sort((a, b) => b.name.localeCompare(a.name));
-          break;
-        case 'newest':
-          filteredProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-          break;
-        default:
-          // Featured - keep original order or sort by featured flag
-          filteredProducts.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
-      }
-    }
-
-    // Display products
-    function displayProducts() {
-      const loading = document.getElementById('loading');
-      const grid = document.getElementById('products-grid');
-      const noProducts = document.getElementById('no-products');
-      const countText = document.getElementById('product-count-text');
-
-      loading.style.display = 'none';
-
-      if (filteredProducts.length === 0) {
-        noProducts.style.display = 'block';
-        grid.style.display = 'none';
-        countText.textContent = 'No products found';
-        return;
-      }
-
-      // Update count
-      countText.textContent = `${filteredProducts.length} product${filteredProducts.length !== 1 ? 's' : ''} found`;
-
-      // Render products
-      grid.innerHTML = filteredProducts.map(product => {
-        const price = product.salePrice || product.price;
-        const originalPrice = product.salePrice ? product.price : null;
-        const imageUrl = product.images && product.images[0] ? product.images[0].url : '';
-        
-        return `
-          <div class="product-card">
-            <a href="product.html?id=${product._id}">
-              <div class="product-image">
-                ${imageUrl 
-                  ? `<img src="${imageUrl}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">` 
-                  : '<span>Product Image</span>'
-                }
-              </div>
-            </a>
-            <div class="product-info">
-              <h3 class="product-title">
-                <a href="product.html?id=${product._id}" style="text-decoration: none; color: inherit;">
-                  ${product.name.toUpperCase()}
-                </a>
-              </h3>
-              <p class="product-price">
-                ${originalPrice ? `<span class="text-grey" style="text-decoration: line-through; font-size: 0.875rem;">£${originalPrice.toFixed(2)}</span> ` : ''}
-                £${price.toFixed(2)}
-              </p>
-              <button class="btn btn-primary w-100 btn-sm" onclick="addToCart('${product._id}', '${product.name.replace(/'/g, "\\'")}', ${price})">
-                ADD TO CART
-              </button>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      grid.style.display = 'grid';
-    }
-
-    // Filter by category
-    function filterCategory(category) {
-      currentCategory = category;
+    // Initialize products on load
+    document.addEventListener('DOMContentLoaded', () => {
+      displayProducts(displayedProducts);
+      updateCartDisplay();
       
-      // Update active button
-      document.querySelectorAll('#category-filters button').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.category === category) {
-          btn.classList.add('active');
-        }
-      });
-
-      // Update title
-      const titles = {
-        'all': 'ALL PRODUCTS',
-        'apparel': 'APPAREL',
-        'stickers': 'STICKERS & LABELS',
-        'party-decor': 'PARTY DECOR',
-        'accessories': 'ACCESSORIES'
-      };
-      document.getElementById('category-title').textContent = titles[category];
-
-      // Apply filters and redisplay
-      applyFilters();
-      applySorting();
-      displayProducts();
-
-      // Update URL
-      const url = new URL(window.location);
-      if (category === 'all') {
-        url.searchParams.delete('category');
-      } else {
-        url.searchParams.set('category', category);
+      // Check URL parameters for category filtering
+      const urlParams = new URLSearchParams(window.location.search);
+      const category = urlParams.get('category');
+      if (category) {
+        document.getElementById(`cat-${category}`).checked = true;
+        document.getElementById('cat-all').checked = false;
+        filterProducts();
       }
-      window.history.pushState({}, '', url);
-    }
-
-    // Handle sort change
-    function handleSort() {
-      currentSort = document.getElementById('sort-select').value;
-      applySorting();
-      displayProducts();
-    }
-
-    // Handle search
-    function handleSearch(event) {
-      event.preventDefault();
-      searchQuery = document.getElementById('search-input').value.trim();
-      applyFilters();
-      applySorting();
-      displayProducts();
-    }
-
-    // Setup category filter buttons
-    document.querySelectorAll('#category-filters button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterCategory(btn.dataset.category);
-      });
     });
 
-    // Check URL for category parameter
-    const urlParams = new URLSearchParams(window.location.search);
-    const categoryParam = urlParams.get('category');
-
-    // Initialize
-    document.addEventListener('DOMContentLoaded', () => {
-      if (categoryParam && categoryParam !== 'all') {
-        currentCategory = categoryParam;
-        document.querySelector(`[data-category="${categoryParam}"]`)?.classList.add('active');
-        document.querySelector(`[data-category="all"]`)?.classList.remove('active');
+    function displayProducts(products) {
+      const container = document.getElementById('products-container');
+      
+      if (products.length === 0) {
+        container.innerHTML = '<div class="col-12 text-center"><p class="text-grey-dark">No products found matching your filters.</p></div>';
+        return;
       }
       
-      loadProducts();
-      updateCartDisplay();
+      container.innerHTML = products.map(product => `
+        <div class="product-card" data-product-id="${product.id}">
+          <a href="product.html?id=${product.id}">
+            <div class="product-image">
+              <span>Product Image</span>
+            </div>
+          </a>
+          <div class="product-info">
+            <h3 class="product-title">
+              <a href="product.html?id=${product.id}" style="text-decoration: none; color: inherit;">${product.name}</a>
+            </h3>
+            <p class="product-price">£${product.price.toFixed(2)}</p>
+            <button class="btn btn-primary w-100" onclick="addToCartQuick(${product.id}, '${product.name}', ${product.price})">
+              ADD TO CART
+            </button>
+          </div>
+        </div>
+      `).join('');
+      
+      updateProductCount(products.length, allProducts.length);
+    }
+
+    function updateProductCount(shown, total) {
+      document.getElementById('product-count').textContent = `Showing ${shown} of ${total} products`;
+    }
+
+    function filterProducts() {
+      let filtered = [...allProducts];
+      
+      // Category filter
+      const allChecked = document.getElementById('cat-all').checked;
+      if (!allChecked) {
+        const categories = [];
+        if (document.getElementById('cat-apparel').checked) categories.push('apparel');
+        if (document.getElementById('cat-stickers').checked) categories.push('stickers');
+        if (document.getElementById('cat-party').checked) categories.push('party-decor');
+        if (document.getElementById('cat-accessories').checked) categories.push('accessories');
+        
+        if (categories.length > 0) {
+          filtered = filtered.filter(p => categories.includes(p.category));
+        }
+      }
+      
+      // Price filter
+      const minPrice = parseFloat(document.getElementById('price-min').value) || 0;
+      const maxPrice = parseFloat(document.getElementById('price-max').value) || Infinity;
+      filtered = filtered.filter(p => p.price >= minPrice && p.price <= maxPrice);
+      
+      // Size filter
+      const sizes = [];
+      ['xs', 's', 'm', 'l', 'xl'].forEach(size => {
+        if (document.getElementById(`size-${size}`).checked) {
+          sizes.push(size.toUpperCase());
+        }
+      });
+      if (sizes.length > 0) {
+        filtered = filtered.filter(p => p.sizes.some(s => sizes.includes(s)));
+      }
+      
+      // Color filter
+      const colors = [];
+      ['black', 'white', 'grey', 'navy', 'red'].forEach(color => {
+        if (document.getElementById(`color-${color}`).checked) {
+          colors.push(color);
+        }
+      });
+      if (colors.length > 0) {
+        filtered = filtered.filter(p => p.colors.length === 0 || p.colors.some(c => colors.includes(c)));
+      }
+      
+      displayedProducts = filtered;
+      sortProducts();
+    }
+
+    function sortProducts() {
+      const sortValue = document.getElementById('sort-select').value;
+      let sorted = [...displayedProducts];
+      
+      switch(sortValue) {
+        case 'price-low':
+          sorted.sort((a, b) => a.price - b.price);
+          break;
+        case 'price-high':
+          sorted.sort((a, b) => b.price - a.price);
+          break;
+        case 'name-az':
+          sorted.sort((a, b) => a.name.localeCompare(b.name));
+          break;
+        case 'name-za':
+          sorted.sort((a, b) => b.name.localeCompare(a.name));
+          break;
+        case 'newest':
+          sorted.sort((a, b) => b.id - a.id);
+          break;
+        default:
+          // Featured - keep original order
+          break;
+      }
+      
+      displayProducts(sorted);
+    }
+
+    function clearFilters() {
+      // Reset all checkboxes
+      document.querySelectorAll('.filter-option input[type="checkbox"]').forEach(cb => {
+        cb.checked = false;
+      });
+      document.getElementById('cat-all').checked = true;
+      
+      // Reset price inputs
+      document.getElementById('price-min').value = '';
+      document.getElementById('price-max').value = '';
+      
+      // Reset sort
+      document.getElementById('sort-select').value = 'featured';
+      
+      // Reload all products
+      displayedProducts = [...allProducts];
+      displayProducts(displayedProducts);
+    }
+
+    function handleSearch(event) {
+      event.preventDefault();
+      const searchTerm = document.getElementById('search-input').value.toLowerCase();
+      
+      if (searchTerm.trim() === '') {
+        displayedProducts = [...allProducts];
+      } else {
+        displayedProducts = allProducts.filter(p => 
+          p.name.toLowerCase().includes(searchTerm) ||
+          p.category.toLowerCase().includes(searchTerm)
+        );
+      }
+      
+      displayProducts(displayedProducts);
+    }
+
+    function addToCartQuick(id, name, price) {
+      addToCart(id, name, price);
+      alert(`${name} added to cart!`);
+    }
+
+    function toggleMobileFilters() {
+      document.getElementById('filter-sidebar').classList.toggle('show');
+    }
+
+    // Handle "All Products" checkbox
+    document.getElementById('cat-all').addEventListener('change', function() {
+      if (this.checked) {
+        ['cat-apparel', 'cat-stickers', 'cat-party', 'cat-accessories'].forEach(id => {
+          document.getElementById(id).checked = false;
+        });
+      }
+    });
+
+    // Uncheck "All" when any category is checked
+    ['cat-apparel', 'cat-stickers', 'cat-party', 'cat-accessories'].forEach(id => {
+      document.getElementById(id).addEventListener('change', function() {
+        if (this.checked) {
+          document.getElementById('cat-all').checked = false;
+        }
+      });
     });
   </script>
 </body>
