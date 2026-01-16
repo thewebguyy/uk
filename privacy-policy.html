@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Privacy Policy - Customise Me UK</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Privacy Policy for Creative Merch UK - Learn how we collect, use, and protect your personal information.">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- SVG Icons -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+        </symbol>
+        <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+        </symbol>
+        <symbol id="icon-shopping-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <path d="M16 10a4 4 0 0 1-8 0" />
+        </symbol>
+        <symbol id="icon-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+        </symbol>
+        <symbol id="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="2" y1="12" x2="22" y2="12" />
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+        </symbol>
+        <symbol id="icon-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+        </symbol>
+    </svg>
+
+    <!-- Announcement Banner -->
+    <div class="announcement-banner">
+        <div class="announcement-content">
+            <span class="announcement-item">FREE DELIVERY OVER £100</span>
+            <span class="announcement-item">CONTACT US</span>
+            <span class="announcement-item">INFO@CUSTOMISEMEUK.COM</span>
+            <span class="announcement-item">07588770901</span>
+            <span class="announcement-item">FREE DELIVERY OVER £100</span>
+            <span class="announcement-item">CONTACT US</span>
+            <span class="announcement-item">INFO@CUSTOMISEMEUK.COM</span>
+            <span class="announcement-item">07588770901</span>
+        </div>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-content">
+                <a class="navbar-brand" href="index.html">
+                    <img src="icon.png" alt="Creative Merch UK" class="logo-image">
+                </a>
+
+                <form class="search-bar-form-compact">
+                    <svg class="search-icon">
+                        <use xlink:href="#icon-search" />
+                    </svg>
+                    <input type="search" class="search-input" placeholder="Search products...">
+                </form>
+
+                <div class="d-flex align-items-center gap-3">
+                    <div class="dropdown">
+                        <a href="#" class="nav-icon" data-bs-toggle="dropdown" aria-expanded="false">
+                            <svg class="icon">
+                                <use xlink:href="#icon-globe" />
+                            </svg>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end region-dropdown">
+                            <li><a class="dropdown-item" href="#"><span class="flag">🇬🇧</span> UNITED KINGDOM</a></li>
+                            <li><a class="dropdown-item" href="#"><span class="flag">🇪🇺</span> EUROPE</a></li>
+                            <li><a class="dropdown-item" href="#"><span class="flag">🇺🇸</span> AMERICA</a></li>
+                        </ul>
+                    </div>
+                    <a href="#wishlist" class="nav-icon"><svg class="icon">
+                            <use xlink:href="#icon-heart" />
+                        </svg></a>
+                    <a href="#cart" class="nav-icon" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                        <svg class="icon">
+                            <use xlink:href="#icon-shopping-bag" />
+                        </svg>
+                        <span class="badge-cart" id="cart-count"></span>
+                    </a>
+                    <a href="account.html" class="nav-icon nav-icon-text">
+                        <svg class="icon">
+                            <use xlink:href="#icon-user" />
+                        </svg>
+                        <span class="nav-text">SIGN IN / SIGN UP</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shopping Cart Offcanvas -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">YOUR CART</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="cart-items"></div>
+            <div id="cart-empty" class="text-center">
+                <p class="text-grey">Your cart is empty</p>
+            </div>
+            <div id="cart-summary" style="display: none;">
+                <div class="d-flex justify-content-between mb-3 pt-3"
+                    style="border-top: 1px solid var(--color-grey-light);">
+                    <strong>SUBTOTAL:</strong>
+                    <strong id="cart-subtotal">£0.00</strong>
+                </div>
+                <button class="btn btn-primary w-100" onclick="window.location.href='checkout.html'">CHECKOUT</button>
+                <button class="btn btn-secondary w-100 mt-2" data-bs-dismiss="offcanvas">CONTINUE SHOPPING</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <nav class="navbar navbar-expand-lg main-nav">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown mega-menu">
+                        <a class="nav-link dropdown-toggle" href="shop.html" role="button"
+                            data-bs-toggle="dropdown">SHOP</a>
+                        <div class="dropdown-menu mega-dropdown">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <h6 class="mega-title">CATEGORIES</h6>
+                                        <a class="dropdown-item" href="shop.html">ALL PRODUCTS</a>
+                                        <a class="dropdown-item" href="shop.html?category=apparel">APPAREL</a>
+                                        <a class="dropdown-item" href="shop.html?category=stickers">STICKERS &
+                                            LABELS</a>
+                                        <a class="dropdown-item" href="shop.html?category=party-decor">PARTY DECOR</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown mega-menu">
+                        <a class="nav-link dropdown-toggle" href="designstudio.html" role="button"
+                            data-bs-toggle="dropdown">DESIGN STUDIO</a>
+                        <div class="dropdown-menu mega-dropdown">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6 class="mega-title">SERVICES</h6>
+                                        <a class="dropdown-item" href="designservice.html">Custom Design</a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6 class="mega-title">RESOURCES</h6>
+                                        <a class="dropdown-item" href="faq.html">FAQs</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown mega-menu">
+                        <a class="nav-link dropdown-toggle" href="premiumservices.html" role="button"
+                            data-bs-toggle="dropdown">PREMIUM SERVICES</a>
+                        <div class="dropdown-menu mega-dropdown">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <h6 class="mega-title">SERVICES</h6>
+                                        <a class="dropdown-item" href="senditems.html">Send Items In</a>
+                                        <a class="dropdown-item" href="subscriptions.html">Subscriptions</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="section" style="background: var(--color-grey-light); padding: 3rem 0;">
+        <div class="container text-center">
+            <h1>PRIVACY POLICY</h1>
+            <p class="text-grey-dark">Last updated: January 16, 2026</p>
+        </div>
+    </section>
+
+    <!-- Privacy Policy Content -->
+    <section class="section">
+        <div class="container">
+            <div class="container-text">
+                <h2>1. INTRODUCTION</h2>
+                <p class="text-grey-dark">
+                    Creative Merch UK ("we", "us", or "our") is committed to protecting your privacy. This Privacy
+                    Policy explains how we collect, use, disclose, and safeguard your information when you visit our
+                    website or make a purchase from us.
+                </p>
+
+                <h2>2. INFORMATION WE COLLECT</h2>
+                <h3>Personal Information</h3>
+                <p class="text-grey-dark">
+                    We may collect personal information that you voluntarily provide to us when you:
+                </p>
+                <ul class="text-grey-dark">
+                    <li>Register for an account</li>
+                    <li>Make a purchase</li>
+                    <li>Subscribe to our newsletter</li>
+                    <li>Contact us with inquiries</li>
+                    <li>Fill out a form on our website</li>
+                </ul>
+                <p class="text-grey-dark">
+                    This information may include your name, email address, postal address, phone number, and payment
+                    information.
+                </p>
+
+                <h3>Automatically Collected Information</h3>
+                <p class="text-grey-dark">
+                    When you visit our website, we may automatically collect certain information about your device,
+                    including your IP address, browser type, operating system, and browsing behavior.
+                </p>
+
+                <h2>3. HOW WE USE YOUR INFORMATION</h2>
+                <p class="text-grey-dark">We use the information we collect to:</p>
+                <ul class="text-grey-dark">
+                    <li>Process and fulfill your orders</li>
+                    <li>Send you order confirmations and updates</li>
+                    <li>Respond to your inquiries and provide customer support</li>
+                    <li>Send marketing communications (with your consent)</li>
+                    <li>Improve our website and services</li>
+                    <li>Comply with legal obligations</li>
+                </ul>
+
+                <h2>4. SHARING YOUR INFORMATION</h2>
+                <p class="text-grey-dark">
+                    We do not sell your personal information. We may share your information with:
+                </p>
+                <ul class="text-grey-dark">
+                    <li>Service providers who assist us in operating our business (e.g., payment processors, shipping
+                        carriers)</li>
+                    <li>Legal authorities when required by law</li>
+                    <li>Business partners with your consent</li>
+                </ul>
+
+                <h2>5. COOKIES AND TRACKING</h2>
+                <p class="text-grey-dark">
+                    We use cookies and similar tracking technologies to enhance your experience on our website. You can
+                    control cookie preferences through your browser settings.
+                </p>
+
+                <h2>6. DATA SECURITY</h2>
+                <p class="text-grey-dark">
+                    We implement appropriate security measures to protect your personal information. However, no method
+                    of transmission over the internet is 100% secure, and we cannot guarantee absolute security.
+                </p>
+
+                <h2>7. YOUR RIGHTS</h2>
+                <p class="text-grey-dark">Under applicable data protection laws, you have the right to:</p>
+                <ul class="text-grey-dark">
+                    <li>Access your personal information</li>
+                    <li>Correct inaccurate information</li>
+                    <li>Request deletion of your information</li>
+                    <li>Object to certain processing activities</li>
+                    <li>Withdraw consent at any time</li>
+                </ul>
+
+                <h2>8. CONTACT US</h2>
+                <p class="text-grey-dark">
+                    If you have questions about this Privacy Policy or our data practices, please contact us at:
+                </p>
+                <p class="text-grey-dark">
+                    <strong>Email:</strong> <a href="mailto:info@customisemeuk.com">info@customisemeuk.com</a><br>
+                    <strong>Phone:</strong> <a href="tel:07588770901">07588770901</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 footer-section">
+                    <h3 class="footer-title">ABOUT US</h3>
+                    <p class="text-grey-dark">Creative Merch UK offers premium designs, custom prints, and party
+                        essentials crafted with care.</p>
+                </div>
+
+                <div class="col-md-4 footer-section">
+                    <h3 class="footer-title">QUICK LINKS</h3>
+                    <ul class="footer-links">
+                        <li><a href="shop.html">SHOP</a></li>
+                        <li><a href="contact.html">CONTACT</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="privacy-policy.html">PRIVACY POLICY</a></li>
+                        <li><a href="terms-conditions.html">TERMS & CONDITIONS</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 footer-section">
+                    <h3 class="footer-title">CONTACT US</h3>
+                    <p class="text-grey-dark">
+                        <strong>EMAIL:</strong><br>
+                        <a href="mailto:info@customisemeuk.com">info@customisemeuk.com</a>
+                    </p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/customisemeuk" target="_blank" class="social-link">
+                            <svg>
+                                <use xlink:href="#icon-instagram" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4 pt-4" style="border-top: 1px solid var(--color-grey-light);">
+                <p class="text-grey-dark mb-0">© 2026 Customise Me UK. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/cart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof updateCartDisplay === 'function') {
+                updateCartDisplay();
+            }
+        });
+    </script>
+</body>
+
+</html>
