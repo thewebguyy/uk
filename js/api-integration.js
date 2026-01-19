@@ -159,7 +159,7 @@ class ProductService {
 
       // Apply category filter
       if (filters.category && filters.category !== 'all') {
-        q = query(q, where('category', '==', filters.category));
+        q = query(q, where('category', 'array-contains', filters.category));
       }
 
       // Apply limit (default to 50 for performance)
