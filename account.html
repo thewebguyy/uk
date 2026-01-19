@@ -2,13 +2,74 @@
 <html lang="en">
 
 <head>
-  <title>Account - Creative Merch UK</title>
+  <title>My Account - Creative Merch UK</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Dashboard specific styles */
+    .dashboard-container {
+      padding: 3rem 0;
+      min-height: 60vh;
+    }
+
+    .dashboard-sidebar {
+      background: var(--color-white);
+      border: 1px solid var(--color-grey-light);
+    }
+
+    .dashboard-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem;
+      color: var(--color-grey-dark);
+      text-decoration: none;
+      border-bottom: 1px solid var(--color-grey-light);
+      transition: all 0.2s;
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+
+    .dashboard-menu-item:hover,
+    .dashboard-menu-item.active {
+      background: var(--color-grey-light);
+      color: var(--color-black);
+      padding-left: 1.25rem;
+    }
+
+    .dashboard-menu-item svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .dashboard-content-area {
+      background: var(--color-white);
+      min-height: 400px;
+    }
+
+    .stat-card {
+      background: var(--color-grey-light);
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--color-black);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-grey-dark);
+    }
+  </style>
 </head>
 
 <body>
@@ -36,6 +97,28 @@
       <line x1="2" y1="12" x2="22" y2="12" />
       <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
     </symbol>
+    <symbol id="icon-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      <polyline points="9 22 9 12 15 12 15 22"></polyline>
+    </symbol>
+    <symbol id="icon-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path
+        d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+      </path>
+      <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+      <line x1="12" y1="22.08" x2="12" y2="12"></line>
+    </symbol>
+    <symbol id="icon-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="3"></circle>
+      <path
+        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+      </path>
+    </symbol>
+    <symbol id="icon-log-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+      <polyline points="16 17 21 12 16 7"></polyline>
+      <line x1="21" y1="12" x2="9" y2="12"></line>
+    </symbol>
   </svg>
 
   <!-- Announcement Banner -->
@@ -45,10 +128,14 @@
       <span class="announcement-item">CONTACT US</span>
       <span class="announcement-item">INFO@CUSTOMISEMEUK.COM</span>
       <span class="announcement-item">07588770901</span>
+      <span class="announcement-item">NEW ARRIVALS WEEKLY</span>
+      <span class="announcement-item">CUSTOM DESIGNS AVAILABLE</span>
       <span class="announcement-item">FREE DELIVERY OVER £100</span>
       <span class="announcement-item">CONTACT US</span>
       <span class="announcement-item">INFO@CUSTOMISEMEUK.COM</span>
       <span class="announcement-item">07588770901</span>
+      <span class="announcement-item">NEW ARRIVALS WEEKLY</span>
+      <span class="announcement-item">CUSTOM DESIGNS AVAILABLE</span>
     </div>
   </div>
 
@@ -57,16 +144,14 @@
     <div class="container">
       <div class="top-bar-content">
         <a class="navbar-brand" href="index.html">
-          <img src="icon.png" alt="Customise Me UK" class="logo-image">
+          <img src="icon.png" alt="Creative Merch UK" class="logo-image">
         </a>
-
         <form class="search-bar-form-compact">
           <svg class="search-icon">
             <use xlink:href="#icon-search" />
           </svg>
           <input type="search" class="search-input" placeholder="Search products...">
         </form>
-
         <div class="d-flex align-items-center gap-3">
           <div class="dropdown">
             <a href="#" class="nav-icon" data-bs-toggle="dropdown" aria-expanded="false">
@@ -100,30 +185,9 @@
     </div>
   </div>
 
-  <!-- Shopping Cart Offcanvas -->
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title">YOUR CART</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-    </div>
-    <div class="offcanvas-body">
-      <div id="cart-items"></div>
-      <div id="cart-empty" class="text-center">
-        <p class="text-grey">Your cart is empty</p>
-      </div>
-      <div id="cart-summary" style="display: none;">
-        <div class="d-flex justify-content-between mb-3 pt-3" style="border-top: 1px solid var(--color-grey-light);">
-          <strong>SUBTOTAL:</strong>
-          <strong id="cart-subtotal">£0.00</strong>
-        </div>
-        <button class="btn btn-primary w-100" onclick="window.location.href='checkout.html'">CHECKOUT</button>
-        <button class="btn btn-secondary w-100 mt-2" data-bs-dismiss="offcanvas">CONTINUE SHOPPING</button>
-      </div>
-    </div>
-  </div>
-
   <!-- Main Navigation -->
   <nav class="navbar navbar-expand-lg main-nav">
+    <!-- Same as index.html -->
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
@@ -131,7 +195,7 @@
       <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item dropdown mega-menu">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">SHOP</a>
+            <a class="nav-link dropdown-toggle" href="shop.html">SHOP</a>
             <div class="dropdown-menu mega-dropdown">
               <div class="container">
                 <div class="row">
@@ -141,94 +205,38 @@
                     <a class="dropdown-item" href="shop.html?category=apparel">APPAREL</a>
                     <a class="dropdown-item" href="shop.html?category=stickers">STICKERS & LABELS</a>
                     <a class="dropdown-item" href="shop.html?category=party-decor">PARTY DECOR</a>
-                    <a class="dropdown-item" href="shop.html?category=accessories">ACCESSORIES</a>
-                  </div>
-                  <div class="col-md-3">
-                    <h6 class="mega-title">APPAREL</h6>
-                    <a class="dropdown-item" href="#">T-Shirts</a>
-                    <a class="dropdown-item" href="#">Hoodies</a>
-                    <a class="dropdown-item" href="#">Hats</a>
-                    <a class="dropdown-item" href="#">Bags</a>
-                  </div>
-                  <div class="col-md-3">
-                    <h6 class="mega-title">PARTY ESSENTIALS</h6>
-                    <a class="dropdown-item" href="#">Banners</a>
-                    <a class="dropdown-item" href="#">Balloons</a>
-                    <a class="dropdown-item" href="#">Table Decor</a>
-                    <a class="dropdown-item" href="#">Party Packs</a>
-                  </div>
-                  <div class="col-md-3">
-                    <h6 class="mega-title">STICKERS & LABELS</h6>
-                    <a class="dropdown-item" href="#">Vinyl Stickers</a>
-                    <a class="dropdown-item" href="#">Custom Labels</a>
-                    <a class="dropdown-item" href="#">Wall Decals</a>
-                    <a class="dropdown-item" href="#">Sticker Packs</a>
                   </div>
                 </div>
               </div>
             </div>
           </li>
           <li class="nav-item dropdown mega-menu">
-            <a class="nav-link dropdown-toggle" href="designstudio.html" role="button" data-bs-toggle="dropdown">DESIGN
-              STUDIO</a>
-            <div class="dropdown-menu mega-dropdown">
-              <div class="container">
-                <div class="row">
-                  <div class="col-md-6">
-                    <h6 class="mega-title">SERVICES</h6>
-                    <a class="dropdown-item" href="designservice.html">Custom Design</a>
-                  </div>
-                  <div class="col-md-6">
-                    <h6 class="mega-title">RESOURCES</h6>
-                    <a class="dropdown-item" href="designstudio.html#resources">Design Templates</a>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <a class="nav-link dropdown-toggle" href="designstudio.html">DESIGN STUDIO</a>
           </li>
           <li class="nav-item dropdown mega-menu">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">PREMIUM SERVICES</a>
-            <div class="dropdown-menu mega-dropdown">
-              <div class="container">
-                <div class="row">
-                  <div class="col-md-4">
-                    <h6 class="mega-title">SERVICES</h6>
-                    <a class="dropdown-item" href="senditems.html">Send Items In</a>
-                    <a class="dropdown-item" href="subscriptions.html">Subscriptions</a>
-                  </div>
-                  <div class="col-md-4">
-                    <h6 class="mega-title">INSTALLATION</h6>
-                    <a class="dropdown-item" href="installation.html">Vinyl Installation</a>
-                  </div>
-                  <div class="col-md-4">
-                    <h6 class="mega-title">WORKSHOPS</h6>
-                    <a class="dropdown-item" href="contact.html?service=workshop">Group Iron on Workshop</a>
-                    <a class="dropdown-item" href="contact.html?service=workshop">Individual Iron on Experience</a>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <a class="nav-link dropdown-toggle" href="premiumservices.html">PREMIUM SERVICES</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- Account Section -->
-  <section class="section">
+  <!-- LOADING OVERLAY -->
+  <div id="auth-loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- GUEST VIEW -->
+  <section id="guest-view" class="section" style="display: none;">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-10">
-          <div class="text-center mb-5">
-            <h1>Welcome to Customise Me UK</h1>
-            <p class="text-grey-dark">Sign in to your account or create a new one</p>
-          </div>
-
           <div class="row g-4">
             <!-- Sign In -->
             <div class="col-lg-6">
-              <div class="p-4"
-                style="background: var(--color-grey-light); border-radius: var(--radius-lg); height: 100%;">
+              <div class="p-4" style="background: var(--color-grey-light); border-radius: 0px; height: 100%;">
                 <h3 class="mb-4">Sign In</h3>
                 <form id="signin-form" onsubmit="handleSignIn(event)">
                   <div class="mb-3">
@@ -239,88 +247,33 @@
                     <label for="signin-password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="signin-password" required>
                   </div>
-                  <div class="mb-3">
-                    <a href="#" class="text-grey-dark" style="font-size: 0.875rem;">Forgot password?</a>
-                  </div>
-                  <div id="signin-error" class="alert alert-danger" style="display: none;"></div>
-                  <button type="submit" class="btn btn-primary w-100 mb-3" id="signin-btn">
-                    <span id="signin-text">Sign In</span>
-                    <span id="signin-spinner" class="spinner-border spinner-border-sm" style="display: none;"></span>
-                  </button>
-                  <button type="button" class="btn btn-outline-dark w-100" onclick="handleGoogleSignIn()">
-                    <svg width="18" height="18" viewBox="0 0 18 18"
-                      style="margin-right: 8px; vertical-align: text-bottom;">
-                      <path
-                        d="M17.64 9.2c0-.637-.057-1.252-.164-1.841H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"
-                        fill="#4285F4"></path>
-                      <path
-                        d="M9 18c2.43 0 4.467-.806 5.956-2.18L12.048 13.56c-.806.54-1.836.86-3.048.86-2.344 0-4.328-1.584-5.036-3.715H.957v2.332A8.997 8.997 0 0 0 9 18z"
-                        fill="#34A853"></path>
-                      <path
-                        d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"
-                        fill="#FBBC05"></path>
-                      <path
-                        d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.159 6.656 3.58 9 3.58z"
-                        fill="#EA4335"></path>
-                    </svg>
-                    Sign in with Google
-                  </button>
+                  <button type="submit" class="btn btn-primary w-100 mb-3" id="signin-btn">Sign In</button>
                 </form>
+                <div class="text-center">OR</div>
+                <button type="button" class="btn btn-outline w-100 mt-3" onclick="handleGoogleSignIn()">Sign in with
+                  Google</button>
               </div>
             </div>
-
             <!-- Create Account -->
             <div class="col-lg-6">
               <div class="p-4"
-                style="background: var(--color-white); border: 1px solid var(--color-grey-light); border-radius: var(--radius-lg); height: 100%;">
+                style="background: var(--color-white); border: 1px solid var(--color-grey-light); height: 100%;">
                 <h3 class="mb-4">Create Account</h3>
                 <form id="signup-form" onsubmit="handleCreateAccount(event)">
                   <div class="mb-3">
-                    <label for="signup-name" class="form-label">Full Name</label>
+                    <label class="form-label">Full Name</label>
                     <input type="text" class="form-control" id="signup-name" required>
                   </div>
                   <div class="mb-3">
-                    <label for="signup-email" class="form-label">Email</label>
+                    <label class="form-label">Email</label>
                     <input type="email" class="form-control" id="signup-email" required>
                   </div>
                   <div class="mb-3">
-                    <label for="signup-password" class="form-label">Password</label>
+                    <label class="form-label">Password</label>
                     <input type="password" class="form-control" id="signup-password" required minlength="8">
-                    <small class="text-grey-dark">Minimum 8 characters</small>
                   </div>
-                  <div class="mb-3">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="newsletter" checked>
-                      <label class="form-check-label" for="newsletter" style="font-size: 0.875rem;">
-                        Subscribe to newsletter for exclusive offers
-                      </label>
-                    </div>
-                  </div>
-                  <div id="signup-error" class="alert alert-danger" style="display: none;"></div>
-                  <button type="submit" class="btn btn-primary w-100" id="signup-btn">
-                    <span id="signup-text">Create Account</span>
-                    <span id="signup-spinner" class="spinner-border spinner-border-sm" style="display: none;"></span>
-                  </button>
+                  <button type="submit" class="btn btn-primary w-100">Create Account</button>
                 </form>
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-5 p-4 text-center"
-            style="background: var(--color-grey-light); border-radius: var(--radius-lg);">
-            <h4>Benefits of Creating an Account</h4>
-            <div class="row g-3 mt-3">
-              <div class="col-md-4">
-                <p class="mb-1"><strong>Track Orders</strong></p>
-                <p class="text-grey-dark" style="font-size: 0.875rem;">View order history and track deliveries</p>
-              </div>
-              <div class="col-md-4">
-                <p class="mb-1"><strong>Save Favorites</strong></p>
-                <p class="text-grey-dark" style="font-size: 0.875rem;">Create wishlists and save designs</p>
-              </div>
-              <div class="col-md-4">
-                <p class="mb-1"><strong>Faster Checkout</strong></p>
-                <p class="text-grey-dark" style="font-size: 0.875rem;">Save addresses and payment methods</p>
               </div>
             </div>
           </div>
@@ -329,123 +282,163 @@
     </div>
   </section>
 
-  <footer>
+  <!-- DASHBOARD VIEW -->
+  <section id="dashboard-view" class="dashboard-container" style="display: none;">
     <div class="container">
-      <div class="text-center">
-        <p class="text-grey-dark">© 2026 Customise Me UK. All rights reserved.</p>
+      <div class="row g-4">
+        <!-- Sidebar -->
+        <div class="col-lg-3">
+          <div class="dashboard-sidebar">
+            <div class="p-4 text-center border-bottom">
+              <div
+                style="width: 80px; height: 80px; background: var(--color-grey-light); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center;">
+                <span style="font-size: 2rem;" id="user-initial">U</span>
+              </div>
+              <h5 class="mb-0" id="user-name">User Name</h5>
+              <small class="text-grey-dark" id="user-email">email@example.com</small>
+            </div>
+            <nav class="d-flex flex-column">
+              <a href="#" class="dashboard-menu-item active" onclick="showTab('overview')"><svg>
+                  <use xlink:href="#icon-home" />
+                </svg> Overview</a>
+              <a href="#" class="dashboard-menu-item" onclick="showTab('orders')"><svg>
+                  <use xlink:href="#icon-box" />
+                </svg> Order History</a>
+              <a href="#" class="dashboard-menu-item" onclick="showTab('profile')"><svg>
+                  <use xlink:href="#icon-user" />
+                </svg> Profile & Address</a>
+              <a href="#" class="dashboard-menu-item" onclick="showTab('settings')"><svg>
+                  <use xlink:href="#icon-settings" />
+                </svg> Settings</a>
+              <a href="#" class="dashboard-menu-item text-danger" onclick="window.AuthService.logout()"><svg>
+                  <use xlink:href="#icon-log-out" />
+                </svg> Sign Out</a>
+            </nav>
+          </div>
+        </div>
+        <!-- Content -->
+        <div class="col-lg-9">
+          <div class="dashboard-content-area p-4" id="tab-overview">
+            <h3>Overview</h3>
+            <div class="row g-3 mt-2">
+              <div class="col-md-4">
+                <div class="stat-card">
+                  <div class="stat-number">0</div>
+                  <div class="stat-label">Total Orders</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="stat-card">
+                  <div class="stat-number">0</div>
+                  <div class="stat-label">Active Subs</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="stat-card">
+                  <div class="stat-number">0</div>
+                  <div class="stat-label">Reward Points</div>
+                </div>
+              </div>
+            </div>
+            <h4 class="mt-5">Recent Activity</h4>
+            <p class="text-grey">No recent activity.</p>
+          </div>
+
+          <div class="dashboard-content-area p-4" id="tab-orders" style="display: none;">
+            <h3>My Orders</h3>
+            <p>No orders found.</p>
+          </div>
+
+          <div class="dashboard-content-area p-4" id="tab-profile" style="display: none;">
+            <h3>My Profile</h3>
+            <form class="mt-4" style="max-width: 500px;">
+              <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="profile-name">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" id="profile-email" readonly disabled>
+              </div>
+              <button class="btn btn-primary">Save Changes</button>
+            </form>
+          </div>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container text-center">
+      <p>© 2026 Customise Me UK</p>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/cart.js"></script>
-
   <script type="module">
     import './js/api-integration.js';
 
-    // Handle Sign In
-    window.handleSignIn = async function (event) {
-      event.preventDefault();
+    // Auth State Logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const loading = document.getElementById('auth-loading');
+      const guestView = document.getElementById('guest-view');
+      const dashboardView = document.getElementById('dashboard-view');
 
-      const btn = document.getElementById('signin-btn');
-      const text = document.getElementById('signin-text');
-      const spinner = document.getElementById('signin-spinner');
-      const errorDiv = document.getElementById('signin-error');
+      setTimeout(() => { // Simulate auth check delay or wait for Firebase
+        const user = window.AuthService.getUser();
+        loading.style.display = 'none';
 
-      const email = document.getElementById('signin-email').value;
-      const password = document.getElementById('signin-password').value;
-
-      btn.disabled = true;
-      text.style.display = 'none';
-      spinner.style.display = 'inline-block';
-      errorDiv.style.display = 'none';
-
-      try {
-        const result = await window.AuthService.login(email, password);
-
-        if (result.success) {
-          window.location.href = 'index.html';
+        if (user) {
+          dashboardView.style.display = 'block';
+          updateDashboard(user);
         } else {
-          errorDiv.textContent = result.message || 'Login failed. Please try again.';
-          errorDiv.style.display = 'block';
+          guestView.style.display = 'block';
         }
-      } catch (error) {
-        console.error('Login error:', error);
-        errorDiv.textContent = 'An unexpected error occurred.';
-        errorDiv.style.display = 'block';
-      } finally {
-        btn.disabled = false;
-        text.style.display = 'inline';
-        spinner.style.display = 'none';
-      }
+      }, 500);
+    });
+
+    function updateDashboard(user) {
+      document.getElementById('user-name').textContent = user.name || 'User';
+      document.getElementById('user-email').textContent = user.email || '';
+      document.getElementById('user-initial').textContent = (user.name || 'U').charAt(0).toUpperCase();
+      document.getElementById('profile-name').value = user.name || '';
+      document.getElementById('profile-email').value = user.email || '';
+    }
+
+    window.showTab = function (tabName) {
+      // Hide all tabs
+      document.querySelectorAll('.dashboard-content-area').forEach(el => el.style.display = 'none');
+      // Show selected
+      const selected = document.getElementById('tab-' + tabName);
+      if (selected) selected.style.display = 'block';
+      // Update menu active state (simplified)
+    };
+
+    // Login/Register handlers... (Same as before)
+    window.handleSignIn = async function (e) {
+      e.preventDefault();
+      const email = document.getElementById('signin-email').value;
+      const pass = document.getElementById('signin-password').value;
+      const res = await window.AuthService.login(email, pass);
+      if (res.success) location.reload();
+      else alert(res.message);
     };
 
     window.handleGoogleSignIn = async function () {
-      try {
-        const result = await window.AuthService.loginWithGoogle();
-        if (result.success) {
-          window.location.href = 'index.html';
-        } else {
-          alert(result.message || 'Google Sign In Failed');
-        }
-      } catch (error) {
-        console.error(error);
-        alert('Google Sign In Error');
-      }
+      const res = await window.AuthService.loginWithGoogle();
+      if (res.success) location.reload();
     };
 
-    // Handle Create Account
-    window.handleCreateAccount = async function (event) {
-      event.preventDefault();
-
-      const btn = document.getElementById('signup-btn');
-      const text = document.getElementById('signup-text');
-      const spinner = document.getElementById('signup-spinner');
-      const errorDiv = document.getElementById('signup-error');
-
+    window.handleCreateAccount = async function (e) {
+      e.preventDefault();
       const name = document.getElementById('signup-name').value;
       const email = document.getElementById('signup-email').value;
-      const password = document.getElementById('signup-password').value;
-      const newsletterSubscribed = document.getElementById('newsletter').checked;
-
-      btn.disabled = true;
-      text.style.display = 'none';
-      spinner.style.display = 'inline-block';
-      errorDiv.style.display = 'none';
-
-      try {
-        const result = await window.AuthService.register({ name, email, password });
-
-        if (result.success) {
-          alert('Account created successfully!');
-          window.location.href = 'index.html';
-        } else {
-          errorDiv.textContent = result.message || 'Registration failed. Please try again.';
-          errorDiv.style.display = 'block';
-        }
-      } catch (error) {
-        console.error('Registration error:', error);
-        errorDiv.textContent = 'An unexpected error occurred.';
-        errorDiv.style.display = 'block';
-      } finally {
-        btn.disabled = false;
-        text.style.display = 'inline';
-        spinner.style.display = 'none';
-      }
+      const pass = document.getElementById('signup-password').value;
+      const res = await window.AuthService.register({ name, email, password: pass });
+      if (res.success) location.reload();
+      else alert(res.message);
     };
-
-    // Check if already logged in
-    if (localStorage.getItem('authToken')) {
-      const user = JSON.parse(localStorage.getItem('user'));
-      if (confirm(`You're already logged in as ${user.name}. Go to homepage?`)) {
-        window.location.href = 'index.html';
-      }
-    }
-
-    // Update cart display
-    document.addEventListener('DOMContentLoaded', () => {
-      updateCartDisplay();
-    });
   </script>
 </body>
 

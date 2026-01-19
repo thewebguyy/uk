@@ -233,10 +233,14 @@
       <span class="announcement-item">CONTACT US</span>
       <span class="announcement-item">INFO@CUSTOMISEMEUK.COM</span>
       <span class="announcement-item">07588770901</span>
+      <span class="announcement-item">NEW ARRIVALS WEEKLY</span>
+      <span class="announcement-item">CUSTOM DESIGNS AVAILABLE</span>
       <span class="announcement-item">FREE DELIVERY OVER £100</span>
       <span class="announcement-item">CONTACT US</span>
       <span class="announcement-item">INFO@CUSTOMISEMEUK.COM</span>
       <span class="announcement-item">07588770901</span>
+      <span class="announcement-item">NEW ARRIVALS WEEKLY</span>
+      <span class="announcement-item">CUSTOM DESIGNS AVAILABLE</span>
     </div>
   </div>
 
@@ -427,6 +431,97 @@
               Loading description...
             </div>
 
+            <!-- Customization Options -->
+            <div class="product-customization">
+              <!-- Color Selection -->
+              <div class="customization-group">
+                <label class="customization-label">Select Color</label>
+                <div class="color-swatches" id="color-options">
+                  <div class="color-swatch active" style="background: white; border: 1px solid #ddd;"
+                    onclick="updateCustomization('color', 'White', this)"></div>
+                  <div class="color-swatch" style="background: black;"
+                    onclick="updateCustomization('color', 'Black', this)"></div>
+                  <div class="color-swatch" style="background: #1F2937;"
+                    onclick="updateCustomization('color', 'Navy', this)"></div>
+                  <div class="color-swatch" style="background: #DC2626;"
+                    onclick="updateCustomization('color', 'Red', this)"></div>
+                  <div class="color-swatch" style="background: #2563EB;"
+                    onclick="updateCustomization('color', 'Royal Blue', this)"></div>
+                </div>
+              </div>
+
+              <!-- Size Selection -->
+              <div class="customization-group">
+                <label class="customization-label">Select Size <a href="#"
+                    style="font-size: 0.75rem; text-decoration: underline; margin-left: 5px;">Size Guide</a></label>
+                <div class="size-options">
+                  <button class="size-btn" onclick="updateCustomization('size', 'XS', this)">XS</button>
+                  <button class="size-btn" onclick="updateCustomization('size', 'S', this)">S</button>
+                  <button class="size-btn active" onclick="updateCustomization('size', 'M', this)">M</button>
+                  <button class="size-btn" onclick="updateCustomization('size', 'L', this)">L</button>
+                  <button class="size-btn" onclick="updateCustomization('size', 'XL', this)">XL</button>
+                  <button class="size-btn" onclick="updateCustomization('size', '2XL', this)">2XL</button>
+                  <button class="size-btn" onclick="updateCustomization('size', '3XL', this)">3XL</button>
+                </div>
+              </div>
+
+              <!-- Print Location -->
+              <div class="customization-group">
+                <label class="customization-label">Print Location</label>
+                <div class="print-options">
+                  <button class="print-btn active"
+                    onclick="updateCustomization('printLocation', 'Front Only', this)">Front Only</button>
+                  <button class="print-btn" onclick="updateCustomization('printLocation', 'Back Only', this)">Back
+                    Only</button>
+                  <button class="print-btn" onclick="updateCustomization('printLocation', 'Front & Back', this)">Front &
+                    Back (+£5)</button>
+                </div>
+              </div>
+
+              <!-- Design Position -->
+              <div class="customization-group">
+                <label class="customization-label">Design Position</label>
+                <div class="position-options">
+                  <button class="position-btn" onclick="updateCustomization('designPosition', 'Left Chest', this)">Left
+                    Chest</button>
+                  <button class="position-btn"
+                    onclick="updateCustomization('designPosition', 'Right Chest', this)">Right Chest</button>
+                  <button class="position-btn active"
+                    onclick="updateCustomization('designPosition', 'Centre', this)">Centre</button>
+                  <button class="position-btn" onclick="updateCustomization('designPosition', 'Full Front', this)">Full
+                    Front</button>
+                </div>
+              </div>
+
+              <!-- Artwork Upload -->
+              <div class="customization-group">
+                <label class="customization-label">Upload Artwork</label>
+                <div class="artwork-options">
+                  <button class="artwork-btn" onclick="document.getElementById('artwork-upload').click()">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                    </svg>
+                    <span>Upload Your File</span>
+                    <div style="font-size: 0.7rem; color: #666; margin-top: 5px;">PNG, PDF, AI (Min 300 DPI)</div>
+                  </button>
+                  <input type="file" id="artwork-upload" style="display: none;" onchange="handleFileUpload(this)">
+
+                  <button class="artwork-btn" onclick="window.location.href='designservice.html'">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                      </path>
+                    </svg>
+                    <span>Design in Studio</span>
+                    <div style="font-size: 0.7rem; color: #666; margin-top: 5px;">Need help designing?</div>
+                  </button>
+                </div>
+                <div id="file-preview" style="margin-top: 10px; font-size: 0.875rem; font-weight: 500; color: #059669;">
+                </div>
+              </div>
+            </div>
+
             <!-- Quantity Selector -->
             <div class="quantity-selector">
               <span class="quantity-label">Quantity:</span>
@@ -491,6 +586,15 @@
   <script>
     let currentProduct = null;
     let currentQuantity = 1;
+
+    // Customization State
+    const customization = {
+      color: 'White',
+      size: 'M',
+      printLocation: 'Front Only',
+      designPosition: 'Centre',
+      artwork: null
+    };
 
     // Get product ID from URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -580,6 +684,46 @@
       if (errorState) errorState.style.display = 'block';
     }
 
+    // Update Customization
+    window.updateCustomization = function (type, value, element) {
+      customization[type] = value;
+
+      // Update UI classes
+      if (element) {
+        const siblings = element.parentElement.children;
+        for (let el of siblings) {
+          el.classList.remove('active');
+        }
+        element.classList.add('active');
+      }
+
+      // Update Price if needed
+      updatePrice();
+    };
+
+    function updatePrice() {
+      if (!currentProduct) return;
+
+      let finalPrice = currentProduct.price;
+
+      // Add logic for Front & Back (+£5)
+      if (customization.printLocation === 'Front & Back') {
+        finalPrice += 5;
+      }
+
+      const priceEl = document.getElementById('product-price');
+      if (priceEl) priceEl.textContent = `£${finalPrice.toFixed(2)}`;
+    }
+
+    // Handle File Upload
+    window.handleFileUpload = function (input) {
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        customization.artwork = file.name;
+        document.getElementById('file-preview').textContent = `Selected: ${file.name}`;
+      }
+    };
+
     // Change quantity
     window.changeQuantity = function (delta) {
       const quantityInput = document.getElementById('quantity');
@@ -596,7 +740,19 @@
       if (!currentProduct) return;
 
       // Use addToCart from cart.js
-      addToCart(currentProduct._id || currentProduct.id, currentProduct.name, currentProduct.price, currentProduct.imageUrl, currentQuantity);
+      // We need to pass customization options. cart.js needs to handle it or we append to name.
+      // For MVP, appends to name/notes
+      const customizedName = `${currentProduct.name} (${customization.size}, ${customization.color})`;
+      const finalPrice = customization.printLocation === 'Front & Back' ? currentProduct.price + 5 : currentProduct.price;
+
+      addToCart(
+        currentProduct._id || currentProduct.id,
+        customizedName,
+        finalPrice,
+        currentProduct.imageUrl,
+        currentQuantity,
+        customization // Passing full object if cart supports it
+      );
 
       // Show success feedback
       const btn = document.getElementById('add-to-cart-btn');

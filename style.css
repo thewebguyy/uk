@@ -469,8 +469,9 @@ p {
   margin-left: auto;
   margin-right: auto;
   position: absolute;
-  top: 100%;
   z-index: var(--z-dropdown);
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 .mega-title {
@@ -1518,6 +1519,8 @@ footer {
   padding: var(--spacing-md);
   overflow-y: auto;
   max-height: calc(100vh - 80px);
+  padding-bottom: 50px;
+  /* Ensure space for last item delete icon */
 }
 
 .btn-close {
@@ -1537,8 +1540,9 @@ footer {
 .cart-item {
   display: flex;
   gap: 1rem;
-  padding: 1rem 0;
+  padding: 1.25rem 0;
   border-bottom: 1px solid var(--color-grey-light);
+  position: relative;
 }
 
 .cart-item-image {

@@ -15,22 +15,38 @@ function saveCart(cart) {
   updateCartDisplay();
 }
 
+// Generate simple hash for customization object
+function getCustomizationHash(customization) {
+  if (!customization || Object.keys(customization).length === 0) return '';
+  // simple stable stringify sort of
+  return JSON.stringify(customization).split('').reduce((a, b) => {
+    a = ((a << 5) - a) + b.charCodeAt(0);
+    return a & a;
+  }, 0);
+}
+
 // Add item to cart
-function addToCart(id, name, price, imageUrl = '', quantity = 1) {
+function addToCart(productId, name, price, imageUrl = '', quantity = 1, customization = null) {
   const cart = getCart();
 
-  // Check if item already exists
-  const existingItem = cart.find(item => item.id === id);
+  // Create unique ID based on product + customization
+  const custHash = getCustomizationHash(customization);
+  const cartItemId = custHash ? `${productId}-${custHash}` : productId;
+
+  // Check if specific variant exists
+  const existingItem = cart.find(item => item.id === cartItemId);
 
   if (existingItem) {
     existingItem.quantity += quantity;
   } else {
     cart.push({
-      id: id,
+      id: cartItemId, // Unique Cart Item ID
+      productId: productId, // Reference to original product
       name: name,
       price: price,
       imageUrl: imageUrl,
-      quantity: quantity
+      quantity: quantity,
+      customization: customization || {}
     });
   }
 
@@ -38,20 +54,20 @@ function addToCart(id, name, price, imageUrl = '', quantity = 1) {
 }
 
 // Remove item from cart
-function removeFromCart(id) {
+function removeFromCart(cartItemId) {
   let cart = getCart();
-  cart = cart.filter(item => item.id !== id);
+  cart = cart.filter(item => item.id !== cartItemId);
   saveCart(cart);
 }
 
 // Update item quantity
-function updateQuantity(id, newQuantity) {
+function updateQuantity(cartItemId, newQuantity) {
   const cart = getCart();
-  const item = cart.find(item => item.id === id);
+  const item = cart.find(item => item.id === cartItemId);
 
   if (item) {
     if (newQuantity <= 0) {
-      removeFromCart(id);
+      removeFromCart(cartItemId);
     } else {
       item.quantity = newQuantity;
       saveCart(cart);
@@ -123,6 +139,7 @@ function updateCartDisplay() {
           <div class="cart-item-title">${escapeHtml(item.name)}</div>
           <div class="cart-item-price">£${item.price.toFixed(2)} × ${item.quantity}</div>
           <div class="cart-item-total" style="font-weight: 600; margin-top: 0.25rem;">£${(item.price * item.quantity).toFixed(2)}</div>
+          ${item.customization && item.customization.size ? `<div style="font-size: 0.7rem; color: #666;">Size: ${item.customization.size}, Color: ${item.customization.color}</div>` : ''}
         </div>
         <button class="cart-item-remove" onclick="removeFromCart('${item.id}')" aria-label="Remove ${escapeHtml(item.name)} from cart">
           ×
