@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>Account - Creative Merch UK</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -14,25 +15,26 @@
   <!-- SVG Icons -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="11" cy="11" r="8"/>
-      <path d="m21 21-4.35-4.35"/>
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.35-4.35" />
     </symbol>
     <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-      <circle cx="12" cy="7" r="4"/>
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
     </symbol>
     <symbol id="icon-shopping-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-      <line x1="3" y1="6" x2="21" y2="6"/>
-      <path d="M16 10a4 4 0 0 1-8 0"/>
+      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <path d="M16 10a4 4 0 0 1-8 0" />
     </symbol>
     <symbol id="icon-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      <path
+        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
     </symbol>
     <symbol id="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="12" cy="12" r="10"/>
-      <line x1="2" y1="12" x2="22" y2="12"/>
-      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      <circle cx="12" cy="12" r="10" />
+      <line x1="2" y1="12" x2="22" y2="12" />
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
     </symbol>
   </svg>
 
@@ -57,16 +59,20 @@
         <a class="navbar-brand" href="index.html">
           <img src="icon.png" alt="Customise Me UK" class="logo-image">
         </a>
-        
+
         <form class="search-bar-form-compact">
-          <svg class="search-icon"><use xlink:href="#icon-search"/></svg>
+          <svg class="search-icon">
+            <use xlink:href="#icon-search" />
+          </svg>
           <input type="search" class="search-input" placeholder="Search products...">
         </form>
-        
+
         <div class="d-flex align-items-center gap-3">
           <div class="dropdown">
             <a href="#" class="nav-icon" data-bs-toggle="dropdown" aria-expanded="false">
-              <svg class="icon"><use xlink:href="#icon-globe"/></svg>
+              <svg class="icon">
+                <use xlink:href="#icon-globe" />
+              </svg>
             </a>
             <ul class="dropdown-menu dropdown-menu-end region-dropdown">
               <li><a class="dropdown-item" href="#"><span class="flag">🇬🇧</span> UNITED KINGDOM</a></li>
@@ -74,13 +80,19 @@
               <li><a class="dropdown-item" href="#"><span class="flag">🇺🇸</span> AMERICA</a></li>
             </ul>
           </div>
-          <a href="#wishlist" class="nav-icon"><svg class="icon"><use xlink:href="#icon-heart"/></svg></a>
+          <a href="#wishlist" class="nav-icon"><svg class="icon">
+              <use xlink:href="#icon-heart" />
+            </svg></a>
           <a href="#cart" class="nav-icon" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
-            <svg class="icon"><use xlink:href="#icon-shopping-bag"/></svg>
+            <svg class="icon">
+              <use xlink:href="#icon-shopping-bag" />
+            </svg>
             <span class="badge-cart" id="cart-count"></span>
           </a>
           <a href="account.html" class="nav-icon nav-icon-text">
-            <svg class="icon"><use xlink:href="#icon-user"/></svg>
+            <svg class="icon">
+              <use xlink:href="#icon-user" />
+            </svg>
             <span class="nav-text">SIGN IN / SIGN UP</span>
           </a>
         </div>
@@ -157,7 +169,8 @@
             </div>
           </li>
           <li class="nav-item dropdown mega-menu">
-            <a class="nav-link dropdown-toggle" href="designstudio.html" role="button" data-bs-toggle="dropdown">DESIGN STUDIO</a>
+            <a class="nav-link dropdown-toggle" href="designstudio.html" role="button" data-bs-toggle="dropdown">DESIGN
+              STUDIO</a>
             <div class="dropdown-menu mega-dropdown">
               <div class="container">
                 <div class="row">
@@ -214,7 +227,8 @@
           <div class="row g-4">
             <!-- Sign In -->
             <div class="col-lg-6">
-              <div class="p-4" style="background: var(--color-grey-light); border-radius: var(--radius-lg); height: 100%;">
+              <div class="p-4"
+                style="background: var(--color-grey-light); border-radius: var(--radius-lg); height: 100%;">
                 <h3 class="mb-4">Sign In</h3>
                 <form id="signin-form" onsubmit="handleSignIn(event)">
                   <div class="mb-3">
@@ -229,9 +243,27 @@
                     <a href="#" class="text-grey-dark" style="font-size: 0.875rem;">Forgot password?</a>
                   </div>
                   <div id="signin-error" class="alert alert-danger" style="display: none;"></div>
-                  <button type="submit" class="btn btn-primary w-100" id="signin-btn">
+                  <button type="submit" class="btn btn-primary w-100 mb-3" id="signin-btn">
                     <span id="signin-text">Sign In</span>
                     <span id="signin-spinner" class="spinner-border spinner-border-sm" style="display: none;"></span>
+                  </button>
+                  <button type="button" class="btn btn-outline-dark w-100" onclick="handleGoogleSignIn()">
+                    <svg width="18" height="18" viewBox="0 0 18 18"
+                      style="margin-right: 8px; vertical-align: text-bottom;">
+                      <path
+                        d="M17.64 9.2c0-.637-.057-1.252-.164-1.841H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"
+                        fill="#4285F4"></path>
+                      <path
+                        d="M9 18c2.43 0 4.467-.806 5.956-2.18L12.048 13.56c-.806.54-1.836.86-3.048.86-2.344 0-4.328-1.584-5.036-3.715H.957v2.332A8.997 8.997 0 0 0 9 18z"
+                        fill="#34A853"></path>
+                      <path
+                        d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"
+                        fill="#FBBC05"></path>
+                      <path
+                        d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.159 6.656 3.58 9 3.58z"
+                        fill="#EA4335"></path>
+                    </svg>
+                    Sign in with Google
                   </button>
                 </form>
               </div>
@@ -239,7 +271,8 @@
 
             <!-- Create Account -->
             <div class="col-lg-6">
-              <div class="p-4" style="background: var(--color-white); border: 1px solid var(--color-grey-light); border-radius: var(--radius-lg); height: 100%;">
+              <div class="p-4"
+                style="background: var(--color-white); border: 1px solid var(--color-grey-light); border-radius: var(--radius-lg); height: 100%;">
                 <h3 class="mb-4">Create Account</h3>
                 <form id="signup-form" onsubmit="handleCreateAccount(event)">
                   <div class="mb-3">
@@ -273,7 +306,8 @@
             </div>
           </div>
 
-          <div class="mt-5 p-4 text-center" style="background: var(--color-grey-light); border-radius: var(--radius-lg);">
+          <div class="mt-5 p-4 text-center"
+            style="background: var(--color-grey-light); border-radius: var(--radius-lg);">
             <h4>Benefits of Creating an Account</h4>
             <div class="row g-3 mt-3">
               <div class="col-md-4">
@@ -305,103 +339,100 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/cart.js"></script>
-  
-  <script>
-    const API_URL = 'http://localhost:5000/api';
+
+  <script type="module">
+    import './js/api-integration.js';
 
     // Handle Sign In
-    async function handleSignIn(event) {
+    window.handleSignIn = async function (event) {
       event.preventDefault();
-      
+
       const btn = document.getElementById('signin-btn');
       const text = document.getElementById('signin-text');
       const spinner = document.getElementById('signin-spinner');
       const errorDiv = document.getElementById('signin-error');
-      
+
       const email = document.getElementById('signin-email').value;
       const password = document.getElementById('signin-password').value;
-      
+
       btn.disabled = true;
       text.style.display = 'none';
       spinner.style.display = 'inline-block';
       errorDiv.style.display = 'none';
-      
+
       try {
-        const response = await fetch(`${API_URL}/auth/login`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
-          localStorage.setItem('authToken', data.data.token);
-          localStorage.setItem('user', JSON.stringify(data.data.user));
-          alert('Login successful! Welcome back.');
+        const result = await window.AuthService.login(email, password);
+
+        if (result.success) {
           window.location.href = 'index.html';
         } else {
-          errorDiv.textContent = data.message || 'Login failed. Please try again.';
+          errorDiv.textContent = result.message || 'Login failed. Please try again.';
           errorDiv.style.display = 'block';
         }
       } catch (error) {
         console.error('Login error:', error);
-        errorDiv.textContent = 'Connection error. Please make sure the backend server is running.';
+        errorDiv.textContent = 'An unexpected error occurred.';
         errorDiv.style.display = 'block';
       } finally {
         btn.disabled = false;
         text.style.display = 'inline';
         spinner.style.display = 'none';
       }
-    }
+    };
+
+    window.handleGoogleSignIn = async function () {
+      try {
+        const result = await window.AuthService.loginWithGoogle();
+        if (result.success) {
+          window.location.href = 'index.html';
+        } else {
+          alert(result.message || 'Google Sign In Failed');
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Google Sign In Error');
+      }
+    };
 
     // Handle Create Account
-    async function handleCreateAccount(event) {
+    window.handleCreateAccount = async function (event) {
       event.preventDefault();
-      
+
       const btn = document.getElementById('signup-btn');
       const text = document.getElementById('signup-text');
       const spinner = document.getElementById('signup-spinner');
       const errorDiv = document.getElementById('signup-error');
-      
+
       const name = document.getElementById('signup-name').value;
       const email = document.getElementById('signup-email').value;
       const password = document.getElementById('signup-password').value;
       const newsletterSubscribed = document.getElementById('newsletter').checked;
-      
+
       btn.disabled = true;
       text.style.display = 'none';
       spinner.style.display = 'inline-block';
       errorDiv.style.display = 'none';
-      
+
       try {
-        const response = await fetch(`${API_URL}/auth/register`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, password, newsletterSubscribed })
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
-          localStorage.setItem('authToken', data.data.token);
-          localStorage.setItem('user', JSON.stringify(data.data.user));
-          alert('Account created successfully! Welcome to Creative Merch UK.');
+        const result = await window.AuthService.register({ name, email, password });
+
+        if (result.success) {
+          alert('Account created successfully!');
           window.location.href = 'index.html';
         } else {
-          errorDiv.textContent = data.message || 'Registration failed. Please try again.';
+          errorDiv.textContent = result.message || 'Registration failed. Please try again.';
           errorDiv.style.display = 'block';
         }
       } catch (error) {
         console.error('Registration error:', error);
-        errorDiv.textContent = 'Connection error. Please make sure the backend server is running.';
+        errorDiv.textContent = 'An unexpected error occurred.';
         errorDiv.style.display = 'block';
       } finally {
         btn.disabled = false;
         text.style.display = 'inline';
         spinner.style.display = 'none';
       }
-    }
+    };
 
     // Check if already logged in
     if (localStorage.getItem('authToken')) {
@@ -417,4 +448,5 @@
     });
   </script>
 </body>
+
 </html>

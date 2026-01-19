@@ -1,14 +1,33 @@
 /**
- * FRONTEND API INTEGRATION
- * Complete examples for connecting frontend to backend
+ * FRONTEND API INTEGRATION - FIREBASE VERSION
+ * Reads products directly from Firestore
+ * Auth handled via Firebase Auth
  */
+
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import { getFirestore, collection, getDocs, doc, getDoc, query, where, limit, orderBy, startAfter } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 // ============================================
 // CONFIGURATION
 // ============================================
 
+const firebaseConfig = {
+  apiKey: "AIzaSyA6pLJdRb4V5LUUrHdwSKRne-ZgXJoqqY8",
+  authDomain: "cmuksite.firebaseapp.com",
+  projectId: "cmuksite",
+  storageBucket: "cmuksite.firebasestorage.app",
+  messagingSenderId: "311601861870",
+  appId: "1:311601861870:web:4d3c04c418a789961dcfff"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
 const CONFIG = {
-  API_URL: 'http://localhost:5000/api',
+  API_URL: 'http://localhost:5000/api', // Kept for legacy backend endpoints if needed
   STRIPE_PUBLIC_KEY: 'pk_test_your_stripe_key'
 };
 
@@ -19,52 +38,89 @@ const CONFIG = {
 class AuthService {
   static async register(userData) {
     try {
-      const response = await fetch(`${CONFIG.API_URL}/auth/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData)
+      const { email, password, name } = userData;
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Update profile with name
+      await updateProfile(user, {
+        displayName: name
       });
 
-      const data = await response.json();
-      
-      if (data.success) {
-        localStorage.setItem('authToken', data.data.token);
-        localStorage.setItem('user', JSON.stringify(data.data.user));
-        return { success: true, user: data.data.user };
-      }
+      // Format user object
+      const formattedUser = {
+        uid: user.uid,
+        email: user.email,
+        name: name,
+        createdAt: new Date().toISOString()
+      };
 
-      return { success: false, message: data.message };
+      // Store in localStorage for compatibility
+      localStorage.setItem('user', JSON.stringify(formattedUser));
+      localStorage.setItem('authToken', await user.getIdToken());
+
+      return { success: true, user: formattedUser };
     } catch (error) {
-      return { success: false, message: error.message };
+      console.error('Registration error:', error);
+      return { success: false, message: this.getErrorMessage(error) };
     }
   }
 
   static async login(email, password) {
     try {
-      const response = await fetch(`${CONFIG.API_URL}/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-      const data = await response.json();
-      
-      if (data.success) {
-        localStorage.setItem('authToken', data.data.token);
-        localStorage.setItem('user', JSON.stringify(data.data.user));
-        return { success: true, user: data.data.user };
-      }
+      const formattedUser = {
+        uid: user.uid,
+        email: user.email,
+        name: user.displayName || 'User',
+        createdAt: user.metadata.creationTime
+      };
 
-      return { success: false, message: data.message };
+      localStorage.setItem('user', JSON.stringify(formattedUser));
+      localStorage.setItem('authToken', await user.getIdToken());
+
+      return { success: true, user: formattedUser };
     } catch (error) {
-      return { success: false, message: error.message };
+      console.error('Login error:', error);
+      return { success: false, message: this.getErrorMessage(error) };
     }
   }
 
-  static logout() {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('user');
-    window.location.href = '/index.html';
+  static async loginWithGoogle() {
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      const formattedUser = {
+        uid: user.uid,
+        email: user.email,
+        name: user.displayName,
+        photoURL: user.photoURL,
+        createdAt: user.metadata.creationTime
+      };
+
+      localStorage.setItem('user', JSON.stringify(formattedUser));
+      localStorage.setItem('authToken', await user.getIdToken());
+
+      return { success: true, user: formattedUser };
+    } catch (error) {
+      console.error('Google login error:', error);
+      return { success: false, message: this.getErrorMessage(error) };
+    }
+  }
+
+  static async logout() {
+    try {
+      await signOut(auth);
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('user');
+      window.location.href = 'index.html';
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   }
 
   static getToken() {
@@ -79,20 +135,58 @@ class AuthService {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
+
+  static getErrorMessage(error) {
+    switch (error.code) {
+      case 'auth/user-not-found': return 'No account found with this email.';
+      case 'auth/wrong-password': return 'Incorrect password.';
+      case 'auth/email-already-in-use': return 'Email is already registered.';
+      case 'auth/weak-password': return 'Password should be at least 6 characters.';
+      default: return error.message;
+    }
+  }
 }
 
 // ============================================
-// PRODUCTS
+// PRODUCTS (FIRESTORE)
 // ============================================
 
 class ProductService {
   static async getProducts(filters = {}) {
     try {
-      const params = new URLSearchParams(filters);
-      const response = await fetch(`${CONFIG.API_URL}/products?${params}`);
-      const data = await response.json();
-      
-      return data.success ? data.data.products : [];
+      let productsRef = collection(db, 'products');
+      let q = query(productsRef);
+
+      // Apply category filter
+      if (filters.category && filters.category !== 'all') {
+        q = query(q, where('category', '==', filters.category));
+      }
+
+      // Apply limit (default to 50 for performance)
+      const limitCount = filters.limit || 50;
+      q = query(q, limit(limitCount));
+
+      // Execute query
+      const querySnapshot = await getDocs(q);
+
+      let products = [];
+      querySnapshot.forEach((doc) => {
+        products.push({
+          _id: doc.id,
+          ...doc.data()
+        });
+      });
+
+      // Client-side filtering/sorting for price (Firestore requires composite indexes for complex queries)
+      // This is MVP approach to avoid index creation requirements for every combo
+      if (filters.minPrice) {
+        products = products.filter(p => p.price >= parseFloat(filters.minPrice));
+      }
+      if (filters.maxPrice) {
+        products = products.filter(p => p.price <= parseFloat(filters.maxPrice));
+      }
+
+      return products;
     } catch (error) {
       console.error('Get products error:', error);
       return [];
@@ -101,10 +195,14 @@ class ProductService {
 
   static async getProduct(id) {
     try {
-      const response = await fetch(`${CONFIG.API_URL}/products/${id}`);
-      const data = await response.json();
-      
-      return data.success ? data.data.product : null;
+      const docRef = doc(db, 'products', id);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        return { _id: docSnap.id, ...docSnap.data() };
+      } else {
+        return null;
+      }
     } catch (error) {
       console.error('Get product error:', error);
       return null;
@@ -113,10 +211,15 @@ class ProductService {
 
   static async getFeaturedProducts() {
     try {
-      const response = await fetch(`${CONFIG.API_URL}/products/featured/list`);
-      const data = await response.json();
-      
-      return data.success ? data.data.products : [];
+      const q = query(collection(db, 'products'), where('featured', '==', true), limit(4));
+      const querySnapshot = await getDocs(q);
+
+      const products = [];
+      querySnapshot.forEach((doc) => {
+        products.push({ _id: doc.id, ...doc.data() });
+      });
+
+      return products;
     } catch (error) {
       console.error('Get featured products error:', error);
       return [];
@@ -173,12 +276,16 @@ class CheckoutService {
 // ============================================
 
 async function initializeStripeCheckout() {
-  // Load Stripe.js
+  // Load Stripe.js (Assuming Stripe script is loaded in HTML)
+  if (typeof Stripe === 'undefined') {
+    console.error('Stripe.js not loaded');
+    return;
+  }
   const stripe = Stripe(CONFIG.STRIPE_PUBLIC_KEY);
-  
+
   // Get cart items
   const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-  
+
   if (cart.length === 0) {
     alert('Your cart is empty');
     window.location.href = '/shop.html';
@@ -284,7 +391,7 @@ class OrderService {
     try {
       const response = await fetch(`${CONFIG.API_URL}/orders/track/${orderNumber}`);
       const data = await response.json();
-      
+
       return data.success ? data.data : null;
     } catch (error) {
       console.error('Track order error:', error);
@@ -294,87 +401,15 @@ class OrderService {
 }
 
 // ============================================
-// USAGE EXAMPLES
+// EXPORTS
 // ============================================
 
-// Example 1: Display products on shop page
-async function loadShopProducts() {
-  const products = await ProductService.getProducts({ category: 'apparel' });
-  const grid = document.getElementById('products-grid');
-  
-  grid.innerHTML = products.map(product => `
-    <div class="product-card">
-      <h3>${product.name}</h3>
-      <p>£${product.price}</p>
-      <button onclick="addToCart(${product._id}, '${product.name}', ${product.price})">
-        Add to Cart
-      </button>
-    </div>
-  `).join('');
-}
-
-// Example 2: Handle registration
-async function handleRegistration(event) {
-  event.preventDefault();
-  
-  const formData = {
-    name: document.getElementById('signup-name').value,
-    email: document.getElementById('signup-email').value,
-    password: document.getElementById('signup-password').value
-  };
-
-  const result = await AuthService.register(formData);
-  
-  if (result.success) {
-    alert('Registration successful!');
-    window.location.href = '/index.html';
-  } else {
-    alert(result.message);
-  }
-}
-
-// Example 3: Handle login
-async function handleLogin(event) {
-  event.preventDefault();
-  
-  const email = document.getElementById('signin-email').value;
-  const password = document.getElementById('signin-password').value;
-
-  const result = await AuthService.login(email, password);
-  
-  if (result.success) {
-    window.location.href = '/index.html';
-  } else {
-    alert(result.message);
-  }
-}
-
-// Example 4: Submit contact form
-async function handleContactSubmit(event) {
-  event.preventDefault();
-  
-  const formData = {
-    name: document.getElementById('name').value,
-    email: document.getElementById('email').value,
-    phone: document.getElementById('phone').value,
-    service: document.getElementById('service').value,
-    message: document.getElementById('message').value
-  };
-
-  const success = await submitContactForm(formData);
-  
-  if (success) {
-    alert('Message sent! We\'ll get back to you within 24 hours.');
-    event.target.reset();
-  } else {
-    alert('Failed to send message. Please try again.');
-  }
-}
-
-// Export for use in HTML files
+// Assign to window for global access
 window.AuthService = AuthService;
 window.ProductService = ProductService;
 window.CheckoutService = CheckoutService;
 window.OrderService = OrderService;
 window.initializeStripeCheckout = initializeStripeCheckout;
 window.submitContactForm = submitContactForm;
+
+console.log('API Integration (Firebase Version) Loaded');

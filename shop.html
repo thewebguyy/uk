@@ -545,7 +545,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/cart.js"></script>
 
-  <script src="js/api-integration.js"></script>
+  <script type="module" src="js/api-integration.js"></script>
 
   <script>
     // ========================================
@@ -783,58 +783,38 @@
       return div.innerHTML;
     }
   </script>
-  // Show feedback
-  alert(`${name} added to cart!`);
-  };
 
-  // ========================================
-  // MOBILE FILTER TOGGLE
-  // ========================================
-  window.toggleMobileFilters = function() {
-  document.getElementById('filter-sidebar').classList.toggle('show');
-  };
+  <script>
+    // Show feedback when adding to cart
+    window.showCartFeedback = function (name) {
+      alert(`${name} added to cart!`);
+    };
 
-  // ========================================
-  // HELPER FUNCTIONS
-  // ========================================
-  function escapeHtml(text) {
-  if (!text) return '';
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
-  }
+    // Mobile filter toggle
+    window.toggleMobileFilters = function () {
+      document.getElementById('filter-sidebar').classList.toggle('show');
+    };
 
-  // ========================================
-  // CATEGORY CHECKBOX HANDLERS
-  // ========================================
-  document.getElementById('cat-all').addEventListener('change', function() {
-  if (this.checked) {
-  ['cat-apparel', 'cat-stickers', 'cat-party-decor', 'cat-accessories'].forEach(id => {
-  const checkbox = document.getElementById(id);
-  if (checkbox) checkbox.checked = false;
-  });
-  }
-  });
+    // Category checkbox handlers
+    document.getElementById('cat-all').addEventListener('change', function () {
+      if (this.checked) {
+        ['cat-apparel', 'cat-stickers', 'cat-party-decor', 'cat-accessories'].forEach(id => {
+          const checkbox = document.getElementById(id);
+          if (checkbox) checkbox.checked = false;
+        });
+      }
+    });
 
-  ['cat-apparel', 'cat-stickers', 'cat-party-decor', 'cat-accessories'].forEach(id => {
-  const checkbox = document.getElementById(id);
-  if (checkbox) {
-  checkbox.addEventListener('change', function() {
-  if (this.checked) {
-  document.getElementById('cat-all').checked = false;
-  }
-  });
-  }
-  });
-
-  // ========================================
-  // INITIALIZE CART DISPLAY
-  // ========================================
-  document.addEventListener('DOMContentLoaded', () => {
-  if (typeof updateCartDisplay === 'function') {
-  updateCartDisplay();
-  }
-  });
+    ['cat-apparel', 'cat-stickers', 'cat-party-decor', 'cat-accessories'].forEach(id => {
+      const checkbox = document.getElementById(id);
+      if (checkbox) {
+        checkbox.addEventListener('change', function () {
+          if (this.checked) {
+            document.getElementById('cat-all').checked = false;
+          }
+        });
+      }
+    });
   </script>
 </body>
 
