@@ -321,59 +321,11 @@
       <p class="section-subtitle">Discover premium custom designs and party essentials</p>
 
       <div class="product-grid-four">
-        <!-- Product 1 -->
-        <div class="product-card">
-          <a href="product.html?id=1">
-            <div class="product-image">
-              <span>Product Image</span>
+        <div class="product-grid-four" id="featured-products">
+          <div class="text-center w-100 py-5">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
             </div>
-          </a>
-          <div class="product-info">
-            <h3 class="product-title">
-              <a href="product.html?id=1" style="text-decoration: none; color: inherit;">CUSTOM T-SHIRT DESIGN</a>
-            </h3>
-          </div>
-        </div>
-
-        <!-- Product 2 -->
-        <div class="product-card">
-          <a href="product.html?id=2">
-            <div class="product-image">
-              <span>Product Image</span>
-            </div>
-          </a>
-          <div class="product-info">
-            <h3 class="product-title">
-              <a href="product.html?id=2" style="text-decoration: none; color: inherit;">VINYL STICKER PACK</a>
-            </h3>
-          </div>
-        </div>
-
-        <!-- Product 3 -->
-        <div class="product-card">
-          <a href="product.html?id=3">
-            <div class="product-image">
-              <span>Product Image</span>
-            </div>
-          </a>
-          <div class="product-info">
-            <h3 class="product-title">
-              <a href="product.html?id=3" style="text-decoration: none; color: inherit;">PARTY BANNER SET</a>
-            </h3>
-          </div>
-        </div>
-
-        <!-- Product 4 -->
-        <div class="product-card">
-          <a href="product.html?id=4">
-            <div class="product-image">
-              <span>Product Image</span>
-            </div>
-          </a>
-          <div class="product-info">
-            <h3 class="product-title">
-              <a href="product.html?id=4" style="text-decoration: none; color: inherit;">CUSTOM LABELS</a>
-            </h3>
           </div>
         </div>
       </div>
@@ -703,7 +655,17 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/cart.js"></script>
 
+  <script type="module" src="js/api-integration.js"></script>
+
   <script>
+    // Helper function to escape HTML
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
     // Hero Carousel Functionality - Auto-slide only
     let currentSlideIndex = 0;
     let slideInterval;
@@ -725,10 +687,54 @@
       }, 5000); // Change slide every 5 seconds
     }
 
-    // Initialize carousel
+    // Load Featured Products
+    async function loadFeaturedProducts() {
+      const container = document.getElementById('featured-products');
+      try {
+        // Wait for service to be available (simple retry mechanism)
+        if (!window.ProductService) {
+          setTimeout(loadFeaturedProducts, 100);
+          return;
+        }
+
+        const products = await window.ProductService.getFeaturedProducts();
+
+        if (!products || products.length === 0) {
+          container.innerHTML = '<p class="text-center w-100">No featured products found.</p>';
+          return;
+        }
+
+        container.innerHTML = products.map(product => `
+          <div class="product-card">
+            <a href="product.html?id=${product._id}">
+              <div class="product-image">
+                ${product.imageUrl ?
+            `<img src="${escapeHtml(product.imageUrl)}" alt="${escapeHtml(product.name)}" style="width:100%;height:100%;object-fit:cover;">` :
+            `<span>${escapeHtml(product.name)}</span>`
+          }
+              </div>
+            </a>
+            <div class="product-info">
+               <div style="font-size: 0.75rem; color: #666; margin-bottom: 5px;">${escapeHtml((product.category || '').toUpperCase())}</div>
+              <h3 class="product-title">
+                <a href="product.html?id=${product._id}" style="text-decoration: none; color: inherit;">${escapeHtml(product.name)}</a>
+              </h3>
+              <p style="font-weight: 600; margin-top: 5px;">£${product.price.toFixed(2)}</p>
+            </div>
+          </div>
+        `).join('');
+
+      } catch (error) {
+        console.error('Error loading featured products:', error);
+        container.innerHTML = '<p class="text-center w-100">Failed to load products.</p>';
+      }
+    }
+
+    // Initialize
     document.addEventListener('DOMContentLoaded', () => {
       showSlide(currentSlideIndex);
       startAutoSlide();
+      loadFeaturedProducts();
 
       // Update cart count display
       if (typeof updateCartDisplay === 'function') {

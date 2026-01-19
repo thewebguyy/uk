@@ -158,8 +158,9 @@ class ProductService {
       let q = query(productsRef);
 
       // Apply category filter
+      // FIELD: 'categories' (array) matches 'array-contains'
       if (filters.category && filters.category !== 'all') {
-        q = query(q, where('category', 'array-contains', filters.category));
+        q = query(q, where('categories', 'array-contains', filters.category));
       }
 
       // Apply limit (default to 50 for performance)
@@ -171,14 +172,17 @@ class ProductService {
 
       let products = [];
       querySnapshot.forEach((doc) => {
+        const data = doc.data();
         products.push({
           _id: doc.id,
-          ...doc.data()
+          ...data,
+          // Map array -> string for frontend compatibility
+          category: Array.isArray(data.categories) ? data.categories[0] : (data.category || 'Uncategorized'),
+          imageUrl: Array.isArray(data.images) && data.images.length > 0 ? data.images[0] : (data.imageUrl || '')
         });
       });
 
-      // Client-side filtering/sorting for price (Firestore requires composite indexes for complex queries)
-      // This is MVP approach to avoid index creation requirements for every combo
+      // Client-side filtering/sorting for price
       if (filters.minPrice) {
         products = products.filter(p => p.price >= parseFloat(filters.minPrice));
       }
@@ -199,7 +203,13 @@ class ProductService {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        return { _id: docSnap.id, ...docSnap.data() };
+        const data = docSnap.data();
+        return {
+          _id: docSnap.id,
+          ...data,
+          category: Array.isArray(data.categories) ? data.categories[0] : (data.category || 'Uncategorized'),
+          imageUrl: Array.isArray(data.images) && data.images.length > 0 ? data.images[0] : (data.imageUrl || '')
+        };
       } else {
         return null;
       }
@@ -216,7 +226,13 @@ class ProductService {
 
       const products = [];
       querySnapshot.forEach((doc) => {
-        products.push({ _id: doc.id, ...doc.data() });
+        const data = doc.data();
+        products.push({
+          _id: doc.id,
+          ...data,
+          category: Array.isArray(data.categories) ? data.categories[0] : (data.category || 'Uncategorized'),
+          imageUrl: Array.isArray(data.images) && data.images.length > 0 ? data.images[0] : (data.imageUrl || '')
+        });
       });
 
       return products;
