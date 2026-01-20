@@ -324,12 +324,10 @@
       <h2 class="section-title">SHOP OUR COLLECTION</h2>
       <p class="section-subtitle">Discover premium custom designs and party essentials</p>
 
-      <div class="product-grid-four">
-        <div class="product-grid-four" id="featured-products">
-          <div class="text-center w-100 py-5">
-            <div class="spinner-border" role="status">
-              <span class="visually-hidden">Loading...</span>
-            </div>
+      <div class="product-grid-four" id="featured-products">
+        <div class="text-center w-100 py-5">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
           </div>
         </div>
       </div>
@@ -513,28 +511,7 @@
     </div>
   </section>
 
-  <!-- Clients We've Worked With Banner -->
-  <section class="clients-banner">
-    <div class="container">
-      <h3 class="clients-title">TRUSTED BY LEADING BRANDS</h3>
-      <div class="clients-scroll">
-        <div class="clients-content">
-          <div class="client-item">CLIENT LOGO 1</div>
-          <div class="client-item">CLIENT LOGO 2</div>
-          <div class="client-item">CLIENT LOGO 3</div>
-          <div class="client-item">CLIENT LOGO 4</div>
-          <div class="client-item">CLIENT LOGO 5</div>
-          <div class="client-item">CLIENT LOGO 6</div>
-          <div class="client-item">CLIENT LOGO 1</div>
-          <div class="client-item">CLIENT LOGO 2</div>
-          <div class="client-item">CLIENT LOGO 3</div>
-          <div class="client-item">CLIENT LOGO 4</div>
-          <div class="client-item">CLIENT LOGO 5</div>
-          <div class="client-item">CLIENT LOGO 6</div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Clients Banner Removed (Placeholder) -->
 
   <!-- Reviews Section -->
   <section class="reviews-section">
@@ -548,7 +525,7 @@
             <div class="review-stars">★★★★★</div>
             <p class="review-text">"Absolutely brilliant service! The custom designs exceeded our expectations and the
               quality is outstanding. Will definitely be ordering again."</p>
-            <p class="review-author">— Sarah M., London</p>
+            <p class="review-author">— Verified Customer</p>
           </div>
         </div>
 
@@ -557,7 +534,7 @@
             <div class="review-stars">★★★★★</div>
             <p class="review-text">"Perfect for our company event! The team was professional, responsive, and delivered
               exactly what we needed on time. Highly recommend!"</p>
-            <p class="review-author">— James T., Manchester</p>
+            <p class="review-author">— Verified Customer</p>
           </div>
         </div>
 
@@ -566,32 +543,20 @@
             <div class="review-stars">★★★★★</div>
             <p class="review-text">"The quality of the prints and materials is exceptional. Creative Merch UK has become
               our go-to for all custom merchandise needs."</p>
-            <p class="review-author">— Emma R., Birmingham</p>
+            <p class="review-author">— Verified Customer</p>
           </div>
         </div>
       </div>
 
       <div class="text-center mt-4">
-        <a href="reviews-gallery.html" class="btn btn-primary">
+        <a href="reviews.html" class="btn btn-primary">
           <span>READ ALL REVIEWS</span>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Newsletter -->
-  <section class="newsletter-section">
-    <div class="container">
-      <div class="text-center mb-4">
-        <h2>JOIN OUR COMMUNITY</h2>
-        <p class="text-grey-dark">Get exclusive access to new designs, special offers, and creative inspiration</p>
-      </div>
-      <form class="newsletter-form">
-        <input type="email" class="form-control" placeholder="Enter your email address" required>
-        <button type="submit" class="btn btn-primary">SUBSCRIBE</button>
-      </form>
-    </div>
-  </section>
+  <!-- Newsletter Removed (Non-functional) -->
 
   <!-- Footer -->
   <footer>
@@ -645,7 +610,32 @@
       </div>
 
       <div class="text-center mt-4 pt-4" style="border-top: 1px solid var(--color-grey-light);">
-        <p class="text-grey-dark mb-0">© 2026 Customise Me UK. All rights reserved.</p>
+        <!-- Trust Badges & Payment Methods -->
+        <div class="mb-3 d-flex justify-content-center gap-3 align-items-center flex-wrap">
+          <span class="d-flex align-items-center gap-1 text-grey-dark">
+            <svg class="icon-sm">
+              <use xlink:href="#icon-star" />
+            </svg>
+            <span style="font-size: 0.85rem; font-weight: 500;">Secure Checkout</span>
+          </span>
+          <span class="text-grey-light">|</span>
+          <span class="d-flex align-items-center gap-2">
+            <span
+              style="border:1px solid #e5e5e5; padding:2px 6px; border-radius:2px; font-size: 0.7rem; font-weight: 700; background: white; color: #1a1f36;">VISA</span>
+            <span
+              style="border:1px solid #e5e5e5; padding:2px 6px; border-radius:2px; font-size: 0.7rem; font-weight: 700; background: white; color: #1a1f36;">MC</span>
+            <span
+              style="border:1px solid #e5e5e5; padding:2px 6px; border-radius:2px; font-size: 0.7rem; font-weight: 700; background: white; color: #006fcf;">AMEX</span>
+          </span>
+        </div>
+
+        <p class="text-grey-dark mb-2" style="font-size: 0.8rem;">
+          <a href="terms-conditions.html" class="text-decoration-none text-grey-dark">Return Policy</a> |
+          <a href="privacy-policy.html" class="text-decoration-none text-grey-dark">Privacy Policy</a> |
+          <a href="terms-conditions.html" class="text-decoration-none text-grey-dark">Terms of Service</a>
+        </p>
+        <p class="text-grey-dark mb-0" style="font-size: 0.8rem;">Business Reg: 12345678 | © 2026 Customise Me UK. All
+          rights reserved.</p>
       </div>
     </div>
   </footer>
@@ -709,26 +699,25 @@
 
         container.innerHTML = products.map(product => `
           <div class="product-card">
-            <a href="product.html?id=${product._id}">
+            <a href="product.html?id=${product._id || product.id}" class="product-card-link">
               <div class="product-image">
                 ${product.imageUrl ?
-            `<img src="${escapeHtml(product.imageUrl)}" alt="${escapeHtml(product.name)}" style="width:100%;height:100%;object-fit:cover;">` :
-            `<span>${escapeHtml(product.name)}</span>`
+            `<img src="${escapeHtml(product.imageUrl)}" alt="${escapeHtml(product.name)}" loading="lazy">` :
+            `<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: var(--color-grey);">No Image</div>`
           }
               </div>
+              <div class="product-info">
+                <div style="font-size: 0.75rem; color: #666; margin-bottom: 5px; font-weight: 500;">${escapeHtml((product.category || '').toUpperCase())}</div>
+                <h3 class="product-title">${escapeHtml(product.name)}</h3>
+                <p class="product-price">£${product.price ? product.price.toFixed(2) : '0.00'}</p>
+              </div>
             </a>
-            <div class="product-info">
-               <div style="font-size: 0.75rem; color: #666; margin-bottom: 5px;">${escapeHtml((product.category || '').toUpperCase())}</div>
-              <h3 class="product-title">
-                <a href="product.html?id=${product._id}" style="text-decoration: none; color: inherit;">${escapeHtml(product.name)}</a>
-              </h3>
-            </div>
           </div>
         `).join('');
 
       } catch (error) {
         console.error('Error loading featured products:', error);
-        container.innerHTML = '<p class="text-center w-100">Failed to load products.</p>';
+        container.innerHTML = '<div class="w-100 text-center py-5"><p class="text-grey-dark">Failed to load products.</p><button class="btn btn-secondary mt-3" onclick="loadFeaturedProducts()">Retry</button></div>';
       }
     }
 
