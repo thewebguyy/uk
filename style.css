@@ -472,6 +472,14 @@ p {
   z-index: var(--z-dropdown);
   max-height: 80vh;
   overflow-y: auto;
+  border-top: 1px solid var(--color-grey-light);
+}
+
+/* Fix for hover menu interaction */
+@media (min-width: 992px) {
+  .mega-menu:hover>.mega-dropdown {
+    display: block !important;
+  }
 }
 
 .mega-title {
@@ -1518,9 +1526,16 @@ footer {
 .offcanvas-body {
   padding: var(--spacing-md);
   overflow-y: auto;
-  max-height: calc(100vh - 80px);
-  padding-bottom: 50px;
-  /* Ensure space for last item delete icon */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#cart-items {
+  flex: 1;
+  overflow-y: auto;
+  margin-right: -5px;
+  padding-right: 5px;
 }
 
 .btn-close {
@@ -1543,6 +1558,7 @@ footer {
   padding: 1.25rem 0;
   border-bottom: 1px solid var(--color-grey-light);
   position: relative;
+  align-items: flex-start;
 }
 
 .cart-item-image {

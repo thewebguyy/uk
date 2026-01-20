@@ -388,93 +388,6 @@
     </div>
   </section>
 
-  <!-- Premium Services Section -->
-  <section id="premium-services" class="service-section">
-    <div class="container">
-      <h2 class="section-title">PREMIUM SERVICES</h2>
-      <p class="section-subtitle">Professional services tailored to your needs</p>
-
-      <div class="row g-4 flex-nowrap overflow-auto pb-4" style="scrollbar-width: none; -ms-overflow-style: none;">
-        <!-- Send Items In -->
-        <div class="col-10 col-md-4">
-          <div class="service-card h-100">
-            <div class="service-icon">
-              <svg>
-                <use xlink:href="#icon-scissors" />
-              </svg>
-            </div>
-            <h3 class="service-title">SEND ITEMS IN</h3>
-            <p class="service-description">Transform your personal items with professional customization. Send us your
-              pieces and we'll create something unique.</p>
-            <ul class="text-start mb-3" style="font-size: 0.85rem;">
-              <li>Expert customization</li>
-              <li>Full insurance coverage</li>
-              <li>10-14 day turnaround</li>
-              <li>Quality guarantee</li>
-            </ul>
-            <a href="senditems.html" class="btn btn-outline mt-auto">
-              <span>LEARN MORE</span>
-              <svg class="icon-sm">
-                <use xlink:href="#icon-scissors" />
-              </svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Installation Services -->
-        <div class="col-10 col-md-4" id="installation">
-          <div class="service-card h-100">
-            <div class="service-icon">
-              <svg>
-                <use xlink:href="#icon-tool" />
-              </svg>
-            </div>
-            <h3 class="service-title">INSTALLATION SERVICES</h3>
-            <p class="service-description">Professional installation for wall vinyls, party setups, and large-scale
-              projects across the UK.</p>
-            <ul class="text-start mb-3" style="font-size: 0.85rem;">
-              <li>Vinyl installation for windows & walls</li>
-              <li>Expert installation team</li>
-              <li>Perfect results guaranteed</li>
-              <li>Event setup available</li>
-            </ul>
-            <a href="installation.html" class="btn btn-outline mt-auto">
-              <span>REQUEST QUOTE</span>
-              <svg class="icon-sm">
-                <use xlink:href="#icon-tool" />
-              </svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Creative Workshops -->
-        <div class="col-10 col-md-4" id="workshops">
-          <div class="service-card h-100">
-            <div class="service-icon">
-              <svg>
-                <use xlink:href="#icon-users" />
-              </svg>
-            </div>
-            <h3 class="service-title">CREATIVE WORKSHOPS</h3>
-            <p class="service-description">Join our hands-on workshops to learn design techniques, DIY party decor, and
-              custom printing skills.</p>
-            <ul class="text-start mb-3" style="font-size: 0.85rem;">
-              <li>Group Iron on Workshop</li>
-              <li>Individual Iron on Experience</li>
-              <li>All materials included</li>
-              <li>Take home your creations</li>
-            </ul>
-            <a href="contact.html?service=workshop" class="btn btn-outline mt-auto">
-              <span>BOOK WORKSHOP</span>
-              <svg class="icon-sm">
-                <use xlink:href="#icon-users" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- Subscriptions -->
   <section id="subscriptions" class="section" style="background: var(--color-grey-light);">
@@ -530,8 +443,8 @@
       <h2 class="section-title">WHAT OUR CLIENTS SAY</h2>
       <p class="section-subtitle">Real feedback from satisfied customers</p>
 
-      <div class="row g-4 flex-nowrap overflow-auto pb-4" style="scrollbar-width: none; -ms-overflow-style: none;">
-        <div class="col-10 col-md-4">
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-4">
           <div class="review-card h-100">
             <div class="review-stars">★★★★★</div>
             <p class="review-text">"Absolutely brilliant service! The custom designs exceeded our expectations and the
@@ -540,7 +453,7 @@
           </div>
         </div>
 
-        <div class="col-10 col-md-4">
+        <div class="col-md-4">
           <div class="review-card h-100">
             <div class="review-stars">★★★★★</div>
             <p class="review-text">"Perfect for our company event! The team was professional, responsive, and delivered
@@ -549,7 +462,7 @@
           </div>
         </div>
 
-        <div class="col-10 col-md-4">
+        <div class="col-md-4">
           <div class="review-card h-100">
             <div class="review-stars">★★★★★</div>
             <p class="review-text">"The quality of the prints and materials is exceptional. Creative Merch UK has become
@@ -708,7 +621,7 @@
           return;
         }
 
-        container.innerHTML = products.map(product => `
+        container.innerHTML = products.slice(0, 4).map(product => `
           <div class="product-card">
             <a href="product.html?id=${product._id || product.id}" class="product-card-link">
               <div class="product-image">
@@ -720,7 +633,6 @@
               <div class="product-info">
                 <div style="font-size: 0.75rem; color: #666; margin-bottom: 5px; font-weight: 500;">${escapeHtml((product.category || '').toUpperCase())}</div>
                 <h3 class="product-title">${escapeHtml(product.name)}</h3>
-                <p class="product-price">£${product.price ? product.price.toFixed(2) : '0.00'}</p>
               </div>
             </a>
           </div>
