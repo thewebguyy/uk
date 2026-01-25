@@ -1,212 +1,128 @@
-const functions = require("firebase-functions");
-const admin = require("firebase-admin");
-const stripe = require("stripe")(functions.config().stripe ? functions.config().stripe.secret_key : "sk_test_PLACEHOLDER"); // User must set this config
-const cors = require("cors")({ origin: true });
-
+const functions = require('firebase-functions');
+const admin = require('firebase-admin');
 admin.initializeApp();
-const db = admin.firestore();
 
-// ==========================================
-// 1. SECURE PAYMENT INTENT
-// ==========================================
-exports.createPaymentIntent = functions.https.onCall(async (data, context) => {
-    // Ensure user is authenticated (optional, but recommended)
-    // if (!context.auth) {
-    //   throw new functions.https.HttpsError('unauthenticated', 'The function must be called while authenticated.');
-    // }
+// 1. INVENTORY MANAGEMENT
+// decreases stock when a new order is created
+exports.updateStockOnPurchase = functions.firestore
+    .document('orders/{orderId}')
+    .onCreate(async (snap, context) => {
+        const order = snap.data();
+        const batch = admin.firestore().batch();
 
-    const { items, shippingAddress, email } = data;
+        // Check if items exist
+        if (!order.items || !Array.isArray(order.items)) return null;
 
-    if (!items || items.length === 0) {
-        throw new functions.https.HttpsError('invalid-argument', 'The function must be called with an items array.');
-    }
+        order.items.forEach(item => {
+            // Assuming item has productId and quantity
+            const productRef = admin.firestore().collection('products').doc(item.id || item.productId);
 
-    try {
-        let totalAmount = 0;
-        const orderItems = [];
-
-        // Validated prices from server (Firestore)
-        for (const item of items) {
-            const productDoc = await db.collection('products').doc(item.productId).get();
-
-            if (!productDoc.exists) {
-                throw new functions.https.HttpsError('not-found', `Product ${item.productId} not found`);
-            }
-
-            const productData = productDoc.data();
-            const price = productData.price; // Trust only server price
-
-            // Check stock
-            if (productData.stock < item.quantity) {
-                throw new functions.https.HttpsError('failed-precondition', `Insufficient stock for ${productData.name}`);
-            }
-
-            totalAmount += price * item.quantity;
-
-            orderItems.push({
-                productId: item.productId,
-                name: productData.name,
-                price: price, // Store the price at time of purchase
-                quantity: item.quantity,
-                customization: item.customization || {}
+            // Atomic decrement
+            batch.update(productRef, {
+                stock: admin.firestore.FieldValue.increment(-item.quantity)
             });
+        });
+
+        // Commit the batch
+        try {
+            await batch.commit();
+            console.log(`Stock updated for Order ${context.params.orderId}`);
+        } catch (error) {
+            console.error('Failed to update stock:', error);
         }
 
-        // Shipping Logic (Simple tier)
-        let shippingCost = 4.99;
-        if (totalAmount >= 50) {
-            shippingCost = 0;
+        return null;
+    });
+
+// 2. LOW STOCK ALERT
+// monitoring product updates
+exports.checkLowStock = functions.firestore
+    .document('products/{productId}')
+    .onUpdate(async (change, context) => {
+        const newValue = change.after.data();
+        const previousValue = change.before.data();
+
+        // If stock dropped below 10 and was previously above 10
+        if (newValue.stock < 10 && previousValue.stock >= 10) {
+            // Send notification to admin (could be email or db notification)
+            await admin.firestore().collection('admin_notifications').add({
+                type: 'LOW_STOCK',
+                message: `Product ${newValue.name} is low on stock (${newValue.stock} left).`,
+                productId: context.params.productId,
+                timestamp: admin.firestore.FieldValue.serverTimestamp(),
+                read: false
+            });
+            console.log(`Low stock alert created for ${newValue.name}`);
         }
+    });
 
-        // Tax Calculation (20% VAT)
-        const tax = (totalAmount + shippingCost) * 0.20;
-        const finalTotal = totalAmount + shippingCost + tax;
+// 3. EMAIL AUTOMATION TRIGGER (via Firestore Trigger)
+exports.sendOrderConfirmation = functions.firestore
+    .document('orders/{orderId}')
+    .onCreate(async (snap, context) => {
+        const order = snap.data();
 
-        // Create PaymentIntent
-        const paymentIntent = await stripe.paymentIntents.create({
-            amount: Math.round(finalTotal * 100), // Stripe expects cents
-            currency: "gbp",
-            metadata: {
-                email: email || (context.auth ? context.auth.token.email : "guest"),
-                items: JSON.stringify(items.map(i => ({ id: i.productId, q: i.quantity })))
-            },
-            shipping: {
-                name: shippingAddress.name,
-                address: {
-                    line1: shippingAddress.street,
-                    line2: shippingAddress.apartment,
-                    city: shippingAddress.city,
-                    postal_code: shippingAddress.postcode,
-                    country: 'GB'
-                }
-            },
-            automatic_payment_methods: {
-                enabled: true,
-            },
-        });
-
-        // Create a wrapper "Pending Order" in Firestore
-        const orderRef = await db.collection('orders').add({
-            userId: context.auth ? context.auth.uid : 'guest',
-            email: email,
-            items: orderItems,
-            amountSubtotal: totalAmount,
-            amountShipping: shippingCost,
-            amountTax: tax,
-            amountTotal: finalTotal,
-            currency: 'gbp',
-            status: 'pending_payment',
-            paymentIntentId: paymentIntent.id,
-            shippingAddress: shippingAddress,
-            createdAt: admin.firestore.FieldValue.serverTimestamp()
-        });
-
-        return {
-            clientSecret: paymentIntent.client_secret,
-            orderId: orderRef.id,
-            amounts: {
-                subtotal: totalAmount,
-                shipping: shippingCost,
-                tax: tax,
-                total: finalTotal
-            }
-        };
-
-    } catch (error) {
-        console.error("Payment Intent Error:", error);
-        throw new functions.https.HttpsError('internal', error.message);
-    }
-});
-
-// ==========================================
-// 2. CONFIRM ORDER (Post-Webhook simulation)
-// ==========================================
-// Ideally, use Stripe Webhooks. specific confirm endpoint for client sync.
-exports.confirmOrder = functions.https.onCall(async (data, context) => {
-    const { orderId, paymentIntentId } = data;
-
-    const orderRef = db.collection('orders').doc(orderId);
-    const orderDoc = await orderRef.get();
-
-    if (!orderDoc.exists) {
-        throw new functions.https.HttpsError('not-found', 'Order not found');
-    }
-
-    const orderData = orderDoc.data();
-
-    // Verify inputs match
-    if (orderData.paymentIntentId !== paymentIntentId) {
-        throw new functions.https.HttpsError('permission-denied', 'Payment ID mismatch');
-    }
-
-    // Retrieve Intent status from Stripe to be sure
-    const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
-
-    if (paymentIntent.status === 'succeeded') {
-        // Update Order Status
-        await orderRef.update({
-            status: 'paid',
-            paidAt: admin.firestore.FieldValue.serverTimestamp()
-        });
-
-        // DECREMENT STOCK
-        // Run as transaction to ensure atomicity
-        await db.runTransaction(async (t) => {
-            for (const item of orderData.items) {
-                const productRef = db.collection('products').doc(item.productId);
-                const productSnapshot = await t.get(productRef);
-                if (productSnapshot.exists) {
-                    const newStock = Math.max(0, productSnapshot.data().stock - item.quantity);
-                    t.update(productRef, { stock: newStock });
-                }
+        // Write to a 'mail' collection to trigger the specific Firebase Extension (Firestore Send Email)
+        // Or call SendGrid/Mailgun API directly here if set up
+        return admin.firestore().collection('mail').add({
+            to: order.email || order.shipping_address?.email,
+            message: {
+                subject: `Order Confirmation #${context.params.orderId}`,
+                text: `Thank you for your order! Total: £${order.total_amount}. We will notify you when it ships.`,
+                html: `<h1>Thank You!</h1><p>Your order #${context.params.orderId} has been received.</p>`
             }
         });
+    });
 
-        return { success: true, orderNumber: orderId };
-    } else {
-        throw new functions.https.HttpsError('failed-precondition', 'Payment not successful yet');
-    }
-});
-
-// ==========================================
-// 3. REVIEWS SYSTEM
-// ==========================================
-exports.addReview = functions.https.onCall(async (data, context) => {
+// 4. STRIPE PAYMENT INTENT (Callable)
+// Used by the checkout page
+exports.createPaymentIntent = functions.https.onCall(async (data, context) => {
     if (!context.auth) {
-        throw new functions.https.HttpsError('unauthenticated', 'User must be logged in to review');
+        throw new functions.https.HttpsError('unauthenticated', 'User must be logged in.');
     }
 
-    const { productId, rating, comment, userName } = data;
+    const { items, currency = 'gbp' } = data;
 
-    // Basic validation
-    if (rating < 1 || rating > 5) throw new functions.https.HttpsError('invalid-argument', 'Rating must be 1-5');
+    // Calculate price safely on server side
+    let total = 0;
+    for (const item of items) {
+        const productDoc = await admin.firestore().collection('products').doc(item.id).get();
+        const productData = productDoc.data();
+        let price = productData.price;
+        // Add logic for customizations if needed
+        if (item.customization && item.customization.printLocation === 'Front & Back') {
+            price += 5;
+        }
+        total += price * item.quantity;
+    }
 
-    // Add Review
-    await db.collection('products').doc(productId).collection('reviews').add({
-        userId: context.auth.uid,
-        userName: userName || 'Anonymous',
-        rating: Number(rating),
-        comment: comment,
-        createdAt: admin.firestore.FieldValue.serverTimestamp(),
-        verifiedPurchase: true // You would assume true if checking orders dynamically
-    });
+    // Initialize Stripe (placeholder)
+    // const stripe = require('stripe')(functions.config().stripe.secret);
+    // const paymentIntent = await stripe.paymentIntents.create({ ... });
 
-    // Aggregation (Average Rating) - Trigger preferred, but doing inline for MVP
-    const reviewsSnapshot = await db.collection('products').doc(productId).collection('reviews').get();
-    let totalStars = 0;
-    let count = 0;
-
-    reviewsSnapshot.forEach(doc => {
-        totalStars += doc.data().rating;
-        count++;
-    });
-
-    const averageRating = count > 0 ? (totalStars / count) : 0;
-
-    await db.collection('products').doc(productId).update({
-        rating: averageRating,
-        reviewCount: count
-    });
-
-    return { success: true };
+    // Returning mock client secret for now
+    return {
+        clientSecret: 'pi_mock_secret_' + Date.now(),
+        amount: total
+    };
 });
+
+// 5. REVIEW MODERATION (Optional)
+exports.sanitizeReview = functions.firestore
+    .document('products/{productId}/reviews/{reviewId}')
+    .onCreate(async (snap, context) => {
+        const review = snap.data();
+        // Check for bad words, etc.
+        // Ensure verified purchase
+        // Update product average rating...
+
+        // Simple average rating update logic
+        const productRef = admin.firestore().collection('products').doc(context.params.productId);
+
+        // In a real app, you'd transactionally update the average
+        // Here we just increment a counter for demo
+        return productRef.update({
+            reviewCount: admin.firestore.FieldValue.increment(1)
+            // ratingTotal: admin.firestore.FieldValue.increment(review.rating)
+        });
+    });

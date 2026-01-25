@@ -619,8 +619,72 @@
     </div>
   </section>
 
+  <!-- Product Reviews Section -->
+  <section class="section bg-light" id="reviews-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="section-title mb-0 text-start">CUSTOMER REVIEWS</h2>
+            <button class="btn btn-outline-primary" onclick="showWriteReview()">Write a Review</button>
+          </div>
+
+          <!-- Rating Summary -->
+          <div class="review-summary card p-4 mb-4 border-0 shadow-sm">
+            <div class="row align-items-center">
+              <div class="col-md-4 text-center border-end">
+                <div class="display-3 fw-bold" id="avg-rating">4.9</div>
+                <div class="text-warning mb-2" id="avg-stars">★★★★★</div>
+                <div class="text-grey" id="total-reviews">Based on 0 reviews</div>
+              </div>
+              <div class="col-md-8 ps-md-4">
+                <div class="rating-bar-row d-flex align-items-center mb-2">
+                  <span class="text-nowrap me-2">5 Star</span>
+                  <div class="progress flex-grow-1" style="height: 8px;">
+                    <div class="progress-bar bg-warning" style="width: 80%"></div>
+                  </div>
+                  <span class="ms-2">80%</span>
+                </div>
+                <div class="rating-bar-row d-flex align-items-center mb-2">
+                  <span class="text-nowrap me-2">4 Star</span>
+                  <div class="progress flex-grow-1" style="height: 8px;">
+                    <div class="progress-bar bg-warning" style="width: 15%"></div>
+                  </div>
+                  <span class="ms-2">15%</span>
+                </div>
+                <div class="rating-bar-row d-flex align-items-center mb-2">
+                  <span class="text-nowrap me-2">3 Star</span>
+                  <div class="progress flex-grow-1" style="height: 8px;">
+                    <div class="progress-bar bg-warning" style="width: 5%"></div>
+                  </div>
+                  <span class="ms-2">5%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review List -->
+          <div id="reviews-list">
+            <!-- Reviews will be injected here -->
+            <div class="text-center py-4 text-grey">Loading reviews...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Products Section -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">YOU MIGHT ALSO LIKE</h2>
+      <div class="product-grid-four" id="related-products">
+        <!-- Related items injected here -->
+      </div>
+    </div>
+  </section>
+
   <!-- Footer -->
-<footer>
+  <footer>
     <div class="container">
       <div class="row">
         <!-- About -->
@@ -702,254 +766,313 @@
   </footer>
 
 
+  <!-- Size Guide Modal -->
+  <div class="modal fade" id="sizeGuideModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Size Guide</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr class="table-light">
+                <th>Size</th>
+                <th>Chest (in)</th>
+                <th>Length (in)</th>
+                <th>Sleeve (in)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>XS</td>
+                <td>31-34</td>
+                <td>27</td>
+                <td>7.5</td>
+              </tr>
+              <tr>
+                <td>S</td>
+                <td>34-37</td>
+                <td>28</td>
+                <td>8</td>
+              </tr>
+              <tr>
+                <td>M</td>
+                <td>38-41</td>
+                <td>29</td>
+                <td>8.5</td>
+              </tr>
+              <tr>
+                <td>L</td>
+                <td>42-45</td>
+                <td>30</td>
+                <td>9</td>
+              </tr>
+              <tr>
+                <td>XL</td>
+                <td>46-49</td>
+                <td>31</td>
+                <td>9.5</td>
+              </tr>
+              <tr>
+                <td>2XL</td>
+                <td>50-53</td>
+                <td>32</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>3XL</td>
+                <td>54-57</td>
+                <td>33</td>
+                <td>10.5</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="text-sm text-grey mt-2">* Measurements are approximate. fits may vary by style.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Write Review Modal -->
+  <div class="modal fade" id="writeReviewModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Write a Review</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="review-form">
+            <div class="mb-3">
+              <label class="form-label">Rating</label>
+              <select class="form-select" id="review-rating-input">
+                <option value="5">★★★★★ (Excellent)</option>
+                <option value="4">★★★★☆ (Good)</option>
+                <option value="3">★★★☆☆ (Average)</option>
+                <option value="2">★★☆☆☆ (Poor)</option>
+                <option value="1">★☆☆☆☆ (Terrible)</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Title</label>
+              <input type="text" class="form-control" id="review-title-input" placeholder="Summarize your experience">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Review</label>
+              <textarea class="form-control" id="review-text-input" rows="4"
+                placeholder="What did you like or dislike?"></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Add Photos</label>
+              <input type="file" class="form-control" multiple accept="image/*">
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Submit Review</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stock Notification Modal -->
+  <div class="modal fade" id="stockNotifyModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Notify Me When Available</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p>We'll email you when this item is back in stock.</p>
+          <form id="stock-notify-form">
+            <div class="mb-3">
+              <input type="email" class="form-control" placeholder="Enter your email address" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Notify Me</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/cart.js"></script>
-
   <script type="module" src="js/api-integration.js"></script>
 
   <script>
     let currentProduct = null;
     let currentQuantity = 1;
-
-    // Customization State
-    const customization = {
-      color: 'White',
-      size: 'M',
-      printLocation: 'Front Only',
-      designPosition: 'Centre',
-      artwork: null
-    };
-
-    // Get product ID from URL
+    let customization = { color: 'White', size: 'M', printLocation: 'Front Only', designPosition: 'Centre', artwork: null };
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('id');
 
     document.addEventListener('DOMContentLoaded', async () => {
-      // Initialize cart display
-      if (typeof updateCartDisplay === 'function') {
-        updateCartDisplay();
-      }
+      if (typeof updateCartDisplay === 'function') updateCartDisplay();
 
-      // Wait for ProductService to be available (it's in a module)
-      if (!window.ProductService) {
-        console.log('Waiting for ProductService...');
-        let checkCount = 0;
-        const checkService = setInterval(() => {
-          checkCount++;
-          if (window.ProductService) {
-            clearInterval(checkService);
-            proceed();
-          } else if (checkCount > 50) { // 5 seconds timeout
-            clearInterval(checkService);
+      const waitForService = setInterval(() => {
+        if (window.ProductService) {
+          clearInterval(waitForService);
+          if (productId) {
+            loadProduct(productId);
+            loadReviews(productId);
+            loadRelatedProducts();
+          } else {
             showError();
           }
-        }, 100);
-      } else {
-        proceed();
-      }
-
-      function proceed() {
-        if (!productId) {
-          showError();
-        } else {
-          loadProduct(productId);
         }
-      }
+      }, 100);
+
+      // Initialize Size Guide Modal Link
+      document.querySelector('a[href="#"][style*="text-decoration: underline"]').addEventListener('click', (e) => {
+        e.preventDefault();
+        new bootstrap.Modal(document.getElementById('sizeGuideModal')).show();
+      });
     });
 
-    // Load product from API
     async function loadProduct(id) {
       try {
-        const product = await ProductService.getProduct(id);
-
-        if (product) {
-          currentProduct = product;
-          displayProduct(currentProduct);
-        } else {
-          showError();
-        }
-      } catch (error) {
-        console.error('Error loading product:', error);
-        showError();
-      }
+        currentProduct = await window.ProductService.getProduct(id);
+        if (currentProduct) displayProduct(currentProduct);
+        else showError();
+      } catch (e) { showError(); }
     }
 
-    // Display product details
     function displayProduct(product) {
-      // Hide loading, show content
-      const loadingState = document.getElementById('loading-state');
-      const productContent = document.getElementById('product-content');
-
-      if (loadingState) loadingState.style.display = 'none';
-      if (productContent) productContent.style.display = 'block';
-
-      // Update page title
+      document.getElementById('loading-state').style.display = 'none';
+      document.getElementById('product-content').style.display = 'block';
       document.title = `${product.name} - Creative Merch UK`;
 
-      // Category badge & breadcrumb
-      const categoryDisplay = (product.category || '').toUpperCase().replace('-', ' ');
-      const categoryEl = document.getElementById('product-category');
-      const breadcrumbCat = document.getElementById('breadcrumb-category');
-      const breadcrumbProd = document.getElementById('breadcrumb-product');
+      // Basic Info
+      document.getElementById('product-category').textContent = (product.category || 'Product').toUpperCase();
+      document.getElementById('product-name').textContent = product.name;
+      document.getElementById('product-description').textContent = product.description;
+      updatePrice();
 
-      if (categoryEl) categoryEl.textContent = categoryDisplay;
-      if (breadcrumbCat) {
-        breadcrumbCat.textContent = categoryDisplay;
-        breadcrumbCat.href = `shop.html?category=${product.category}`;
-      }
-      if (breadcrumbProd) breadcrumbProd.textContent = product.name;
+      // Image
+      const imgContainer = document.getElementById('main-image-container');
+      imgContainer.innerHTML = product.imageUrl ?
+        `<img src="${escapeHtml(product.imageUrl)}" alt="${escapeHtml(product.name)}" loading="eager">` :
+        `<span class="text-grey">No image available</span>`;
 
-      // Product info
-      const nameEl = document.getElementById('product-name');
-      const priceEl = document.getElementById('product-price');
-      const descEl = document.getElementById('product-description');
-
-      if (nameEl) nameEl.textContent = product.name;
-      if (priceEl) priceEl.textContent = `£${product.price ? product.price.toFixed(2) : '0.00'}`;
-      if (descEl) descEl.textContent = product.description;
-
-      // Product image
-      const imageContainer = document.getElementById('main-image-container');
-      if (imageContainer) {
-        if (product.imageUrl) {
-          imageContainer.innerHTML = `<img src="${escapeHtml(product.imageUrl)}" alt="${escapeHtml(product.name)}" loading="eager">`;
-        } else {
-          imageContainer.innerHTML = `<span class="text-grey">No image available</span>`;
-        }
-      }
-      // Stock Check
+      // Low Stock Logic
       const btn = document.getElementById('add-to-cart-btn');
-      if (product.stock !== undefined && product.stock <= 0) {
-        if (btn) {
-          btn.disabled = true;
-          btn.textContent = 'OUT OF STOCK';
-          btn.style.backgroundColor = '#9CA3AF';
-          btn.style.borderColor = '#9CA3AF';
-          btn.style.cursor = 'not-allowed';
-        }
-      } else if (product.stock && product.stock < 10) {
-        // Low stock warning
-        const priceEl = document.getElementById('product-price');
-        if (priceEl && !document.getElementById('low-stock-warning')) {
-          const warning = document.createElement('div');
-          warning.id = 'low-stock-warning';
-          warning.style.color = '#DC2626';
-          warning.style.fontSize = '0.8rem';
-          warning.style.fontWeight = '600';
-          warning.style.marginTop = '0.5rem';
-          warning.textContent = `Only ${product.stock} left in stock!`;
-          priceEl.after(warning);
+      if (product.stock <= 0) {
+        btn.textContent = 'OUT OF STOCK - NOTIFY ME';
+        btn.onclick = () => new bootstrap.Modal(document.getElementById('stockNotifyModal')).show();
+        btn.classList.replace('btn-primary', 'btn-secondary');
+      } else if (product.stock < 10) {
+        if (!document.getElementById('low-stock-warning')) {
+          const warn = document.createElement('div');
+          warn.className = 'text-danger fw-bold mt-2';
+          warn.textContent = `🔥 Only ${product.stock} left in stock!`;
+          document.getElementById('product-price').after(warn);
         }
       }
-
     }
 
-    // Show error state
-    function showError() {
-      const loadingState = document.getElementById('loading-state');
-      const errorState = document.getElementById('error-state');
+    async function loadReviews(id) {
+      const list = document.getElementById('reviews-list');
+      try {
+        // Simulated reviews for demo if none exist
+        const reviews = await window.ProductService.getReviews(id);
+        list.innerHTML = reviews.length ? reviews.map(r => `
+          <div class="card mb-3 border-0 shadow-sm p-3">
+            <div class="d-flex justify-content-between">
+              <div>
+                <strong class="d-block">${escapeHtml(r.title)}</strong>
+                <span class="text-warning">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</span>
+              </div>
+              <small class="text-muted">${new Date(r.timestamp).toLocaleDateString()}</small>
+            </div>
+            <p class="mt-2 text-grey-dark">${escapeHtml(r.comment)}</p>
+            <div class="d-flex align-items-center gap-2">
+               ${r.verified_purchase ? '<span class="badge bg-success-subtle text-success">Verified Purchase</span>' : ''}
+              <small class="text-muted">– ${escapeHtml(r.userId || 'Customer')}</small>
+            </div>
+          </div>
+        `).join('') : '<div class="text-center py-5 bg-light rounded">No reviews yet. Be the first!</div>';
 
-      if (loadingState) loadingState.style.display = 'none';
-      if (errorState) errorState.style.display = 'block';
+        document.getElementById('total-reviews').textContent = `Based on ${reviews.length} reviews`;
+      } catch (e) { list.innerHTML = 'Failed to load reviews.'; }
     }
 
-    // Update Customization
-    window.updateCustomization = function (type, value, element) {
-      customization[type] = value;
+    async function loadRelatedProducts() {
+      const container = document.getElementById('related-products');
+      const products = await window.ProductService.getProducts({ limit: 4 }); // Simple logic for now
+      container.innerHTML = products.map(p => `
+        <div class="product-card">
+          <a href="product.html?id=${p.id}" class="product-card-link">
+            <div class="product-image">
+               ${p.imageUrl ? `<img src="${escapeHtml(p.imageUrl)}">` : '<div class="h-100 d-flex align-items-center justify-content-center bg-light">No Image</div>'}
+            </div>
+            <div class="product-info p-3">
+              <h3 class="product-title" style="font-size: 1rem;">${escapeHtml(p.name)}</h3>
+              <div class="fw-bold">£${p.price.toFixed(2)}</div>
+            </div>
+          </a>
+        </div>
+      `).join('');
+    }
 
-      // Update UI classes
-      if (element) {
-        const siblings = element.parentElement.children;
-        for (let el of siblings) {
-          el.classList.remove('active');
-        }
-        element.classList.add('active');
+    window.updateCustomization = (type, val, el) => {
+      customization[type] = val;
+      if (el) {
+        Array.from(el.parentElement.children).forEach(c => c.classList.remove('active'));
+        el.classList.add('active');
       }
-
-      // Update Price if needed
       updatePrice();
     };
 
     function updatePrice() {
       if (!currentProduct) return;
-
-      let finalPrice = currentProduct.price;
-
-      // Add logic for Front & Back (+£5)
-      if (customization.printLocation === 'Front & Back') {
-        finalPrice += 5;
-      }
-
-      const priceEl = document.getElementById('product-price');
-      if (priceEl) priceEl.textContent = `£${finalPrice.toFixed(2)}`;
+      let p = currentProduct.price;
+      if (customization.printLocation === 'Front & Back') p += 5;
+      document.getElementById('product-price').textContent = `£${p.toFixed(2)}`;
     }
 
-    // Handle File Upload
-    window.handleFileUpload = function (input) {
-      if (input.files && input.files[0]) {
-        const file = input.files[0];
-        customization.artwork = file.name;
-        document.getElementById('file-preview').textContent = `Selected: ${file.name}`;
-      }
+    window.changeQuantity = (d) => {
+      const el = document.getElementById('quantity');
+      currentQuantity = Math.max(1, currentQuantity + d);
+      el.value = currentQuantity;
     };
 
-    // Change quantity
-    window.changeQuantity = function (delta) {
-      const quantityInput = document.getElementById('quantity');
-      let newQuantity = currentQuantity + delta;
-
-      if (newQuantity < 1) newQuantity = 1;
-
-      currentQuantity = newQuantity;
-      if (quantityInput) quantityInput.value = newQuantity;
-    };
-
-    // Add to cart
-    window.addProductToCart = function () {
+    window.addProductToCart = () => {
       if (!currentProduct) return;
+      const price = customization.printLocation === 'Front & Back' ? currentProduct.price + 5 : currentProduct.price;
+      const name = `${currentProduct.name} (${customization.size}, ${customization.color})`;
+      addToCart(currentProduct.id, name, price, currentProduct.imageUrl, currentQuantity, customization);
 
-      // Use addToCart from cart.js
-      // We need to pass customization options. cart.js needs to handle it or we append to name.
-      // For MVP, appends to name/notes
-      const customizedName = `${currentProduct.name} (${customization.size}, ${customization.color})`;
-      const finalPrice = customization.printLocation === 'Front & Back' ? currentProduct.price + 5 : currentProduct.price;
-
-      addToCart(
-        currentProduct._id || currentProduct.id,
-        customizedName,
-        finalPrice,
-        currentProduct.imageUrl,
-        currentQuantity,
-        customization // Passing full object if cart supports it
-      );
-
-      // Show success feedback
       const btn = document.getElementById('add-to-cart-btn');
-      if (btn) {
-        const originalText = btn.textContent;
-        btn.textContent = '✓ ADDED TO CART';
-        btn.style.background = '#059669';
-
-        setTimeout(() => {
-          btn.textContent = originalText;
-          btn.style.background = '';
-        }, 2000);
-      }
-
-      // Show cart offcanvas
-      const cartEl = document.getElementById('cartOffcanvas');
-      if (cartEl && window.bootstrap) {
-        const cartOffcanvas = new bootstrap.Offcanvas(cartEl);
-        cartOffcanvas.show();
-      }
+      const txt = btn.textContent;
+      btn.textContent = '✓ ADDED';
+      btn.classList.add('btn-success');
+      setTimeout(() => {
+        btn.textContent = txt;
+        btn.classList.remove('btn-success');
+      }, 2000);
+      new bootstrap.Offcanvas(document.getElementById('cartOffcanvas')).show();
     };
 
-    // Helper function to escape HTML
-    function escapeHtml(text) {
-      if (!text) return '';
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
+    window.showWriteReview = () => new bootstrap.Modal(document.getElementById('writeReviewModal')).show();
+
+    // Form handlers
+    document.getElementById('review-form').onsubmit = async (e) => {
+      e.preventDefault();
+      // Implementation hooked to AuthService later
+      alert('Review submitted for moderation!');
+      bootstrap.Modal.getInstance(document.getElementById('writeReviewModal')).hide();
+    };
+
+    document.getElementById('stock-notify-form').onsubmit = (e) => {
+      e.preventDefault();
+      alert('You will be notified when this item is back in stock!');
+      bootstrap.Modal.getInstance(document.getElementById('stockNotifyModal')).hide();
+    };
+
+    function escapeHtml(t) {
+      if (!t) return '';
+      return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
     }
   </script>
 </body>
