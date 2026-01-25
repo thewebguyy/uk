@@ -860,15 +860,20 @@
               <input type="text" class="form-control" id="review-title-input" placeholder="Summarize your experience">
             </div>
             <div class="mb-3">
-              <label class="form-label">Review</label>
-              <textarea class="form-control" id="review-text-input" rows="4"
-                placeholder="What did you like or dislike?"></textarea>
+              <label class="form-label">Review (Min 50 characters)</label>
+              <textarea class="form-control" id="review-text-input" rows="4" placeholder="What did you like or dislike?"
+                oninput="updateCharCount(this)"></textarea>
+              <small class="text-muted"><span id="char-count">0</span> / 50 characters</small>
             </div>
             <div class="mb-3">
-              <label class="form-label">Add Photos</label>
-              <input type="file" class="form-control" multiple accept="image/*">
+              <label class="form-label">Add Photos (Optional)</label>
+              <input type="file" class="form-control" id="review-photos" multiple accept="image/*">
             </div>
-            <button type="submit" class="btn btn-primary w-100">Submit Review</button>
+            <div class="alert alert-info py-2" style="font-size: 0.85rem;">
+              <strong>Guidelines:</strong> Please focus on product quality and fit. Avoid mentions of delivery issues
+              which should be reported via support.
+            </div>
+            <button type="submit" class="btn btn-primary w-100" id="submit-review-btn">Submit Review</button>
           </form>
         </div>
       </div>
@@ -949,6 +954,18 @@
       document.getElementById('product-description').textContent = product.description;
       updatePrice();
 
+      // GA4 Event - View Item
+      if (typeof gtag === 'function') {
+        gtag('event', 'view_item', {
+          items: [{
+            item_id: product.id,
+            item_name: product.name,
+            price: product.price,
+            item_category: product.category
+          }]
+        });
+      }
+
       // Image
       const imgContainer = document.getElementById('main-image-container');
       imgContainer.innerHTML = product.imageUrl ?
@@ -974,7 +991,6 @@
     async function loadReviews(id) {
       const list = document.getElementById('reviews-list');
       try {
-        // Simulated reviews for demo if none exist
         const reviews = await window.ProductService.getReviews(id);
         list.innerHTML = reviews.length ? reviews.map(r => `
           <div class="card mb-3 border-0 shadow-sm p-3">
@@ -983,17 +999,22 @@
                 <strong class="d-block">${escapeHtml(r.title)}</strong>
                 <span class="text-warning">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</span>
               </div>
-              <small class="text-muted">${new Date(r.timestamp).toLocaleDateString()}</small>
+              <small class="text-muted">${r.timestamp ? new Date(r.timestamp.toDate()).toLocaleDateString() : '---'}</small>
             </div>
             <p class="mt-2 text-grey-dark">${escapeHtml(r.comment)}</p>
+            ${r.images && r.images.length ? `<div class="d-flex gap-2 mb-2">${r.images.map(img => `<img src="${img}" width="60" class="border rounded" onclick="window.open(this.src)">`).join('')}</div>` : ''}
             <div class="d-flex align-items-center gap-2">
-               ${r.verified_purchase ? '<span class="badge bg-success-subtle text-success">Verified Purchase</span>' : ''}
-              <small class="text-muted">– ${escapeHtml(r.userId || 'Customer')}</small>
+               ${r.verified_purchase ? '<span class="badge bg-success-subtle text-success" title="Checked against order history">✓ Verified Purchase</span>' : ''}
+              <small class="text-muted">– ${escapeHtml(r.userName || 'Customer')}</small>
             </div>
           </div>
         `).join('') : '<div class="text-center py-5 bg-light rounded">No reviews yet. Be the first!</div>';
 
         document.getElementById('total-reviews').textContent = `Based on ${reviews.length} reviews`;
+        if (reviews.length > 0) {
+          const avg = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
+          document.getElementById('avg-rating').textContent = avg.toFixed(1);
+        }
       } catch (e) { list.innerHTML = 'Failed to load reviews.'; }
     }
 
@@ -1056,12 +1077,45 @@
 
     window.showWriteReview = () => new bootstrap.Modal(document.getElementById('writeReviewModal')).show();
 
+    window.updateCharCount = (el) => {
+      const count = el.value.length;
+      document.getElementById('char-count').textContent = count;
+      document.getElementById('char-count').style.color = count >= 50 ? 'green' : 'red';
+    };
+
     // Form handlers
     document.getElementById('review-form').onsubmit = async (e) => {
       e.preventDefault();
-      // Implementation hooked to AuthService later
-      alert('Review submitted for moderation!');
-      bootstrap.Modal.getInstance(document.getElementById('writeReviewModal')).hide();
+      const txt = document.getElementById('review-text-input').value;
+      if (txt.length < 50) return alert('Your review must be at least 50 characters.');
+
+      const submitBtn = document.getElementById('submit-review-btn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      try {
+        // Implementation calling Cloud Function
+        const { httpsCallable } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-functions.js');
+        const submitReviewFn = httpsCallable(window.functions, 'submitReview');
+
+        // Note: For images, you'd upload to Firebase Storage first here. Skipping for brevity.
+        await submitReviewFn({
+          productId: productId,
+          rating: parseInt(document.getElementById('review-rating-input').value),
+          title: document.getElementById('review-title-input').value,
+          comment: txt,
+          images: []
+        });
+
+        alert('Review submitted for moderation! Thank you.');
+        bootstrap.Modal.getInstance(document.getElementById('writeReviewModal')).hide();
+        loadReviews(productId);
+      } catch (err) {
+        alert('Error: ' + err.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Review';
+      }
     };
 
     document.getElementById('stock-notify-form').onsubmit = (e) => {

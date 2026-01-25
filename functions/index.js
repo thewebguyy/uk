@@ -1,273 +1,425 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const nodemailer = require('nodemailer');
+const fs = require('fs');
+const path = require('path');
+
 admin.initializeApp();
+const db = admin.firestore();
 
 // ==========================================
-// 1. INVENTORY MANAGEMENT
+// CONFIGURATION & HELPERS
 // ==========================================
-exports.updateStockOnPurchase = functions.firestore
-    .document('orders/{orderId}')
-    .onCreate(async (snap, context) => {
-        const order = snap.data();
-        const batch = admin.firestore().batch();
 
-        // Check if items exist
-        if (!order.items || !Array.isArray(order.items)) return null;
+// Helper to load and compile simple templates
+function renderTemplate(name, data) {
+    const filePath = path.join(__dirname, '..', 'email-templates', `${name}.html`);
+    if (!fs.existsSync(filePath)) return `Template ${name} not found`;
 
-        order.items.forEach(item => {
-            // Assuming item has productId and quantity
-            // Handle both id and productId properties
-            const pid = item.id || item.productId;
-            if (!pid) return;
+    let html = fs.readFileSync(filePath, 'utf8');
 
-            const productRef = admin.firestore().collection('products').doc(pid);
+    // Simple mustache style replacement
+    Object.keys(data).forEach(key => {
+        const val = data[key];
+        if (Array.isArray(val)) {
+            // Handle simple list rendering (e.g., items)
+            const listRegex = new RegExp(`{{#${key}}}([\\s\\S]*?){{/${key}}}`, 'g');
+            html = html.replace(listRegex, (_, inner) => {
+                return val.map(item => {
+                    let itemHtml = inner;
+                    Object.keys(item).forEach(k => {
+                        itemHtml = itemHtml.replace(new RegExp(`{{${k}}}`, 'g'), item[k]);
+                    });
+                    return itemHtml;
+                }).join('');
+            });
+        } else {
+            html = html.replace(new RegExp(`{{${key}}}`, 'g'), val);
+        }
+    });
+    return html;
+}
 
-            // Atomic decrement
-            batch.update(productRef, {
-                stock: admin.firestore.FieldValue.increment(-item.quantity)
+// ==========================================
+// 1. INVENTORY MANAGEMENT (STRICT TRANSACTIONS)
+// ==========================================
+
+// Atomic stock decrement during checkout or admin manual update
+exports.updateStockTransaction = functions.https.onCall(async (data, context) => {
+    const { items } = data; // Array of {id, quantity}
+
+    return db.runTransaction(async (transaction) => {
+        const productRefs = items.map(item => db.collection('products').doc(item.id));
+        const snapshots = await Promise.all(productRefs.map(ref => transaction.get(ref)));
+
+        // 1. Check all stock first
+        for (let i = 0; i < snapshots.length; i++) {
+            const snap = snapshots[i];
+            const item = items[i];
+            if (!snap.exists) throw new functions.https.HttpsError('not-found', `Product ${item.id} not found`);
+
+            const product = snap.data();
+            if (product.stock < item.quantity) {
+                throw new functions.https.HttpsError('out-of-resource', `Insufficient stock for ${product.name}`);
+            }
+        }
+
+        // 2. Perform updates
+        snapshots.forEach((snap, i) => {
+            const item = items[i];
+            const newStock = snap.data().stock - item.quantity;
+            transaction.update(productRefs[i], {
+                stock: newStock,
+                updatedAt: admin.firestore.FieldValue.serverTimestamp()
             });
         });
 
-        // Commit the batch
-        try {
-            await batch.commit();
-            console.log(`Stock updated for Order ${context.params.orderId}`);
-        } catch (error) {
-            console.error('Failed to update stock:', error);
+        return { success: true };
+    });
+});
+
+// Sync Stock to MongoDB via Express API (Shadow Sync)
+exports.syncStockToMongo = functions.firestore
+    .document('products/{productId}')
+    .onUpdate(async (change, context) => {
+        const newData = change.after.data();
+        const oldData = change.before.data();
+
+        if (newData.stock === oldData.stock) return null;
+
+        // Note: In real setup, you'd use axios to call your backend/server.js
+        console.log(`Syncing stock for ${context.params.productId} to MongoDB: ${newData.stock}`);
+
+        // Internal system log
+        await db.collection('stock_logs').add({
+            productId: context.params.productId,
+            name: newData.name,
+            oldStock: oldData.stock,
+            newStock: newData.stock,
+            reason: newData.lastUpdateReason || 'User Purchase / Admin Update',
+            timestamp: admin.firestore.FieldValue.serverTimestamp()
+        });
+
+        // Trigger Low Stock Alert
+        if (newData.stock < 10 && oldData.stock >= 10) {
+            await db.collection('mail').add({
+                to: 'admin@customisemeuk.com',
+                message: {
+                    subject: `⚠️ LOW STOCK: ${newData.name}`,
+                    html: `<p>Product <strong>${newData.name}</strong> has only ${newData.stock} units left.</p>`
+                }
+            });
+        }
+
+        // Trigger Restock Notification
+        if (oldData.stock === 0 && newData.stock > 0) {
+            return notifyWaitlist(context.params.productId, newData);
         }
 
         return null;
     });
 
 // ==========================================
-// 2. STOCK ALERTS
-// ==========================================
-exports.checkLowStock = functions.firestore
-    .document('products/{productId}')
-    .onUpdate(async (change, context) => {
-        const newValue = change.after.data();
-        const previousValue = change.before.data();
-
-        // If stock dropped below 10 and was previously above 10
-        if (newValue.stock < 10 && previousValue.stock >= 10) {
-            // Send notification to admin (using mail collection)
-            await admin.firestore().collection('mail').add({
-                to: 'admin@customisemeuk.com',
-                message: {
-                    subject: `Low Stock Alert: ${newValue.name}`,
-                    text: `Product ${newValue.name} is low on stock (${newValue.stock} left).`,
-                    html: `<p>Product <strong>${newValue.name}</strong> is running low.</p><p>Current Stock: ${newValue.stock}</p>`
-                }
-            });
-            console.log(`Low stock alert created for ${newValue.name}`);
-        }
-
-        // Restock Notification ( 0 -> >0 )
-        if (previousValue.stock === 0 && newValue.stock > 0) {
-            // Logic for notifying waiting users
-            // Assumes we store waitlists in `waitlists/{productId}` document
-            const waitlistDoc = await admin.firestore().collection('waitlists').doc(context.params.productId).get();
-            if (waitlistDoc.exists) {
-                const emails = waitlistDoc.data().emails || [];
-                const batch = admin.firestore().batch();
-
-                emails.forEach(email => {
-                    // Create mail docs
-                    const mailRef = admin.firestore().collection('mail').doc();
-                    batch.set(mailRef, {
-                        to: email,
-                        message: {
-                            subject: `${newValue.name} is Back in Stock!`,
-                            html: `<p>Great news! The item you wanted is available again. <a href="https://customisemeuk.com/product.html?id=${context.params.productId}">Buy Now</a></p>`
-                        }
-                    });
-                });
-
-                // Clear waitlist or mark notified
-                batch.delete(waitlistDoc.ref);
-
-                await batch.commit();
-            }
-        }
-    });
-
-// ==========================================
-// 3. EMAIL AUTOMATION
+// 2. ORDER LIFECYCLE & EMAILS
 // ==========================================
 
-// Order Confirmation
-exports.sendOrderConfirmation = functions.firestore
+exports.onOrderCreated = functions.firestore
     .document('orders/{orderId}')
     .onCreate(async (snap, context) => {
         const order = snap.data();
-        const email = order.email || order.shipping_address?.email;
+        const orderId = context.params.orderId;
 
-        if (!email) return null;
+        // 1. DEDUCT STOCK (Atomic)
+        // Note: For best UX, stock should be reserved at PaymentIntent creation 
+        // and confirmed here. For simplicity, we deduct here.
+        const batch = db.batch();
+        order.items.forEach(item => {
+            const ref = db.collection('products').doc(item.productId || item.id);
+            batch.update(ref, { stock: admin.firestore.FieldValue.increment(-item.quantity) });
+        });
+        await batch.commit();
 
-        // Write to a 'mail' collection to trigger the specific Firebase Extension (Firestore Send Email)
-        return admin.firestore().collection('mail').add({
-            to: email,
-            message: {
-                subject: `Order Confirmation #${context.params.orderId}`,
-                text: `Thank you for your order! Total: £${order.total_amount}. We will notify you when it ships.`,
-                html: `
-            <div style="font-family: sans-serif; padding: 20px;">
-                <h1>Thank You for Your Order!</h1>
-                <p>Your order #${context.params.orderId} has been confirmed.</p>
-                <div style="background: #f9f9f9; padding: 15px; margin: 20px 0;">
-                    <p><strong>Total:</strong> £${order.total_amount}</p>
-                    <p><strong>Status:</strong> Pending Processing</p>
-                </div>
-                <a href="https://customisemeuk.com/order-tracking.html?order=${context.params.orderId}" style="background: black; color: white; padding: 10px 20px; text-decoration: none;">Track Order</a>
-            </div>
-        `
+        // 2. SEND CONFIRMATION EMAIL
+        const templateData = {
+            order_id: orderId,
+            items: order.items,
+            subtotal: order.subtotal || 0,
+            shipping: order.shipping || 0,
+            total: order.total_amount || 0,
+            shipping_address: `${order.shipping_address.name}, ${order.shipping_address.address.line1}, ${order.shipping_address.address.city}, ${order.shipping_address.address.postal_code}`
+        };
+
+        return db.collection('mail').add({
+            to: order.email,
+            template: {
+                name: 'order-confirmation',
+                data: templateData
             }
         });
     });
 
-// Shipping Notification
-exports.sendShippingNotification = functions.firestore
+exports.onOrderStatusUpdate = functions.firestore
     .document('orders/{orderId}')
     .onUpdate(async (change, context) => {
         const newData = change.after.data();
         const oldData = change.before.data();
+        const orderId = context.params.orderId;
 
+        if (newData.status === oldData.status) return null;
+
+        // SHIPPED -> Send notification
         if (newData.status === 'shipped' && oldData.status !== 'shipped') {
-            return admin.firestore().collection('mail').add({
+            const html = renderTemplate('shipping-notification', {
+                order_id: orderId,
+                tracking_number: newData.tracking_number,
+                tracking_link: `https://www.royalmail.com/track-your-item#/tracking-results/${newData.tracking_number}`,
+                est_delivery: newData.estimated_delivery || '3-5 Business Days'
+            });
+
+            await db.collection('mail').add({
                 to: newData.email,
                 message: {
-                    subject: `Your Order #${context.params.orderId} Has Shipped!`,
-                    html: `
-              <div style="font-family: sans-serif;">
-                  <h1>It's on the way!</h1>
-                  <p>Your items have been shipped and will be with you shortly.</p>
-                  <p><strong>Tracking Number:</strong> ${newData.tracking_number || 'N/A'}</p>
-                  <a href="https://customisemeuk.com/order-tracking.html?order=${context.params.orderId}">Track Shipment</a>
-              </div>
-            `
+                    subject: `📦 Your Order #${orderId} Has Shipped!`,
+                    html: html
                 }
             });
         }
+
+        // DELIVERED -> Log delivery time for review request trigger
+        if (newData.status === 'delivered') {
+            await change.after.ref.update({ time_delivered: admin.firestore.FieldValue.serverTimestamp() });
+        }
+
+        return null;
     });
 
 // ==========================================
-// 4. CHECKOUT & PAYMENTS
-// ==========================================
-exports.createPaymentIntent = functions.https.onCall(async (data, context) => {
-    // If we wanted to enforce auth:
-    // if (!context.auth) throw new functions.https.HttpsError('unauthenticated', 'User must be logged in.');
-
-    const { items, currency = 'gbp' } = data;
-
-    // Calculate price safely on server side
-    let total = 0;
-    for (const item of items) {
-        const pid = item.id || item.productId;
-        const productDoc = await admin.firestore().collection('products').doc(pid).get();
-
-        if (productDoc.exists) {
-            const productData = productDoc.data();
-            let price = productData.price;
-            // Add logic for customizations if needed
-            if (item.customization && item.customization.printLocation === 'Front & Back') {
-                price += 5;
-            }
-            total += price * item.quantity;
-        } else {
-            // Fallback or error
-            total += (item.price || 0) * item.quantity;
-        }
-    }
-
-    // Add shipping if < 100
-    const shipping = total >= 100 ? 0 : 4.99;
-    const grandTotal = total + shipping;
-
-    // Returning mock client secret for now
-    // Real implementation:
-    // const paymentIntent = await stripe.paymentIntents.create({
-    //   amount: Math.round(grandTotal * 100),
-    //   currency: 'gbp',
-    //   metadata: { integration_check: 'accept_a_payment' },
-    // });
-
-    return {
-        clientSecret: 'pi_mock_secret_' + Date.now(),
-        orderId: 'ORD-' + Date.now().toString(36).toUpperCase(),
-        amounts: {
-            subtotal: total,
-            shipping: shipping,
-            total: grandTotal
-        }
-    };
-});
-
-// ==========================================
-// 5. SCHEDULED TASKS (PubSub)
+// 3. ABANDONED CART RECOVERY (SCHEDULED)
 // ==========================================
 
-// Abandoned Cart Check (Every 30 mins)
 exports.checkAbandonedCarts = functions.pubsub.schedule('every 30 minutes').onRun(async (context) => {
-    const now = admin.firestore.Timestamp.now();
-    const cutoff = admin.firestore.Timestamp.fromMillis(Date.now() - 30 * 60 * 1000); // 30 mins ago
+    const thirtyMinsAgo = admin.firestore.Timestamp.fromMillis(Date.now() - 30 * 60 * 1000);
+    const twentyFourHoursAgo = admin.firestore.Timestamp.fromMillis(Date.now() - 24 * 60 * 60 * 1000);
 
-    const carts = await admin.firestore().collection('carts')
-        .where('updatedAt', '<', cutoff)
+    // 1. First recovery (30 mins - 24 hours)
+    const carts1 = await db.collection('carts')
+        .where('updatedAt', '<=', thirtyMinsAgo)
+        .where('updatedAt', '>', twentyFourHoursAgo)
         .where('status', '==', 'active')
         .where('emailSent', '==', false)
         .get();
 
-    const batch = admin.firestore().batch();
-
-    carts.forEach(doc => {
+    for (const doc of carts1.docs) {
         const cart = doc.data();
         if (cart.email) {
-            const mailRef = admin.firestore().collection('mail').doc();
-            batch.set(mailRef, {
+            const html = renderTemplate('abandoned-cart-1', { items: cart.items });
+            await db.collection('mail').add({
                 to: cart.email,
-                message: {
-                    subject: 'You left something behind!',
-                    html: `<p>Don't miss out on your items. <a href="https://customisemeuk.com/checkout.html">Complete Checkout</a></p>`
-                }
+                message: { subject: '🛒 You left something in your bag!', html }
             });
-            batch.update(doc.ref, { emailSent: true });
+            await doc.ref.update({ emailSent: true, firstEmailSentAt: admin.firestore.FieldValue.serverTimestamp() });
         }
-    });
+    }
 
-    await batch.commit();
-    return null;
+    // 2. Second recovery (24 hours later with discount)
+    const carts2 = await db.collection('carts')
+        .where('firstEmailSentAt', '<=', twentyFourHoursAgo)
+        .where('status', '==', 'active')
+        .where('discountEmailSent', '==', false)
+        .get();
+
+    for (const doc of carts2.docs) {
+        const cart = doc.data();
+        const html = renderTemplate('abandoned-cart-2', {});
+        await db.collection('mail').add({
+            to: cart.email,
+            message: { subject: '🎁 Final chance: 10% OFF your cart', html }
+        });
+        await doc.ref.update({ discountEmailSent: true });
+    }
 });
 
-// Review Requests (Daily)
-exports.sendReviewRequests = functions.pubsub.schedule('every 24 hours').onRun(async (context) => {
-    // Find orders delivered ~7 days ago
-    // For simplicity, we flag them
+// ==========================================
+// 4. WAITLIST & REVIEWS
+// ==========================================
+
+async function notifyWaitlist(productId, product) {
+    const waitlistDoc = await db.collection('waitlists').doc(productId).get();
+    if (!waitlistDoc.exists) return;
+
+    const emails = waitlistDoc.data().emails || [];
+    const html = renderTemplate('restock-notification', {
+        product_name: product.name,
+        product_id: productId,
+        imageUrl: product.images ? product.images[0] : '',
+        stock_count: product.stock
+    });
+
+    const batch = db.batch();
+    emails.forEach(email => {
+        const mailRef = db.collection('mail').doc();
+        batch.set(mailRef, { to: email, message: { subject: `🔥 BACK IN STOCK: ${product.name}`, html } });
+    });
+
+    batch.delete(waitlistDoc.ref);
+    return batch.commit();
+}
+
+// Review submission with verification
+exports.submitReview = functions.https.onCall(async (data, context) => {
+    if (!context.auth) throw new functions.https.HttpsError('unauthenticated', 'Must be logged in');
+    const { productId, rating, comment, title, images } = data;
+
+    // Verify purchase
+    const orders = await db.collection('orders')
+        .where('userId', '==', context.auth.uid)
+        .where('status', '==', 'delivered')
+        .get();
+
+    let verified = false;
+    orders.forEach(o => {
+        if (o.data().items.some(item => (item.productId || item.id) === productId)) verified = true;
+    });
+
+    if (!verified) throw new functions.https.HttpsError('permission-denied', 'You can only review products you have purchased and received.');
+
+    return db.collection('products').doc(productId).collection('reviews').add({
+        userId: context.auth.uid,
+        userName: context.auth.token.name || 'Customer',
+        rating,
+        comment,
+        title,
+        images: images || [],
+        verified_purchase: true,
+        approved: false,
+        timestamp: admin.firestore.FieldValue.serverTimestamp()
+    });
+});
+
+// Daily Review Request
+exports.sendReviewRequests = functions.pubsub.schedule('every 24 hours').onRun(async () => {
     const sevenDaysAgo = admin.firestore.Timestamp.fromMillis(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
-    const orders = await admin.firestore().collection('orders')
+    const orders = await db.collection('orders')
         .where('status', '==', 'delivered')
         .where('time_delivered', '<=', sevenDaysAgo)
         .where('review_requested', '==', false)
-        .limit(20)
         .get();
 
-    const batch = admin.firestore().batch();
-
-    orders.forEach(doc => {
+    for (const doc of orders.docs) {
         const order = doc.data();
-        if (order.email) {
-            const mailRef = admin.firestore().collection('mail').doc();
-            batch.set(mailRef, {
-                to: order.email,
-                message: {
-                    subject: 'How was your order?',
-                    html: `<p>We'd love to hear your feedback on your recent order. <a href="https://customisemeuk.com/product.html">Leave a Review</a></p>`
-                }
-            });
-            batch.update(doc.ref, { review_requested: true });
-        }
+        // Request review for the first item in order
+        const item = order.items[0];
+        const html = renderTemplate('review-request', { product_id: item.id || item.productId });
+
+        await db.collection('mail').add({
+            to: order.email,
+            message: { subject: '⭐️ How did we do?', html }
+        });
+        await doc.ref.update({ review_requested: true });
+    }
+});
+
+// ==========================================
+// 5. CUSTOM ORDERS FLOW
+// ==========================================
+
+exports.notifyAdminNewCustomOrder = functions.firestore
+    .document('orders/{orderId}')
+    .onCreate(async (snap, context) => {
+        const order = snap.data();
+        if (!order.hasCustomArtwork) return null;
+
+        return db.collection('mail').add({
+            to: 'admin@customisemeuk.com',
+            message: {
+                subject: '🎨 NEW CUSTOM ORDER PENDING APPROVAL',
+                html: `<p>Order #${context.params.orderId} requires artwork review.</p><a href="https://customisemeuk.com/dashboard.html">Go to Admin Dashboard</a>`
+            }
+        });
     });
 
-    await batch.commit();
-    return null;
+exports.approveCustomArtwork = functions.https.onCall(async (data, context) => {
+    // Admin only check (real check would use custom claims)
+    const { orderId, mockupUrl, adminNotes } = data;
+
+    await db.collection('orders').doc(orderId).update({
+        customOrderStatus: 'approved_mockup',
+        mockupUrl: mockupUrl,
+        adminNotes: adminNotes,
+        updatedAt: admin.firestore.FieldValue.serverTimestamp()
+    });
+
+    const order = (await db.collection('orders').doc(orderId).get()).data();
+
+    // Send Mockup to customer
+    return db.collection('mail').add({
+        to: order.email,
+        message: {
+            subject: '✨ YOUR MOCKUP IS READY!',
+            html: `
+                <h1>Review your design</h1>
+                <p>We've prepared a mockup for your order <strong>#${orderId}</strong>.</p>
+                <img src="${mockupUrl}" width="100%">
+                <p>Notes: ${adminNotes}</p>
+                <p>Please confirm within 48 hours to start production.</p>
+                <a href="https://customisemeuk.com/account.html" class="btn">Approve Mockup</a>
+            `
+        }
+    });
 });
+
+exports.requestCustomArtworkChanges = functions.https.onCall(async (data, context) => {
+    // Admin only check placeholder
+    const { orderId, adminNotes } = data;
+
+    await db.collection('orders').doc(orderId).update({
+        customOrderStatus: 'changes_requested',
+        adminNotes: adminNotes,
+        updatedAt: admin.firestore.FieldValue.serverTimestamp()
+    });
+
+    const order = (await db.collection('orders').doc(orderId).get()).data();
+
+    return db.collection('mail').add({
+        to: order.email,
+        message: {
+            subject: '⚠️ ACTION REQUIRED: Changes to your artwork',
+            html: `
+                <h1>Action required for your order #${orderId}</h1>
+                <p>Our designers have reviewed your artwork and require some changes before we can proceed.</p>
+                <p><strong>Admin Notes:</strong> ${adminNotes}</p>
+                <p>Please log in to your account to upload revised artwork.</p>
+                <a href="https://customisemeuk.com/account.html" class="btn">View Order Details</a>
+            `
+        }
+    });
+});
+
+exports.rejectCustomArtwork = functions.https.onCall(async (data, context) => {
+    // Admin only check placeholder
+    const { orderId, adminNotes } = data;
+
+    await db.collection('orders').doc(orderId).update({
+        customOrderStatus: 'rejected',
+        status: 'cancelled',
+        adminNotes: adminNotes,
+        updatedAt: admin.firestore.FieldValue.serverTimestamp()
+    });
+
+    const order = (await db.collection('orders').doc(orderId).get()).data();
+
+    return db.collection('mail').add({
+        to: order.email,
+        message: {
+            subject: '❌ Order Update: Custom Order Rejected',
+            html: `
+                <h1>Your custom order #${orderId} has been rejected</h1>
+                <p>Unfortunately, we cannot fulfill your custom design request at this time.</p>
+                <p><strong>Reason:</strong> ${adminNotes}</p>
+                <p>If you have already paid, a refund will be processed automatically.</p>
+            `
+        }
+    });
+});
+

@@ -256,197 +256,208 @@
                   <div class="section-header">
                     <h2>Custom Order Requests</h2>
                     <div class="order-filters">
-                      <select id="customOrderFilter" onchange="filterCustomOrders()">
-                        <option value="all">All Statuses</option>
-                        <option value="pending">Pending Review</option>
-                        <option value="approved_mockup">Mockup Sent</option>
-                        <option value="in_production">In Production</option>
+                      <select id="customOrderFilter" onchange="loadCustomOrders()">
+                        <option value="all">All Pending</option>
+                        <option value="pending">Awaiting Review</option>
+                        <option value="approved">Awaiting Customer Confirmation</option>
                       </select>
                     </div>
                   </div>
-                  <div id="customOrdersContainer" class="orders-container">
-                    <div class="spinner-large"></div>
-                    <p class="text-center">Loading requests...</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Waitlist Tab -->
-              <div id="waitlist-tab" class="tab-content">
-                <div class="card">
-                  <h2>Product Waitlists</h2>
-                  <p class="text-grey-dark">Users waiting for out-of-stock items.</p>
-                  <div id="waitlistContainer">
+                  <div id="customOrdersContainer" class="orders-table-container">
                     <table class="table w-100">
                       <thead>
                         <tr>
-                          <th>Product ID</th>
-                          <th>Product Name</th>
-                          <th>Waitlist Count</th>
+                          <th>Order ID</th>
+                          <th>Customer</th>
+                          <th>Product</th>
+                          <th>Artwork</th>
+                          <th>Status</th>
                           <th>Action</th>
                         </tr>
                       </thead>
-                      <tbody id="waitlist-table-body">
+                      <tbody id="custom-orders-body">
                         <!-- Dynamic -->
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- Homepage Images Tab -->
-        <div id="homepage-tab" class="tab-content">
-          <div class="card">
-            <h2>Homepage Images Management</h2>
-            <p class="text-grey-dark mb-4">Upload seasonal or promotional images for the homepage hero section</p>
-
-            <form id="homepageForm">
-              <div class="form-group">
-                <label for="homepageTitle">Section Title</label>
-                <input type="text" id="homepageTitle" placeholder="e.g., Summer Collection 2025">
-              </div>
-
-              <div class="form-group">
-                <label for="homepageSubtitle">Section Subtitle</label>
-                <input type="text" id="homepageSubtitle" placeholder="e.g., Get ready for summer with our new designs">
-              </div>
-
-              <div class="form-group">
-                <label for="homepageImages">Hero Images * (Recommended: 1920x800px)</label>
-                <input type="file" id="homepageImages" accept="image/*" multiple>
-                <small>Upload up to 5 images for the hero carousel</small>
-              </div>
-
-              <div id="homepagePreviews" class="image-previews"></div>
-
-              <div class="form-group">
-                <label>Current Homepage Images</label>
-                <div id="currentHomepageImages" class="image-previews"></div>
-              </div>
-
-              <div id="homepageMessage" class="form-message" style="display: none;"></div>
-
-              <button type="submit" class="btn btn-primary" id="homepageBtn">
-                <span id="homepageText">Update Homepage</span>
-                <span id="homepageSpinner" class="spinner" style="display: none;"></span>
-              </button>
-            </form>
-          </div>
-        </div>
-
-        <!-- Partners Logo Tab -->
-        <div id="partners-tab" class="tab-content">
-          <div class="card">
-            <h2>Partners & Collaborators</h2>
-            <p class="text-grey-dark mb-4">Manage logos of people and brands you've worked with</p>
-
-            <form id="partnersForm">
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="partnerName">Partner/Brand Name *</label>
-                  <input type="text" id="partnerName" required placeholder="e.g., Coca Cola">
-                </div>
-
-                <div class="form-group">
-                  <label for="partnerWebsite">Website URL (optional)</label>
-                  <input type="url" id="partnerWebsite" placeholder="https://example.com">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="partnerLogo">Partner Logo * (Recommended: Square, transparent background)</label>
-                <input type="file" id="partnerLogo" accept="image/*" required>
-              </div>
-
-              <div id="partnerPreview" class="image-previews"></div>
-
-              <div id="partnersMessage" class="form-message" style="display: none;"></div>
-
-              <button type="submit" class="btn btn-primary" id="partnersBtn">
-                <span id="partnersText">Add Partner</span>
-                <span id="partnersSpinner" class="spinner" style="display: none;"></span>
-              </button>
-            </form>
-
-            <hr class="my-5">
-
-            <h3>Current Partners</h3>
-            <div id="partnersContainer" class="partners-grid">
-              <div class="loading-products">
-                <div class="spinner-large"></div>
-                <p>Loading partners...</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Reviews Tab -->
-        <div id="reviews-tab" class="tab-content">
-          <div class="card">
-            <div class="section-header">
-              <h2>Customer Reviews</h2>
-              <button class="btn btn-primary btn-sm" onclick="showAddReviewForm()">Add Review</button>
-            </div>
-
-            <!-- Add Review Form -->
-            <div id="addReviewForm" style="display: none;" class="mb-5 p-4"
-              style="background: var(--color-bg-secondary); border-radius: var(--radius);">
-              <h3>Add New Review</h3>
-              <form id="reviewForm">
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="reviewName">Customer Name *</label>
-                    <input type="text" id="reviewName" required>
+              <!-- Custom Order Detail Modal -->
+              <div id="customOrderModal" class="modal-overlay" style="display:none;">
+                <div class="modal-card">
+                  <div class="modal-header">
+                    <h3>Review Artwork: #<span id="mo-order-id"></span></h3>
+                    <button class="btn-close" onclick="closeCustomModal()">×</button>
                   </div>
-
-                  <div class="form-group">
-                    <label for="reviewRating">Rating *</label>
-                    <select id="reviewRating" required>
-                      <option value="5">5 Stars ⭐⭐⭐⭐⭐</option>
-                      <option value="4">4 Stars ⭐⭐⭐⭐</option>
-                      <option value="3">3 Stars ⭐⭐⭐</option>
-                      <option value="2">2 Stars ⭐⭐</option>
-                      <option value="1">1 Star ⭐</option>
-                    </select>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <h5>Original Artwork</h5>
+                        <img id="mo-artwork-img" src="" class="img-fluid border" style="max-height: 400px;">
+                        <a id="mo-download-link" href="#" target="_blank" class="d-block mt-2">⬇️ Download High-Res</a>
+                      </div>
+                      <div class="col-md-6">
+                        <h5>Product Details</h5>
+                        <p id="mo-product-info"></p>
+                        <hr>
+                        <label>Admin Mockup URL (e.g. from Canva/Photoshop)</label>
+                        <input type="text" id="mo-mockup-input" class="form-control" placeholder="https://...">
+                        <label class="mt-3">Notes to Customer</label>
+                        <textarea id="mo-notes-input" class="form-control" rows="3"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer d-flex gap-2">
+                    <button class="btn btn-primary" onclick="approveCustom()">Approve & Send Mockup</button>
+                    <button class="btn btn-warning" onclick="requestChanges()">Request Changes</button>
+                    <button class="btn btn-danger" onclick="rejectCustom()">Reject Order</button>
                   </div>
                 </div>
-
-                <div class="form-group">
-                  <label for="reviewText">Review Text *</label>
-                  <textarea id="reviewText" required rows="4"></textarea>
-                </div>
-
-                <div class="form-group">
-                  <label for="reviewProduct">Product (optional)</label>
-                  <input type="text" id="reviewProduct" placeholder="e.g., Custom T-Shirt">
-                </div>
-
-                <div id="reviewMessage" class="form-message" style="display: none;"></div>
-
-                <div class="form-row">
-                  <button type="submit" class="btn btn-primary" id="reviewBtn">
-                    <span id="reviewBtnText">Add Review</span>
-                    <span id="reviewSpinner" class="spinner" style="display: none;"></span>
-                  </button>
-                  <button type="button" class="btn btn-secondary" onclick="hideAddReviewForm()">Cancel</button>
-                </div>
-              </form>
+              </div>
             </div>
 
-            <div id="reviewsContainer" class="reviews-container">
-              <div class="loading-products">
-                <div class="spinner-large"></div>
-                <p>Loading reviews...</p>
+            <!-- Waitlist Tab -->
+            <div id="waitlist-tab" class="tab-content">
+              <div class="card">
+                <h2>Product Waitlists</h2>
+                <p class="text-grey-dark">Users waiting for out-of-stock items.</p>
+                <div id="waitlistContainer">
+                  <table class="table w-100">
+                    <thead>
+                      <tr>
+                        <th>Product ID</th>
+                        <th>Product Name</th>
+                        <th>Waitlist Count</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="waitlist-table-body">
+                      <!-- Dynamic -->
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
-    </main>
+
+      <!-- Homepage Images Tab -->
+      <div id="homepage-tab" class="tab-content">
+        <div class="card">
+          <h2>Homepage Images Management</h2>
+          <p class="text-grey-dark mb-4">Upload seasonal or promotional images for the homepage hero section</p>
+
+          <form id="homepageForm">
+            <div class="form-group">
+              <label for="homepageTitle">Section Title</label>
+              <input type="text" id="homepageTitle" placeholder="e.g., Summer Collection 2025">
+            </div>
+
+            <div class="form-group">
+              <label for="homepageSubtitle">Section Subtitle</label>
+              <input type="text" id="homepageSubtitle" placeholder="e.g., Get ready for summer with our new designs">
+            </div>
+
+            <div class="form-group">
+              <label for="homepageImages">Hero Images * (Recommended: 1920x800px)</label>
+              <input type="file" id="homepageImages" accept="image/*" multiple>
+              <small>Upload up to 5 images for the hero carousel</small>
+            </div>
+
+            <div id="homepagePreviews" class="image-previews"></div>
+
+            <div class="form-group">
+              <label>Current Homepage Images</label>
+              <div id="currentHomepageImages" class="image-previews"></div>
+            </div>
+
+            <div id="homepageMessage" class="form-message" style="display: none;"></div>
+
+            <button type="submit" class="btn btn-primary" id="homepageBtn">
+              <span id="homepageText">Update Homepage</span>
+              <span id="homepageSpinner" class="spinner" style="display: none;"></span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Partners Logo Tab -->
+      <div id="partners-tab" class="tab-content">
+        <div class="card">
+          <h2>Partners & Collaborators</h2>
+          <p class="text-grey-dark mb-4">Manage logos of people and brands you've worked with</p>
+
+          <form id="partnersForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="partnerName">Partner/Brand Name *</label>
+                <input type="text" id="partnerName" required placeholder="e.g., Coca Cola">
+              </div>
+
+              <div class="form-group">
+                <label for="partnerWebsite">Website URL (optional)</label>
+                <input type="url" id="partnerWebsite" placeholder="https://example.com">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="partnerLogo">Partner Logo * (Recommended: Square, transparent background)</label>
+              <input type="file" id="partnerLogo" accept="image/*" required>
+            </div>
+
+            <div id="partnerPreview" class="image-previews"></div>
+
+            <div id="partnersMessage" class="form-message" style="display: none;"></div>
+
+            <button type="submit" class="btn btn-primary" id="partnersBtn">
+              <span id="partnersText">Add Partner</span>
+              <span id="partnersSpinner" class="spinner" style="display: none;"></span>
+            </button>
+          </form>
+
+          <hr class="my-5">
+
+          <h3>Current Partners</h3>
+          <div id="partnersContainer" class="partners-grid">
+            <div class="loading-products">
+              <div class="spinner-large"></div>
+              <p>Loading partners...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reviews Tab -->
+      <div id="reviews-tab" class="tab-content">
+        <div class="card">
+          <div class="section-header">
+            <h2>Pending Reviews</h2>
+            <div class="d-flex gap-2">
+              <button class="btn btn-primary btn-sm" onclick="approveAllReviews()">Approve All</button>
+            </div>
+          </div>
+          <div id="pendingReviewsContainer" class="reviews-moderation-grid mb-5">
+            <!-- Dynamic -->
+          </div>
+
+          <div class="section-header">
+            <h2>Approved Reviews</h2>
+            <button class="btn btn-primary btn-sm" onclick="showAddReviewForm()">Add Review Manually</button>
+          </div>
+
+          <div id="reviewsContainer" class="reviews-container">
+            <div class="loading-products">
+              <div class="spinner-large"></div>
+              <p>Loading reviews...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  </div>
+  </main>
   </div>
 
   <!-- Firebase SDK -->
@@ -455,6 +466,8 @@
     import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
     import { getFirestore, collection, addDoc, getDocs, doc, getDoc, updateDoc, deleteDoc, setDoc, query, where, orderBy, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
     import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js';
+    import { getFunctions, httpsCallable } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-functions.js';
+
 
     // Firebase Configuration
     const firebaseConfig = {
@@ -470,11 +483,13 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
     const storage = getStorage(app);
+    const functions = getFunctions(app);
 
     // Make Firebase available globally
     window.db = db;
     window.storage = storage;
     window.auth = auth;
+    window.functions = functions;
 
     // Auth State Observer
     onAuthStateChanged(auth, async (user) => {
@@ -656,11 +671,134 @@
     // ========================================
     // CUSTOM ORDERS MANAGEMENT
     // ========================================
+    let selectedOrder = null;
+
     window.loadCustomOrders = async function () {
-      // Implementation for custom orders
-      // For MVP, just a placeholder fetch
-      const container = document.getElementById('customOrdersContainer');
-      container.innerHTML = `<div class="p-5 text-center text-muted">No custom orders pending.</div>`;
+      const tbody = document.getElementById('custom-orders-body');
+      const filter = document.getElementById('customOrderFilter').value;
+      tbody.innerHTML = '<tr><td colspan="6" class="text-center p-4 text-grey">Loading custom orders...</td></tr>';
+
+      try {
+        let q;
+        if (filter === 'all') {
+          q = query(collection(db, 'orders'), where('hasCustomArtwork', '==', true));
+        } else if (filter === 'pending') {
+          q = query(collection(db, 'orders'), where('hasCustomArtwork', '==', true), where('customOrderStatus', '==', 'pending'));
+        } else if (filter === 'approved') {
+          q = query(collection(db, 'orders'), where('hasCustomArtwork', '==', true), where('customOrderStatus', '==', 'approved_mockup'));
+        }
+
+        const snap = await getDocs(q);
+
+        if (snap.empty) {
+          tbody.innerHTML = '<tr><td colspan="6" class="text-center p-4 text-grey">No custom orders found.</td></tr>';
+          return;
+        }
+
+        let html = '';
+        snap.forEach(doc => {
+          const order = doc.data();
+          const status = order.customOrderStatus || 'pending';
+          let statusBadgeClass = 'bg-secondary';
+          if (status === 'pending') statusBadgeClass = 'bg-warning';
+          else if (status === 'approved_mockup') statusBadgeClass = 'bg-info';
+          else if (status === 'in_production') statusBadgeClass = 'bg-primary';
+          else if (status === 'changes_requested') statusBadgeClass = 'bg-danger';
+          else if (status === 'rejected') statusBadgeClass = 'bg-dark';
+
+          html += `
+                    <tr>
+                        <td>#${doc.id.substring(0, 8)}</td>
+                        <td>${order.email}</td>
+                        <td>${order.items && order.items.length > 0 ? order.items[0].name : '---'}</td>
+                        <td><img src="${order.artworkUrl}" height="40" class="border"></td>
+                        <td><span class="badge ${statusBadgeClass}">${status.replace(/_/g, ' ').toUpperCase()}</span></td>
+                        <td><button class="btn btn-sm btn-outline-primary" onclick="viewCustomOrder('${doc.id}')">Review</button></td>
+                    </tr>
+                `;
+        });
+        tbody.innerHTML = html;
+      } catch (e) {
+        console.error('Error loading custom orders:', e);
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center p-4 text-danger">Error loading custom orders.</td></tr>';
+      }
+    };
+
+    window.viewCustomOrder = async function (id) {
+      const snap = await getDoc(doc(db, 'orders', id));
+      selectedOrder = { id: snap.id, ...snap.data() };
+
+      document.getElementById('mo-order-id').textContent = id.substring(0, 8);
+      document.getElementById('mo-artwork-img').src = selectedOrder.artworkUrl;
+      document.getElementById('mo-download-link').href = selectedOrder.artworkUrl;
+      document.getElementById('mo-product-info').innerHTML = `
+            <strong>Product:</strong> ${selectedOrder.items && selectedOrder.items.length > 0 ? selectedOrder.items[0].name : 'N/A'}<br>
+            <strong>Quantity:</strong> ${selectedOrder.items && selectedOrder.items.length > 0 ? selectedOrder.items[0].quantity : 'N/A'}<br>
+            <strong>Customer Msg:</strong> ${selectedOrder.customerNotes || 'N/A'}
+        `;
+      document.getElementById('mo-mockup-input').value = selectedOrder.adminMockupUrl || '';
+      document.getElementById('mo-notes-input').value = selectedOrder.adminNotes || '';
+
+      document.getElementById('customOrderModal').style.display = 'flex';
+    };
+
+    window.closeCustomModal = () => { document.getElementById('customOrderModal').style.display = 'none'; };
+
+    window.approveCustom = async function () {
+      const mockup = document.getElementById('mo-mockup-input').value;
+      const notes = document.getElementById('mo-notes-input').value;
+
+      if (!mockup) return alert('Please provide a mockup URL first.');
+
+      if (!confirm('Are you sure you want to approve this order and send the mockup to the customer?')) return;
+
+      try {
+        const approveFn = httpsCallable(window.functions, 'approveCustomArtwork');
+        await approveFn({ orderId: selectedOrder.id, mockupUrl: mockup, adminNotes: notes });
+
+        alert('Custom order approved & customer notified!');
+        closeCustomModal();
+        loadCustomOrders();
+      } catch (e) {
+        console.error('Error approving order:', e);
+        alert('Error approving order: ' + (e.message || 'Unknown error'));
+      }
+    };
+
+    window.requestChanges = async function () {
+      const notes = document.getElementById('mo-notes-input').value;
+      if (!notes) return alert('Please add notes explaining the requested changes to the customer.');
+      if (!confirm('Are you sure you want to request changes for this order? The customer will be notified.')) return;
+
+      try {
+        const requestChangesFn = httpsCallable(window.functions, 'requestCustomArtworkChanges');
+        await requestChangesFn({ orderId: selectedOrder.id, adminNotes: notes });
+
+        alert('Changes requested for custom order. Customer notified!');
+        closeCustomModal();
+        loadCustomOrders();
+      } catch (e) {
+        console.error('Error requesting changes:', e);
+        alert('Error requesting changes: ' + (e.message || 'Unknown error'));
+      }
+    };
+
+    window.rejectCustom = async function () {
+      const notes = document.getElementById('mo-notes-input').value;
+      if (!notes) return alert('Please add notes explaining why the order is being rejected.');
+      if (!confirm('Are you sure you want to reject this custom order? This action cannot be undone.')) return;
+
+      try {
+        const rejectFn = httpsCallable(window.functions, 'rejectCustomArtwork');
+        await rejectFn({ orderId: selectedOrder.id, adminNotes: notes });
+
+        alert('Custom order rejected. Customer notified!');
+        closeCustomModal();
+        loadCustomOrders();
+      } catch (e) {
+        console.error('Error rejecting order:', e);
+        alert('Error rejecting order: ' + (e.message || 'Unknown error'));
+      }
     };
 
     // ========================================
@@ -1567,43 +1705,67 @@
     // REVIEWS MANAGEMENT
     // ========================================
 
-    async function loadReviews() {
-      const container = document.getElementById('reviewsContainer');
+    // ========================================
+    // REVIEWS MODERATION
+    // ========================================
+    window.loadReviews = async function () {
+      // We need collectionGroup for subcollections if using that structure, 
+      // or just query reviews collection if flattened. 
+      // Previously we had 'products/{pid}/reviews'. Let's assume flattened 'reviews' for admin ease.
+      const pendingContainer = document.getElementById('pendingReviewsContainer');
+      const approvedContainer = document.getElementById('reviewsContainer');
 
       try {
-        const q = query(collection(db, 'reviews'), orderBy('createdAt', 'desc'));
-        const querySnapshot = await getDocs(q);
-        const reviews = [];
+        const qAll = query(collection(db, 'reviews'), orderBy('timestamp', 'desc'));
+        const snap = await getDocs(qAll);
 
-        querySnapshot.forEach((doc) => {
-          reviews.push({ id: doc.id, ...doc.data() });
+        let pendingHtml = '';
+        let approvedHtml = '';
+
+        snap.forEach(doc => {
+          const r = doc.data();
+          const html = `
+                    <div class="review-item border p-3 mb-3 bg-white">
+                        <div class="d-flex justify-content-between">
+                            <strong>${r.userName} (${r.rating}⭐️)</strong>
+                            <small>${r.timestamp ? new Date(r.timestamp.toDate()).toLocaleDateString() : '---'}</small>
+                        </div>
+                        <p class="mb-1"><strong>${r.title || ''}</strong></p>
+                        <p class="small text-muted">${r.comment}</p>
+                        <div class="mt-2">
+                            ${r.approved ?
+              `<button class="btn btn-sm btn-outline-danger" onclick="toggleReviewStatus('${doc.id}', false)">Unapprove</button>` :
+              `<button class="btn btn-sm btn-success" onclick="toggleReviewStatus('${doc.id}', true)">Approve</button>
+                                 <button class="btn btn-sm btn-danger" onclick="deleteReview('${doc.id}')">Delete</button>`
+            }
+                        </div>
+                    </div>
+                `;
+          if (r.approved) approvedHtml += html;
+          else pendingHtml += html;
         });
 
-        if (reviews.length === 0) {
-          container.innerHTML = '<div class="empty-state"><p>No reviews yet</p></div>';
-        } else {
-          container.innerHTML = reviews.map(review => `
-            <div class="review-item">
-              <div class="review-header">
-                <div>
-                  <h4>${review.customerName}</h4>
-                  <div class="review-rating">${'⭐'.repeat(review.rating || 5)}</div>
-                </div>
-                <button class="btn btn-danger btn-sm" onclick="deleteReview('${review.id}')">Delete</button>
-              </div>
-              <p class="review-text">"${review.text}"</p>
-              ${review.product ? `<p class="text-grey-dark" style="font-size: 0.875rem;">Product: ${review.product}</p>` : ''}
-              <p class="text-grey-dark" style="font-size: 0.75rem;">
-                ${review.createdAt ? new Date(review.createdAt.seconds * 1000).toLocaleDateString() : 'N/A'}
-              </p>
-            </div>
-          `).join('');
-        }
-      } catch (error) {
-        console.error('Error loading reviews:', error);
-        container.innerHTML = '<div class="error-state"><p>Failed to load reviews</p></div>';
-      }
-    }
+        pendingContainer.innerHTML = pendingHtml || '<p class="text-grey p-3">No pending reviews.</p>';
+        approvedContainer.innerHTML = approvedHtml || '<p class="text-grey p-3">No approved reviews.</p>';
+
+      } catch (e) { console.error('Error loading reviews:', e); }
+    };
+
+    window.toggleReviewStatus = async function (id, status) {
+      try {
+        await updateDoc(doc(db, 'reviews', id), { approved: status });
+        loadReviews();
+      } catch (e) { alert('Error updating review'); }
+    };
+
+    window.deleteReview = async function (id) {
+      if (!confirm('Delete this review forever?')) return;
+      try {
+        await deleteDoc(doc(db, 'reviews', id));
+        loadReviews();
+      } catch (e) { alert('Error deleting review'); }
+    };
+
 
     window.showAddReviewForm = function () {
       document.getElementById('addReviewForm').style.display = 'block';

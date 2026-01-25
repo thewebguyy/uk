@@ -53,6 +53,18 @@ function addToCart(productId, name, price, imageUrl = '', quantity = 1, customiz
 
   saveCart(cart);
 
+  // GA4 Event - Add to Cart
+  if (typeof gtag === 'function') {
+    gtag('event', 'add_to_cart', {
+      items: [{
+        item_id: productId,
+        item_name: name,
+        price: price,
+        quantity: quantity
+      }]
+    });
+  }
+
   // Save to Firestore for Abandoned Cart Recovery (if user is known or just by cookie ID)
   // For MVP, if we have a global saved email or user, we push it.
   if (typeof saveCartToFirestore === 'function') {
