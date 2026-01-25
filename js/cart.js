@@ -53,6 +53,12 @@ function addToCart(productId, name, price, imageUrl = '', quantity = 1, customiz
 
   saveCart(cart);
 
+  // Save to Firestore for Abandoned Cart Recovery (if user is known or just by cookie ID)
+  // For MVP, if we have a global saved email or user, we push it.
+  if (typeof saveCartToFirestore === 'function') {
+    saveCartToFirestore(cart);
+  }
+
   // Show Offcanvas (optional interaction polish)
   const offcanvasEl = document.getElementById('cartOffcanvas');
   if (offcanvasEl && window.bootstrap) {
@@ -60,6 +66,7 @@ function addToCart(productId, name, price, imageUrl = '', quantity = 1, customiz
     bsOffcanvas.show();
   }
 }
+
 
 // Remove item from cart
 function removeFromCart(cartItemId) {

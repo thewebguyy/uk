@@ -5,7 +5,7 @@
 
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import { getFirestore, collection, getDocs, doc, getDoc, query, where, limit, orderBy, startAfter, addDoc, updateDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import { getFirestore, collection, getDocs, doc, getDoc, query, where, limit, orderBy, startAfter, addDoc, updateDoc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 import { getFunctions, httpsCallable } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-functions.js';
 
 // ============================================
@@ -272,5 +272,33 @@ window.ProductService = ProductService;
 window.CheckoutService = CheckoutService;
 window.initializeStripe = initializeStripe;
 window.db = db; // Export db for index.html hero loading
+
+// ============================================
+// CART SYNC (ABANDONED CART)
+// ============================================
+window.saveCartToFirestore = async function (cart) {
+  // Only save if we have some user identifier (Auth or Email entered)
+  // For specific abandoned cart flow, we often need the email first.
+  // Here we check if user is logged in:
+  const user = auth.currentUser;
+  if (user) {
+    try {
+      const cartRef = doc(db, 'carts', user.uid);
+      await setDoc(cartRef, {
+        items: cart,
+        userId: user.uid,
+        email: user.email,
+        status: 'active',
+        emailSent: false,
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+    } catch (e) {
+      console.error("Failed to sync cart", e);
+    }
+  } else {
+    // If guest, we might store in a 'guest_carts' by a fuzzy ID, 
+    // but for now only sync if we have an authoritative ID to link to email.
+  }
+};
 
 console.log('API Integration (Firebase + Functions) Loaded');
