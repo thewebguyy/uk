@@ -693,8 +693,8 @@
       }
 
       productsContainer.innerHTML = products.map(product => `
-        <div class="product-card" data-product-id="${product._id}">
-          <a href="product.html?id=${product._id}">
+        <div class="product-card" data-product-id="${product.id}">
+          <a href="product.html?id=${product.id}">
             <div class="product-image">
               ${product.imageUrl ?
           `<img src="${escapeHtml(product.imageUrl)}" alt="${escapeHtml(product.name)}" loading="lazy">` :
@@ -704,12 +704,12 @@
           </a>
           <div class="product-info">
             <h3 class="product-title">
-              <a href="product.html?id=${product._id}" style="text-decoration: none; color: inherit;">
+              <a href="product.html?id=${product.id}" style="text-decoration: none; color: inherit;">
                 ${escapeHtml(product.name)}
               </a>
             </h3>
             <p class="product-price">£${product.price.toFixed(2)}</p>
-            <button class="btn btn-primary w-100" onclick="addToCart('${product._id}', '${escapeHtml(product.name)}', ${product.price}, '${escapeHtml(product.imageUrl || '')}')">
+            <button class="btn btn-primary w-100" onclick="addToCart('${product.id}', '${escapeHtml(product.name)}', ${product.price}, '${escapeHtml(product.imageUrl || '')}')">
               ADD TO CART
             </button>
           </div>

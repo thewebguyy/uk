@@ -4,7 +4,7 @@
  */
 
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, sendPasswordResetEmail, sendEmailVerification } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 import { getFirestore, collection, getDocs, doc, getDoc, query, where, limit, orderBy, startAfter, addDoc, updateDoc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 import { getFunctions, httpsCallable } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-functions.js';
 
@@ -44,17 +44,30 @@ class AuthService {
 
       await updateProfile(user, { displayName: name });
 
-      // Create user doc in Firestore (optional but good for extra data)
-      await updateDoc(doc(db, 'users', user.uid), {
-        name,
-        email,
-        createdAt: serverTimestamp()
-      }).catch(async () => {
-        // Create if doesn't exist (using set with merge is getting complicated with modular SDK without setDoc import, so we stick to auth mainly)
-        // For now Auth is sufficient for this MVP level
+      // Send verification email
+      await sendEmailVerification(user, {
+        url: window.location.origin + '/login.html',
+        handleCodeInApp: false
       });
 
-      return { success: true, user: this.formatUser(user) };
+      // Sign out user until verified
+      await signOut(auth);
+
+      // Create user doc in Firestore (optional but good for extra data)
+      try {
+        await updateDoc(doc(db, 'users', user.uid), {
+          name,
+          email,
+          createdAt: serverTimestamp()
+        });
+      } catch (e) {
+        // Doc might not exist, but we proceed
+      }
+
+      return {
+        success: true,
+        message: 'Account created! Please check your email to verify before logging in.'
+      };
     } catch (error) {
       console.error('Registration error:', error);
       return { success: false, message: this.getErrorMessage(error) };
@@ -64,7 +77,29 @@ class AuthService {
   static async login(email, password) {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      return { success: true, user: this.formatUser(userCredential.user) };
+      const user = userCredential.user;
+
+      // Check if email is verified
+      if (!user.emailVerified) {
+        // Offer to resend
+        const resend = confirm('Your email is not verified. Would you like us to resend the verification link?');
+        if (resend) {
+          try {
+            await sendEmailVerification(user);
+            alert('Verification email resent! Please check your inbox.');
+          } catch (e) {
+            alert('Error resending email: ' + e.message);
+          }
+        }
+        await signOut(auth);
+        return {
+          success: false,
+          message: 'Please verify your email address before logging in.',
+          needsVerification: true
+        };
+      }
+
+      return { success: true, user: this.formatUser(user) };
     } catch (error) {
       console.error('Login error:', error);
       return { success: false, message: this.getErrorMessage(error) };

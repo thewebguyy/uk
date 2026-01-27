@@ -2189,3 +2189,26 @@ footer {
   grid-column: 1 / -1;
   /* Span all columns */
 }
+
+/* ============================================
+   PRODUCT DETAIL PAGE FIXES
+   ============================================ */
+@media (min-width: 992px) {
+  #reviews-section {
+    display: none !important;
+  }
+}
+
+/* Ensure side-by-side layout on desktop for product overview */
+@media (min-width: 992px) {
+  .product-detail-section .row {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 2rem;
+  }
+
+  .product-detail-section .col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
