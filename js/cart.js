@@ -162,7 +162,7 @@ function updateCartDisplay() {
         <div class="cart-item-image">
           ${item.imageUrl ?
         `<img src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.name)}">` :
-        `<div class="placeholder-img">No Image</div>`
+        `<div class="h-100 d-flex align-items-center justify-content-center bg-light text-grey" style="font-size: 0.6rem;">No Image</div>`
       }
         </div>
         <div class="cart-item-details">
@@ -173,14 +173,18 @@ function updateCartDisplay() {
           </div>
           <div class="cart-item-controls">
              <div class="quantity-selector-sm">
-                <button type="button" onclick="updateQuantity('${item.id}', ${item.quantity - 1})">−</button>
+                <button type="button" onclick="window.updateQuantity('${item.id}', ${item.quantity - 1})" aria-label="Decrease quantity">−</button>
                 <span>${item.quantity}</span>
-                <button type="button" onclick="updateQuantity('${item.id}', ${item.quantity + 1})">+</button>
+                <button type="button" onclick="window.updateQuantity('${item.id}', ${item.quantity + 1})" aria-label="Increase quantity">+</button>
              </div>
-             <div class="cart-item-price">£${(item.price * item.quantity).toFixed(2)}</div>
+             <div class="cart-item-price fw-bold">£${(item.price * item.quantity).toFixed(2)}</div>
           </div>
         </div>
-        <button class="cart-item-remove" onclick="removeFromCart('${item.id}')" aria-label="Remove item">×</button>
+        <button class="cart-item-remove" onclick="window.removeFromCart('${item.id}')" aria-label="Remove item" title="Remove item">
+          <svg style="width:18px; height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"></path>
+          </svg>
+        </button>
       </div>
     `).join('');
   }
