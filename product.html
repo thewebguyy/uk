@@ -264,6 +264,10 @@
           <div class="product-main-image" id="main-image-container">
             <span class="text-grey">Loading image...</span>
           </div>
+          <!-- Product Description (Moved here) -->
+          <div class="product-description-full mt-4" id="product-description">
+            Loading description...
+          </div>
         </div>
 
         <!-- Product Details -->
@@ -273,28 +277,13 @@
 
             <h1 class="product-title-main" id="product-name">Product Name</h1>
 
-            <div class="product-price-main" id="product-price">£0.00</div>
-
-            <div class="product-description-full" id="product-description">
-              Loading description...
-            </div>
-
             <!-- Customization Options -->
             <div class="product-customization">
               <!-- Color Selection -->
               <div class="customization-group">
                 <label class="customization-label">Select Color</label>
                 <div class="color-swatches" id="color-options">
-                  <div class="color-swatch active" style="background: white; border: 1px solid #ddd;"
-                    onclick="updateCustomization('color', 'White', this)"></div>
-                  <div class="color-swatch" style="background: black;"
-                    onclick="updateCustomization('color', 'Black', this)"></div>
-                  <div class="color-swatch" style="background: #1F2937;"
-                    onclick="updateCustomization('color', 'Navy', this)"></div>
-                  <div class="color-swatch" style="background: #DC2626;"
-                    onclick="updateCustomization('color', 'Red', this)"></div>
-                  <div class="color-swatch" style="background: #2563EB;"
-                    onclick="updateCustomization('color', 'Royal Blue', this)"></div>
+                  <!-- Colors dynamically generated -->
                 </div>
               </div>
 
@@ -330,10 +319,6 @@
               <div class="customization-group">
                 <label class="customization-label">Design Position</label>
                 <div class="position-options">
-                  <button class="position-btn" onclick="updateCustomization('designPosition', 'Left Chest', this)">Left
-                    Chest</button>
-                  <button class="position-btn"
-                    onclick="updateCustomization('designPosition', 'Right Chest', this)">Right Chest</button>
                   <button class="position-btn active"
                     onclick="updateCustomization('designPosition', 'Centre', this)">Centre</button>
                   <button class="position-btn" onclick="updateCustomization('designPosition', 'Full Front', this)">Full
@@ -369,6 +354,9 @@
                 </div>
               </div>
             </div>
+
+            <!-- Price (Moved here) -->
+            <div class="product-price-main mb-3" id="product-price">£0.00</div>
 
             <!-- Quantity Selector -->
             <div class="quantity-selector">
@@ -689,7 +677,11 @@
       </div>
     </div>
   </div>
+  <!-- Footer Component -->
+  <div id="footer-container" data-component="components/footer.html"></div>
 
+  <!-- Scripts -->
+  <script src="js/components.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/cart.js"></script>
   <script type="module" src="js/api-integration.js"></script>

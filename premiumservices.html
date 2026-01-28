@@ -2,20 +2,11 @@
 <html lang="en">
 
 <head>
-  <title>Premium Services - Creative Merch UK</title>
+  <title>Premium Services - CustomiseMe UK</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description"
     content="Explore our premium services including custom send-ins, vinyl installation, event setup, and creative workshops.">
-
-  <!-- GA4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
-  </script>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="style.css">
@@ -28,8 +19,6 @@
 
   <!-- Cart Component -->
   <div id="cart-container" data-component="components/cart.html"></div>
-
-  <!-- Main Navigation remains same as index.html -->
 
   <!-- Header Section -->
   <section class="section" style="background: var(--color-grey-light); padding: 4rem 0;">
@@ -47,11 +36,6 @@
         <!-- Send Items In -->
         <div class="col-md-6">
           <div class="service-card h-100 p-5">
-            <div class="service-icon mb-4">
-              <svg>
-                <use xlink:href="#icon-scissors" />
-              </svg>
-            </div>
             <h3 class="service-title h2">SEND ITEMS IN</h3>
             <p class="service-description fs-5">Transform your personal items with professional customization. Send us
               your pieces and we'll create something unique.</p>
@@ -59,7 +43,7 @@
               <li>Expert customization on your own garments</li>
               <li>Full insurance coverage during processing</li>
               <li>Fast 10-14 day turnaround</li>
-              <li>Creative Merch quality guarantee</li>
+              <li>CustomiseMe UK quality guarantee</li>
             </ul>
             <a href="senditems.html" class="btn btn-primary btn-lg w-100">
               <span>LEARN MORE</span>
@@ -70,11 +54,6 @@
         <!-- Subscriptions -->
         <div class="col-md-6">
           <div class="service-card h-100 p-5">
-            <div class="service-icon mb-4">
-              <svg>
-                <use xlink:href="#icon-globe" />
-              </svg>
-            </div>
             <h3 class="service-title h2">SUBSCRIPTIONS</h3>
             <p class="service-description fs-5">Regular deliveries of curated party supplies and custom items with
               exclusive benefits.</p>
@@ -93,11 +72,6 @@
         <!-- Vinyl Installation -->
         <div class="col-md-6">
           <div class="service-card h-100 p-5">
-            <div class="service-icon mb-4">
-              <svg>
-                <use xlink:href="#icon-tool" />
-              </svg>
-            </div>
             <h3 class="service-title h2">VINYL INSTALLATION</h3>
             <p class="service-description fs-5">Professional installation for wall vinyls, window graphics, and
               large-scale projects across the UK.</p>
@@ -116,11 +90,6 @@
         <!-- Event Setup -->
         <div class="col-md-6" id="event-setup">
           <div class="service-card h-100 p-5">
-            <div class="service-icon mb-4">
-              <svg>
-                <use xlink:href="#icon-users" />
-              </svg>
-            </div>
             <h3 class="service-title h2">EVENT SETUP</h3>
             <p class="service-description fs-5">Complete event setup and styling services for parties, corporate events,
               and special occasions.</p>
@@ -130,7 +99,7 @@
               <li>Bespoke custom decorations</li>
               <li>Dedicated on-site coordination</li>
             </ul>
-            <a href="event-setup.html" class="btn btn-primary btn-lg w-100">
+            <a href="contact.html?service=custom" class="btn btn-primary btn-lg w-100">
               <span>GET QUOTE</span>
             </a>
           </div>
@@ -141,13 +110,9 @@
       <!-- Workshops - Separate Section Below Grid -->
       <div class="mt-5">
         <div class="service-card p-5" style="border: 2px solid var(--color-grey-light);">
-          <div class="service-icon mb-4">
-            <svg>
-              <use xlink:href="#icon-users" />
-            </svg>
-          </div>
-          <h3 class="service-title h2">CREATIVE WORKSHOPS</h3>
-          <p class="service-description fs-5">Join our hands-on workshops to learn design techniques, DIY party decor,
+          <h3 class="service-title h2 text-center mb-4">CREATIVE WORKSHOPS</h3>
+          <p class="service-description fs-5 text-center">Join our hands-on workshops to learn design techniques, DIY
+            party decor,
             and custom printing skills from the pros.</p>
 
           <div class="row g-4 mt-3">
@@ -182,10 +147,6 @@
     </div>
   </section>
 
-  </div>
-  </div>
-  </section>
-
   <!-- Call to Action -->
   <section class="section" style="background: var(--color-black); color: var(--color-white); padding: 4rem 0;">
     <div class="container text-center">
@@ -205,7 +166,6 @@
 
   <!-- Scripts -->
   <script src="js/components.js"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/cart.js"></script>
   <script type="module" src="js/api-integration.js"></script>

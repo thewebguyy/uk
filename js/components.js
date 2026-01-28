@@ -157,5 +157,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Custom: Trigger a globally accessible event that components are ready
         document.dispatchEvent(new CustomEvent('allComponentsLoaded'));
+
+        // Important: Update cart display after components load
+        if (typeof window.updateCartDisplay === 'function') {
+            window.updateCartDisplay();
+        }
     }
 });
