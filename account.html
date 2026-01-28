@@ -90,11 +90,11 @@
   <!-- GUEST VIEW -->
   <section id="guest-view" class="section" style="display: none;">
     <div class="container">
-      <div class="row g-5">
-        <!-- Sign In (Left) -->
+      <div class="row g-4">
+        <!-- TOP LEFT: Sign In -->
         <div class="col-lg-6">
-          <div class="p-5" style="background: var(--color-grey-light); height: 100%;">
-            <h3 class="mb-4">Sign In</h3>
+          <div class="p-4" style="background: var(--color-grey-light); height: 100%;">
+            <h3 class="mb-4">SIGN IN</h3>
             <form id="signin-form" onsubmit="handleSignIn(event)">
               <div class="mb-3">
                 <label for="signin-email" class="form-label">Email</label>
@@ -105,17 +105,19 @@
                 <input type="password" class="form-control" id="signin-password" required>
               </div>
               <button type="submit" class="btn btn-primary w-100 mb-3" id="signin-btn">Sign In</button>
+              <div class="text-center">OR</div>
+              <button type="button" class="btn btn-outline w-100 mt-3" onclick="handleGoogleSignIn()">
+                Sign in with Google
+              </button>
             </form>
-            <div class="text-center">OR</div>
-            <button type="button" class="btn btn-outline w-100 mt-3" onclick="handleGoogleSignIn()">Sign in with
-              Google</button>
           </div>
         </div>
-        <!-- Create Account (Right) -->
+
+        <!-- TOP RIGHT: Create Account -->
         <div class="col-lg-6">
-          <div class="p-5"
+          <div class="p-4"
             style="background: var(--color-white); border: 1px solid var(--color-grey-light); height: 100%;">
-            <h3 class="mb-4">Create Account</h3>
+            <h3 class="mb-4">CREATE ACCOUNT</h3>
             <form id="signup-form" onsubmit="handleCreateAccount(event)">
               <div class="mb-3">
                 <label class="form-label">Full Name</label>
@@ -130,10 +132,65 @@
                 <input type="password" class="form-control" id="signup-password" required minlength="8">
               </div>
               <button type="submit" class="btn btn-primary w-100 mb-3">Create Account</button>
+              <div class="text-center">OR</div>
+              <button type="button" class="btn btn-outline w-100 mt-3" onclick="handleGoogleSignIn()">
+                Sign up with Google
+              </button>
             </form>
-            <div class="text-center">OR</div>
-            <button type="button" class="btn btn-outline w-100 mt-3" onclick="handleGoogleSignIn()">Sign up with
-              Google</button>
+          </div>
+        </div>
+
+        <!-- BOTTOM LEFT: Benefits -->
+        <div class="col-lg-6">
+          <div class="p-4"
+            style="background: var(--color-white); border: 1px solid var(--color-grey-light); height: 100%;">
+            <h3 class="mb-4">WHY CREATE AN ACCOUNT?</h3>
+            <ul class="design-features" style="list-style: none; padding: 0;">
+              <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                <span style="position: absolute; left: 0; font-weight: 700;">✓</span>
+                Track your orders in real-time
+              </li>
+              <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                <span style="position: absolute; left: 0; font-weight: 700;">✓</span>
+                Save your designs & favorites
+              </li>
+              <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                <span style="position: absolute; left: 0; font-weight: 700;">✓</span>
+                Faster checkout process
+              </li>
+              <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                <span style="position: absolute; left: 0; font-weight: 700;">✓</span>
+                Exclusive member discounts
+              </li>
+              <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                <span style="position: absolute; left: 0; font-weight: 700;">✓</span>
+                Early access to new products
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- BOTTOM RIGHT: Need Help? -->
+        <div class="col-lg-6">
+          <div class="p-4" style="background: var(--color-grey-light); height: 100%;">
+            <h3 class="mb-4">NEED HELP?</h3>
+            <p class="mb-3">Having trouble signing in or creating an account?</p>
+            <div class="d-flex flex-column gap-2">
+              <a href="contact.html" class="btn btn-outline w-100">
+                <span>CONTACT SUPPORT</span>
+              </a>
+              <a href="faq.html" class="btn btn-outline w-100">
+                <span>VIEW FAQs</span>
+              </a>
+              <button onclick="alert('Password reset email sent!')" class="btn btn-outline w-100">
+                <span>RESET PASSWORD</span>
+              </button>
+            </div>
+            <p class="text-grey-dark mt-4 mb-0" style="font-size: 0.875rem;">
+              <strong>Customer Service:</strong><br>
+              Email: info@customisemeuk.com<br>
+              Phone: 07588770901
+            </p>
           </div>
         </div>
       </div>

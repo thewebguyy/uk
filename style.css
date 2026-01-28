@@ -205,6 +205,7 @@ p {
   display: flex;
   align-items: center;
   overflow: hidden;
+  transition: transform 0.3s ease;
 }
 
 .announcement-content {
@@ -249,6 +250,7 @@ p {
   padding: 0.75rem 0;
   z-index: var(--z-topbar);
   box-shadow: var(--shadow-sm);
+  transition: transform 0.3s ease;
 }
 
 .top-bar-content {
@@ -403,6 +405,7 @@ p {
   z-index: var(--z-nav);
   box-shadow: var(--shadow-sm);
   border-bottom: 1px solid var(--color-grey-light);
+  transition: transform 0.3s ease;
 }
 
 .navbar-nav {
@@ -2220,4 +2223,130 @@ footer {
     flex: 0 0 50%;
     max-width: 50%;
   }
+}
+
+/* ================================================
+   SHOPPING CART OFFCANVAS - FIX HEADER OVERLAP
+   ================================================ */
+
+/* Cart appears above all fixed headers */
+.offcanvas-end {
+  z-index: 10000 !important;
+  top: 0 !important;
+  height: 100vh !important;
+  max-width: 400px;
+  transition: transform 0.3s ease-out !important;
+}
+
+.offcanvas-end:not(.show) {
+  transform: translateX(100%);
+}
+
+.offcanvas-end.show {
+  transform: translateX(0);
+}
+
+/* Backdrop between header and cart */
+.offcanvas-backdrop {
+  z-index: 9999 !important;
+}
+
+.offcanvas-backdrop.show {
+  opacity: 0.7;
+}
+
+/* Cart header */
+.offcanvas-end .offcanvas-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--color-grey-light);
+  background: var(--color-white);
+  flex-shrink: 0;
+}
+
+.offcanvas-end .offcanvas-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Close button */
+.offcanvas-end .btn-close {
+  padding: 0.5rem;
+  min-width: 44px;
+  min-height: 44px;
+  opacity: 0.7;
+}
+
+.offcanvas-end .btn-close:hover {
+  opacity: 1;
+}
+
+/* Cart body */
+.offcanvas-end .offcanvas-body {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Cart items scrollable area */
+#cart-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+  padding-bottom: 0;
+}
+
+/* Empty cart message */
+#cart-empty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+}
+
+/* Cart summary fixed at bottom */
+#cart-summary {
+  flex-shrink: 0;
+  padding: 1.5rem;
+  background: var(--color-white);
+  border-top: 1px solid var(--color-grey-light);
+}
+
+/* Mobile: Full width cart */
+@media (max-width: 767px) {
+  .offcanvas-end {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Tablet: 85% width cart */
+@media (min-width: 768px) and (max-width: 991px) {
+  .offcanvas-end {
+    width: 85% !important;
+    max-width: 450px !important;
+  }
+}
+
+/* ================================================
+   AUTOHIDE HEADER
+   ================================================ */
+/* When scrolling down, hide header */
+.header-hidden .announcement-banner,
+.header-hidden .top-bar,
+.header-hidden .main-nav {
+  transform: translateY(-100%);
+}
+
+/* Exception for Top Bar (needs more offset) */
+.header-hidden .top-bar {
+  transform: translateY(-140px);
+}
+
+/* Exception for Main Nav (needs more offset) */
+.header-hidden .main-nav {
+  transform: translateY(-140px);
 }
