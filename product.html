@@ -226,213 +226,11 @@
     </symbol>
   </svg>
 
-  <!-- Announcement Banner -->
-  <div class="announcement-banner">
-    <div class="announcement-content">
-      <span class="announcement-item">FREE DELIVERY OVER £100</span>
-      <span class="announcement-item">CONTACT US</span>
-      <span class="announcement-item">INFO@CUSTOMISEMEUK.COM</span>
-      <span class="announcement-item">07588770901</span>
-      <span class="announcement-item">NEW ARRIVALS WEEKLY</span>
-      <span class="announcement-item">CUSTOM DESIGNS AVAILABLE</span>
-      <span class="announcement-item">FREE DELIVERY OVER £100</span>
-      <span class="announcement-item">CONTACT US</span>
-      <span class="announcement-item">INFO@CUSTOMISEMEUK.COM</span>
-      <span class="announcement-item">07588770901</span>
-      <span class="announcement-item">NEW ARRIVALS WEEKLY</span>
-      <span class="announcement-item">CUSTOM DESIGNS AVAILABLE</span>
-    </div>
-  </div>
+  <!-- Navigation Component -->
+  <div id="navigation" data-component="components/nav.html"></div>
 
-  <!-- Top Bar: Logo, Search, Region, Icons -->
-  <div class="top-bar">
-    <div class="container">
-      <div class="top-bar-content">
-        <!-- Logo -->
-        <a class="navbar-brand" href="index.html">
-          <img src="icon.png" alt="Creative Merch UK" class="logo-image">
-        </a>
-
-        <!-- Search Bar -->
-        <form class="search-bar-form-compact">
-          <svg class="search-icon">
-            <use xlink:href="#icon-search" />
-          </svg>
-          <input type="search" class="search-input" placeholder="Search products...">
-        </form>
-
-        <!-- Right Icons -->
-        <div class="d-flex align-items-center gap-3">
-          <!-- Region Selector -->
-          <div class="dropdown">
-            <a href="#" class="nav-icon" data-bs-toggle="dropdown" aria-expanded="false">
-              <svg class="icon">
-                <use xlink:href="#icon-globe" />
-              </svg>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end region-dropdown">
-              <li><a class="dropdown-item" href="#"><span class="flag">🇬🇧</span> UNITED KINGDOM</a></li>
-              <li><a class="dropdown-item" href="#"><span class="flag">🇪🇺</span> EUROPE</a></li>
-              <li><a class="dropdown-item" href="#"><span class="flag">🇺🇸</span> AMERICA</a></li>
-            </ul>
-          </div>
-
-          <a href="#wishlist" class="nav-icon">
-            <svg class="icon">
-              <use xlink:href="#icon-heart" />
-            </svg>
-          </a>
-          <a href="#cart" class="nav-icon" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
-            <svg class="icon">
-              <use xlink:href="#icon-shopping-bag" />
-            </svg>
-            <span class="badge-cart" id="cart-count"></span>
-          </a>
-
-          <!-- Sign In / Sign Up -->
-          <a href="account.html" class="nav-icon nav-icon-text">
-            <svg class="icon">
-              <use xlink:href="#icon-user" />
-            </svg>
-            <span class="nav-text">SIGN IN / SIGN UP</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Shopping Cart Offcanvas -->
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title">YOUR CART</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-    </div>
-    <div class="offcanvas-body">
-      <div id="cart-items"></div>
-      <div id="cart-empty" class="text-center">
-        <p class="text-grey">Your cart is empty</p>
-      </div>
-      <div id="cart-summary" style="display: none;">
-        <div class="d-flex justify-content-between mb-3 pt-3" style="border-top: 1px solid var(--color-grey-light);">
-          <strong>SUBTOTAL:</strong>
-          <strong id="cart-subtotal">£0.00</strong>
-        </div>
-        <button class="btn btn-primary w-100" onclick="window.location.href='checkout.html'">CHECKOUT</button>
-        <button class="btn btn-secondary w-100 mt-2" data-bs-dismiss="offcanvas">CONTINUE SHOPPING</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Main Navigation -->
-  <nav class="navbar navbar-expand-lg main-nav">
-    <div class="container">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-        <ul class="navbar-nav">
-          <!-- Shop Mega Menu -->
-          <li class="nav-item dropdown mega-menu">
-            <a class="nav-link dropdown-toggle" href="shop.html" id="shopDropdown" role="button"
-              data-bs-toggle="dropdown" aria-expanded="false">
-              SHOP
-            </a>
-            <div class="dropdown-menu mega-dropdown">
-              <div class="container">
-                <div class="row">
-                  <div class="col-md-3">
-                    <h6 class="mega-title">CATEGORIES</h6>
-                    <a class="dropdown-item" href="shop.html">ALL PRODUCTS</a>
-                    <a class="dropdown-item" href="shop.html?category=apparel">APPAREL</a>
-                    <a class="dropdown-item" href="shop.html?category=stickers">STICKERS & LABELS</a>
-                    <a class="dropdown-item" href="shop.html?category=party-decor">PARTY DECOR</a>
-                    <a class="dropdown-item" href="shop.html?category=accessories">ACCESSORIES</a>
-                  </div>
-                  <div class="col-md-3">
-                    <h6 class="mega-title">APPAREL</h6>
-                    <a class="dropdown-item" href="shop.html?category=apparel">T-Shirts</a>
-                    <a class="dropdown-item" href="shop.html?category=apparel">Hoodies</a>
-                    <a class="dropdown-item" href="shop.html?category=apparel">Hats</a>
-                    <a class="dropdown-item" href="shop.html?category=apparel">Bags</a>
-                  </div>
-                  <div class="col-md-3">
-                    <h6 class="mega-title">PARTY ESSENTIALS</h6>
-                    <a class="dropdown-item" href="shop.html?category=party-decor">Banners</a>
-                    <a class="dropdown-item" href="shop.html?category=party-decor">Balloons</a>
-                    <a class="dropdown-item" href="shop.html?category=party-decor">Table Decor</a>
-                    <a class="dropdown-item" href="shop.html?category=party-decor">Party Packs</a>
-                  </div>
-                  <div class="col-md-3">
-                    <h6 class="mega-title">STICKERS & LABELS</h6>
-                    <a class="dropdown-item" href="shop.html?category=stickers">Vinyl Stickers</a>
-                    <a class="dropdown-item" href="shop.html?category=stickers">Custom Labels</a>
-                    <a class="dropdown-item" href="shop.html?category=stickers">Wall Decals</a>
-                    <a class="dropdown-item" href="shop.html?category=stickers">Sticker Packs</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-
-          <!-- Design Studio Mega Menu -->
-          <li class="nav-item dropdown mega-menu">
-            <a class="nav-link dropdown-toggle" href="designstudio.html" id="studioDropdown" role="button"
-              data-bs-toggle="dropdown" aria-expanded="false">
-              DESIGN STUDIO
-            </a>
-            <div class="dropdown-menu mega-dropdown">
-              <div class="container">
-                <div class="row">
-                  <div class="col-md-6">
-                    <h6 class="mega-title">SERVICES</h6>
-                    <a class="dropdown-item" href="designservice.html">Custom Design</a>
-                    <a class="dropdown-item" href="designstudio.html#logo-design">Logo Design</a>
-                    <a class="dropdown-item" href="designstudio.html#mockup">Mockup Generation</a>
-                  </div>
-                  <div class="col-md-6">
-                    <h6 class="mega-title">RESOURCES</h6>
-                    <a class="dropdown-item" href="designstudio.html#resources">Design Templates</a>
-                    <a class="dropdown-item" href="designstudio.html#resources">Style Guide</a>
-                    <a class="dropdown-item" href="designstudio.html#resources">FAQs</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-
-          <!-- Premium Services Mega Menu -->
-          <li class="nav-item dropdown mega-menu">
-            <a class="nav-link dropdown-toggle" href="premiumservices.html" id="servicesDropdown" role="button"
-              data-bs-toggle="dropdown" aria-expanded="false">
-              PREMIUM SERVICES
-            </a>
-            <div class="dropdown-menu mega-dropdown">
-              <div class="container">
-                <div class="row">
-                  <div class="col-md-4">
-                    <h6 class="mega-title">SERVICES</h6>
-                    <a class="dropdown-item" href="senditems.html">Send Items In</a>
-                    <a class="dropdown-item" href="subscriptions.html">Subscriptions</a>
-                  </div>
-                  <div class="col-md-4">
-                    <h6 class="mega-title">INSTALLATION</h6>
-                    <a class="dropdown-item" href="installation.html">Vinyl Installation</a>
-                    <a class="dropdown-item" href="premiumservices.html#event-setup">Event Setup</a>
-                  </div>
-                  <div class="col-md-4">
-                    <h6 class="mega-title">WORKSHOPS</h6>
-                    <a class="dropdown-item" href="contact.html?service=workshop">Group Iron On Workshop</a>
-                    <a class="dropdown-item" href="contact.html?service=workshop">Individual Iron On Experience</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <!-- Cart Component -->
+  <div id="cart-container" data-component="components/cart.html"></div>
 
   <!-- Loading State -->
   <div id="loading-state" class="loading-spinner">
@@ -683,86 +481,77 @@
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="row">
-        <!-- About -->
-        <div class="col-md-4 footer-section">
-          <h3 class="footer-title">ABOUT US</h3>
-          <p class="text-grey-dark">Creative Merch UK offers premium designs, custom prints, and party essentials
-            crafted with care. We're dedicated to helping you create memorable moments and standout branding.</p>
-        </div>
+  </div>
 
-        <!-- Quick Links -->
-        <div class="col-md-4 footer-section">
-          <h3 class="footer-title">QUICK LINKS</h3>
-          <ul class="footer-links">
-            <li><a href="shop.html">SHOP</a></li>
-            <li><a href="designstudio.html">DESIGN STUDIO</a></li>
-            <li><a href="senditems.html">SEND ITEMS IN</a></li>
-            <li><a href="workshop.html">WORKSHOPS</a></li>
-            <li><a href="contact.html">CONTACT</a></li>
-            <li><a href="faq.html">FAQ</a></li>
-            <li><a href="privacy-policy.html">PRIVACY POLICY</a></li>
-            <li><a href="terms-conditions.html">TERMS & CONDITIONS</a></li>
-          </ul>
-        </div>
+  <!-- Quick Links -->
+  <div class="col-md-4 footer-section">
+    <h3 class="footer-title">QUICK LINKS</h3>
+    <ul class="footer-links">
+      <li><a href="shop.html">SHOP</a></li>
+      <li><a href="designstudio.html">DESIGN STUDIO</a></li>
+      <li><a href="senditems.html">SEND ITEMS IN</a></li>
+      <li><a href="workshop.html">WORKSHOPS</a></li>
+      <li><a href="contact.html">CONTACT</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="privacy-policy.html">PRIVACY POLICY</a></li>
+      <li><a href="terms-conditions.html">TERMS & CONDITIONS</a></li>
+    </ul>
+  </div>
 
-        <!-- Contact -->
-        <div class="col-md-4 footer-section">
-          <h3 class="footer-title">CONTACT US</h3>
-          <p class="text-grey-dark">
-            <strong>EMAIL:</strong><br>
-            <a href="mailto:info@customisemeuk.com">info@customisemeuk.com</a>
-          </p>
-          <p class="text-grey-dark mb-3">
-            <strong>PHONE:</strong><br>
-            <a href="tel:07588770901">07588770901</a>
-          </p>
-          <p class="text-grey-dark mb-3">
-            <strong>INSTAGRAM:</strong><br>
-            <a href="https://www.instagram.com/customisemeuk" target="_blank">@customisemeuk</a>
-          </p>
-          <div class="social-links">
-            <a href="https://www.instagram.com/customisemeuk" target="_blank" class="social-link">
-              <svg>
-                <use xlink:href="#icon-instagram" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="text-center mt-4 pt-4" style="border-top: 1px solid var(--color-grey-light);">
-        <!-- Trust Badges & Payment Methods -->
-        <div class="mb-3 d-flex justify-content-center gap-3 align-items-center flex-wrap">
-          <span class="d-flex align-items-center gap-1 text-grey-dark">
-            <svg class="icon-sm">
-              <use xlink:href="#icon-star" />
-            </svg>
-            <span style="font-size: 0.85rem; font-weight: 500;">Secure Checkout</span>
-          </span>
-          <span class="text-grey-light">|</span>
-          <span class="d-flex align-items-center gap-2">
-            <span
-              style="border:1px solid #e5e5e5; padding:2px 6px; border-radius:2px; font-size: 0.7rem; font-weight: 700; background: white; color: #1a1f36;">VISA</span>
-            <span
-              style="border:1px solid #e5e5e5; padding:2px 6px; border-radius:2px; font-size: 0.7rem; font-weight: 700; background: white; color: #1a1f36;">MC</span>
-            <span
-              style="border:1px solid #e5e5e5; padding:2px 6px; border-radius:2px; font-size: 0.7rem; font-weight: 700; background: white; color: #006fcf;">AMEX</span>
-          </span>
-        </div>
-
-        <p class="text-grey-dark mb-2" style="font-size: 0.8rem;">
-          <a href="terms-conditions.html" class="text-decoration-none text-grey-dark">Return Policy</a> |
-          <a href="privacy-policy.html" class="text-decoration-none text-grey-dark">Privacy Policy</a> |
-          <a href="terms-conditions.html" class="text-decoration-none text-grey-dark">Terms of Service</a>
-        </p>
-        <p class="text-grey-dark mb-0" style="font-size: 0.8rem;">Business Reg: 12345678 | © 2026 Customise Me UK. All
-          rights reserved.</p>
-      </div>
+  <!-- Contact -->
+  <div class="col-md-4 footer-section">
+    <h3 class="footer-title">CONTACT US</h3>
+    <p class="text-grey-dark">
+      <strong>EMAIL:</strong><br>
+      <a href="mailto:info@customisemeuk.com">info@customisemeuk.com</a>
+    </p>
+    <p class="text-grey-dark mb-3">
+      <strong>PHONE:</strong><br>
+      <a href="tel:07588770901">07588770901</a>
+    </p>
+    <p class="text-grey-dark mb-3">
+      <strong>INSTAGRAM:</strong><br>
+      <a href="https://www.instagram.com/customisemeuk" target="_blank">@customisemeuk</a>
+    </p>
+    <div class="social-links">
+      <a href="https://www.instagram.com/customisemeuk" target="_blank" class="social-link">
+        <svg>
+          <use xlink:href="#icon-instagram" />
+        </svg>
+      </a>
     </div>
+  </div>
+  </div>
+
+  <div class="text-center mt-4 pt-4" style="border-top: 1px solid var(--color-grey-light);">
+    <!-- Trust Badges & Payment Methods -->
+    <div class="mb-3 d-flex justify-content-center gap-3 align-items-center flex-wrap">
+      <span class="d-flex align-items-center gap-1 text-grey-dark">
+        <svg class="icon-sm">
+          <use xlink:href="#icon-star" />
+        </svg>
+        <span style="font-size: 0.85rem; font-weight: 500;">Secure Checkout</span>
+      </span>
+      <span class="text-grey-light">|</span>
+      <span class="d-flex align-items-center gap-2">
+        <span
+          style="border:1px solid #e5e5e5; padding:2px 6px; border-radius:2px; font-size: 0.7rem; font-weight: 700; background: white; color: #1a1f36;">VISA</span>
+        <span
+          style="border:1px solid #e5e5e5; padding:2px 6px; border-radius:2px; font-size: 0.7rem; font-weight: 700; background: white; color: #1a1f36;">MC</span>
+        <span
+          style="border:1px solid #e5e5e5; padding:2px 6px; border-radius:2px; font-size: 0.7rem; font-weight: 700; background: white; color: #006fcf;">AMEX</span>
+      </span>
+    </div>
+
+    <p class="text-grey-dark mb-2" style="font-size: 0.8rem;">
+      <a href="terms-conditions.html" class="text-decoration-none text-grey-dark">Return Policy</a> |
+      <a href="privacy-policy.html" class="text-decoration-none text-grey-dark">Privacy Policy</a> |
+      <a href="terms-conditions.html" class="text-decoration-none text-grey-dark">Terms of Service</a>
+    </p>
+    <p class="text-grey-dark mb-0" style="font-size: 0.8rem;">Business Reg: 12345678 | © 2026 Customise Me UK. All
+      rights reserved.</p>
+  </div>
+  </div>
   </footer>
 
 

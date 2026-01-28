@@ -1,0 +1,21 @@
+<div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">YOUR CART</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div id="cart-items"></div>
+        <div id="cart-empty" class="text-center">
+            <p class="text-grey">Your cart is empty</p>
+        </div>
+        <div id="cart-summary" style="display: none;">
+            <div class="d-flex justify-content-between mb-3 pt-3"
+                style="border-top: 1px solid var(--color-grey-light);">
+                <strong>SUBTOTAL:</strong>
+                <strong id="cart-subtotal">£0.00</strong>
+            </div>
+            <button class="btn btn-primary w-100" onclick="window.location.href='checkout.html'">CHECKOUT</button>
+            <button class="btn btn-secondary w-100 mt-2" data-bs-dismiss="offcanvas">CONTINUE SHOPPING</button>
+        </div>
+    </div>
+</div>
