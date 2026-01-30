@@ -795,6 +795,45 @@
     };
 
     // Form handlers
+    window.handleFileUpload = (input) => {
+      const preview = document.getElementById('file-preview');
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const reader = new FileReader();
+
+        // Show loading state
+        preview.innerHTML = `<span class="text-muted">Uploading ${file.name}...</span>`;
+        preview.style.color = '#666';
+
+        reader.onload = (e) => {
+          customization.artwork = e.target.result;
+          preview.innerHTML = `
+            <div class="d-flex align-items-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="color: #059669;">
+                <path d="M20 6L9 17L4 12" />
+              </svg>
+              <span>File uploaded: <strong>${file.name}</strong></span>
+              <button class="btn btn-sm p-0 ms-auto text-danger" onclick="removeArtwork(event)" style="font-size: 0.75rem; text-decoration: underline;">Remove</button>
+            </div>
+          `;
+          preview.style.color = '#059669';
+
+          // Show a toast or simple alert for extra confirmation
+          console.log('Artwork uploaded:', file.name);
+        };
+
+        reader.readAsDataURL(file);
+      }
+    };
+
+    window.removeArtwork = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      customization.artwork = null;
+      document.getElementById('artwork-upload').value = '';
+      document.getElementById('file-preview').innerHTML = '';
+    };
+
     document.getElementById('review-form').onsubmit = async (e) => {
       e.preventDefault();
       const txt = document.getElementById('review-text-input').value;
