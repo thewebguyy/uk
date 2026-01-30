@@ -28,7 +28,7 @@ const db = getFirestore(app);
 const functions = getFunctions(app); // Defaults to us-central1
 
 const CONFIG = {
-  STRIPE_PUBLIC_KEY: 'pk_test_your_stripe_key' // User needs to update this
+  STRIPE_PUBLIC_KEY: 'pk_live_PLACEHOLDER' // REPLACE THIS with your actual Publishable Key (starts with pk_)
 };
 
 // ============================================
