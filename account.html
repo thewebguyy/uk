@@ -11,83 +11,143 @@
   <link rel="stylesheet" type="text/css" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Dashboard specific styles */
+    /* ========================================
+       DASHBOARD COMPLETE FIX
+       ======================================== */
+    
+    /* Force account page specific padding */
+    body.account-page {
+      padding-top: 154px !important;
+    }
+
+    /* Dashboard container */
     .dashboard-container {
       padding: 3rem 0;
-      min-height: 60vh;
+      min-height: calc(100vh - 154px);
       background-color: #f8f9fa;
     }
 
-    /* DASHBOARD LAYOUT FIX */
-    /* Ensure proper grid layout */
+    /* Force Bootstrap grid to work properly */
+    .dashboard-container .container {
+      max-width: 1400px;
+      width: 100%;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      margin: 0 auto;
+    }
+
     .dashboard-container .row {
       display: flex;
       flex-wrap: wrap;
-      margin: 0 -1rem;
+      margin-left: -1rem;
+      margin-right: -1rem;
+      gap: 0;
     }
 
-    .dashboard-container .col-lg-3,
-    .dashboard-container .col-lg-9 {
-      padding: 0 1rem;
-    }
-
-    /* Sidebar styling */
+    /* Sidebar column - 25% width on desktop */
     .dashboard-container .col-lg-3 {
-      flex: 0 0 25%;
-      max-width: 25%;
+      flex: 0 0 auto;
+      width: 25%;
+      padding-left: 1rem;
+      padding-right: 1rem;
     }
 
-    /* Content area styling */
+    /* Content column - 75% width on desktop */
     .dashboard-container .col-lg-9 {
-      flex: 0 0 75%;
-      max-width: 75%;
+      flex: 0 0 auto;
+      width: 75%;
+      padding-left: 1rem;
+      padding-right: 1rem;
     }
 
-    /* Sidebar card */
+    /* Sidebar card styling */
     .dashboard-container .col-lg-3 .card {
-      position: sticky;
-      top: 180px;
-      /* Accounts for fixed header */
       background: white;
+      border: none;
       border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       overflow: hidden;
+      position: sticky;
+      top: 170px;
     }
 
-    /* List group items */
+    .dashboard-container .card-body {
+      padding: 2rem 1.5rem;
+    }
+
+    /* User avatar circle */
+    .user-avatar {
+      width: 80px;
+      height: 80px;
+      background: #000;
+      color: white;
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
+    /* Navigation menu items */
     .list-group-item {
       border: none !important;
       border-bottom: 1px solid #f0f0f0 !important;
+      padding: 1rem 1.5rem !important;
       transition: all 0.2s ease;
+      cursor: pointer;
+      background: white;
     }
 
     .list-group-item:last-child {
       border-bottom: none !important;
     }
 
+    .list-group-item:hover:not(.active) {
+      background-color: #f8f9fa;
+      padding-left: 2rem !important;
+    }
+
     .list-group-item.active {
       background-color: #000 !important;
       color: white !important;
+      border-left: 4px solid #000 !important;
     }
 
-    .list-group-item:hover:not(.active) {
-      background-color: #f8f9fa;
-      padding-left: 1.5rem;
+    .list-group-item.text-danger:hover {
+      background-color: #fee;
+      color: #dc3545 !important;
     }
 
-    /* Content area cards */
+    /* Content area styling */
     .dashboard-content-area {
       background: white;
+      border: none;
       border-radius: 8px;
-      min-height: 400px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      padding: 2.5rem !important;
+      min-height: 500px;
     }
 
-    /* Responsive adjustments */
-    @media (max-width: 991px) {
+    /* Stats cards in overview */
+    .dashboard-content-area .row.g-4 {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin: 0;
+    }
 
+    .dashboard-content-area .row.g-4 > [class*="col-"] {
+      padding: 0;
+    }
+
+    /* Responsive: Mobile stacks sidebar on top */
+    @media (max-width: 991px) {
       .dashboard-container .col-lg-3,
       .dashboard-container .col-lg-9 {
-        flex: 0 0 100%;
-        max-width: 100%;
+        width: 100%;
+        flex: 0 0 auto;
       }
 
       .dashboard-container .col-lg-3 {
@@ -98,66 +158,58 @@
         position: relative;
         top: auto;
       }
+
+      .dashboard-container .row {
+        flex-direction: column;
+      }
     }
 
-    /* Adjust body padding when on account page */
-    body.account-page {
-      padding-top: 154px;
-      /* Match your header height */
+    /* Table styling in dashboard */
+    .table-responsive {
+      margin-top: 1rem;
     }
 
-    /* Or target the dashboard section specifically */
-    #dashboard-view {
-      margin-top: 2rem;
+    .table {
+      margin-bottom: 0;
     }
 
-    .dashboard-sidebar {
-      background: var(--color-white);
-      border: 1px solid var(--color-grey-light);
-    }
-
-    .dashboard-menu-item {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 1rem;
-      color: var(--color-grey-dark);
-      text-decoration: none;
-      border-bottom: 1px solid var(--color-grey-light);
-      transition: all 0.2s;
-      font-weight: 500;
-      font-size: 0.875rem;
-    }
-
-    .dashboard-menu-item:hover,
-    .dashboard-menu-item.active {
-      background: var(--color-grey-light);
-      color: var(--color-black);
-      padding-left: 1.25rem;
-    }
-
-    .dashboard-menu-item svg {
-      width: 20px;
-      height: 20px;
-    }
-
-    .stat-card {
-      background: var(--color-grey-light);
-      padding: 1.5rem;
-      text-align: center;
-    }
-
-    .stat-number {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--color-black);
-    }
-
-    .stat-label {
-      font-size: 0.75rem;
+    .table th {
+      font-weight: 600;
+      font-size: 0.85rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: var(--color-grey-dark);
+      color: #6b7280;
+      border-bottom: 2px solid #e5e7eb;
+      padding: 1rem 0.75rem;
+    }
+
+    .table td {
+      padding: 1rem 0.75rem;
+      vertical-align: middle;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    /* Badge styling */
+    .badge {
+      padding: 0.35rem 0.75rem;
+      font-weight: 600;
+      font-size: 0.75rem;
+      border-radius: 4px;
+    }
+
+    /* Form styling in dashboard */
+    .dashboard-content-area .form-control {
+      padding: 0.75rem 1rem;
+      font-size: 0.95rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+    }
+
+    .dashboard-content-area .form-label {
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+      color: #374151;
     }
   </style>
 </head>
@@ -176,8 +228,7 @@
     </div>
   </div>
 
-  <!-- GUEST VIEW -->
-  <!-- GUEST VIEW -->
+  <!-- GUEST VIEW (Sign In / Sign Up) -->
   <section id="guest-view" class="section align-items-center"
     style="display: flex; min-height: 80vh; background-color: #f7f7f7;">
     <div class="container">
@@ -328,15 +379,14 @@
   <!-- DASHBOARD VIEW -->
   <section id="dashboard-view" class="dashboard-container" style="display: none;">
     <div class="container">
-      <div class="row g-4">
+      <div class="row">
 
         <!-- LEFT SIDEBAR -->
         <div class="col-12 col-lg-3">
-          <div class="card border-0 shadow-sm">
+          <div class="card">
             <!-- User Profile -->
-            <div class="card-body text-center p-4">
-              <div
-                style="width: 80px; height: 80px; background: var(--color-black); color: white; border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 600;">
+            <div class="card-body text-center">
+              <div class="user-avatar">
                 <span id="user-initial">U</span>
               </div>
               <h5 class="mb-1 fw-bold" id="user-name">User Name</h5>
@@ -345,35 +395,25 @@
 
             <!-- Navigation Menu -->
             <div class="list-group list-group-flush">
-              <a href="#" class="list-group-item list-group-item-action py-3 px-4 active" id="link-overview"
+              <a href="#" class="list-group-item list-group-item-action active" id="link-overview"
                 onclick="showTab('overview'); return false;">
-                <span class="d-flex align-items-center gap-3">
-                  Overview
-                </span>
+                Overview
               </a>
-              <a href="#" class="list-group-item list-group-item-action py-3 px-4" id="link-orders"
+              <a href="#" class="list-group-item list-group-item-action" id="link-orders"
                 onclick="showTab('orders'); return false;">
-                <span class="d-flex align-items-center gap-3">
-                  Order History
-                </span>
+                Order History
               </a>
-              <a href="#" class="list-group-item list-group-item-action py-3 px-4" id="link-profile"
+              <a href="#" class="list-group-item list-group-item-action" id="link-profile"
                 onclick="showTab('profile'); return false;">
-                <span class="d-flex align-items-center gap-3">
-                  Profile & Address
-                </span>
+                Profile & Address
               </a>
-              <a href="#" class="list-group-item list-group-item-action py-3 px-4" id="link-settings"
+              <a href="#" class="list-group-item list-group-item-action" id="link-settings"
                 onclick="showTab('settings'); return false;">
-                <span class="d-flex align-items-center gap-3">
-                  Settings
-                </span>
+                Settings
               </a>
-              <a href="#" class="list-group-item list-group-item-action py-3 px-4 text-danger"
+              <a href="#" class="list-group-item list-group-item-action text-danger"
                 onclick="window.AuthService.logout(); return false;">
-                <span class="d-flex align-items-center gap-3">
-                  Sign Out
-                </span>
+                Sign Out
               </a>
             </div>
           </div>
@@ -382,26 +422,26 @@
         <!-- RIGHT CONTENT AREA -->
         <div class="col-12 col-lg-9">
           <!-- Overview Tab -->
-          <div class="dashboard-content-area card border-0 shadow-sm p-4 p-md-5" id="tab-overview">
+          <div class="dashboard-content-area" id="tab-overview">
             <h2 class="h4 mb-4 fw-bold">ACCOUNT OVERVIEW</h2>
 
             <div class="row g-4 mb-5">
               <div class="col-md-4">
                 <div class="p-4 rounded-3 text-center" style="background: white; border: 1px solid #eee;">
                   <h3 class="display-6 fw-bold mb-1">0</h3>
-                  <p class="text-muted small mb-0 text-uppercase tracking-wider">Total Orders</p>
+                  <p class="text-muted small mb-0 text-uppercase" style="letter-spacing: 0.05em;">Total Orders</p>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="p-4 rounded-3 text-center" style="background: white; border: 1px solid #eee;">
                   <h3 class="display-6 fw-bold mb-1">PRO</h3>
-                  <p class="text-muted small mb-0 text-uppercase tracking-wider">Member Status</p>
+                  <p class="text-muted small mb-0 text-uppercase" style="letter-spacing: 0.05em;">Member Status</p>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="p-4 rounded-3 text-center" style="background: white; border: 1px solid #eee;">
                   <h3 class="display-6 fw-bold mb-1">0</h3>
-                  <p class="text-muted small mb-0 text-uppercase tracking-wider">Points Balance</p>
+                  <p class="text-muted small mb-0 text-uppercase" style="letter-spacing: 0.05em;">Points Balance</p>
                 </div>
               </div>
             </div>
@@ -446,7 +486,7 @@
           </div>
 
           <!-- Orders Tab -->
-          <div class="dashboard-content-area card border-0 shadow-sm p-4 p-md-5" id="tab-orders" style="display: none;">
+          <div class="dashboard-content-area" id="tab-orders" style="display: none;">
             <h2 class="h4 mb-4 fw-bold">ORDER HISTORY</h2>
             <div class="table-responsive">
               <table class="table table-hover align-middle">
@@ -461,14 +501,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <!-- Content populated by JS or static mock -->
                   <tr>
                     <td class="fw-medium">#CMUK-10234</td>
                     <td>Jan 28, 2026</td>
                     <td><span class="badge bg-warning text-dark">Processing</span></td>
                     <td>3 items</td>
                     <td class="fw-bold">£45.99</td>
-                    <td class="text-end"><a href="#" class="btn btn-sm btn-outline">Track Order</a></td>
+                    <td class="text-end"><a href="#" class="btn btn-sm btn-outline-dark">Track Order</a></td>
                   </tr>
                 </tbody>
               </table>
@@ -476,8 +515,7 @@
           </div>
 
           <!-- Profile Tab -->
-          <div class="dashboard-content-area card border-0 shadow-sm p-4 p-md-5" id="tab-profile"
-            style="display: none;">
+          <div class="dashboard-content-area" id="tab-profile" style="display: none;">
             <h2 class="h4 mb-4 fw-bold">PROFILE & ADDRESS</h2>
 
             <div class="row g-4">
@@ -511,7 +549,7 @@
                   SW1A 1AA
                 </div>
                 <button class="btn btn-outline-dark btn-sm">EDIT ADDRESS</button>
-                <button class="btn btn-outline-dark btn-sm">ADD NEW ADDRESS</button>
+                <button class="btn btn-outline-dark btn-sm ms-2">ADD NEW ADDRESS</button>
               </div>
             </div>
 
@@ -536,8 +574,7 @@
           </div>
 
           <!-- Settings Tab -->
-          <div class="dashboard-content-area card border-0 shadow-sm p-4 p-md-5" id="tab-settings"
-            style="display: none;">
+          <div class="dashboard-content-area" id="tab-settings" style="display: none;">
             <h2 class="h4 mb-4 fw-bold">ACCOUNT SETTINGS</h2>
 
             <h5 class="mb-3">Email Preferences</h5>
@@ -569,7 +606,6 @@
 
   <!-- Scripts -->
   <script src="js/components.js"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/cart.js"></script>
   <script type="module" src="js/api-integration.js"></script>
@@ -584,7 +620,6 @@
       const checkAuth = setInterval(() => {
         if (window.AuthService) {
           clearInterval(checkAuth);
-          // Also listen for async state changes
           window.AuthService.initAuthListener((user) => {
             loading.style.display = 'none';
             if (user) {
@@ -599,45 +634,34 @@
         }
       }, 100);
 
-      // Fallback timeout
       setTimeout(() => clearInterval(checkAuth), 5000);
     });
 
     function updateDashboard(user) {
-      // Update Dashboard Info
       document.getElementById('user-name').textContent = user.name || 'User';
       document.getElementById('user-email').textContent = user.email || '';
       document.getElementById('user-initial').textContent = (user.name || 'U').charAt(0).toUpperCase();
       document.getElementById('profile-name').value = user.name || '';
       document.getElementById('profile-email').value = user.email || '';
 
-      // Update Header Navigation Text (Sign In / Sign Up -> User Name)
       const navTextEl = document.querySelector('.nav-text');
       if (navTextEl) {
         navTextEl.textContent = 'HI, ' + (user.name ? user.name.split(' ')[0].toUpperCase() : 'USER');
-
-        // Optional: Change the icon or link functionality if needed
         const navLink = navTextEl.closest('a');
-        if (navLink) {
-          navLink.href = 'account.html'; // Ensure it points to account dashboard
-        }
+        if (navLink) navLink.href = 'account.html';
       }
     }
 
     window.showTab = function (tabName) {
-      // Hide all tabs
       document.querySelectorAll('.dashboard-content-area').forEach(el => el.style.display = 'none');
-      // Show selected
       const selected = document.getElementById('tab-' + tabName);
       if (selected) selected.style.display = 'block';
 
-      // Update sidebar active state
       document.querySelectorAll('.list-group-item').forEach(el => el.classList.remove('active'));
       const activeLink = document.getElementById('link-' + tabName);
       if (activeLink) activeLink.classList.add('active');
     };
 
-    // Login/Register handlers
     window.handleSignIn = async function (e) {
       e.preventDefault();
       const email = document.getElementById('signin-email').value;
