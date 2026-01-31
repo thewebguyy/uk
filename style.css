@@ -1634,6 +1634,17 @@ p {
   .gallery-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  /* Force horizontal rows to wrap on mobile/tablet */
+  .row.flex-nowrap {
+    flex-wrap: wrap !important;
+    overflow: visible !important;
+  }
+
+  .row.flex-nowrap>[class*="col-"] {
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+  }
 }
 
 @media (max-width: 576px) {
@@ -1647,6 +1658,12 @@ p {
 
   .artwork-btn {
     min-width: 100%;
+  }
+
+  /* Full width stacking on search mobile */
+  .row.flex-nowrap>[class*="col-"] {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
   }
 }
 
@@ -2465,6 +2482,11 @@ footer {
   .product-detail-section .col-md-6 {
     flex: 0 0 50%;
     max-width: 50%;
+  }
+
+  /* Force horizontal row behavior on desktop only */
+  .row.flex-nowrap {
+    flex-wrap: nowrap !important;
   }
 }
 
