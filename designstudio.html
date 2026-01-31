@@ -37,16 +37,10 @@
     <style>
       .ds-services-grid {
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, 1fr);
         gap: 40px;
         max-width: 1400px;
         margin: 0 auto;
-      }
-
-      @media (min-width: 992px) {
-        .ds-services-grid {
-          grid-template-columns: repeat(3, 1fr);
-        }
       }
 
       .ds-card {
@@ -167,7 +161,7 @@
             to bring it to life...
           </div>
         </div>
-        <a href="#mockup" class="ds-btn">EXPLORE STUDIO</a>
+        <a href="studio.html" class="ds-btn">EXPLORE STUDIO</a>
       </div>
 
       <!-- Card 3: Resources -->
