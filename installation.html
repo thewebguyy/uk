@@ -218,7 +218,7 @@
                 <div class="row">
                   <div class="col-md-6">
                     <h6 class="mega-title">SERVICES</h6>
-                    <a class="dropdown-item" href="designstudio.html">DESIGN SERVICES</a>
+                    <a class="dropdown-item" href="designservice.html">DESIGN SERVICES</a>
                     <a class="dropdown-item" href="designstudio.html#mockup">MOCKUP GENERATION</a>
                   </div>
                   <div class="col-md-6">
@@ -289,12 +289,8 @@
             <h3 class="mb-4">OUR INSTALLATION SERVICES</h3>
 
             <div class="row g-4">
-              <div class="col-lg-4 col-md-6">
+              <div class="col-lg-3 col-md-6">
                 <div class="p-4" style="background: var(--color-grey-light); height: 100%;">
-                  <div class="mb-3"
-                    style="height: 200px; background: #e9ecef; display: flex; align-items: center; justify-content: center; border-radius: 4px;">
-                    <span class="text-muted">Window Vinyl Placeholder</span>
-                  </div>
                   <div class="mb-3">
                     <svg style="width: 48px; height: 48px;">
                       <use xlink:href="#icon-tool" />
@@ -311,12 +307,8 @@
                 </div>
               </div>
 
-              <div class="col-lg-4 col-md-6">
+              <div class="col-lg-3 col-md-6">
                 <div class="p-4" style="background: var(--color-grey-light); height: 100%;">
-                  <div class="mb-3"
-                    style="height: 200px; background: #e9ecef; display: flex; align-items: center; justify-content: center; border-radius: 4px;">
-                    <span class="text-muted">Wall Vinyl Placeholder</span>
-                  </div>
                   <div class="mb-3">
                     <svg style="width: 48px; height: 48px;">
                       <use xlink:href="#icon-tool" />
@@ -333,12 +325,8 @@
                 </div>
               </div>
 
-              <div class="col-lg-4 col-md-6">
+              <div class="col-lg-3 col-md-6">
                 <div class="p-4" style="background: var(--color-grey-light); height: 100%;">
-                  <div class="mb-3"
-                    style="height: 200px; background: #e9ecef; display: flex; align-items: center; justify-content: center; border-radius: 4px;">
-                    <span class="text-muted">Backdrop Placeholder</span>
-                  </div>
                   <div class="mb-3">
                     <svg style="width: 48px; height: 48px;">
                       <use xlink:href="#icon-tool" />
@@ -351,6 +339,24 @@
                     <li>Exhibition displays</li>
                     <li>Temporary installations</li>
                     <li>Custom graphics</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-6">
+                <div class="p-4" style="background: var(--color-grey-light); height: 100%;">
+                  <div class="mb-3">
+                    <svg style="width: 48px; height: 48px;">
+                      <use xlink:href="#icon-tool" />
+                    </svg>
+                  </div>
+                  <h4 class="mb-3">EVENT BRANDING</h4>
+                  <ul class="text-grey-dark" style="font-size: 0.95rem;">
+                    <li>Floor graphics</li>
+                    <li>Wayfinding signage</li>
+                    <li>Entrance displays</li>
+                    <li>Branded furniture</li>
+                    <li>Pop-up activations</li>
                   </ul>
                 </div>
               </div>
@@ -427,7 +433,13 @@
             </div>
           </div>
 
-
+          <div class="p-5 text-center" style="background: var(--color-black); color: var(--color-white);">
+            <h3 class="mb-3" style="color: var(--color-white);">READY TO TRANSFORM YOUR SPACE?</h3>
+            <p class="mb-4" style="color: var(--color-white); opacity: 0.9;">Get a free quote for your vinyl
+              installation project</p>
+            <a href="contact.html?service=installation" class="btn btn-primary btn-lg"
+              style="background: var(--color-white); color: var(--color-black);">REQUEST A QUOTE</a>
+          </div>
 
         </div>
       </div>
@@ -524,18 +536,6 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       updateCartDisplay();
-
-      // Make dropdown parent clickable
-      document.querySelectorAll('.nav-item.dropdown').forEach(dropdown => {
-        const link = dropdown.querySelector('.nav-link.dropdown-toggle');
-        if (link && link.getAttribute('href') && link.getAttribute('href') !== '#') {
-          link.addEventListener('click', (e) => {
-            if (window.innerWidth > 991) { // Only on desktop
-              window.location.href = link.getAttribute('href');
-            }
-          });
-        }
-      });
     });
   </script>
 </body>

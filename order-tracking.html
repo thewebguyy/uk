@@ -261,7 +261,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <h6 class="mega-title">SERVICES</h6>
-                                        <a class="dropdown-item" href="designstudio.html">Custom Design</a>
+                                        <a class="dropdown-item" href="designservice.html">Custom Design</a>
                                         <a class="dropdown-item" href="designstudio.html#logo-design">Logo Design</a>
                                         <a class="dropdown-item" href="designstudio.html#mockup">Mockup Generation</a>
                                     </div>
@@ -596,26 +596,10 @@
                     window.location.href = 'checkout.html';
                 };
             }
+
+            // Invoice Link (Placeholder)
+            // document.getElementById('download-invoice-btn').href = `/api/orders/${id}/invoice`;
         }
-
-        // Update cart display on load
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof updateCartDisplay === 'function') {
-                updateCartDisplay();
-            }
-
-            // Make dropdown parent clickable
-            document.querySelectorAll('.nav-item.dropdown').forEach(dropdown => {
-                const link = dropdown.querySelector('.nav-link.dropdown-toggle');
-                if (link && link.getAttribute('href') && link.getAttribute('href') !== '#') {
-                    link.addEventListener('click', (e) => {
-                        if (window.innerWidth > 991) { // Only on desktop
-                            window.location.href = link.getAttribute('href');
-                        }
-                    });
-                }
-            });
-        });
     </script>
 </body>
 

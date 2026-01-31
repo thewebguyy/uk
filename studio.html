@@ -660,20 +660,6 @@
     currentZoom = config.zoom;
     updateModelTransform();
   }
-
-  // Dropdown fix
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.nav-item.dropdown').forEach(dropdown => {
-      const link = dropdown.querySelector('.nav-link.dropdown-toggle');
-      if (link && link.getAttribute('href') && link.getAttribute('href') !== '#') {
-        link.addEventListener('click', (e) => {
-          if (window.innerWidth > 991) { // Only on desktop
-            window.location.href = link.getAttribute('href');
-          }
-        });
-      }
-    });
-  });
 </script>
 </body>
 

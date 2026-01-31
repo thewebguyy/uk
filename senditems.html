@@ -214,7 +214,7 @@
                 <div class="row">
                   <div class="col-md-6">
                     <h6 class="mega-title">SERVICES</h6>
-                    <a class="dropdown-item" href="designstudio.html">DESIGN SERVICES</a>
+                    <a class="dropdown-item" href="designservice.html">DESIGN SERVICES</a>
                     <a class="dropdown-item" href="designstudio.html#mockup">MOCKUP GENERATION</a>
                   </div>
                   <div class="col-md-6">
@@ -614,30 +614,10 @@
 
   <script>
     // Handle form submission
-    document.addEventListener('DOMContentLoaded', () => {
-      const sendItemsForm = document.getElementById('send-items-form');
-      if (sendItemsForm) {
-        sendItemsForm.addEventListener('submit', function (e) {
-          e.preventDefault();
-          alert('Thank you for your request! We will review your submission and respond within 24 hours with a quote and next steps. Please remember to download, sign, and email the liability form to info@customisemeuk.com');
-        });
-      }
-
-      if (typeof updateCartDisplay === 'function') {
-        updateCartDisplay();
-      }
-
-      // Make dropdown parent clickable
-      document.querySelectorAll('.nav-item.dropdown').forEach(dropdown => {
-        const link = dropdown.querySelector('.nav-link.dropdown-toggle');
-        if (link && link.getAttribute('href') && link.getAttribute('href') !== '#') {
-          link.addEventListener('click', (e) => {
-            if (window.innerWidth > 991) { // Only on desktop
-              window.location.href = link.getAttribute('href');
-            }
-          });
-        }
-      });
+    document.getElementById('send-items-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      alert('Thank you for your request! We will review your submission and respond within 24 hours with a quote and next steps. Please remember to download, sign, and email the liability form to info@customisemeuk.com');
+      // In production, this would submit to your backend
     });
   </script>
 </body>

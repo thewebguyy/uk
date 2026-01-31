@@ -162,18 +162,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (typeof window.updateCartDisplay === 'function') {
             window.updateCartDisplay();
         }
-
-        // New link fix for Design Studio and other dropdowns
-        document.querySelectorAll('.nav-item.dropdown').forEach(dropdown => {
-            const link = dropdown.querySelector('.nav-link.dropdown-toggle');
-            if (link && link.getAttribute('href') && link.getAttribute('href') !== '#') {
-                link.addEventListener('click', (e) => {
-                    if (window.innerWidth > 991) { // Only on desktop
-                        window.location.href = link.getAttribute('href');
-                    }
-                });
-            }
-        });
     }
 });
 
