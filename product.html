@@ -395,9 +395,18 @@
             </div>
 
             <!-- Add to Cart Button -->
-            <button class="btn btn-primary btn-lg w-100 mb-3" id="add-to-cart-btn" onclick="addProductToCart()">
-              ADD TO CART
-            </button>
+            <div class="d-flex gap-2">
+              <button class="btn btn-primary btn-lg flex-grow-1" id="add-to-cart-btn" onclick="addProductToCart()">
+                ADD TO CART
+              </button>
+              <button class="wishlist-btn" id="product-wishlist-btn"
+                onclick="toggleWishlist({id: productId, name: currentProduct.name, price: currentProduct.price, imageUrl: currentProduct.imageUrl})"
+                style="position: relative; top: 0; right: 0; width: 56px; height: 56px;">
+                <svg class="icon">
+                  <use xlink:href="#icon-heart" />
+                </svg>
+              </button>
+            </div>
 
             <!-- Request Custom Design -->
             <button class="btn btn-outline w-100 mb-4" onclick="window.location.href='contact.html?service=custom'">
@@ -640,6 +649,7 @@
   <script src="js/components.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/cart.js"></script>
+  <script src="js/wishlist.js"></script>
   <script type="module" src="js/api-integration.js"></script>
 
   <script>
@@ -726,6 +736,29 @@
 
       // Handle Category Specific Options
       const category = (product.category || '').toLowerCase();
+
+      // Generate Color Swatches if not stickers
+      if (category !== 'stickers') {
+        const colors = ['Black', 'White', 'Navy', 'Red', 'Grey', 'Green'];
+        const colorContainer = document.getElementById('color-options');
+        colorContainer.innerHTML = colors.map(c => `
+          <div class="color-swatch ${customization.color === c ? 'active' : ''}" 
+               style="background-color: ${c.toLowerCase() === 'navy' ? '#000080' : c.toLowerCase()}; border: ${c.toLowerCase() === 'white' ? '1px solid #ddd' : 'none'};" 
+               onclick="updateCustomization('color', '${c}', this)" 
+               title="${c}"></div>
+        `).join('');
+      }
+
+      // Wishlist Button State
+      const wishlistBtn = document.getElementById('product-wishlist-btn');
+      if (wishlistBtn) {
+        if (window.isInWishlist && window.isInWishlist(product.id)) {
+          wishlistBtn.classList.add('active');
+        } else {
+          wishlistBtn.classList.remove('active');
+        }
+      }
+
       if (category === 'tote-bags' || category === 'accessories' && product.name.toLowerCase().includes('bag')) {
         document.querySelector('#group-size .size-options').style.display = 'none';
         document.querySelector('#group-size a[style*="text-decoration: underline"]').style.display = 'none';

@@ -261,7 +261,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/cart.js"></script>
-
+  <script src="js/wishlist.js"></script>
   <script type="module" src="js/api-integration.js"></script>
 
   <script>
@@ -351,6 +351,13 @@
 
         container.innerHTML = products.slice(0, 4).map(product => `
           <div class="product-card">
+            <div class="wishlist-badge">
+                <button class="wishlist-btn ${window.isInWishlist && window.isInWishlist(product._id || product.id) ? 'active' : ''}" 
+                        data-id="${product._id || product.id}"
+                        onclick='window.toggleWishlist(${JSON.stringify({ id: product._id || product.id, name: product.name, price: product.price, imageUrl: product.imageUrl }).replace(/'/g, "&apos;")})'>
+                    <svg class="icon"><use xlink:href="#icon-heart" /></svg>
+                </button>
+            </div>
             <a href="product.html?id=${product._id || product.id}" class="product-card-link">
               <div class="product-image">
                 ${product.imageUrl ?
