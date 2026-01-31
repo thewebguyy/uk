@@ -9,6 +9,16 @@ function getCart() {
   return cart ? JSON.parse(cart) : [];
 }
 
+// Get or generate a unique ID for the current cart session (Idempotency)
+function getCartId() {
+  let cartId = localStorage.getItem('cartId');
+  if (!cartId) {
+    cartId = 'cart_' + Math.random().toString(36).substr(2, 9) + Date.now();
+    localStorage.setItem('cartId', cartId);
+  }
+  return cartId;
+}
+
 // Save cart to localStorage
 function saveCart(cart) {
   localStorage.setItem('cart', JSON.stringify(cart));
@@ -120,6 +130,7 @@ function getCartCount() {
 // Clear entire cart
 function clearCart() {
   localStorage.removeItem('cart');
+  localStorage.removeItem('cartId');
   updateCartDisplay();
 }
 
@@ -223,6 +234,7 @@ if (typeof window !== 'undefined') {
   window.removeFromCart = removeFromCart;
   window.updateQuantity = updateQuantity;
   window.getCart = getCart;
+  window.getCartId = getCartId;
   window.getCartTotal = getCartTotal;
   window.getCartCount = getCartCount;
   window.clearCart = clearCart;

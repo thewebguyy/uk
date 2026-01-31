@@ -807,7 +807,8 @@
         const result = await window.CheckoutService.createPaymentIntent({
           items: items,
           email: document.getElementById('email').value || 'guest@example.com',
-          shippingAddress: { name: 'Guest', city: 'London', street: 'TBD', postcode: 'TBD', apartment: '' }
+          shippingAddress: { name: 'Guest', city: 'London', street: 'TBD', postcode: 'TBD', apartment: '' },
+          cartId: window.getCartId ? window.getCartId() : 'guest_' + Date.now()
         });
 
         if (result) {

@@ -8,7 +8,7 @@ admin.initializeApp();
 const db = admin.firestore();
 
 // Initialize Stripe
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(functions.config().stripe.secret);
 
 // ==========================================
 // CONFIGURATION & HELPERS
@@ -48,7 +48,7 @@ function renderTemplate(name, data) {
 // ==========================================
 
 exports.createPaymentIntent = functions.https.onCall(async (data, context) => {
-    const { items, email, shippingAddress } = data;
+    const { items, email, shippingAddress, cartId } = data;
 
     // 1. Calculate Price on Server
     let subtotal = 0;
@@ -88,7 +88,12 @@ exports.createPaymentIntent = functions.https.onCall(async (data, context) => {
         amount: amountInPence,
         currency: 'gbp',
         automatic_payment_methods: { enabled: true },
-        metadata: { email: email }
+        metadata: {
+            email: email,
+            cart_id: cartId || 'none'
+        }
+    }, {
+        idempotencyKey: cartId // Prevent double charges for the same cart/intent
     });
 
     // 4. Create Pending Order in Firestore
