@@ -113,18 +113,26 @@
 
         <div class="top-bar-content">
             <!-- Mobile Toggle (Hamburger) - Left on mobile -->
-            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNav">
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                style="order: 1;">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <!-- Logo - Centered on mobile -->
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="index.html" style="order: 2;">
                 <img src="icon.png" alt="Creative Merch UK" class="logo-image">
             </a>
 
+            <!-- Search Bar - Full width below header on mobile -->
+            <form class="search-bar-form-compact" style="order: 4;">
+                <svg class="search-icon">
+                    <use xlink:href="#icon-search" />
+                </svg>
+                <input type="search" class="search-input" placeholder="Search products...">
+            </form>
+
             <!-- Right Icons - Right on mobile (Heart, Bag, Account) -->
-            <div class="d-flex align-items-center gap-1 gap-md-3 nav-header-icons">
+            <div class="d-flex align-items-center gap-1 gap-md-3 nav-header-icons" style="order: 3;">
                 <div class="dropdown d-none d-md-block">
                     <a href="#" class="nav-icon" data-bs-toggle="dropdown" aria-expanded="false">
                         <svg class="icon">
@@ -156,14 +164,6 @@
                     <span class="nav-text d-none d-md-inline">SIGN IN / SIGN UP</span>
                 </a>
             </div>
-
-            <!-- Search Bar - Full width below header on mobile -->
-            <form class="search-bar-form-compact">
-                <svg class="search-icon">
-                    <use xlink:href="#icon-search" />
-                </svg>
-                <input type="search" class="search-input" placeholder="Search products...">
-            </form>
         </div>
     </div>
 </div>

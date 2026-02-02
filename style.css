@@ -2114,6 +2114,41 @@ footer {
 }
 
 /* ============================================
+   RESPONSIVE - DESKTOP PROTECTION (769px and above)
+   ============================================ */
+@media (min-width: 769px) {
+  .top-bar-content {
+    display: grid !important;
+    grid-template-columns: 200px 1fr auto !important;
+    align-items: center !important;
+    gap: 2rem !important;
+  }
+
+  .nav-header-icons {
+    display: flex !important;
+    order: 3 !important;
+  }
+
+  .search-bar-form-compact {
+    display: flex !important;
+    order: 2 !important;
+    max-width: 580px !important;
+  }
+
+  .navbar-brand {
+    order: 1 !important;
+  }
+
+  .navbar-toggler {
+    display: none !important;
+  }
+
+  .nav-text {
+    display: inline !important;
+  }
+}
+
+/* ============================================
    RESPONSIVE - TABLET (768px - 991px)
    ============================================ */
 @media (max-width: 991px) {
