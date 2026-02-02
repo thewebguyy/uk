@@ -2187,8 +2187,8 @@ footer {
   }
 
   body {
-    padding-top: 240px;
-    /* Adjusted for multiple stacked bars */
+    padding-top: 190px;
+    /* Adjusted for stacked bars (Announcement, Utility, Header, Search) */
   }
 
   .announcement-banner {
@@ -2286,22 +2286,7 @@ footer {
     border-radius: 4px;
   }
 
-  /* Navigation Icons Row (Mobile Only) */
-  .mobile-icons-row {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 8px 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
-    background: #fff;
-  }
-
-  .mobile-icons-row .nav-icon {
-    flex: 1;
-    padding: 10px;
-  }
-
-  /* Floating Contact Bar Preservation - Image 3 has this fixed at bottom or just above main content */
+  /* Floating Contact Bar Preservation */
   /* Based on specification, it should be below floating announcement or similar */
 
   .main-nav {

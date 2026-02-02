@@ -85,18 +85,19 @@
 <!-- Top Bar -->
 <div class="top-bar">
     <div class="container">
-        <!-- Mobile-only utility bar (Currency & VAT) -->
+        <!-- Mobile-only utility bar (Region & VAT) -->
         <div class="mobile-utility-bar d-md-none">
             <div class="utility-left">
                 <div class="dropdown">
-                    <a href="#" class="nav-icon py-0" data-bs-toggle="dropdown"
-                        style="font-size: 0.75rem; min-height: auto;">
-                        <span class="flag">🇬🇧</span> GBP £
+                    <a href="#" class="nav-icon py-0" data-bs-toggle="dropdown" style="min-height: auto;">
+                        <svg class="icon" style="width: 20px; height: 20px;">
+                            <use xlink:href="#icon-globe" />
+                        </svg>
                     </a>
                     <ul class="dropdown-menu region-dropdown">
-                        <li><a class="dropdown-item" href="#"><span class="flag">🇬🇧</span> GBP £</a></li>
-                        <li><a class="dropdown-item" href="#"><span class="flag">🇪🇺</span> EUR €</a></li>
-                        <li><a class="dropdown-item" href="#"><span class="flag">🇺🇸</span> USD $</a></li>
+                        <li><a class="dropdown-item" href="#"><span class="flag">🇬🇧</span> UNITED KINGDOM</a></li>
+                        <li><a class="dropdown-item" href="#"><span class="flag">🇪🇺</span> EUROPE</a></li>
+                        <li><a class="dropdown-item" href="#"><span class="flag">🇺🇸</span> AMERICA</a></li>
                     </ul>
                 </div>
             </div>
@@ -122,7 +123,7 @@
                 <img src="icon.png" alt="Creative Merch UK" class="logo-image">
             </a>
 
-            <!-- Right Icons - Right on mobile (Heart & Bag) -->
+            <!-- Right Icons - Right on mobile (Heart, Bag, Account) -->
             <div class="d-flex align-items-center gap-1 gap-md-3 nav-header-icons">
                 <div class="dropdown d-none d-md-block">
                     <a href="#" class="nav-icon" data-bs-toggle="dropdown" aria-expanded="false">
@@ -148,11 +149,11 @@
                     </svg>
                     <span class="badge-cart" id="cart-count"></span>
                 </a>
-                <a href="account.html" class="nav-icon nav-icon-text d-none d-md-flex">
+                <a href="account.html" class="nav-icon nav-icon-text">
                     <svg class="icon">
                         <use xlink:href="#icon-user" />
                     </svg>
-                    <span class="nav-text">SIGN IN / SIGN UP</span>
+                    <span class="nav-text d-none d-md-inline">SIGN IN / SIGN UP</span>
                 </a>
             </div>
 
@@ -163,23 +164,6 @@
                 </svg>
                 <input type="search" class="search-input" placeholder="Search products...">
             </form>
-        </div>
-
-        <!-- Navigation Icons Row (Mobile Only) - Preserve globe and user here if needed -->
-        <div class="mobile-icons-row d-md-none">
-            <a href="#" class="nav-icon"><svg class="icon">
-                    <use xlink:href="#icon-globe" />
-                </svg></a>
-            <a href="wishlist.html" class="nav-icon"><svg class="icon">
-                    <use xlink:href="#icon-heart" />
-                </svg></a>
-            <a href="#cart" class="nav-icon" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas"><svg
-                    class="icon">
-                    <use xlink:href="#icon-shopping-bag" />
-                </svg></a>
-            <a href="account.html" class="nav-icon"><svg class="icon">
-                    <use xlink:href="#icon-user" />
-                </svg></a>
         </div>
     </div>
 </div>
