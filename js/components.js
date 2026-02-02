@@ -153,6 +153,19 @@ document.addEventListener('DOMContentLoaded', async () => {
                     new bootstrap.Offcanvas(targetEl);
                 }
             });
+            // Re-initialize collapses
+            const collapses = document.querySelectorAll('[data-bs-toggle="collapse"]');
+            collapses.forEach(collapse => {
+                const targetId = collapse.getAttribute('data-bs-target');
+                const targetEl = document.querySelector(targetId);
+                if (targetEl) {
+                    const existing = bootstrap.Collapse.getInstance(targetEl);
+                    if (existing) existing.dispose();
+                    new bootstrap.Collapse(targetEl, {
+                        toggle: false
+                    });
+                }
+            });
         }
 
         // Custom: Trigger a globally accessible event that components are ready
