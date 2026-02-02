@@ -14,3 +14,147 @@
 [debug] [2026-02-02T11:23:48.979Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/cmuksite:testIamPermissions [none]
 [debug] [2026-02-02T11:23:48.979Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/cmuksite:testIamPermissions  x-goog-user-project=cmuksite
 [debug] [2026-02-02T11:23:48.979Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/cmuksite:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2026-02-02T11:23:49.904Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/cmuksite:testIamPermissions 200
+[debug] [2026-02-02T11:23:49.904Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/cmuksite:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2026-02-02T11:23:49.905Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:23:49.905Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:23:49.905Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/cmuksite/serviceAccounts/cmuksite@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2026-02-02T11:23:49.905Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/cmuksite/serviceAccounts/cmuksite@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2026-02-02T11:23:51.484Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/cmuksite/serviceAccounts/cmuksite@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2026-02-02T11:23:51.484Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/cmuksite/serviceAccounts/cmuksite@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'cmuksite'...
+[info] 
+[info] i  deploying functions 
+[debug] [2026-02-02T11:23:51.494Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:23:51.494Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:23:51.494Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/cmuksite [none]
+[debug] [2026-02-02T11:23:51.819Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/cmuksite 200
+[debug] [2026-02-02T11:23:51.819Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/cmuksite {"projectNumber":"311601861870","projectId":"cmuksite","lifecycleState":"ACTIVE","name":"CMUKSITE","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2026-01-06T10:43:34.958817Z"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2026-02-02T11:23:51.822Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:23:51.822Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:23:51.822Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/cmuksite/adminSdkConfig [none]
+[debug] [2026-02-02T11:23:52.953Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/cmuksite/adminSdkConfig 200
+[debug] [2026-02-02T11:23:52.953Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/cmuksite/adminSdkConfig {"projectId":"cmuksite","storageBucket":"cmuksite.firebasestorage.app"}
+[debug] [2026-02-02T11:23:52.961Z] Validating nodejs source
+[debug] [2026-02-02T11:23:55.253Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "24"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^12.7.0",
+    "firebase-functions": "^7.0.0",
+    "stripe": "^20.3.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.4.1"
+  },
+  "private": true
+}
+[debug] [2026-02-02T11:23:55.253Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase default to determine what to deploy 
+[debug] [2026-02-02T11:23:55.255Z] Could not find functions.yaml. Must use http discovery
+[debug] [2026-02-02T11:23:55.266Z] Found firebase-functions binary at 'C:\Users\pstma\OneDrive\Documents\uk\functions\node_modules\.bin\firebase-functions'
+[info] Serving at port 8219
+
+[debug] [2026-02-02T11:23:56.146Z] Got response from /__/functions.yaml {"endpoints":{"createPaymentIntent":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","secretEnvironmentVariables":[{"key":"STRIPE_SECRET_KEY"}],"labels":{},"callableTrigger":{},"entryPoint":"createPaymentIntent"},"confirmOrder":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"callableTrigger":{},"entryPoint":"confirmOrder"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{},"params":[{"type":"secret","name":"STRIPE_SECRET_KEY"}]}
+[info] i  extensions: ensuring required API firebaseextensions.googleapis.com is enabled... 
+[debug] [2026-02-02T11:24:00.188Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-02-02T11:24:00.188Z] > authorizing via signed-in user (olabodemathewolusegun@gmail.com)
+[debug] [2026-02-02T11:24:00.188Z] [iam] checking project cmuksite for permissions ["firebase.projects.get","firebaseextensions.instances.list"]
+[debug] [2026-02-02T11:24:00.188Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:00.188Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:00.189Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/cmuksite:testIamPermissions [none]
+[debug] [2026-02-02T11:24:00.189Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/cmuksite:testIamPermissions  x-goog-user-project=cmuksite
+[debug] [2026-02-02T11:24:00.189Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/cmuksite:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2026-02-02T11:24:01.218Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/cmuksite:testIamPermissions 200
+[debug] [2026-02-02T11:24:01.218Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/cmuksite:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2026-02-02T11:24:01.219Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:01.219Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:01.221Z] >>> [apiv2][query] GET https://firebaseextensions.googleapis.com/v1beta/projects/cmuksite/instances pageSize=100&pageToken=
+[debug] [2026-02-02T11:24:02.666Z] <<< [apiv2][status] GET https://firebaseextensions.googleapis.com/v1beta/projects/cmuksite/instances 200
+[debug] [2026-02-02T11:24:02.666Z] <<< [apiv2][body] GET https://firebaseextensions.googleapis.com/v1beta/projects/cmuksite/instances {}
+[debug] [2026-02-02T11:24:02.668Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:02.668Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:02.668Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/cmuksite/secrets/STRIPE_SECRET_KEY [none]
+[debug] [2026-02-02T11:24:04.128Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/cmuksite/secrets/STRIPE_SECRET_KEY 200
+[debug] [2026-02-02T11:24:04.129Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/cmuksite/secrets/STRIPE_SECRET_KEY {"name":"projects/311601861870/secrets/STRIPE_SECRET_KEY","replication":{"automatic":{}},"createTime":"2026-02-02T05:37:10.492541Z","labels":{"firebase-managed":"functions"},"etag":"\"1649d0b7065a7a\""}
+[debug] [2026-02-02T11:24:04.129Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:04.129Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:04.129Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/cmuksite/secrets/STRIPE_SECRET_KEY/versions/latest [none]
+[debug] [2026-02-02T11:24:04.766Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/cmuksite/secrets/STRIPE_SECRET_KEY/versions/latest 200
+[debug] [2026-02-02T11:24:04.766Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/cmuksite/secrets/STRIPE_SECRET_KEY/versions/latest {"name":"projects/311601861870/secrets/STRIPE_SECRET_KEY/versions/1","createTime":"2026-02-02T05:38:29.809525Z","state":"ENABLED","replicationStatus":{"automatic":{}},"etag":"\"1649d0bb9b5975\""}
+[info] i  functions: preparing functions directory for uploading... 
+[info] i  functions: packaged C:\Users\pstma\OneDrive\Documents\uk\functions (69.53 KB) for uploading 
+[debug] [2026-02-02T11:24:04.807Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:04.807Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:04.807Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/cmuksite/locations/-/functions [none]
+[debug] [2026-02-02T11:24:05.936Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/projects/cmuksite/locations/-/functions 200
+[debug] [2026-02-02T11:24:05.936Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/projects/cmuksite/locations/-/functions {}
+[debug] [2026-02-02T11:24:05.936Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:05.936Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:05.936Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/cmuksite/locations/-/functions filter=environment%3D%22GEN_2%22
+[debug] [2026-02-02T11:24:07.044Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/cmuksite/locations/-/functions 200
+[debug] [2026-02-02T11:24:07.044Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/cmuksite/locations/-/functions {}
+[info] i  functions: ensuring required API run.googleapis.com is enabled... 
+[info] i  functions: ensuring required API eventarc.googleapis.com is enabled... 
+[info] i  functions: ensuring required API pubsub.googleapis.com is enabled... 
+[info] i  functions: ensuring required API storage.googleapis.com is enabled... 
+[info] i  functions: generating the service identity for pubsub.googleapis.com... 
+[debug] [2026-02-02T11:24:07.053Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:07.053Z] Checked if tokens are valid: true, expires at: 1770033136456
+[info] i  functions: generating the service identity for eventarc.googleapis.com... 
+[debug] [2026-02-02T11:24:07.054Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:07.054Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:07.054Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/311601861870/services/pubsub.googleapis.com:generateServiceIdentity [none]
+[debug] [2026-02-02T11:24:07.054Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1beta1/projects/311601861870/services/pubsub.googleapis.com:generateServiceIdentity  x-goog-user-project=311601861870
+[debug] [2026-02-02T11:24:07.054Z] >>> [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/311601861870/services/pubsub.googleapis.com:generateServiceIdentity {}
+[debug] [2026-02-02T11:24:07.055Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/311601861870/services/eventarc.googleapis.com:generateServiceIdentity [none]
+[debug] [2026-02-02T11:24:07.055Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1beta1/projects/311601861870/services/eventarc.googleapis.com:generateServiceIdentity  x-goog-user-project=311601861870
+[debug] [2026-02-02T11:24:07.056Z] >>> [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/311601861870/services/eventarc.googleapis.com:generateServiceIdentity {}
+[debug] [2026-02-02T11:24:08.907Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/311601861870/services/pubsub.googleapis.com:generateServiceIdentity 200
+[debug] [2026-02-02T11:24:08.907Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/311601861870/services/pubsub.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-311601861870@gcp-sa-pubsub.iam.gserviceaccount.com","uniqueId":"108068440439152779481"}}
+[debug] [2026-02-02T11:24:09.399Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/311601861870/services/eventarc.googleapis.com:generateServiceIdentity 200
+[debug] [2026-02-02T11:24:09.400Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/311601861870/services/eventarc.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-311601861870@gcp-sa-eventarc.iam.gserviceaccount.com","uniqueId":"100812970119928550915"}}
+[info] i  functions: ensuring required API secretmanager.googleapis.com is enabled... 
+[debug] [2026-02-02T11:24:09.404Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:09.404Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:09.404Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/cmuksite/secrets/STRIPE_SECRET_KEY/versions/latest [none]
+[debug] [2026-02-02T11:24:11.119Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/cmuksite/secrets/STRIPE_SECRET_KEY/versions/latest 200
+[debug] [2026-02-02T11:24:11.119Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/cmuksite/secrets/STRIPE_SECRET_KEY/versions/latest {"name":"projects/311601861870/secrets/STRIPE_SECRET_KEY/versions/1","createTime":"2026-02-02T05:38:29.809525Z","state":"ENABLED","replicationStatus":{"automatic":{}},"etag":"\"1649d0bb9b5975\""}
+[debug] [2026-02-02T11:24:11.120Z] Resolved secret version of STRIPE_SECRET_KEY to 1.
+[debug] [2026-02-02T11:24:11.122Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:11.122Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:11.122Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/cmuksite [none]
+[debug] [2026-02-02T11:24:12.244Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/cmuksite 200
+[debug] [2026-02-02T11:24:12.244Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/cmuksite {"projectNumber":"311601861870","projectId":"cmuksite","lifecycleState":"ACTIVE","name":"CMUKSITE","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2026-01-06T10:43:34.958817Z"}
+[debug] [2026-02-02T11:24:12.244Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:12.244Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:12.245Z] >>> [apiv2][query] GET https://compute.googleapis.com/compute/v1/projects/311601861870 [none]
+[debug] [2026-02-02T11:24:13.027Z] <<< [apiv2][status] GET https://compute.googleapis.com/compute/v1/projects/311601861870 403
+[debug] [2026-02-02T11:24:13.027Z] <<< [apiv2][body] GET https://compute.googleapis.com/compute/v1/projects/311601861870 {"error":{"code":403,"message":"Compute Engine API has not been used in project 311601861870 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 311601861870 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870","consumer":"projects/311601861870","serviceTitle":"Compute Engine API","containerInfo":"311601861870","service":"compute.googleapis.com"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 311601861870 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870"}]}]}}
+[debug] [2026-02-02T11:24:13.028Z] unable to look up default compute service account. Falling back to 311601861870-compute@developer.gserviceaccount.com. Error: {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":403,"message":"Compute Engine API has not been used in project 311601861870 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 311601861870 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870","consumer":"projects/311601861870","serviceTitle":"Compute Engine API","containerInfo":"311601861870","service":"compute.googleapis.com"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 311601861870 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870"}]}]}},"response":{"statusCode":403}},"exit":1,"message":"Request to https://compute.googleapis.com/compute/v1/projects/311601861870 had HTTP Error: 403, Compute Engine API has not been used in project 311601861870 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","status":403}
+[debug] [2026-02-02T11:24:13.028Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:13.028Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:13.028Z] >>> [apiv2][query] GET https://compute.googleapis.com/compute/v1/projects/311601861870 [none]
+[debug] [2026-02-02T11:24:13.329Z] <<< [apiv2][status] GET https://compute.googleapis.com/compute/v1/projects/311601861870 403
+[debug] [2026-02-02T11:24:13.329Z] <<< [apiv2][body] GET https://compute.googleapis.com/compute/v1/projects/311601861870 {"error":{"code":403,"message":"Compute Engine API has not been used in project 311601861870 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 311601861870 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"consumer":"projects/311601861870","activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870","service":"compute.googleapis.com","serviceTitle":"Compute Engine API","containerInfo":"311601861870"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 311601861870 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870"}]}]}}
+[debug] [2026-02-02T11:24:13.329Z] unable to look up default compute service account. Falling back to 311601861870-compute@developer.gserviceaccount.com. Error: {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":403,"message":"Compute Engine API has not been used in project 311601861870 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 311601861870 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"consumer":"projects/311601861870","activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870","service":"compute.googleapis.com","serviceTitle":"Compute Engine API","containerInfo":"311601861870"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 311601861870 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870"}]}]}},"response":{"statusCode":403}},"exit":1,"message":"Request to https://compute.googleapis.com/compute/v1/projects/311601861870 had HTTP Error: 403, Compute Engine API has not been used in project 311601861870 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=311601861870 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","status":403}
+[info] i  functions: ensuring 311601861870-compute@developer.gserviceaccount.com access to secret STRIPE_SECRET_KEY. 
+[debug] [2026-02-02T11:24:13.331Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:13.331Z] Checked if tokens are valid: true, expires at: 1770033136456
+[debug] [2026-02-02T11:24:13.332Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/cmuksite/secrets/STRIPE_SECRET_KEY:getIamPolicy [none]
