@@ -1,32 +1,39 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
-
-const {setGlobalOptions} = require("firebase-functions");
-const {onRequest} = require("firebase-functions/https");
+const { onRequest } = require("firebase-functions/v2/https");
+const { defineSecret } = require("firebase-functions/params");
+const stripe = require("stripe");
 const logger = require("firebase-functions/logger");
 
-// For cost control, you can set the maximum number of containers that can be
-// running at the same time. This helps mitigate the impact of unexpected
-// traffic spikes by instead downgrading performance. This limit is a
-// per-function limit. You can override the limit for each function using the
-// `maxInstances` option in the function's options, e.g.
-// `onRequest({ maxInstances: 5 }, (req, res) => { ... })`.
-// NOTE: setGlobalOptions does not apply to functions using the v1 API. V1
-// functions should each use functions.runWith({ maxInstances: 10 }) instead.
-// In the v1 API, each function can only serve one request per container, so
-// this will be the maximum concurrent request count.
-setGlobalOptions({ maxInstances: 10 });
+// 1. Define the secret link
+const stripeSecret = defineSecret("STRIPE_SECRET_KEY");
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
+// 2. Add the secret to the function options
+exports.createPaymentIntent = onRequest({ secrets: [stripeSecret] }, async (req, res) => {
+    // Enable CORS for Namecheap
+    res.set('Access-Control-Allow-Origin', '*');
+    if (req.method === 'OPTIONS') {
+        res.set('Access-Control-Allow-Methods', 'POST');
+        res.set('Access-Control-Allow-Headers', 'Content-Type');
+        res.status(204).send('');
+        return;
+    }
 
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+    try {
+        // Use the secret value securely
+        const stripeClient = stripe(stripeSecret.value());
+        const { amount, cartId } = req.body;
+
+        const paymentIntent = await stripeClient.paymentIntents.create({
+            amount: amount,
+            currency: "usd",
+            automatic_payment_methods: { enabled: true },
+            metadata: { cartId: cartId }
+        }, {
+            idempotencyKey: cartId // Prevents double-charging
+        });
+
+        res.status(200).send({ clientSecret: paymentIntent.client_secret });
+    } catch (error) {
+        logger.error("Stripe Error:", error);
+        res.status(500).send({ error: error.message });
+    }
+});
