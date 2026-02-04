@@ -28,7 +28,7 @@ const db = getFirestore(app);
 const functions = getFunctions(app); // Defaults to us-central1
 
 const CONFIG = {
-  STRIPE_PUBLIC_KEY: 'pk_live_YOUR_PUBLISHABLE_KEY_HERE' // IMPORTANT: Use Publishable Key (pk_), NEVER Restricted/Secret Key (rk_/sk_)
+  STRIPE_PUBLIC_KEY: 'pk_live_your_actual_publishable_key_here' // IMPORTANT: Replace with your Stripe PUBLISHABLE KEY (pk_live_...)
 };
 
 // ============================================
@@ -364,6 +364,9 @@ AuthService.initAuthListener((user) => {
 
   // Update immediately
   updateNavText();
+
+  // Dispatch global event for other scripts
+  document.dispatchEvent(new CustomEvent('authStateChanged', { detail: { user } }));
 
   // Also update when components are loaded (for dynamic nav)
   document.addEventListener('allComponentsLoaded', updateNavText);
