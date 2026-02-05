@@ -44,6 +44,12 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // Newsletter: Public write (create/update) if doc ID is email, Admin read/delete
+    match /newsletter/{email} {
+      allow create, update: if request.resource.data.email == email;
+      allow read, delete: if isAdmin();
+    }
+
     // Default deny
     match /{document=**} {
       allow read, write: if false;

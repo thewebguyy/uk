@@ -298,6 +298,31 @@ class CheckoutService {
 }
 
 // ============================================
+// NEWSLETTER
+// ============================================
+
+class NewsletterService {
+  static async subscribe(email) {
+    try {
+      // Use email as document ID for simple idempotency without needing read permissions
+      // This works because we'll allow create/update in rules where documentId == email
+      const docRef = doc(db, 'newsletter', email);
+
+      await setDoc(docRef, {
+        email,
+        createdAt: serverTimestamp(),
+        source: 'website_footer'
+      }, { merge: true });
+
+      return { success: true, message: 'Successfully subscribed!' };
+    } catch (error) {
+      console.error('Newsletter subscription error:', error);
+      return { success: false, message: 'Failed to subscribe. Please try again later.' };
+    }
+  }
+}
+
+// ============================================
 // UTILS
 // ============================================
 // Initialize Stripe
@@ -315,6 +340,7 @@ async function initializeStripe() {
 window.AuthService = AuthService;
 window.ProductService = ProductService;
 window.CheckoutService = CheckoutService;
+window.NewsletterService = NewsletterService;
 window.initializeStripe = initializeStripe;
 window.db = db; // Export db for index.html hero loading
 
