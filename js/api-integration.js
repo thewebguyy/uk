@@ -28,7 +28,7 @@ const db = getFirestore(app);
 const functions = getFunctions(app); // Defaults to us-central1
 
 const CONFIG = {
-  STRIPE_PUBLIC_KEY: 'pk_live_your_actual_publishable_key_here' // IMPORTANT: Replace with your Stripe PUBLISHABLE KEY (pk_live_...)
+  STRIPE_PUBLIC_KEY: 'pk_live_51Qr2StKg0noSfYuQGP6qNLoemAXaMiwaZZfcDfuAtcrq4h5RUlpuzkBE7HbdNa5XnqXaS44C6tiEvVtht9eBiLH500uVeNF7Je'
 };
 
 // ============================================

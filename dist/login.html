@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" type="image/png" href="icon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - Customise Me UK</title>
+  <link rel="stylesheet" href="admin-styles.css">
+</head>
+
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <h1>Customise Me UK</h1>
+      <h2>Admin Portal</h2>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required placeholder="admin@customisemeuk.com"
+            autocomplete="email">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required placeholder="Enter your password"
+            autocomplete="current-password" minlength="6">
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="loginBtn">
+          <span id="loginText">Sign In</span>
+          <span id="loginSpinner" class="spinner" style="display: none;"></span>
+        </button>
+      </form>
+
+      <div id="errorMessage" class="error-message" style="display: none;"></div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Import Firebase modules
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+
+    // ========================================
+    // FIREBASE CONFIGURATION
+    // ========================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyA6pLJdRb4V5LUUrHdwSKRne-ZgXJoqqY8",
+      authDomain: "cmuksite.firebaseapp.com",
+      projectId: "cmuksite",
+      storageBucket: "cmuksite.firebasestorage.app",
+      messagingSenderId: "311601861870",
+      appId: "1:311601861870:web:4d3c04c418a789961dcfff"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // ========================================
+    // AUTH STATE OBSERVER
+    // ========================================
+    // Redirect to dashboard if already logged in
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        window.location.href = 'dashboard.html';
+      }
+    });
+
+    // ========================================
+    // LOGIN FORM HANDLER
+    // ========================================
+    const loginForm = document.getElementById('loginForm');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const loginBtn = document.getElementById('loginBtn');
+    const loginText = document.getElementById('loginText');
+    const loginSpinner = document.getElementById('loginSpinner');
+    const errorMessage = document.getElementById('errorMessage');
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      // Validate inputs
+      if (!email || !password) {
+        showError('Please enter both email and password.');
+        return;
+      }
+
+      // Show loading state
+      setLoading(true);
+      hideError();
+
+      try {
+        // 1. Sign in with Firebase Auth
+        await signInWithEmailAndPassword(auth, email, password);
+        console.log('Firebase login successful');
+
+        // 2. Sign in with Backend API
+        try {
+          const response = await fetch('http://localhost:5000/api/auth/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            console.log('Backend login successful');
+            // Store backend token
+            localStorage.setItem('authToken', data.data.token);
+            // Also store user info if needed
+            localStorage.setItem('user', JSON.stringify(data.data.user));
+          } else {
+            console.warn('Backend login failed:', data.message);
+            // Optional: Decouple backend login failure if you want to allow Firebase-only access
+            // But for "Sync" to work, we need the token. 
+            // We will proceed but alert the user or log it.
+            // For now, we proceed to dashboard, but Sync features might fail.
+          }
+        } catch (backendError) {
+          console.error('Backend connection error:', backendError);
+        }
+
+        // Success - redirect will happen via onAuthStateChanged
+
+      } catch (error) {
+        console.error('Login error:', error);
+
+        // Handle specific Firebase auth errors
+        let errorMsg = 'Login failed. Please try again.';
+
+        switch (error.code) {
+          case 'auth/user-not-found':
+            errorMsg = 'No account found with this email address.';
+            break;
+          case 'auth/wrong-password':
+            errorMsg = 'Incorrect password. Please try again.';
+            break;
+          case 'auth/invalid-email':
+            errorMsg = 'Invalid email address format.';
+            break;
+          case 'auth/user-disabled':
+            errorMsg = 'This account has been disabled.';
+            break;
+          case 'auth/too-many-requests':
+            errorMsg = 'Too many failed attempts. Please try again later.';
+            break;
+          case 'auth/network-request-failed':
+            errorMsg = 'Network error. Please check your connection.';
+            break;
+          case 'auth/invalid-credential':
+            errorMsg = 'Invalid email or password. Please try again.';
+            break;
+          default:
+            errorMsg = error.message || 'An unexpected error occurred.';
+        }
+
+        showError(errorMsg);
+        setLoading(false);
+      }
+    });
+
+    // ========================================
+    // HELPER FUNCTIONS
+    // ========================================
+    function setLoading(isLoading) {
+      loginBtn.disabled = isLoading;
+      loginText.style.display = isLoading ? 'none' : 'inline';
+      loginSpinner.style.display = isLoading ? 'inline-block' : 'none';
+    }
+
+    function showError(message) {
+      errorMessage.textContent = message;
+      errorMessage.style.display = 'block';
+      errorMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function hideError() {
+      errorMessage.style.display = 'none';
+    }
+
+    // Clear error on input
+    emailInput.addEventListener('input', hideError);
+    passwordInput.addEventListener('input', hideError);
+  </script>
+</body>
+
+</html>

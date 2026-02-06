@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" type="image/png" href="icon.png">
+  <title>My Account - CustomiseMe UK</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage your CustomiseMe UK account, track orders, and update your profile.">
+  <link rel="icon" type="image/png" href="icon.png">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ========================================
+       DASHBOARD COMPLETE FIX
+       ======================================== */
+
+    /* Force account page specific padding */
+    body.account-page {
+      padding-top: 154px !important;
+    }
+
+    /* Dashboard container */
+    .dashboard-container {
+      padding: 3rem 0;
+      min-height: calc(100vh - 154px);
+      background-color: #f8f9fa;
+    }
+
+    /* Force Bootstrap grid to work properly */
+    .dashboard-container .container {
+      max-width: 1400px;
+      width: 100%;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      margin: 0 auto;
+    }
+
+    .dashboard-container .row {
+      display: flex;
+      flex-wrap: wrap;
+      margin-left: -1rem;
+      margin-right: -1rem;
+      gap: 0;
+    }
+
+    /* Sidebar column - 25% width on desktop */
+    .dashboard-container .col-lg-3 {
+      flex: 0 0 auto;
+      width: 25%;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    /* Content column - 75% width on desktop */
+    .dashboard-container .col-lg-9 {
+      flex: 0 0 auto;
+      width: 75%;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    /* Sidebar card styling */
+    .dashboard-container .col-lg-3 .card {
+      background: white;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      position: sticky;
+      top: 170px;
+    }
+
+    .dashboard-container .card-body {
+      padding: 2rem 1.5rem;
+    }
+
+    /* User avatar circle */
+    .user-avatar {
+      width: 80px;
+      height: 80px;
+      background: #000;
+      color: white;
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
+    /* Navigation menu items */
+    .list-group-item {
+      border: none !important;
+      border-bottom: 1px solid #f0f0f0 !important;
+      padding: 1rem 1.5rem !important;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      background: white;
+    }
+
+    .list-group-item:last-child {
+      border-bottom: none !important;
+    }
+
+    .list-group-item:hover:not(.active) {
+      background-color: #f8f9fa;
+      padding-left: 2rem !important;
+    }
+
+    .list-group-item.active {
+      background-color: #000 !important;
+      color: white !important;
+      border-left: 4px solid #000 !important;
+    }
+
+    .list-group-item.text-danger:hover {
+      background-color: #fee;
+      color: #dc3545 !important;
+    }
+
+    /* Content area styling */
+    .dashboard-content-area {
+      background: white;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      padding: 2.5rem !important;
+      min-height: 500px;
+    }
+
+    /* Stats cards in overview */
+    .dashboard-content-area .row.g-4 {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin: 0;
+    }
+
+    .dashboard-content-area .row.g-4>[class*="col-"] {
+      padding: 0;
+    }
+
+    /* Responsive: Mobile stacks sidebar on top */
+    @media (max-width: 991px) {
+
+      .dashboard-container .col-lg-3,
+      .dashboard-container .col-lg-9 {
+        width: 100%;
+        flex: 0 0 auto;
+      }
+
+      .dashboard-container .col-lg-3 {
+        margin-bottom: 2rem;
+      }
+
+      .dashboard-container .col-lg-3 .card {
+        position: relative;
+        top: auto;
+      }
+
+      .dashboard-container .row {
+        flex-direction: column;
+      }
+    }
+
+    /* Table styling in dashboard */
+    .table-responsive {
+      margin-top: 1rem;
+    }
+
+    .table {
+      margin-bottom: 0;
+    }
+
+    .table th {
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #6b7280;
+      border-bottom: 2px solid #e5e7eb;
+      padding: 1rem 0.75rem;
+    }
+
+    .table td {
+      padding: 1rem 0.75rem;
+      vertical-align: middle;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    /* Badge styling */
+    .badge {
+      padding: 0.35rem 0.75rem;
+      font-weight: 600;
+      font-size: 0.75rem;
+      border-radius: 4px;
+    }
+
+    /* Form styling in dashboard */
+    .dashboard-content-area .form-control {
+      padding: 0.75rem 1rem;
+      font-size: 0.95rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+    }
+
+    .dashboard-content-area .form-label {
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+      color: #374151;
+    }
+  </style>
+</head>
+
+<body class="account-page">
+  <!-- Navigation Component -->
+  <div id="navigation" data-component="components/nav.html"></div>
+
+  <!-- Cart Component -->
+  <div id="cart-container" data-component="components/cart.html"></div>
+
+  <!-- LOADING OVERLAY -->
+  <div id="auth-loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- GUEST VIEW (Sign In / Sign Up) -->
+  <section id="guest-view" class="section align-items-center"
+    style="display: flex; min-height: 80vh; background-color: #f7f7f7;">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5 col-xl-4">
+
+          <!-- Card -->
+          <div class="bg-white p-5 rounded-3 shadow-sm"
+            style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+
+            <!-- Branding -->
+            <div class="text-center mb-4">
+              <h1 class="h5 fw-bold mb-0" style="letter-spacing: 0.5px;">CustomiseMe.uk</h1>
+            </div>
+
+            <!-- SIGN IN VIEW -->
+            <div id="signin-view">
+              <div class="text-center mb-4">
+                <h2 class="h3 fw-bold mb-1">Sign in</h2>
+                <p class="text-muted small">Sign in or create an account</p>
+              </div>
+
+              <form id="signin-form" onsubmit="handleSignIn(event)">
+
+                <!-- Google Button -->
+                <button type="button"
+                  class="btn btn-outline-secondary w-100 mb-4 d-flex align-items-center justify-content-center gap-2"
+                  onclick="handleGoogleSignIn()"
+                  style="border-color: #ddd; padding: 10px; color: #333; font-weight: 500;">
+                  <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"
+                      fill="#4285F4"></path>
+                    <path
+                      d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.715H.957v2.332A8.997 8.997 0 0 0 9 18z"
+                      fill="#34A853"></path>
+                    <path
+                      d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"
+                      fill="#FBBC05"></path>
+                    <path
+                      d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.162 6.656 3.58 9 3.58z"
+                      fill="#EA4335"></path>
+                  </svg>
+                  Sign in with Google
+                </button>
+
+                <div class="d-flex align-items-center mb-4">
+                  <div class="flex-grow-1 border-bottom" style="border-color: #eee;"></div>
+                  <span class="px-3 text-muted small">or</span>
+                  <div class="flex-grow-1 border-bottom" style="border-color: #eee;"></div>
+                </div>
+
+                <div class="mb-4">
+                  <input type="email" class="form-control form-control-lg bg-light border-0" id="signin-email"
+                    placeholder="Email" required style="font-size: 0.95rem; padding: 12px 15px;">
+                </div>
+
+                <div class="mb-4">
+                  <input type="password" class="form-control form-control-lg bg-light border-0" id="signin-password"
+                    placeholder="Password" required style="font-size: 0.95rem; padding: 12px 15px;">
+                  <div class="text-end mt-1">
+                    <button type="button" class="btn p-0 border-0 bg-transparent text-muted small"
+                      style="font-size: 0.75rem;" onclick="handleForgotPassword()">
+                      Forgot Password?
+                    </button>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-dark w-100 btn-lg mb-4" id="signin-btn"
+                  style="padding: 12px; font-size: 1rem; font-weight: 600; background: black; border: none;">
+                  Continue
+                </button>
+
+                <!-- Create Account Link -->
+                <div class="text-center">
+                  <button type="button"
+                    class="btn p-0 text-decoration-underline border-0 bg-transparent text-dark small"
+                    style="font-weight: 500;" onclick="toggleAuthMode('signup')">
+                    Don't have an account? Create One
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- CREATE ACCOUNT VIEW (Hidden) -->
+            <div id="signup-view" style="display: none;">
+              <div class="text-center mb-4">
+                <h2 class="h3 fw-bold mb-1">Create Account</h2>
+                <p class="text-muted small">Join CustomiseMe UK today</p>
+              </div>
+
+              <form id="signup-form" onsubmit="handleCreateAccount(event)">
+                <!-- Google Button -->
+                <button type="button"
+                  class="btn btn-outline-secondary w-100 mb-4 d-flex align-items-center justify-content-center gap-2"
+                  onclick="handleGoogleSignIn()"
+                  style="border-color: #ddd; padding: 10px; color: #333; font-weight: 500;">
+                  <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"
+                      fill="#4285F4"></path>
+                    <path
+                      d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.715H.957v2.332A8.997 8.997 0 0 0 9 18z"
+                      fill="#34A853"></path>
+                    <path
+                      d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"
+                      fill="#FBBC05"></path>
+                    <path
+                      d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.162 6.656 3.58 9 3.58z"
+                      fill="#EA4335"></path>
+                  </svg>
+                  Sign up with Google
+                </button>
+
+                <div class="d-flex align-items-center mb-4">
+                  <div class="flex-grow-1 border-bottom" style="border-color: #eee;"></div>
+                  <span class="px-3 text-muted small">or</span>
+                  <div class="flex-grow-1 border-bottom" style="border-color: #eee;"></div>
+                </div>
+
+                <div class="mb-3">
+                  <input type="text" class="form-control form-control-lg bg-light border-0" id="signup-name"
+                    placeholder="Full Name" required style="font-size: 0.95rem;">
+                </div>
+                <div class="mb-3">
+                  <input type="email" class="form-control form-control-lg bg-light border-0" id="signup-email"
+                    placeholder="Email" required style="font-size: 0.95rem;">
+                </div>
+                <div class="mb-4">
+                  <input type="password" class="form-control form-control-lg bg-light border-0" id="signup-password"
+                    placeholder="Password (Min 8 chars)" required minlength="8" style="font-size: 0.95rem;">
+                </div>
+
+                <button type="submit" class="btn btn-dark w-100 btn-lg mb-4"
+                  style="padding: 12px; font-size: 1rem; font-weight: 600; background: black; border: none;">Continue</button>
+
+                <!-- Back to Sign In -->
+                <div class="text-center">
+                  <button type="button"
+                    class="btn p-0 text-decoration-underline border-0 bg-transparent text-dark small"
+                    style="font-weight: 500;" onclick="toggleAuthMode('signin')">
+                    Already have an account? Sign In
+                  </button>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DASHBOARD VIEW -->
+  <section id="dashboard-view" class="dashboard-container" style="display: none;">
+    <div class="container">
+      <div class="row">
+
+        <!-- LEFT SIDEBAR -->
+        <div class="col-12 col-lg-3">
+          <div class="card">
+            <!-- User Profile -->
+            <div class="card-body text-center">
+              <div class="user-avatar">
+                <span id="user-initial">U</span>
+              </div>
+              <h5 class="mb-1 fw-bold" id="user-name">User Name</h5>
+              <p class="text-muted small mb-0" id="user-email">email@example.com</p>
+            </div>
+
+            <!-- Navigation Menu -->
+            <div class="list-group list-group-flush">
+              <a href="#" class="list-group-item list-group-item-action active" id="link-overview"
+                onclick="showTab('overview'); return false;">
+                Overview
+              </a>
+              <a href="#" class="list-group-item list-group-item-action" id="link-orders"
+                onclick="showTab('orders'); return false;">
+                Order History
+              </a>
+              <a href="#" class="list-group-item list-group-item-action" id="link-profile"
+                onclick="showTab('profile'); return false;">
+                Profile & Address
+              </a>
+              <a href="#" class="list-group-item list-group-item-action" id="link-settings"
+                onclick="showTab('settings'); return false;">
+                Settings
+              </a>
+              <a href="#" class="list-group-item list-group-item-action text-danger"
+                onclick="window.AuthService.logout(); return false;">
+                Sign Out
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT CONTENT AREA -->
+        <div class="col-12 col-lg-9">
+          <!-- Overview Tab -->
+          <div class="dashboard-content-area" id="tab-overview">
+            <h2 class="h4 mb-4 fw-bold">ACCOUNT OVERVIEW</h2>
+
+            <div class="row g-4 mb-5">
+              <div class="col-md-4">
+                <div class="p-4 rounded-3 text-center" style="background: white; border: 1px solid #eee;">
+                  <h3 class="display-6 fw-bold mb-1">0</h3>
+                  <p class="text-muted small mb-0 text-uppercase" style="letter-spacing: 0.05em;">Total Orders</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="p-4 rounded-3 text-center" style="background: white; border: 1px solid #eee;">
+                  <h3 class="display-6 fw-bold mb-1">PRO</h3>
+                  <p class="text-muted small mb-0 text-uppercase" style="letter-spacing: 0.05em;">Member Status</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="p-4 rounded-3 text-center" style="background: white; border: 1px solid #eee;">
+                  <h3 class="display-6 fw-bold mb-1">0</h3>
+                  <p class="text-muted small mb-0 text-uppercase" style="letter-spacing: 0.05em;">Points Balance</p>
+                </div>
+              </div>
+            </div>
+
+            <h3 class="h5 mb-3 fw-bold">RECENT ORDERS</h3>
+            <div class="table-responsive">
+              <table class="table table-hover align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th>Order #</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                    <th class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>#CMUK-10234</td>
+                    <td>Jan 28, 2026</td>
+                    <td><span class="badge bg-warning text-dark">Processing</span></td>
+                    <td>£45.99</td>
+                    <td class="text-end"><button class="btn btn-sm btn-outline-dark">View</button></td>
+                  </tr>
+                  <tr>
+                    <td>#CMUK-10189</td>
+                    <td>Dec 15, 2025</td>
+                    <td><span class="badge bg-success">Delivered</span></td>
+                    <td>£129.50</td>
+                    <td class="text-end"><button class="btn btn-sm btn-outline-dark">View</button></td>
+                  </tr>
+                  <tr>
+                    <td>#CMUK-09982</td>
+                    <td>Nov 02, 2025</td>
+                    <td><span class="badge bg-success">Delivered</span></td>
+                    <td>£32.00</td>
+                    <td class="text-end"><button class="btn btn-sm btn-outline-dark">View</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Orders Tab -->
+          <div class="dashboard-content-area" id="tab-orders" style="display: none;">
+            <h2 class="h4 mb-4 fw-bold">ORDER HISTORY</h2>
+            <div class="table-responsive">
+              <table class="table table-hover align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Date placed</th>
+                    <th>Status</th>
+                    <th>Items</th>
+                    <th>Total</th>
+                    <th class="text-end"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-medium">#CMUK-10234</td>
+                    <td>Jan 28, 2026</td>
+                    <td><span class="badge bg-warning text-dark">Processing</span></td>
+                    <td>3 items</td>
+                    <td class="fw-bold">£45.99</td>
+                    <td class="text-end"><a href="#" class="btn btn-sm btn-outline-dark">Track Order</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Profile Tab -->
+          <div class="dashboard-content-area" id="tab-profile" style="display: none;">
+            <h2 class="h4 mb-4 fw-bold">PROFILE & ADDRESS</h2>
+
+            <div class="row g-4">
+              <div class="col-md-6">
+                <h5 class="mb-3">Personal Information</h5>
+                <form>
+                  <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="profile-name" value="User Name">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="profile-email" value="email@example.com" disabled
+                      readonly>
+                    <div class="form-text">Contact support to change email</div>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control" placeholder="+44 7123 456789">
+                  </div>
+                  <button type="submit" class="btn btn-primary">UPDATE PROFILE</button>
+                </form>
+              </div>
+
+              <div class="col-md-6">
+                <h5 class="mb-3">Shipping Address</h5>
+                <div class="p-3 bg-light rounded mb-3">
+                  <strong>Default Address</strong><br>
+                  123 High Street<br>
+                  London, UK<br>
+                  SW1A 1AA
+                </div>
+                <button class="btn btn-outline-dark btn-sm">EDIT ADDRESS</button>
+                <button class="btn btn-outline-dark btn-sm ms-2">ADD NEW ADDRESS</button>
+              </div>
+            </div>
+
+            <hr class="my-5">
+
+            <div class="row">
+              <div class="col-12">
+                <h5 class="mb-3">Change Password</h5>
+                <form class="row g-3">
+                  <div class="col-md-4">
+                    <input type="password" class="form-control" placeholder="Current Password">
+                  </div>
+                  <div class="col-md-4">
+                    <input type="password" class="form-control" placeholder="New Password">
+                  </div>
+                  <div class="col-md-4">
+                    <button class="btn btn-outline-dark w-100">UPDATE PASSWORD</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Settings Tab -->
+          <div class="dashboard-content-area" id="tab-settings" style="display: none;">
+            <h2 class="h4 mb-4 fw-bold">ACCOUNT SETTINGS</h2>
+
+            <h5 class="mb-3">Email Preferences</h5>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" id="check-promos" checked>
+              <label class="form-check-label" for="check-promos">
+                Receive details about new products, discounts and special offers
+              </label>
+            </div>
+            <div class="form-check mb-4">
+              <input class="form-check-input" type="checkbox" id="check-orders" checked disabled>
+              <label class="form-check-label" for="check-orders">
+                Receive order updates and tracking information (Required)
+              </label>
+            </div>
+
+            <h5 class="mb-3 text-danger">Danger Zone</h5>
+            <p class="text-muted">Once you delete your account, there is no going back. Please be certain.</p>
+            <button class="btn btn-danger">DELETE ACCOUNT</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Component -->
+  <div id="footer-container" data-component="components/footer.html"></div>
+
+  <!-- Scripts -->
+  <script src="js/components.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/cart.js"></script>
+  <script type="module" src="js/api-integration.js"></script>
+
+  <script>
+    // Auth State Logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const loading = document.getElementById('auth-loading');
+      const guestView = document.getElementById('guest-view');
+      const dashboardView = document.getElementById('dashboard-view');
+
+      const checkAuth = setInterval(() => {
+        if (window.AuthService) {
+          clearInterval(checkAuth);
+          window.AuthService.initAuthListener((user) => {
+            loading.style.display = 'none';
+            if (user) {
+              guestView.style.display = 'none';
+              dashboardView.style.display = 'block';
+              updateDashboard(user);
+            } else {
+              dashboardView.style.display = 'none';
+              guestView.style.display = 'block';
+            }
+          });
+        }
+      }, 100);
+
+      setTimeout(() => clearInterval(checkAuth), 5000);
+    });
+
+    function updateDashboard(user) {
+      document.getElementById('user-name').textContent = user.name || 'User';
+      document.getElementById('user-email').textContent = user.email || '';
+      document.getElementById('user-initial').textContent = (user.name || 'U').charAt(0).toUpperCase();
+      document.getElementById('profile-name').value = user.name || '';
+      document.getElementById('profile-email').value = user.email || '';
+
+      const navTextEl = document.querySelector('.nav-text');
+      if (navTextEl) {
+        navTextEl.textContent = 'HI, ' + (user.name ? user.name.split(' ')[0].toUpperCase() : 'USER');
+        const navLink = navTextEl.closest('a');
+        if (navLink) navLink.href = 'account.html';
+      }
+    }
+
+    window.showTab = function (tabName) {
+      document.querySelectorAll('.dashboard-content-area').forEach(el => el.style.display = 'none');
+      const selected = document.getElementById('tab-' + tabName);
+      if (selected) selected.style.display = 'block';
+
+      document.querySelectorAll('.list-group-item').forEach(el => el.classList.remove('active'));
+      const activeLink = document.getElementById('link-' + tabName);
+      if (activeLink) activeLink.classList.add('active');
+    };
+
+    window.handleSignIn = async function (e) {
+      e.preventDefault();
+      const email = document.getElementById('signin-email').value;
+      const pass = document.getElementById('signin-password').value;
+      const res = await window.AuthService.login(email, pass);
+      if (res.success) location.reload();
+      else alert(res.message);
+    };
+
+    window.handleGoogleSignIn = async function () {
+      const res = await window.AuthService.loginWithGoogle();
+      if (res.success) location.reload();
+    };
+
+    window.handleCreateAccount = async function (e) {
+      e.preventDefault();
+      const name = document.getElementById('signup-name').value;
+      const email = document.getElementById('signup-email').value;
+      const pass = document.getElementById('signup-password').value;
+      const res = await window.AuthService.register({ name, email, password: pass });
+      if (res.success) location.reload();
+      else alert(res.message);
+    };
+
+    window.handleForgotPassword = async function () {
+      const email = document.getElementById('signin-email').value;
+      if (!email) {
+        alert('Please enter your email address first.');
+        return;
+      }
+      const res = await window.AuthService.sendPasswordReset(email);
+      alert(res.message);
+    };
+
+    window.toggleAuthMode = function (mode) {
+      if (mode === 'signup') {
+        document.getElementById('signin-view').style.display = 'none';
+        document.getElementById('signup-view').style.display = 'block';
+      } else {
+        document.getElementById('signin-view').style.display = 'block';
+        document.getElementById('signup-view').style.display = 'none';
+      }
+    };
+  </script>
+</body>
+
+</html>

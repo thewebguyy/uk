@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" type="image/png" href="icon.png">
+  <title>Design Studio - CustomiseMe UK</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Professional design services to bring your vision to life. Custom designs, branding, and mockup generation.">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Navigation Component -->
+  <div id="navigation" data-component="components/nav.html"></div>
+
+  <!-- Cart Component -->
+  <div id="cart-container" data-component="components/cart.html"></div>
+
+  <!-- Hero Section -->
+  <section class="section"
+    style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('shopservices.png') center / cover no-repeat; padding: 5rem 0; text-align: center; color: white;">
+    <h1 class="display-3 fw-bold">DESIGN STUDIO</h1>
+    <p style="max-width: 400px; margin: 0 auto; color: white;">
+      Professional design services to bring your vision to life. From custom designs to complete branding solutions, we
+      help you stand out.
+    </p>
+  </section>
+
+
+  <!-- Services Grid Section -->
+  <section id="services" style="background-color: #f5f5f5; padding: 80px 5%;">
+
+    <style>
+      .ds-services-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .ds-card {
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 0px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: auto;
+        height: 100%;
+        transition: transform 0.3s ease;
+      }
+
+      .ds-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+      }
+
+      .ds-icon-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+
+      .ds-heading {
+        font-size: 24px;
+        font-weight: 700;
+        color: #000000;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 20px;
+      }
+
+      .ds-description {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #666666;
+        margin-bottom: 30px;
+        flex-grow: 1;
+      }
+
+      .ds-btn {
+        width: 100%;
+        max-width: 280px;
+        height: 50px;
+        background: #000000;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 0px;
+        border: none;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: background 0.3s ease;
+      }
+
+      .ds-btn:hover {
+        background: #333333;
+        color: #ffffff;
+      }
+    </style>
+
+    <div class="ds-services-grid">
+
+      <!-- Card 1: Design Services -->
+      <div class="ds-card">
+        <div>
+          <div class="ds-icon-wrapper">
+            <!-- Icon: People with Speech Bubbles -->
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              <path d="M21 6h.01"></path>
+              <path d="M3 6h.01"></path>
+            </svg>
+          </div>
+          <h3 class="ds-heading">DESIGN SERVICES</h3>
+          <div class="ds-description">
+            <p style="margin: 0;">Get a bespoke design created from scratch by our expert designers tailored to your
+              vision.</p>
+            <ul style="list-style: none; padding: 0; margin-top: 10px;">
+              <li>• One-on-one consultation</li>
+              <li>• High-res digital files</li>
+            </ul>
+          </div>
+        </div>
+        <a href="designservice.html" class="ds-btn">BOOK FREE CONSULTATION TODAY</a>
+      </div>
+
+      <!-- Card 2: Mockup Generation -->
+      <div class="ds-card">
+        <div>
+          <div class="ds-icon-wrapper">
+            <!-- Icon: Document/Webpage -->
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <path d="M3 9h18"></path>
+              <path d="M9 21V9"></path>
+              <path d="M14 15h3"></path>
+              <path d="M14 18h3"></path>
+            </svg>
+          </div>
+          <h3 class="ds-heading">MOCK UP GENERATION</h3>
+          <div class="ds-description">
+            Need help to vision what you design will look like on a t-shirt, bag, cup, hat? upload design to the studio
+            to bring it to life...
+          </div>
+        </div>
+        <a href="studio.html" class="ds-btn">EXPLORE STUDIO</a>
+      </div>
+
+      <!-- Card 3: Resources -->
+      <div class="ds-card">
+        <div>
+          <div class="ds-icon-wrapper">
+            <!-- Icon: Stacked Layers -->
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+              <path d="M2 17l10 5 10-5"></path>
+              <path d="M2 12l10 5 10-5"></path>
+            </svg>
+          </div>
+          <h3 class="ds-heading">RESOURCES</h3>
+          <div class="ds-description">
+            Here you will find a list of PDF downloadable that will help you meet our artwork standards and
+            requirements. download and follow the guides for the best outcome.
+          </div>
+        </div>
+        <a href="resources.html" class="ds-btn">CHECK OUT RESOURCES</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="section" style="background: #000000; color: #ffffff; padding: 5rem 0;">
+    <div class="container text-center">
+      <h2 style="font-weight: 700; font-size: 2.5rem; margin-bottom: 1rem; color: #fff;">READY TO START YOUR PROJECT?
+      </h2>
+      <p style="opacity: 0.8; margin-bottom: 2.5rem; font-size: 1.1rem; font-weight: 300;">
+        Collaborate with our expert team to bring your creative vision to life.
+      </p>
+      <a href="contact.html?service=design" class="btn btn-outline-light"
+        style="border: 2px solid white; padding: 12px 30px; font-weight: 600; border-radius: 0; text-transform: uppercase;">
+        BOOK FREE CONSULTATION TODAY
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer Component -->
+  <div id="footer-container" data-component="components/footer.html"></div>
+
+  <!-- Scripts -->
+  <script src="js/components.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/cart.js"></script>
+  <script type="module" src="js/api-integration.js"></script>
+</body>
+
+</html>

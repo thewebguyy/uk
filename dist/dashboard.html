@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" type="image/png" href="icon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Customise Me UK</title>
+  <link rel="stylesheet" href="admin-styles.css">
+</head>
+
+<body>
+  <!-- Loading Screen -->
+  <div id="loadingScreen" class="loading-screen">
+    <div class="spinner-large"></div>
+    <p>Loading Dashboard...</p>
+  </div>
+
+  <!-- Main Dashboard -->
+  <div id="dashboard" style="display: none;">
+    <!-- Header -->
+    <header class="dashboard-header">
+      <div class="header-content">
+        <h1>Customise Me UK - Admin Portal</h1>
+        <div class="header-actions">
+          <span class="user-email" id="userEmail"></span>
+          <button class="btn btn-secondary btn-sm" onclick="logout()">Sign Out</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+      <div class="dashboard-container">
+
+        <!-- Navigation Tabs -->
+        <div class="card">
+          <div class="admin-tabs">
+            <button class="tab-btn active" onclick="showTab('products')">Products</button>
+            <button class="tab-btn" onclick="showTab('upload')">Upload Product</button>
+            <button class="tab-btn" onclick="showTab('edit-product')">Edit Product</button>
+            <button class="tab-btn" onclick="showTab('orders')">Orders</button>
+            <button class="tab-btn" onclick="showTab('custom-orders')">Custom Orders</button>
+            <button class="tab-btn" onclick="showTab('waitlist')">Waitlists</button>
+            <button class="tab-btn" onclick="showTab('homepage')">Homepage Images</button>
+            <button class="tab-btn" onclick="showTab('partners')">Partners Logo</button>
+            <button class="tab-btn" onclick="showTab('reviews')">Reviews</button>
+          </div>
+        </div>
+
+        <!-- Products List Tab -->
+        <div id="products-tab" class="tab-content active">
+          <div class="card">
+            <div class="section-header">
+              <h2>All Products</h2>
+              <span class="product-count" id="productCount">0 Products</span>
+            </div>
+
+            <div id="productsContainer" class="products-container">
+              <div class="loading-products">
+                <div class="spinner-large"></div>
+                <p>Loading products...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upload Product Tab -->
+        <div id="upload-tab" class="tab-content">
+          <div class="card">
+            <h2>Upload New Product</h2>
+
+            <form id="uploadForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="productName">Product Name *</label>
+                  <input type="text" id="productName" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="productPrice">Price (£) *</label>
+                  <input type="number" id="productPrice" step="0.01" min="0" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="productDescription">Description *</label>
+                <textarea id="productDescription" required></textarea>
+                <small class="char-count"><span id="descCharCount">0</span>/500 characters</small>
+              </div>
+
+              <div class="form-group">
+                <label for="productCategories">Categories * (Select multiple)</label>
+                <select id="productCategories" multiple required>
+                  <option value="apparel">Apparel</option>
+                  <option value="stickers">Stickers & Labels</option>
+                  <option value="party-decor">Party Decor</option>
+                  <option value="accessories">Accessories</option>
+                  <option value="custom">Custom Products</option>
+                </select>
+                <small>Hold Ctrl (Windows) or Cmd (Mac) to select multiple categories</small>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="productSizes">Available Sizes (comma-separated)</label>
+                  <input type="text" id="productSizes" placeholder="e.g., S, M, L, XL">
+                  <small>Leave empty if not applicable</small>
+                </div>
+
+                <div class="form-group">
+                  <label for="productColors">Available Colors (comma-separated)</label>
+                  <input type="text" id="productColors" placeholder="e.g., Black, White, Red">
+                  <small>Leave empty if not applicable</small>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="productImages">Product Images * (Max 5 images)</label>
+                <input type="file" id="productImages" accept="image/*" multiple required>
+                <small>Select up to 5 images. First image will be the main image.</small>
+              </div>
+
+              <div id="imagePreviews" class="image-previews"></div>
+
+              <div id="uploadProgress" class="upload-progress" style="display: none;">
+                <div class="progress-bar">
+                  <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p id="uploadStatus">Uploading...</p>
+              </div>
+
+              <div id="uploadMessage" class="form-message" style="display: none;"></div>
+
+              <div class="form-row">
+                <button type="submit" class="btn btn-primary" id="uploadBtn">
+                  <span id="uploadText">Upload Product</span>
+                  <span id="uploadSpinner" class="spinner" style="display: none;"></span>
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="resetUploadForm()">Clear Form</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Edit Product Tab -->
+        <div id="edit-product-tab" class="tab-content">
+          <div class="card">
+            <h2>Edit Product</h2>
+
+            <div class="form-group">
+              <label for="editProductSelect">Select Product to Edit</label>
+              <select id="editProductSelect" onchange="loadProductForEdit()">
+                <option value="">-- Select a product --</option>
+              </select>
+            </div>
+
+            <div id="editFormContainer" style="display: none;">
+              <form id="editForm">
+                <input type="hidden" id="editProductId">
+                <input type="hidden" id="editBackendId">
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="editProductName">Product Name *</label>
+                    <input type="text" id="editProductName" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="editProductPrice">Price (£) *</label>
+                    <input type="number" id="editProductPrice" step="0.01" min="0" required>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="editProductDescription">Description *</label>
+                  <textarea id="editProductDescription" required></textarea>
+                  <small class="char-count"><span id="editDescCharCount">0</span>/500 characters</small>
+                </div>
+
+                <div class="form-group">
+                  <label for="editProductCategories">Categories * (Select multiple)</label>
+                  <select id="editProductCategories" multiple required>
+                    <option value="apparel">Apparel</option>
+                    <option value="stickers">Stickers & Labels</option>
+                    <option value="party-decor">Party Decor</option>
+                    <option value="accessories">Accessories</option>
+                    <option value="custom">Custom Products</option>
+                  </select>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="editProductSizes">Available Sizes (comma-separated)</label>
+                    <input type="text" id="editProductSizes" placeholder="e.g., S, M, L, XL">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="editProductColors">Available Colors (comma-separated)</label>
+                    <input type="text" id="editProductColors" placeholder="e.g., Black, White, Red">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Current Images</label>
+                  <div id="currentImages" class="image-previews"></div>
+                </div>
+
+                <div class="form-group">
+                  <label for="editProductImages">Add New Images (Max 5 total)</label>
+                  <input type="file" id="editProductImages" accept="image/*" multiple>
+                  <small>Upload new images or keep existing ones</small>
+                </div>
+
+                <div id="editImagePreviews" class="image-previews"></div>
+
+                <div id="editMessage" class="form-message" style="display: none;"></div>
+
+                <div class="form-row">
+                  <button type="submit" class="btn btn-primary" id="editBtn">
+                    <span id="editText">Update Product</span>
+                    <span id="editSpinner" class="spinner" style="display: none;"></span>
+                  </button>
+                  <button type="button" class="btn btn-danger" onclick="deleteProduct()">Delete Product</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Orders Tab -->
+        <div id="orders-tab" class="tab-content">
+          <div class="card">
+            <div class="section-header">
+              <h2>Orders</h2>
+              <div class="order-filters">
+                <select id="orderStatusFilter" onchange="filterOrders()">
+                  <option value="all">All Orders</option>
+                  <option value="pending">Pending</option>
+                  <option value="processing">Processing</option>
+                  <option value="shipped">Shipped</option>
+                  <option value="delivered">Delivered</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="ordersContainer" class="orders-container">
+              <div class="loading-products">
+                <div class="spinner-large"></div>
+                <p>Loading orders...</p>
+              </div>
+
+              <!-- Custom Orders Tab -->
+              <div id="custom-orders-tab" class="tab-content">
+                <div class="card">
+                  <div class="section-header">
+                    <h2>Custom Order Requests</h2>
+                    <div class="order-filters">
+                      <select id="customOrderFilter" onchange="loadCustomOrders()">
+                        <option value="all">All Pending</option>
+                        <option value="pending">Awaiting Review</option>
+                        <option value="approved">Awaiting Customer Confirmation</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div id="customOrdersContainer" class="orders-table-container">
+                    <table class="table w-100">
+                      <thead>
+                        <tr>
+                          <th>Order ID</th>
+                          <th>Customer</th>
+                          <th>Product</th>
+                          <th>Artwork</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody id="custom-orders-body">
+                        <!-- Dynamic -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Custom Order Detail Modal -->
+              <div id="customOrderModal" class="modal-overlay" style="display:none;">
+                <div class="modal-card">
+                  <div class="modal-header">
+                    <h3>Review Artwork: #<span id="mo-order-id"></span></h3>
+                    <button class="btn-close" onclick="closeCustomModal()">×</button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <h5>Original Artwork</h5>
+                        <img id="mo-artwork-img" src="" class="img-fluid border" style="max-height: 400px;">
+                        <a id="mo-download-link" href="#" target="_blank" class="d-block mt-2">⬇️ Download High-Res</a>
+                      </div>
+                      <div class="col-md-6">
+                        <h5>Product Details</h5>
+                        <p id="mo-product-info"></p>
+                        <hr>
+                        <label>Admin Mockup URL (e.g. from Canva/Photoshop)</label>
+                        <input type="text" id="mo-mockup-input" class="form-control" placeholder="https://...">
+                        <label class="mt-3">Notes to Customer</label>
+                        <textarea id="mo-notes-input" class="form-control" rows="3"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer d-flex gap-2">
+                    <button class="btn btn-primary" onclick="approveCustom()">Approve & Send Mockup</button>
+                    <button class="btn btn-warning" onclick="requestChanges()">Request Changes</button>
+                    <button class="btn btn-danger" onclick="rejectCustom()">Reject Order</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Waitlist Tab -->
+            <div id="waitlist-tab" class="tab-content">
+              <div class="card">
+                <h2>Product Waitlists</h2>
+                <p class="text-grey-dark">Users waiting for out-of-stock items.</p>
+                <div id="waitlistContainer">
+                  <table class="table w-100">
+                    <thead>
+                      <tr>
+                        <th>Product ID</th>
+                        <th>Product Name</th>
+                        <th>Waitlist Count</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="waitlist-table-body">
+                      <!-- Dynamic -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Homepage Images Tab -->
+      <div id="homepage-tab" class="tab-content">
+        <div class="card">
+          <h2>Homepage Images Management</h2>
+          <p class="text-grey-dark mb-4">Upload seasonal or promotional images for the homepage hero section</p>
+
+          <form id="homepageForm">
+            <div class="form-group">
+              <label for="homepageTitle">Section Title</label>
+              <input type="text" id="homepageTitle" placeholder="e.g., Summer Collection 2025">
+            </div>
+
+            <div class="form-group">
+              <label for="homepageSubtitle">Section Subtitle</label>
+              <input type="text" id="homepageSubtitle" placeholder="e.g., Get ready for summer with our new designs">
+            </div>
+
+            <div class="form-group">
+              <label for="homepageImages">Hero Images * (Recommended: 1920x800px)</label>
+              <input type="file" id="homepageImages" accept="image/*" multiple>
+              <small>Upload up to 5 images for the hero carousel</small>
+            </div>
+
+            <div id="homepagePreviews" class="image-previews"></div>
+
+            <div class="form-group">
+              <label>Current Homepage Images</label>
+              <div id="currentHomepageImages" class="image-previews"></div>
+            </div>
+
+            <div id="homepageMessage" class="form-message" style="display: none;"></div>
+
+            <button type="submit" class="btn btn-primary" id="homepageBtn">
+              <span id="homepageText">Update Homepage</span>
+              <span id="homepageSpinner" class="spinner" style="display: none;"></span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Partners Logo Tab -->
+      <div id="partners-tab" class="tab-content">
+        <div class="card">
+          <h2>Partners & Collaborators</h2>
+          <p class="text-grey-dark mb-4">Manage logos of people and brands you've worked with</p>
+
+          <form id="partnersForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="partnerName">Partner/Brand Name *</label>
+                <input type="text" id="partnerName" required placeholder="e.g., Coca Cola">
+              </div>
+
+              <div class="form-group">
+                <label for="partnerWebsite">Website URL (optional)</label>
+                <input type="url" id="partnerWebsite" placeholder="https://example.com">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="partnerLogo">Partner Logo * (Recommended: Square, transparent background)</label>
+              <input type="file" id="partnerLogo" accept="image/*" required>
+            </div>
+
+            <div id="partnerPreview" class="image-previews"></div>
+
+            <div id="partnersMessage" class="form-message" style="display: none;"></div>
+
+            <button type="submit" class="btn btn-primary" id="partnersBtn">
+              <span id="partnersText">Add Partner</span>
+              <span id="partnersSpinner" class="spinner" style="display: none;"></span>
+            </button>
+          </form>
+
+          <hr class="my-5">
+
+          <h3>Current Partners</h3>
+          <div id="partnersContainer" class="partners-grid">
+            <div class="loading-products">
+              <div class="spinner-large"></div>
+              <p>Loading partners...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reviews Tab -->
+      <div id="reviews-tab" class="tab-content">
+        <div class="card">
+          <div class="section-header">
+            <h2>Pending Reviews</h2>
+            <div class="d-flex gap-2">
+              <button class="btn btn-primary btn-sm" onclick="approveAllReviews()">Approve All</button>
+            </div>
+          </div>
+          <div id="pendingReviewsContainer" class="reviews-moderation-grid mb-5">
+            <!-- Dynamic -->
+          </div>
+
+          <div class="section-header">
+            <h2>Approved Reviews</h2>
+            <button class="btn btn-primary btn-sm" onclick="showAddReviewForm()">Add Review Manually</button>
+          </div>
+
+          <div id="reviewsContainer" class="reviews-container">
+            <div class="loading-products">
+              <div class="spinner-large"></div>
+              <p>Loading reviews...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  </div>
+  </main>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+    import { getFirestore, collection, addDoc, getDocs, doc, getDoc, updateDoc, deleteDoc, setDoc, query, where, orderBy, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+    import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js';
+    import { getFunctions, httpsCallable } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-functions.js';
+
+
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyA6pLJdRb4V5LUUrHdwSKRne-ZgXJoqqY8",
+      authDomain: "cmuksite.firebaseapp.com",
+      projectId: "cmuksite",
+      storageBucket: "cmuksite.firebasestorage.app",
+      messagingSenderId: "311601861870",
+      appId: "1:311601861870:web:4d3c04c418a789961dcfff"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+    const functions = getFunctions(app);
+
+    // Make Firebase available globally
+    window.db = db;
+    window.storage = storage;
+    window.auth = auth;
+    window.functions = functions;
+
+    // Auth State Observer
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        document.getElementById('userEmail').textContent = user.email;
+        document.getElementById('loadingScreen').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+
+        // Load initial data
+        await loadProducts();
+        await loadOrders();
+        await loadCustomOrders(); // New
+        await loadWaitlists();    // New
+        await loadPartners();
+        await loadReviews();
+        await loadHomepageImages();
+        populateEditProductSelect();
+      } else {
+        window.location.href = 'login.html';
+      }
+    });
+
+    // Global Logout Function
+    window.logout = async function () {
+      if (confirm('Are you sure you want to sign out?')) {
+        try {
+          await signOut(auth);
+          localStorage.removeItem('authToken'); // Clear backend token
+          window.location.href = 'login.html';
+        } catch (error) {
+          console.error('Logout error:', error);
+          alert('Failed to sign out. Please try again.');
+        }
+      }
+    };
+
+    // ========================================
+    // BACKEND SYNC FUNCTION
+    // ========================================
+    async function syncToBackend(action, data, backendId = null) {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        console.warn('No backend auth token found. Skipping backend sync.');
+        return null;
+      }
+
+      const API_URL = 'http://localhost:5000/api/products';
+
+      try {
+        let url = API_URL;
+        let method = 'POST';
+        let body = null;
+
+        if (action === 'create') {
+          body = {
+            name: data.name,
+            price: data.price,
+            description: data.description,
+            category: data.categories && data.categories.length > 0 ? data.categories[0] : 'custom',
+            subcategory: data.categories && data.categories.length > 1 ? data.categories[1] : '',
+            tags: data.categories || [],
+            images: data.images.map((img, i) => ({ url: img, isPrimary: i === 0 })),
+            stock: 100,
+            sizes: data.sizes ? data.sizes.map(s => ({ name: s, inStock: true })) : [],
+            colors: data.colors ? data.colors.map(c => ({ name: c, inStock: true })) : [],
+            sku: `SKU-${Date.now()}`
+          };
+        } else if (action === 'update') {
+          if (!backendId) return null;
+          url = `${API_URL}/${backendId}`;
+          method = 'PUT';
+          body = {
+            name: data.name,
+            price: data.price,
+            description: data.description,
+            category: data.categories && data.categories.length > 0 ? data.categories[0] : 'custom',
+            tags: data.categories || [],
+            images: data.images ? data.images.map((img, i) => ({ url: img, isPrimary: i === 0 })) : undefined,
+            sizes: data.sizes ? data.sizes.map(s => ({ name: s, inStock: true })) : [],
+            colors: data.colors ? data.colors.map(c => ({ name: c, inStock: true })) : [],
+          };
+        } else if (action === 'delete') {
+          if (!backendId) return null;
+          url = `${API_URL}/${backendId}`;
+          method = 'DELETE';
+        }
+
+        console.log(`Syncing to backend: ${method} ${url}`);
+        const response = await fetch(url, {
+          method: method,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: body ? JSON.stringify(body) : undefined
+        });
+
+        const result = await response.json();
+        console.log('Backend sync result:', result);
+        return result;
+
+      } catch (error) {
+        console.error('Backend sync error:', error);
+        return null;
+      }
+    }
+
+    // Tab Navigation
+    window.showTab = function (tabName) {
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+
+      // Remove active class from all buttons
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      // Show selected tab
+      document.getElementById(`${tabName}-tab`).classList.add('active');
+
+      // Add active class to clicked button
+      event.target.classList.add('active');
+    };
+
+    // ========================================
+    // PRODUCTS MANAGEMENT
+    // ========================================
+
+    async function loadProducts() {
+      const container = document.getElementById('productsContainer');
+
+      try {
+        const querySnapshot = await getDocs(collection(db, 'products'));
+        const products = [];
+
+        querySnapshot.forEach((doc) => {
+          products.push({ id: doc.id, ...doc.data() });
+        });
+
+        if (products.length === 0) {
+          container.innerHTML = '<div class="empty-state"><p>No products found. Upload your first product to get started!</p></div>';
+        } else {
+          container.innerHTML = products.map(product => `
+            <div class="product-item">
+              <div class="product-image">
+                <img src="${product.images && product.images[0] ? product.images[0] : 'placeholder.jpg'}" alt="${product.name}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22150%22 height=%22150%22%3E%3Crect fill=%22%23ddd%22 width=%22150%22 height=%22150%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2214%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22%3ENo Image%3C/text%3E%3C/svg%3E'">
+              </div>
+              <div class="product-details">
+                <h3>${product.name}</h3>
+                <p class="product-price">£${parseFloat(product.price).toFixed(2)}</p>
+                <div class="mb-2">
+                  ${product.categories ? product.categories.map(cat =>
+            `<span class="product-category">${cat}</span>`
+          ).join(' ') : ''}
+                </div>
+                <p class="product-description">${product.description || 'No description'}</p>
+                ${product.sizes ? `<p class="product-meta"><strong>Sizes:</strong> ${product.sizes.join(', ')}</p>` : ''}
+                ${product.colors ? `<p class="product-meta"><strong>Colors:</strong> ${product.colors.join(', ')}</p>` : ''}
+                <p class="product-meta"><strong>Images:</strong> ${product.images ? product.images.length : 0}</p>
+              </div>
+              <div class="product-actions">
+                <button class="btn btn-danger btn-sm" onclick="deleteProductById('${product.id}')">Delete</button>
+              </div>
+            </div>
+          `).join('');
+        }
+
+        document.getElementById('productCount').textContent = `${products.length} Product${products.length !== 1 ? 's' : ''}`;
+      } catch (error) {
+        console.error('Error loading products:', error);
+        container.innerHTML = '<div class="error-state"><p>Failed to load products. Please refresh the page.</p></div>';
+      }
+    }
+
+    window.loadProducts = loadProducts;
+
+    // ========================================
+    // CUSTOM ORDERS MANAGEMENT
+    // ========================================
+    let selectedOrder = null;
+
+    window.loadCustomOrders = async function () {
+      const tbody = document.getElementById('custom-orders-body');
+      const filter = document.getElementById('customOrderFilter').value;
+      tbody.innerHTML = '<tr><td colspan="6" class="text-center p-4 text-grey">Loading custom orders...</td></tr>';
+
+      try {
+        let q;
+        if (filter === 'all') {
+          q = query(collection(db, 'orders'), where('hasCustomArtwork', '==', true));
+        } else if (filter === 'pending') {
+          q = query(collection(db, 'orders'), where('hasCustomArtwork', '==', true), where('customOrderStatus', '==', 'pending'));
+        } else if (filter === 'approved') {
+          q = query(collection(db, 'orders'), where('hasCustomArtwork', '==', true), where('customOrderStatus', '==', 'approved_mockup'));
+        }
+
+        const snap = await getDocs(q);
+
+        if (snap.empty) {
+          tbody.innerHTML = '<tr><td colspan="6" class="text-center p-4 text-grey">No custom orders found.</td></tr>';
+          return;
+        }
+
+        let html = '';
+        snap.forEach(doc => {
+          const order = doc.data();
+          const status = order.customOrderStatus || 'pending';
+          let statusBadgeClass = 'bg-secondary';
+          if (status === 'pending') statusBadgeClass = 'bg-warning';
+          else if (status === 'approved_mockup') statusBadgeClass = 'bg-info';
+          else if (status === 'in_production') statusBadgeClass = 'bg-primary';
+          else if (status === 'changes_requested') statusBadgeClass = 'bg-danger';
+          else if (status === 'rejected') statusBadgeClass = 'bg-dark';
+
+          html += `
+                    <tr>
+                        <td>#${doc.id.substring(0, 8)}</td>
+                        <td>${order.email}</td>
+                        <td>${order.items && order.items.length > 0 ? order.items[0].name : '---'}</td>
+                        <td><img src="${order.artworkUrl}" height="40" class="border"></td>
+                        <td><span class="badge ${statusBadgeClass}">${status.replace(/_/g, ' ').toUpperCase()}</span></td>
+                        <td><button class="btn btn-sm btn-outline-primary" onclick="viewCustomOrder('${doc.id}')">Review</button></td>
+                    </tr>
+                `;
+        });
+        tbody.innerHTML = html;
+      } catch (e) {
+        console.error('Error loading custom orders:', e);
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center p-4 text-danger">Error loading custom orders.</td></tr>';
+      }
+    };
+
+    window.viewCustomOrder = async function (id) {
+      const snap = await getDoc(doc(db, 'orders', id));
+      selectedOrder = { id: snap.id, ...snap.data() };
+
+      document.getElementById('mo-order-id').textContent = id.substring(0, 8);
+      document.getElementById('mo-artwork-img').src = selectedOrder.artworkUrl;
+      document.getElementById('mo-download-link').href = selectedOrder.artworkUrl;
+      document.getElementById('mo-product-info').innerHTML = `
+            <strong>Product:</strong> ${selectedOrder.items && selectedOrder.items.length > 0 ? selectedOrder.items[0].name : 'N/A'}<br>
+            <strong>Quantity:</strong> ${selectedOrder.items && selectedOrder.items.length > 0 ? selectedOrder.items[0].quantity : 'N/A'}<br>
+            <strong>Customer Msg:</strong> ${selectedOrder.customerNotes || 'N/A'}
+        `;
+      document.getElementById('mo-mockup-input').value = selectedOrder.adminMockupUrl || '';
+      document.getElementById('mo-notes-input').value = selectedOrder.adminNotes || '';
+
+      document.getElementById('customOrderModal').style.display = 'flex';
+    };
+
+    window.closeCustomModal = () => { document.getElementById('customOrderModal').style.display = 'none'; };
+
+    window.approveCustom = async function () {
+      const mockup = document.getElementById('mo-mockup-input').value;
+      const notes = document.getElementById('mo-notes-input').value;
+
+      if (!mockup) return alert('Please provide a mockup URL first.');
+
+      if (!confirm('Are you sure you want to approve this order and send the mockup to the customer?')) return;
+
+      try {
+        const approveFn = httpsCallable(window.functions, 'approveCustomArtwork');
+        await approveFn({ orderId: selectedOrder.id, mockupUrl: mockup, adminNotes: notes });
+
+        alert('Custom order approved & customer notified!');
+        closeCustomModal();
+        loadCustomOrders();
+      } catch (e) {
+        console.error('Error approving order:', e);
+        alert('Error approving order: ' + (e.message || 'Unknown error'));
+      }
+    };
+
+    window.requestChanges = async function () {
+      const notes = document.getElementById('mo-notes-input').value;
+      if (!notes) return alert('Please add notes explaining the requested changes to the customer.');
+      if (!confirm('Are you sure you want to request changes for this order? The customer will be notified.')) return;
+
+      try {
+        const requestChangesFn = httpsCallable(window.functions, 'requestCustomArtworkChanges');
+        await requestChangesFn({ orderId: selectedOrder.id, adminNotes: notes });
+
+        alert('Changes requested for custom order. Customer notified!');
+        closeCustomModal();
+        loadCustomOrders();
+      } catch (e) {
+        console.error('Error requesting changes:', e);
+        alert('Error requesting changes: ' + (e.message || 'Unknown error'));
+      }
+    };
+
+    window.rejectCustom = async function () {
+      const notes = document.getElementById('mo-notes-input').value;
+      if (!notes) return alert('Please add notes explaining why the order is being rejected.');
+      if (!confirm('Are you sure you want to reject this custom order? This action cannot be undone.')) return;
+
+      try {
+        const rejectFn = httpsCallable(window.functions, 'rejectCustomArtwork');
+        await rejectFn({ orderId: selectedOrder.id, adminNotes: notes });
+
+        alert('Custom order rejected. Customer notified!');
+        closeCustomModal();
+        loadCustomOrders();
+      } catch (e) {
+        console.error('Error rejecting order:', e);
+        alert('Error rejecting order: ' + (e.message || 'Unknown error'));
+      }
+    };
+
+    // ========================================
+    // WAITLIST MANAGEMENT
+    // ========================================
+    window.loadWaitlists = async function () {
+      const tbody = document.getElementById('waitlist-table-body');
+      try {
+        const list = await getDocs(collection(db, 'waitlists'));
+        if (list.empty) {
+          tbody.innerHTML = '<tr><td colspan="4" class="text-center p-3">No active waitlists.</td></tr>';
+          return;
+        }
+        let html = '';
+        list.forEach(doc => {
+          const data = doc.data();
+          html += `
+                    <tr>
+                        <td>${doc.id}</td>
+                        <td>${data.productName || 'Unknown'}</td>
+                        <td>${(data.emails || []).length} users</td>
+                        <td><button class="btn btn-sm btn-outline-primary" onclick="notifyRestock('${doc.id}')">Notify Manually</button></td>
+                    </tr>
+                `;
+        });
+        tbody.innerHTML = html;
+      } catch (e) {
+        console.error(e);
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center text-danger">Error loading waitlists.</td></tr>';
+      }
+    };
+
+    window.notifyRestock = async function (pid) {
+      if (!confirm('Trigger restock email manually?')) return;
+      // Trigger generic "in stock" email via mail collection manually
+      // OR rely on cloud function trigger checkLowStock which does it automatically
+      alert('Automation is already set up to notify when you update stock > 0.');
+    };
+
+
+    // Upload Product Form
+    document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const btn = document.getElementById('uploadBtn');
+      const text = document.getElementById('uploadText');
+      const spinner = document.getElementById('uploadSpinner');
+      const messageDiv = document.getElementById('uploadMessage');
+      const progressDiv = document.getElementById('uploadProgress');
+
+      btn.disabled = true;
+      text.style.display = 'none';
+      spinner.style.display = 'inline-block';
+      messageDiv.style.display = 'none';
+      progressDiv.style.display = 'block';
+
+      try {
+        const name = document.getElementById('productName').value;
+        const price = parseFloat(document.getElementById('productPrice').value);
+        const description = document.getElementById('productDescription').value;
+        const categoriesSelect = document.getElementById('productCategories');
+        const categories = Array.from(categoriesSelect.selectedOptions).map(option => option.value);
+        const sizesInput = document.getElementById('productSizes').value;
+        const sizes = sizesInput ? sizesInput.split(',').map(s => s.trim()).filter(s => s) : [];
+        const colorsInput = document.getElementById('productColors').value;
+        const colors = colorsInput ? colorsInput.split(',').map(c => c.trim()).filter(c => c) : [];
+        const imageFiles = Array.from(document.getElementById('productImages').files);
+
+        if (imageFiles.length === 0) {
+          throw new Error('Please select at least one image');
+        }
+
+        if (imageFiles.length > 5) {
+          throw new Error('Maximum 5 images allowed');
+        }
+
+        console.log(`Uploading ${imageFiles.length} images...`);
+
+        // Upload images
+        const imageUrls = [];
+        for (let i = 0; i < imageFiles.length; i++) {
+          const file = imageFiles[i];
+          const timestamp = Date.now();
+          const randomId = Math.random().toString(36).substring(7);
+          const fileName = `${timestamp}_${randomId}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+          const storageRef = ref(storage, `products/${fileName}`);
+
+          document.getElementById('uploadStatus').textContent = `Uploading image ${i + 1} of ${imageFiles.length}...`;
+          const progress = ((i + 1) / imageFiles.length) * 100;
+          document.getElementById('progressFill').style.width = `${progress}%`;
+
+          console.log(`Uploading file: ${fileName}`);
+          const uploadResult = await uploadBytes(storageRef, file);
+          console.log('Upload result:', uploadResult);
+
+          const url = await getDownloadURL(storageRef);
+          console.log('Image URL:', url);
+          imageUrls.push(url);
+        }
+
+        console.log('All images uploaded:', imageUrls);
+
+        // Add product to Firestore
+        document.getElementById('uploadStatus').textContent = 'Saving product...';
+        const productData = {
+          name,
+          price,
+          description,
+          categories,
+          sizes,
+          colors,
+          images: imageUrls,
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp()
+        };
+
+        console.log('Saving product data:', productData);
+        const docRef = await addDoc(collection(db, 'products'), productData);
+        console.log('Product saved with ID:', docRef.id);
+
+        // SYNC TO BACKEND
+        try {
+          messageDiv.textContent = 'Syncing to backend...';
+          const syncResult = await syncToBackend('create', productData);
+
+          if (syncResult && syncResult.success) {
+            // Update Firebase with backend ID
+            await updateDoc(docRef, { backendId: syncResult.data.product._id });
+            console.log('Synced to backend. Backend ID:', syncResult.data.product._id);
+          } else {
+            console.warn('Sync failed or no token.');
+          }
+        } catch (syncErr) {
+          console.error('Sync error:', syncErr);
+        }
+
+        messageDiv.textContent = 'Product uploaded successfully!';
+        messageDiv.className = 'form-message success';
+        messageDiv.style.display = 'block';
+
+        // Reset form
+        document.getElementById('uploadForm').reset();
+        document.getElementById('imagePreviews').innerHTML = '';
+        document.getElementById('descCharCount').textContent = '0';
+
+        // Reload products
+        await loadProducts();
+        populateEditProductSelect();
+
+        // Scroll to top of form
+        document.querySelector('#upload-tab').scrollIntoView({ behavior: 'smooth' });
+
+      } catch (error) {
+        console.error('Upload error:', error);
+        messageDiv.textContent = error.message || 'Failed to upload product. Please try again.';
+        messageDiv.className = 'form-message error';
+        messageDiv.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        text.style.display = 'inline';
+        spinner.style.display = 'none';
+        progressDiv.style.display = 'none';
+        document.getElementById('progressFill').style.width = '0%';
+      }
+    });
+
+    // Image preview for upload - FIXED
+    document.getElementById('productImages').addEventListener('change', function (e) {
+      const previews = document.getElementById('imagePreviews');
+      previews.innerHTML = '';
+
+      const files = Array.from(e.target.files);
+
+      if (files.length > 5) {
+        alert('Maximum 5 images allowed. Only the first 5 will be uploaded.');
+      }
+
+      const filesToShow = files.slice(0, 5);
+      console.log(`Showing ${filesToShow.length} image previews`);
+
+      filesToShow.forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const div = document.createElement('div');
+          div.className = 'image-preview';
+          div.innerHTML = `
+            <img src="${e.target.result}" alt="Preview ${index + 1}">
+            <div style="position: absolute; top: 0; left: 0; background: rgba(0,0,0,0.7); color: white; padding: 4px 8px; font-size: 12px;">
+              ${index === 0 ? 'Main Image' : `Image ${index + 1}`}
+            </div>
+          `;
+          previews.appendChild(div);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+
+    // Character count for description
+    document.getElementById('productDescription').addEventListener('input', function () {
+      document.getElementById('descCharCount').textContent = this.value.length;
+    });
+
+    window.resetUploadForm = function () {
+      document.getElementById('uploadForm').reset();
+      document.getElementById('imagePreviews').innerHTML = '';
+      document.getElementById('uploadMessage').style.display = 'none';
+      document.getElementById('descCharCount').textContent = '0';
+    };
+
+    // Populate edit product select
+    async function populateEditProductSelect() {
+      const select = document.getElementById('editProductSelect');
+
+      try {
+        const querySnapshot = await getDocs(collection(db, 'products'));
+        select.innerHTML = '<option value="">-- Select a product --</option>';
+
+        querySnapshot.forEach((doc) => {
+          const product = doc.data();
+          const option = document.createElement('option');
+          option.value = doc.id;
+          option.textContent = product.name;
+          select.appendChild(option);
+        });
+      } catch (error) {
+        console.error('Error loading products for edit:', error);
+      }
+    }
+
+    // Load product for editing
+    window.loadProductForEdit = async function () {
+      const productId = document.getElementById('editProductSelect').value;
+      const container = document.getElementById('editFormContainer');
+
+      if (!productId) {
+        container.style.display = 'none';
+        return;
+      }
+
+      try {
+        const docRef = doc(db, 'products', productId);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const product = docSnap.data();
+
+          console.log('Loading product for edit:', product);
+
+          document.getElementById('editProductId').value = productId;
+          document.getElementById('editBackendId').value = product.backendId || '';
+          document.getElementById('editProductName').value = product.name || '';
+          document.getElementById('editProductPrice').value = product.price || '';
+          document.getElementById('editProductDescription').value = product.description || '';
+          document.getElementById('editDescCharCount').textContent = (product.description || '').length;
+
+          // Set categories
+          const categoriesSelect = document.getElementById('editProductCategories');
+          Array.from(categoriesSelect.options).forEach(option => {
+            option.selected = product.categories && product.categories.includes(option.value);
+          });
+
+          document.getElementById('editProductSizes').value = product.sizes ? product.sizes.join(', ') : '';
+          document.getElementById('editProductColors').value = product.colors ? product.colors.join(', ') : '';
+
+          // Display current images
+          const currentImagesDiv = document.getElementById('currentImages');
+          if (product.images && product.images.length > 0) {
+            currentImagesDiv.innerHTML = product.images.map((url, index) => `
+              <div class="image-preview">
+                <img src="${url}" alt="Current image ${index + 1}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22150%22 height=%22150%22%3E%3Crect fill=%22%23ddd%22 width=%22150%22 height=%22150%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2214%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22%3EError%3C/text%3E%3C/svg%3E'">
+                <button type="button" class="btn-remove-image" onclick="removeCurrentImage(${index})" title="Remove image">×</button>
+                <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); color: white; padding: 4px; font-size: 12px; text-align: center;">
+                  ${index === 0 ? 'Main Image' : `Image ${index + 1}`}
+                </div>
+              </div>
+            `).join('');
+          } else {
+            currentImagesDiv.innerHTML = '<p class="text-grey-dark">No images</p>';
+          }
+
+          // Clear new image previews
+          document.getElementById('editImagePreviews').innerHTML = '';
+          document.getElementById('editProductImages').value = '';
+
+          container.style.display = 'block';
+
+          // Store current images in a global variable for later use
+          window.currentProductImages = product.images || [];
+        }
+      } catch (error) {
+        console.error('Error loading product:', error);
+        alert('Failed to load product details');
+      }
+    };
+
+    // Character count for edit description
+    document.getElementById('editProductDescription').addEventListener('input', function () {
+      document.getElementById('editDescCharCount').textContent = this.value.length;
+    });
+
+    // Image preview for edit - FIXED
+    document.getElementById('editProductImages').addEventListener('change', function (e) {
+      const previews = document.getElementById('editImagePreviews');
+      previews.innerHTML = '';
+
+      const files = Array.from(e.target.files);
+      const currentImageCount = window.currentProductImages ? window.currentProductImages.length : 0;
+      const totalImages = currentImageCount + files.length;
+
+      console.log(`Current images: ${currentImageCount}, New images: ${files.length}, Total: ${totalImages}`);
+
+      if (totalImages > 5) {
+        alert(`Maximum 5 images total. You have ${currentImageCount} existing images. You can add ${5 - currentImageCount} more.`);
+        this.value = ''; // Clear the file input
+        return;
+      }
+
+      files.forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const div = document.createElement('div');
+          div.className = 'image-preview';
+          div.innerHTML = `
+            <img src="${e.target.result}" alt="New image ${index + 1}">
+            <div style="position: absolute; top: 0; left: 0; background: rgba(0,0,0,0.7); color: white; padding: 4px 8px; font-size: 12px;">
+              New Image ${index + 1}
+            </div>
+          `;
+          previews.appendChild(div);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+
+    // Remove current image
+    window.removeCurrentImage = function (index) {
+      if (confirm('Remove this image?')) {
+        window.currentProductImages.splice(index, 1);
+        loadProductForEdit(); // Reload to show updated images
+      }
+    };
+
+    // Edit Product Form - FIXED
+    document.getElementById('editForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const btn = document.getElementById('editBtn');
+      const text = document.getElementById('editText');
+      const spinner = document.getElementById('editSpinner');
+      const messageDiv = document.getElementById('editMessage');
+
+      btn.disabled = true;
+      text.style.display = 'none';
+      spinner.style.display = 'inline-block';
+      messageDiv.style.display = 'none';
+
+      try {
+        const productId = document.getElementById('editProductId').value;
+        const name = document.getElementById('editProductName').value;
+        const price = parseFloat(document.getElementById('editProductPrice').value);
+        const description = document.getElementById('editProductDescription').value;
+        const categoriesSelect = document.getElementById('editProductCategories');
+        const categories = Array.from(categoriesSelect.selectedOptions).map(option => option.value);
+        const sizesInput = document.getElementById('editProductSizes').value;
+        const sizes = sizesInput ? sizesInput.split(',').map(s => s.trim()).filter(s => s) : [];
+        const colorsInput = document.getElementById('editProductColors').value;
+        const colors = colorsInput ? colorsInput.split(',').map(c => c.trim()).filter(c => c) : [];
+        const newImageFiles = Array.from(document.getElementById('editProductImages').files);
+
+        console.log('Updating product:', productId);
+        console.log('Current images:', window.currentProductImages);
+        console.log('New images to upload:', newImageFiles.length);
+
+        // Start with existing images
+        let imageUrls = [...window.currentProductImages];
+
+        // Upload new images if any
+        if (newImageFiles.length > 0) {
+          for (let i = 0; i < newImageFiles.length; i++) {
+            const file = newImageFiles[i];
+            const timestamp = Date.now();
+            const randomId = Math.random().toString(36).substring(7);
+            const fileName = `${timestamp}_${randomId}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+            const storageRef = ref(storage, `products/${fileName}`);
+
+            console.log(`Uploading new image ${i + 1}: ${fileName}`);
+            await uploadBytes(storageRef, file);
+            const url = await getDownloadURL(storageRef);
+            console.log('New image URL:', url);
+            imageUrls.push(url);
+          }
+        }
+
+        if (imageUrls.length === 0) {
+          throw new Error('Product must have at least one image');
+        }
+
+        console.log('Final image URLs:', imageUrls);
+
+        // Update product in Firestore - USING setDoc with merge instead of updateDoc
+        const docRef = doc(db, 'products', productId);
+        const updateData = {
+          name,
+          price,
+          description,
+          categories,
+          sizes,
+          colors,
+          images: imageUrls,
+          updatedAt: serverTimestamp()
+        };
+
+        console.log('Updating with data:', updateData);
+
+        // Use setDoc with merge:true to ensure the update works
+        await setDoc(docRef, updateData, { merge: true });
+
+        // SYNC TO BACKEND
+        const backendId = document.getElementById('editBackendId').value;
+        if (backendId) {
+          try {
+            messageDiv.textContent = 'Syncing to backend...';
+            await syncToBackend('update', { ...updateData }, backendId);
+          } catch (syncErr) {
+            console.error('Sync error:', syncErr);
+          }
+        }
+
+        console.log('Product updated successfully');
+
+        messageDiv.textContent = 'Product updated successfully!';
+        messageDiv.className = 'form-message success';
+        messageDiv.style.display = 'block';
+
+        // Clear new image input
+        document.getElementById('editProductImages').value = '';
+        document.getElementById('editImagePreviews').innerHTML = '';
+
+        // Reload products and re-populate select
+        await loadProducts();
+        await populateEditProductSelect();
+
+        // Reload the current product to show updated data
+        await loadProductForEdit();
+
+        // Scroll to message
+        messageDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      } catch (error) {
+        console.error('Update error:', error);
+        messageDiv.textContent = error.message || 'Failed to update product. Please try again.';
+        messageDiv.className = 'form-message error';
+        messageDiv.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        text.style.display = 'inline';
+        spinner.style.display = 'none';
+      }
+    });
+
+    // Delete Product
+    window.deleteProduct = async function () {
+      const productId = document.getElementById('editProductId').value;
+
+      if (!confirm('Are you sure you want to delete this product? This action cannot be undone.')) {
+        return;
+      }
+
+      try {
+        // Delete product images from storage
+        const docRef = doc(db, 'products', productId);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const product = docSnap.data();
+          if (product.images) {
+            for (const url of product.images) {
+              try {
+                const imageRef = ref(storage, url);
+                await deleteObject(imageRef);
+              } catch (error) {
+                console.warn('Failed to delete image:', error);
+              }
+            }
+          }
+        }
+
+        // Delete product document
+        const backendId = document.getElementById('editBackendId').value;
+        await deleteDoc(docRef);
+
+        // SYNC TO BACKEND
+        if (backendId) {
+          await syncToBackend('delete', null, backendId);
+        }
+
+        alert('Product deleted successfully');
+
+        // Reset form and reload
+        document.getElementById('editFormContainer').style.display = 'none';
+        document.getElementById('editProductSelect').value = '';
+        await loadProducts();
+        populateEditProductSelect();
+
+      } catch (error) {
+        console.error('Delete error:', error);
+        alert('Failed to delete product. Please try again.');
+      }
+    };
+
+    window.deleteProductById = async function (productId) {
+      if (!confirm('Are you sure you want to delete this product?')) {
+        return;
+      }
+
+      try {
+        const docRef = doc(db, 'products', productId);
+        const docSnap = await getDoc(docRef);
+        const backendId = docSnap.exists() ? docSnap.data().backendId : null;
+
+        await deleteDoc(docRef);
+
+        // SYNC TO BACKEND
+        if (backendId) {
+          await syncToBackend('delete', null, backendId);
+        }
+        await loadProducts();
+        populateEditProductSelect();
+      } catch (error) {
+        console.error('Delete error:', error);
+        alert('Failed to delete product');
+      }
+    };
+
+    // ========================================
+    // ORDERS MANAGEMENT
+    // ========================================
+
+    async function loadOrders() {
+      const container = document.getElementById('ordersContainer');
+
+      try {
+        const q = query(collection(db, 'orders'), orderBy('createdAt', 'desc'));
+        const querySnapshot = await getDocs(q);
+        const orders = [];
+
+        querySnapshot.forEach((doc) => {
+          orders.push({ id: doc.id, ...doc.data() });
+        });
+
+        if (orders.length === 0) {
+          container.innerHTML = '<div class="empty-state"><p>No orders yet</p></div>';
+        } else {
+          container.innerHTML = orders.map(order => `
+            <div class="order-item" data-status="${order.status || 'pending'}">
+              <div class="order-header">
+                <div>
+                  <h3>Order #${order.orderNumber || order.id.substring(0, 8)}</h3>
+                  <p class="text-grey-dark">${order.customer?.name || 'Guest'} | ${order.customer?.email || ''}</p>
+                </div>
+                <div>
+                  <select class="order-status-select" onchange="updateOrderStatus('${order.id}', this.value)">
+                    <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
+                    <option value="processing" ${order.status === 'processing' ? 'selected' : ''}>Processing</option>
+                    <option value="shipped" ${order.status === 'shipped' ? 'selected' : ''}>Shipped</option>
+                    <option value="delivered" ${order.status === 'delivered' ? 'selected' : ''}>Delivered</option>
+                    <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+                  </select>
+                </div>
+              </div>
+              <div class="order-details">
+                <p><strong>Total:</strong> £${(order.total || 0).toFixed(2)}</p>
+                <p><strong>Items:</strong> ${order.items ? order.items.length : 0}</p>
+                <p><strong>Date:</strong> ${order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleDateString() : 'N/A'}</p>
+                ${order.shippingAddress ? `
+                  <p><strong>Shipping:</strong> ${order.shippingAddress.street}, ${order.shippingAddress.city} ${order.shippingAddress.postcode}</p>
+                ` : ''}
+              </div>
+            </div>
+          `).join('');
+        }
+      } catch (error) {
+        console.error('Error loading orders:', error);
+        container.innerHTML = '<div class="error-state"><p>Failed to load orders</p></div>';
+      }
+    }
+
+    window.updateOrderStatus = async function (orderId, newStatus) {
+      try {
+        const docRef = doc(db, 'orders', orderId);
+        await setDoc(docRef, {
+          status: newStatus,
+          updatedAt: serverTimestamp()
+        }, { merge: true });
+
+        console.log(`Order ${orderId} status updated to ${newStatus}`);
+      } catch (error) {
+        console.error('Error updating order status:', error);
+        alert('Failed to update order status');
+      }
+    };
+
+    window.filterOrders = function () {
+      const filter = document.getElementById('orderStatusFilter').value;
+      const orders = document.querySelectorAll('.order-item');
+
+      orders.forEach(order => {
+        if (filter === 'all' || order.dataset.status === filter) {
+          order.style.display = 'block';
+        } else {
+          order.style.display = 'none';
+        }
+      });
+    };
+
+    // ========================================
+    // HOMEPAGE IMAGES MANAGEMENT
+    // ========================================
+
+    async function loadHomepageImages() {
+      const container = document.getElementById('currentHomepageImages');
+
+      try {
+        const docRef = doc(db, 'settings', 'homepage');
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+
+          if (data.title) {
+            document.getElementById('homepageTitle').value = data.title;
+          }
+          if (data.subtitle) {
+            document.getElementById('homepageSubtitle').value = data.subtitle;
+          }
+
+          if (data.images && data.images.length > 0) {
+            container.innerHTML = data.images.map((url, index) => `
+              <div class="image-preview">
+                <img src="${url}" alt="Homepage image ${index + 1}">
+                <button type="button" class="btn-remove-image" onclick="removeHomepageImage(${index})" title="Remove">×</button>
+              </div>
+            `).join('');
+
+            window.currentHomepageImages = data.images;
+          } else {
+            container.innerHTML = '<p class="text-grey-dark">No homepage images set</p>';
+            window.currentHomepageImages = [];
+          }
+        } else {
+          container.innerHTML = '<p class="text-grey-dark">No homepage images set</p>';
+          window.currentHomepageImages = [];
+        }
+      } catch (error) {
+        console.error('Error loading homepage images:', error);
+      }
+    }
+
+    window.removeHomepageImage = async function (index) {
+      if (!confirm('Remove this homepage image?')) {
+        return;
+      }
+
+      try {
+        window.currentHomepageImages.splice(index, 1);
+
+        const docRef = doc(db, 'settings', 'homepage');
+        await setDoc(docRef, {
+          images: window.currentHomepageImages,
+          updatedAt: serverTimestamp()
+        }, { merge: true });
+
+        await loadHomepageImages();
+      } catch (error) {
+        console.error('Error removing image:', error);
+        alert('Failed to remove image');
+      }
+    };
+
+    // Homepage Images preview
+    document.getElementById('homepageImages').addEventListener('change', function (e) {
+      const previews = document.getElementById('homepagePreviews');
+      previews.innerHTML = '';
+
+      const files = Array.from(e.target.files);
+
+      files.slice(0, 5).forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const div = document.createElement('div');
+          div.className = 'image-preview';
+          div.innerHTML = `<img src="${e.target.result}" alt="Preview ${index + 1}">`;
+          previews.appendChild(div);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+
+    // Homepage Form
+    document.getElementById('homepageForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const btn = document.getElementById('homepageBtn');
+      const text = document.getElementById('homepageText');
+      const spinner = document.getElementById('homepageSpinner');
+      const messageDiv = document.getElementById('homepageMessage');
+
+      btn.disabled = true;
+      text.style.display = 'none';
+      spinner.style.display = 'inline-block';
+      messageDiv.style.display = 'none';
+
+      try {
+        const title = document.getElementById('homepageTitle').value;
+        const subtitle = document.getElementById('homepageSubtitle').value;
+        const newImageFiles = Array.from(document.getElementById('homepageImages').files);
+
+        let imageUrls = window.currentHomepageImages || [];
+
+        // Upload new images
+        if (newImageFiles.length > 0) {
+          for (let i = 0; i < Math.min(newImageFiles.length, 5); i++) {
+            const file = newImageFiles[i];
+            const timestamp = Date.now();
+            const randomId = Math.random().toString(36).substring(7);
+            const fileName = `${timestamp}_${randomId}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+            const storageRef = ref(storage, `homepage/${fileName}`);
+
+            await uploadBytes(storageRef, file);
+            const url = await getDownloadURL(storageRef);
+            imageUrls.push(url);
+          }
+
+          // Keep only last 5 images
+          imageUrls = imageUrls.slice(-5);
+        }
+
+        // Save to Firestore using setDoc with merge
+        const docRef = doc(db, 'settings', 'homepage');
+        await setDoc(docRef, {
+          title,
+          subtitle,
+          images: imageUrls,
+          updatedAt: serverTimestamp()
+        }, { merge: true });
+
+        messageDiv.textContent = 'Homepage updated successfully!';
+        messageDiv.className = 'form-message success';
+        messageDiv.style.display = 'block';
+
+        document.getElementById('homepageImages').value = '';
+        document.getElementById('homepagePreviews').innerHTML = '';
+        await loadHomepageImages();
+
+      } catch (error) {
+        console.error('Homepage update error:', error);
+        messageDiv.textContent = 'Failed to update homepage. Please try again.';
+        messageDiv.className = 'form-message error';
+        messageDiv.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        text.style.display = 'inline';
+        spinner.style.display = 'none';
+      }
+    });
+
+    // ========================================
+    // PARTNERS MANAGEMENT
+    // ========================================
+
+    async function loadPartners() {
+      const container = document.getElementById('partnersContainer');
+
+      try {
+        const querySnapshot = await getDocs(collection(db, 'partners'));
+        const partners = [];
+
+        querySnapshot.forEach((doc) => {
+          partners.push({ id: doc.id, ...doc.data() });
+        });
+
+        if (partners.length === 0) {
+          container.innerHTML = '<div class="empty-state"><p>No partners added yet</p></div>';
+        } else {
+          container.innerHTML = partners.map(partner => `
+            <div class="partner-item">
+              <img src="${partner.logo}" alt="${partner.name}">
+              <div class="partner-info">
+                <h4>${partner.name}</h4>
+                ${partner.website ? `<a href="${partner.website}" target="_blank" class="text-grey-dark" style="font-size: 0.75rem;">${partner.website}</a>` : ''}
+              </div>
+              <button class="btn btn-danger btn-sm" onclick="deletePartner('${partner.id}', '${partner.logo}')">Remove</button>
+            </div>
+          `).join('');
+        }
+      } catch (error) {
+        console.error('Error loading partners:', error);
+        container.innerHTML = '<div class="error-state"><p>Failed to load partners</p></div>';
+      }
+    }
+
+    // Partner logo preview
+    document.getElementById('partnerLogo').addEventListener('change', function (e) {
+      const preview = document.getElementById('partnerPreview');
+      preview.innerHTML = '';
+
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const div = document.createElement('div');
+          div.className = 'image-preview';
+          div.innerHTML = `<img src="${e.target.result}" alt="Partner logo preview">`;
+          preview.appendChild(div);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Partners Form
+    document.getElementById('partnersForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const btn = document.getElementById('partnersBtn');
+      const text = document.getElementById('partnersText');
+      const spinner = document.getElementById('partnersSpinner');
+      const messageDiv = document.getElementById('partnersMessage');
+
+      btn.disabled = true;
+      text.style.display = 'none';
+      spinner.style.display = 'inline-block';
+      messageDiv.style.display = 'none';
+
+      try {
+        const name = document.getElementById('partnerName').value;
+        const website = document.getElementById('partnerWebsite').value;
+        const logoFile = document.getElementById('partnerLogo').files[0];
+
+        if (!logoFile) {
+          throw new Error('Please select a logo image');
+        }
+
+        // Upload logo
+        const timestamp = Date.now();
+        const randomId = Math.random().toString(36).substring(7);
+        const fileName = `${timestamp}_${randomId}_${logoFile.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+        const storageRef = ref(storage, `partners/${fileName}`);
+        await uploadBytes(storageRef, logoFile);
+        const logoUrl = await getDownloadURL(storageRef);
+
+        // Add partner to Firestore
+        await addDoc(collection(db, 'partners'), {
+          name,
+          website,
+          logo: logoUrl,
+          createdAt: serverTimestamp()
+        });
+
+        messageDiv.textContent = 'Partner added successfully!';
+        messageDiv.className = 'form-message success';
+        messageDiv.style.display = 'block';
+
+        document.getElementById('partnersForm').reset();
+        document.getElementById('partnerPreview').innerHTML = '';
+        await loadPartners();
+
+      } catch (error) {
+        console.error('Partner add error:', error);
+        messageDiv.textContent = error.message || 'Failed to add partner. Please try again.';
+        messageDiv.className = 'form-message error';
+        messageDiv.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        text.style.display = 'inline';
+        spinner.style.display = 'none';
+      }
+    });
+
+    window.deletePartner = async function (partnerId, logoUrl) {
+      if (!confirm('Remove this partner?')) {
+        return;
+      }
+
+      try {
+        // Delete logo from storage
+        try {
+          const logoRef = ref(storage, logoUrl);
+          await deleteObject(logoRef);
+        } catch (error) {
+          console.warn('Failed to delete logo:', error);
+        }
+
+        // Delete partner document
+        await deleteDoc(doc(db, 'partners', partnerId));
+        await loadPartners();
+
+      } catch (error) {
+        console.error('Delete error:', error);
+        alert('Failed to remove partner');
+      }
+    };
+
+    // ========================================
+    // REVIEWS MANAGEMENT
+    // ========================================
+
+    // ========================================
+    // REVIEWS MODERATION
+    // ========================================
+    window.loadReviews = async function () {
+      // We need collectionGroup for subcollections if using that structure, 
+      // or just query reviews collection if flattened. 
+      // Previously we had 'products/{pid}/reviews'. Let's assume flattened 'reviews' for admin ease.
+      const pendingContainer = document.getElementById('pendingReviewsContainer');
+      const approvedContainer = document.getElementById('reviewsContainer');
+
+      try {
+        const qAll = query(collection(db, 'reviews'), orderBy('timestamp', 'desc'));
+        const snap = await getDocs(qAll);
+
+        let pendingHtml = '';
+        let approvedHtml = '';
+
+        snap.forEach(doc => {
+          const r = doc.data();
+          const html = `
+                    <div class="review-item border p-3 mb-3 bg-white">
+                        <div class="d-flex justify-content-between">
+                            <strong>${r.userName} (${r.rating}⭐️)</strong>
+                            <small>${r.timestamp ? new Date(r.timestamp.toDate()).toLocaleDateString() : '---'}</small>
+                        </div>
+                        <p class="mb-1"><strong>${r.title || ''}</strong></p>
+                        <p class="small text-muted">${r.comment}</p>
+                        <div class="mt-2">
+                            ${r.approved ?
+              `<button class="btn btn-sm btn-outline-danger" onclick="toggleReviewStatus('${doc.id}', false)">Unapprove</button>` :
+              `<button class="btn btn-sm btn-success" onclick="toggleReviewStatus('${doc.id}', true)">Approve</button>
+                                 <button class="btn btn-sm btn-danger" onclick="deleteReview('${doc.id}')">Delete</button>`
+            }
+                        </div>
+                    </div>
+                `;
+          if (r.approved) approvedHtml += html;
+          else pendingHtml += html;
+        });
+
+        pendingContainer.innerHTML = pendingHtml || '<p class="text-grey p-3">No pending reviews.</p>';
+        approvedContainer.innerHTML = approvedHtml || '<p class="text-grey p-3">No approved reviews.</p>';
+
+      } catch (e) { console.error('Error loading reviews:', e); }
+    };
+
+    window.toggleReviewStatus = async function (id, status) {
+      try {
+        await updateDoc(doc(db, 'reviews', id), { approved: status });
+        loadReviews();
+      } catch (e) { alert('Error updating review'); }
+    };
+
+    window.deleteReview = async function (id) {
+      if (!confirm('Delete this review forever?')) return;
+      try {
+        await deleteDoc(doc(db, 'reviews', id));
+        loadReviews();
+      } catch (e) { alert('Error deleting review'); }
+    };
+
+
+    window.showAddReviewForm = function () {
+      document.getElementById('addReviewForm').style.display = 'block';
+    };
+
+    window.hideAddReviewForm = function () {
+      document.getElementById('addReviewForm').style.display = 'none';
+      document.getElementById('reviewForm').reset();
+    };
+
+    // Review Form
+    document.getElementById('reviewForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const btn = document.getElementById('reviewBtn');
+      const text = document.getElementById('reviewBtnText');
+      const spinner = document.getElementById('reviewSpinner');
+      const messageDiv = document.getElementById('reviewMessage');
+
+      btn.disabled = true;
+      text.style.display = 'none';
+      spinner.style.display = 'inline-block';
+      messageDiv.style.display = 'none';
+
+      try {
+        const customerName = document.getElementById('reviewName').value;
+        const rating = parseInt(document.getElementById('reviewRating').value);
+        const reviewText = document.getElementById('reviewText').value;
+        const product = document.getElementById('reviewProduct').value;
+
+        await addDoc(collection(db, 'reviews'), {
+          customerName,
+          rating,
+          text: reviewText,
+          product: product || null,
+          createdAt: serverTimestamp()
+        });
+
+        messageDiv.textContent = 'Review added successfully!';
+        messageDiv.className = 'form-message success';
+        messageDiv.style.display = 'block';
+
+        document.getElementById('reviewForm').reset();
+        await loadReviews();
+
+        setTimeout(() => {
+          hideAddReviewForm();
+        }, 2000);
+
+      } catch (error) {
+        console.error('Review add error:', error);
+        messageDiv.textContent = 'Failed to add review. Please try again.';
+        messageDiv.className = 'form-message error';
+        messageDiv.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        text.style.display = 'inline';
+        spinner.style.display = 'none';
+      }
+    });
+
+    window.deleteReview = async function (reviewId) {
+      if (!confirm('Delete this review?')) {
+        return;
+      }
+
+      try {
+        await deleteDoc(doc(db, 'reviews', reviewId));
+        await loadReviews();
+      } catch (error) {
+        console.error('Delete error:', error);
+        alert('Failed to delete review');
+      }
+    };
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #eee;
+        }
+
+        .content {
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #000;
+            color: #fff !important;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .product-box {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .status-badge {
+            background: #dcfce7;
+            color: #166534;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="content">
+            <span class="status-badge">BACK IN STOCK</span>
+            <h2>It's finally here!</h2>
+            <p>The item you were waiting for is now available at Creative Merch UK.</p>
+
+            <div class="product-box">
+                <img src="{{imageUrl}}" width="200" style="border-radius: 4px;">
+                <h3>{{product_name}}</h3>
+                <p>Current Stock Level: <strong>{{stock_count}} units</strong></p>
+            </div>
+
+            <p>Use code <strong>WELCOMEBACK</strong> for free delivery on this item!</p>
+
+            <p style="margin-top: 30px;">
+                <a href="https://customisemeuk.com/product.html?id={{product_id}}" class="btn">Shop Now</a>
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

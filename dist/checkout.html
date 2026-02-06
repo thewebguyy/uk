@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" type="image/png" href="icon.png">
+  <title>Checkout - CustomiseMe UK</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Secure checkout for your custom Creative Merch UK order.">
+
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-red: #e63946;
+      --color-grey-light: #f8f9fa;
+      --color-grey-medium: #e5e7eb;
+      --color-grey-dark: #6b7280;
+    }
+
+    body {
+      background-color: #f4f4f4;
+      color: #1a1a1a;
+    }
+
+    /* Layout Structure */
+    .checkout-container {
+      max-width: 1300px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .checkout-row {
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .checkout-left {
+      flex: 1;
+      min-width: 60%;
+    }
+
+    .checkout-right {
+      width: 400px;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 992px) {
+
+      .checkout-left,
+      .checkout-right {
+        width: 100%;
+        min-width: 100%;
+      }
+    }
+
+    /* Left Column: Basket */
+    .basket-header {
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
+
+    .basket-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .basket-header .item-count {
+      color: var(--color-grey-dark);
+      font-size: 1.1rem;
+    }
+
+    .basket-table-header {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--color-grey-medium);
+      font-weight: 600;
+      color: #555;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .basket-item {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      align-items: center;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--color-grey-medium);
+      background: #fff;
+      margin-bottom: 1px;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .basket-item:last-child {
+      border-bottom: none;
+    }
+
+    .product-meta {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .product-thumb {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border: 1px solid var(--color-grey-medium);
+      background: #f9f9f9;
+    }
+
+    .product-info h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem 0;
+      color: #1a1a1a;
+    }
+
+    .product-info h3 a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .badge-pill {
+      display: inline-block;
+      padding: 2px 8px;
+      background: #eee;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-right: 5px;
+    }
+
+    .variant-text {
+      color: var(--color-grey-dark);
+      font-size: 0.8rem;
+      display: block;
+      margin-top: 2px;
+    }
+
+    .quantity-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--color-grey-medium);
+      border-radius: 4px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .quantity-controls button {
+      background: none;
+      border: none;
+      width: 30px;
+      height: 35px;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .quantity-controls button:hover {
+      background: #f0f0f0;
+    }
+
+    .quantity-controls input {
+      width: 40px;
+      text-align: center;
+      border: none;
+      border-left: 1px solid var(--color-grey-medium);
+      border-right: 1px solid var(--color-grey-medium);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .price-note {
+      font-size: 0.85rem;
+      color: var(--color-grey-dark);
+    }
+
+    .price-note span.discount {
+      color: var(--color-red);
+      font-weight: 600;
+    }
+
+    .price-note span.original {
+      text-decoration: line-through;
+      margin-left: 4px;
+    }
+
+    .total-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .item-total-price {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--color-red);
+    }
+
+    .total-original {
+      font-size: 0.85rem;
+      color: var(--color-grey-dark);
+      text-decoration: line-through;
+    }
+
+    .remove-btn {
+      background: none;
+      border: none;
+      color: #999;
+      cursor: pointer;
+      padding: 5px;
+      transition: color 0.2s;
+    }
+
+    .remove-btn:hover {
+      color: var(--color-red);
+    }
+
+    /* Right Column: Summary */
+    .shipping-progress-card {
+      background: #fff;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .progress-text {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .progress-container {
+      position: relative;
+      padding: 20px 0 30px 0;
+    }
+
+    .progress-bar-bg {
+      height: 6px;
+      background: #eee;
+      border-radius: 10px;
+      width: 100%;
+      position: relative;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--color-red);
+      border-radius: 10px;
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    .marker {
+      position: absolute;
+      top: -4px;
+      width: 14px;
+      height: 14px;
+      background: #fff;
+      border: 3px solid #ccc;
+      border-radius: 50%;
+      transform: translateX(-50%);
+    }
+
+    .marker.active {
+      border-color: var(--color-red);
+      background: var(--color-red);
+    }
+
+    .marker-label {
+      position: absolute;
+      bottom: -25px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--color-grey-dark);
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+
+    .summary-card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 2rem;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
+    }
+
+    .summary-row .label {
+      color: #555;
+    }
+
+    .summary-row .value {
+      font-weight: 500;
+    }
+
+    .summary-row.total {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--color-grey-medium);
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .disclaimer {
+      font-size: 0.75rem;
+      color: var(--color-grey-dark);
+      margin-top: 0.5rem;
+      line-height: 1.4;
+    }
+
+    /* Buttons */
+    .btn-primary-checkout {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 1.2rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-radius: 6px;
+      margin-top: 1.5rem;
+      transition: all 0.2s;
+    }
+
+    .btn-primary-checkout:hover {
+      background: #333;
+      transform: translateY(-2px);
+    }
+
+    .btn-stripe-checkout {
+      width: 100%;
+      background: #635bff;
+      color: #fff;
+      border: none;
+      padding: 1.2rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border-radius: 6px;
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .btn-stripe-checkout:hover {
+      background: #5a54e3;
+      transform: translateY(-2px);
+    }
+
+    .btn-gpay-checkout {
+      width: 100%;
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 1.2rem;
+      border-radius: 6px;
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 2rem;
+      opacity: 0.7;
+    }
+
+    .payment-methods img {
+      height: 20px;
+      filter: grayscale(100%);
+      transition: filter 0.2s;
+    }
+
+    .payment-methods img:hover {
+      filter: grayscale(0%);
+    }
+
+    .shipping-estimator {
+      margin-top: 2rem;
+      border-top: 1px solid var(--color-grey-medium);
+      padding-top: 1rem;
+    }
+
+    .estimator-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      background: none;
+      border: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0;
+      color: #555;
+      cursor: pointer;
+    }
+
+    #checkout-loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s ease;
+    }
+
+    /* Stripe Element Styling */
+    .payment-form-container {
+      display: none;
+      /* Initially hidden until button click */
+      background: #fff;
+      padding: 2rem;
+      border-radius: 4px;
+      margin-top: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+  <!-- Stripe.js -->
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+
+<body>
+  <!-- Navigation Component -->
+  <div id="navigation" data-component="components/nav.html"></div>
+
+  <!-- Full Page Loading Overlay -->
+  <div id="checkout-loading-overlay">
+    <div class="spinner-border mb-3" style="width: 3rem; height: 3rem; border-width: .3em;" role="status"></div>
+    <p class="fw-medium text-uppercase tracking-wider">SECURE CHECKOUT LOADING...</p>
+  </div>
+
+  <!-- Main Checkout Layout -->
+  <div class="checkout-container">
+    <div class="checkout-row">
+
+      <!-- Left Column: Basket Items -->
+      <div class="checkout-left">
+        <div class="basket-header">
+          <h1>Your basket</h1>
+          <span class="item-count" id="header-item-count">0 items</span>
+        </div>
+
+        <div class="basket-table-header">
+          <span>Product</span>
+          <span class="text-center">Quantity</span>
+          <span class="text-end">Total</span>
+        </div>
+
+        <div id="checkout-items-list">
+          <!-- Dynamic items here -->
+          <div class="text-center py-5">
+            <div class="spinner-border text-secondary" role="status"></div>
+          </div>
+        </div>
+
+        <!-- Shipping Details Form (Hidden by default, shown when proceeding to checkout) -->
+        <div id="shipping-form-container" style="display: none; margin-top: 3rem;">
+          <div class="summary-card" style="position: static; margin-bottom: 2rem;">
+            <h2 class="mb-4" style="font-size: 1.5rem; font-weight: 700;">Shipping Details</h2>
+            <form id="checkout-form">
+              <div class="row g-3">
+                <div class="col-12">
+                  <label class="form-label small fw-bold text-uppercase">Email Address *</label>
+                  <input type="email" class="form-control rounded-0" id="email" required>
+                </div>
+                <div class="col-12">
+                  <label class="form-label small fw-bold text-uppercase">Full Name *</label>
+                  <input type="text" class="form-control rounded-0" id="name" required>
+                </div>
+                <div class="col-12">
+                  <label class="form-label small fw-bold text-uppercase">Address *</label>
+                  <input type="text" class="form-control rounded-0" id="address" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-bold text-uppercase">City *</label>
+                  <input type="text" class="form-control rounded-0" id="city" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-bold text-uppercase">Postcode *</label>
+                  <input type="text" class="form-control rounded-0" id="postcode" required>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Stripe Payment Element (Hidden until step 2) -->
+        <div id="payment-element-container" class="payment-form-container">
+          <h2 class="mb-4" style="font-size: 1.5rem; font-weight: 700;">Secure Payment</h2>
+          <div id="payment-element"></div>
+          <div id="payment-message" class="alert alert-danger mt-3" style="display: none;"></div>
+          <button id="submit-payment" class="btn-primary-checkout mt-4">
+            <span id="button-text">Complete Purchase</span>
+            <div id="spinner" class="spinner-border spinner-border-sm ms-2" style="display: none;"></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Column: Summary & Progress -->
+      <div class="checkout-right">
+
+        <!-- Free Shipping Progress -->
+        <div class="shipping-progress-card">
+          <span class="progress-text" id="shipping-progress-msg">Spend £0 more for Free Shipping!</span>
+          <div class="progress-container">
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" id="shipping-fill"></div>
+
+              <!-- Markers -->
+              <div class="marker" style="left: 20%;"><span class="marker-label">£120</span></div>
+              <div class="marker" style="left: 50%;"><span class="marker-label">£300</span></div>
+              <div class="marker" style="left: 100%;"><span class="marker-label">£600</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary Box -->
+        <div class="summary-card">
+          <div class="summary-row">
+            <span class="label">Subtotal (ex Vat)</span>
+            <span class="value" id="summary-subtotal">£0.00</span>
+          </div>
+          <div class="summary-row">
+            <span class="label">Estimated taxes</span>
+            <span class="value" id="summary-tax">£0.00</span>
+          </div>
+          <div class="summary-row total">
+            <span class="label">Total (<span id="summary-item-count">0 items</span>)</span>
+            <span class="value text-danger" id="summary-total">£0.00</span>
+          </div>
+          <p class="disclaimer">Taxes included. Discounts and shipping calculated at checkout.</p>
+
+          <!-- Main Buttons -->
+          <!-- Step 1: Reveal shipping form -->
+          <button class="btn-primary-checkout" id="proceed-to-checkout">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              class="me-2">
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+            1. Enter Shipping
+          </button>
+
+          <!-- Step 2: Calculate and Load Stripe -->
+          <button class="btn-primary-checkout" id="review-order-btn" style="display: none;">
+            2. Review & Calculate
+            <div id="review-spinner" class="spinner-border spinner-border-sm ms-2" style="display: none;"></div>
+          </button>
+          <div id="review-error" class="alert alert-danger mt-3" style="display: none;"></div>
+
+          <!-- Step 3: Complete (This is a mirror/jump to the bottom button for UX) -->
+          <button class="btn-stripe-checkout" id="goto-payment-btn" style="display: none; background: #000;">
+            3. Finalise Payment
+          </button>
+
+
+
+          <!-- Payment Icons -->
+          <div class="payment-methods">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Apple_Pay_logo.svg" alt="Apple Pay">
+          </div>
+
+          <!-- Shipping Estimator -->
+          <div class="shipping-estimator">
+            <button class="estimator-toggle">
+              <span>Estimated shipping</span>
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Component -->
+  <div id="footer-container" data-component="components/footer.html"></div>
+
+  <!-- Scripts -->
+  <script src="js/components.js"></script>
+  <script type="module" src="js/api-integration.js"></script>
+  <script src="js/cart.js"></script>
+
+  <script type="module">
+    async function waitForServices() {
+      return new Promise((resolve) => {
+        const check = () => {
+          if (window.getCart && typeof Stripe !== 'undefined') {
+            resolve();
+          } else {
+            setTimeout(check, 100);
+          }
+        };
+        check();
+      });
+    }
+
+    let stripe;
+    let elements;
+
+    async function init() {
+      try {
+        await waitForServices();
+        const cart = window.getCart();
+        if (!cart || cart.length === 0) {
+          window.location.href = 'shop.html';
+          return;
+        }
+        renderBasket(cart);
+        updateProgress(cart);
+
+        // SYNC AUTH
+        if (window.AuthService) {
+          const user = window.AuthService.getCurrentUser_Sync();
+          if (user) {
+            document.getElementById('email').value = user.email || '';
+            document.getElementById('name').value = user.name || '';
+          }
+        }
+
+        const overlay = document.getElementById('checkout-loading-overlay');
+        if (overlay) {
+          overlay.style.opacity = '0';
+          setTimeout(() => overlay.style.display = 'none', 500);
+        }
+      } catch (error) {
+        console.error("Init Error:", error);
+      }
+    }
+
+    function renderBasket(cart) {
+      const list = document.getElementById('checkout-items-list');
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      document.getElementById('header-item-count').textContent = `${totalItems} items`;
+      document.getElementById('summary-item-count').textContent = `${totalItems} items`;
+      list.innerHTML = cart.map(item => {
+        const itemTotal = item.price * item.quantity;
+        const originalPrice = (item.price * 1.2).toFixed(2);
+        return `
+            <div class="basket-item">
+                <div class="product-meta">
+                    <img src="${item.imageUrl}" class="product-thumb" alt="${item.name}">
+                    <div class="product-info">
+                        <h3><a href="product.html?id=${item.productId}">${item.name}</a></h3>
+                        ${item.customization && item.customization.size ? `<span class="badge-pill">${item.customization.size}</span>` : ''}
+                        <span class="variant-text">${item.customization && item.customization.color ? item.customization.color : 'Standard'}</span>
+                    </div>
+                </div>
+                <div class="quantity-col">
+                    <div class="quantity-controls">
+                        <button type="button" onclick="window.updateQuantity('${item.id}', ${item.quantity - 1})">−</button>
+                        <input type="text" value="${item.quantity}" readonly>
+                        <button type="button" onclick="window.updateQuantity('${item.id}', ${item.quantity + 1})">+</button>
+                    </div>
+                    <div class="price-note">× <span class="discount">£${item.price.toFixed(2)}</span> <span class="original">£${originalPrice}</span></div>
+                </div>
+                <div class="total-col">
+                    <button class="remove-btn" onclick="window.removeFromCart('${item.id}')">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg>
+                    </button>
+                    <div class="item-total-price">£${itemTotal.toFixed(2)}</div>
+                    <div class="total-original">£${(itemTotal * 1.2).toFixed(2)}</div>
+                </div>
+            </div>`;
+      }).join('');
+      updateSummary(cart);
+    }
+
+    function updateSummary(cart) {
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const tax = subtotal * 0.20;
+      const shipping = subtotal >= 100 ? 0 : 4.99;
+      const total = subtotal + tax + shipping;
+      document.getElementById('summary-subtotal').textContent = `£${subtotal.toFixed(2)}`;
+      document.getElementById('summary-tax').textContent = `£${tax.toFixed(2)}`;
+      document.getElementById('summary-total').textContent = `£${total.toFixed(2)}`;
+    }
+
+    function updateProgress(cart) {
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const freeShippingThreshold = 100;
+      const barMax = 600;
+      const percentage = Math.min((subtotal / barMax) * 100, 100);
+      const fill = document.getElementById('shipping-fill');
+      if (fill) fill.style.width = `${percentage}%`;
+      const msg = document.getElementById('shipping-progress-msg');
+      if (msg) {
+        if (subtotal < freeShippingThreshold) {
+          const diff = (freeShippingThreshold - subtotal).toFixed(2);
+          msg.textContent = `Spend £${diff} more for Free Shipping!`;
+          msg.classList.remove('text-success');
+        } else {
+          msg.textContent = `You've unlocked FREE Shipping!`;
+          msg.classList.add('text-success');
+        }
+      }
+    }
+
+    window.addEventListener('cartUpdated', init);
+    document.addEventListener('authStateChanged', init);
+
+    // STEP 1: PROCEED TO SHIPPING
+    document.getElementById('proceed-to-checkout').addEventListener('click', () => {
+      document.getElementById('shipping-form-container').style.display = 'block';
+      document.getElementById('shipping-form-container').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('proceed-to-checkout').style.display = 'none';
+      document.getElementById('review-order-btn').style.display = 'flex';
+    });
+
+    // STEP 2: REVIEW ORDER & INITIALIZE STRIPE
+    let isReviewing = false;
+    document.getElementById('review-order-btn').addEventListener('click', async () => {
+      if (isReviewing) return;
+
+      const errorEl = document.getElementById('review-error');
+      errorEl.style.display = 'none';
+
+      // Validate form
+      const email = document.getElementById('email').value;
+      const name = document.getElementById('name').value;
+      const address = document.getElementById('address').value;
+      const city = document.getElementById('city').value;
+      const postcode = document.getElementById('postcode').value;
+
+      if (!email || !name || !address || !city || !postcode) {
+        errorEl.textContent = 'Please fill in all shipping details.';
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      isReviewing = true;
+      setReviewLoading(true);
+
+      try {
+        const cart = window.getCart();
+        const items = cart.map(item => ({
+          productId: item.productId,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          imageUrl: item.imageUrl
+        }));
+
+        // Call Firebase Function
+        const result = await window.CheckoutService.createPaymentIntent({
+          items,
+          email,
+          shippingAddress: { name, address, city, postcode },
+          cartId: 'cart-' + Date.now()
+        });
+
+        const { clientSecret, orderId } = result;
+
+        // Initialize Stripe Elements
+        stripe = await window.initializeStripe();
+        if (!stripe) {
+          throw new Error("Stripe failed to initialize. Please check if the Publishable Key is set correctly in js/api-integration.js");
+        }
+        elements = stripe.elements({ clientSecret });
+
+        const paymentElementOptions = { layout: "tabs" };
+        const paymentElement = elements.create("payment", paymentElementOptions);
+        paymentElement.mount("#payment-element");
+
+        // UI Transition
+        document.getElementById('payment-element-container').style.display = 'block';
+        document.getElementById('payment-element-container').scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('review-order-btn').style.display = 'none';
+        document.getElementById('goto-payment-btn').style.display = 'flex';
+
+        // Store orderId for confirmation
+        window.currentOrderId = orderId;
+
+      } catch (error) {
+        console.error("Step 2 Error:", error);
+        errorEl.textContent = "Error: " + error.message;
+        errorEl.style.display = 'block';
+      } finally {
+        isReviewing = false;
+        setReviewLoading(false);
+      }
+    });
+
+    // STEP 3: SUBMIT PAYMENT
+    let isSubmitting = false;
+    document.getElementById('submit-payment').addEventListener('click', async () => {
+      if (isSubmitting) return;
+      isSubmitting = true;
+      setPaymentLoading(true);
+
+      try {
+        const { error } = await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            return_url: window.location.origin + "/order-confirmation.html?orderId=" + window.currentOrderId,
+          },
+        });
+
+        if (error) {
+          const messageContainer = document.getElementById("payment-message");
+          messageContainer.style.display = "block";
+          messageContainer.textContent = error.message;
+        }
+      } catch (error) {
+        console.error("Payment Error:", error);
+      } finally {
+        isSubmitting = false;
+        setPaymentLoading(false);
+      }
+    });
+
+    // UX: Scroll to bottom
+    document.getElementById('goto-payment-btn')?.addEventListener('click', () => {
+      document.getElementById('payment-element-container').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    function setReviewLoading(isLoading) {
+      const btn = document.getElementById('review-order-btn');
+      const spinner = document.getElementById('review-spinner');
+      btn.disabled = isLoading;
+      spinner.style.display = isLoading ? 'inline-block' : 'none';
+    }
+
+    function setPaymentLoading(isLoading) {
+      const btn = document.getElementById('submit-payment');
+      const spinner = document.getElementById('spinner');
+      const txt = document.getElementById('button-text');
+      btn.disabled = isLoading;
+      spinner.style.display = isLoading ? 'inline-block' : 'none';
+      txt.style.display = isLoading ? 'none' : 'inline';
+    }
+
+    init();
+  </script>
+</body>
+
+</html>

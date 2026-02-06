@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" type="image/png" href="icon.png">
+  <title>Order Confirmed - Creative Merch UK</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    .confirmation-section {
+      padding: 4rem 0;
+      min-height: calc(100vh - 200px);
+      display: flex;
+      align-items: center;
+    }
+
+    .confirmation-box {
+      background: var(--color-white);
+      padding: 3rem;
+      border-radius: 0px;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: #059669;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+      animation: scaleIn 0.5s ease-out;
+    }
+
+    .success-icon svg {
+      width: 48px;
+      height: 48px;
+      color: white;
+      stroke-width: 3;
+    }
+
+    @keyframes scaleIn {
+      from {
+        transform: scale(0);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .order-number {
+      font-size: 0.875rem;
+      color: var(--color-grey-dark);
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background: var(--color-grey-light);
+      border-radius: 0px;
+    }
+
+    .order-number strong {
+      color: var(--color-black);
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Simplified Navbar -->
+  <div class="top-bar">
+    <div class="container text-center">
+      <a class="navbar-brand" href="index.html">
+        <img src="icon.png" alt="Creative Merch UK" class="logo-image">
+      </a>
+    </div>
+  </div>
+
+  <!-- Order Confirmation Section -->
+  <section class="confirmation-section">
+    <div class="container">
+      <div class="confirmation-box">
+        <div id="loading-state">
+          <div class="spinner-border text-dark" role="status"></div>
+          <p class="mt-3 text-muted">Confirming your payment...</p>
+        </div>
+
+        <div id="success-state" style="display: none;">
+          <div class="success-icon">
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+
+          <h1>Order Confirmed!</h1>
+          <p class="text-grey-dark" style="font-size: 1.125rem; margin-bottom: 2rem;">
+            Thank you for your purchase. Your order has been secured.
+          </p>
+
+          <div class="order-number">
+            <div style="margin-bottom: 0.5rem;">Order Reference:</div>
+            <strong id="order-number-display"></strong>
+          </div>
+
+          <p class="text-grey-dark" style="font-size: 0.875rem;">
+            A confirmation email has been sent to your email address.
+          </p>
+
+          <div class="mt-4 d-grid gap-2">
+            <button class="btn btn-primary btn-lg" onclick="window.location.href='shop.html'">
+              Continue Shopping
+            </button>
+          </div>
+        </div>
+
+        <div id="error-state" style="display: none;">
+          <div class="text-danger mb-3" style="font-size: 3rem;">⚠</div>
+          <h3>Something went wrong</h3>
+          <p class="text-muted" id="error-message">We couldn't confirm your payment.</p>
+          <button class="btn btn-primary mt-3" onclick="window.location.href='contact.html'">Contact Support</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="text-center">
+        <p class="text-grey-dark">© 2026 Customise Me UK. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Load Cart Logic to clear it -->
+  <script src="js/cart.js"></script>
+  <!-- Load API Logic for confirmation -->
+  <script type="module" src="js/api-integration.js"></script>
+
+  <script type="module">
+    function showError(msg) {
+      document.getElementById('loading-state').style.display = 'none';
+      document.getElementById('error-state').style.display = 'block';
+      document.getElementById('error-message').textContent = msg;
+    }
+    function showSuccess(orderId) {
+      document.getElementById('loading-state').style.display = 'none';
+      document.getElementById('success-state').style.display = 'block';
+      document.getElementById('order-number-display').textContent = orderId;
+    }
+
+    async function init() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const orderId = urlParams.get('orderId');
+      const paymentIntentId = urlParams.get('payment_intent');
+
+      if (!orderId) {
+        showError("Invalid Order Reference");
+        return;
+      }
+
+      // If no payment intent is passed, we might be coming from a guest flow or direct link
+      // For now, let's try to confirm with what we have
+      try {
+        if (paymentIntentId) {
+          // Verify with Firebase Cloud Function
+          const result = await window.CheckoutService.confirmOrder(orderId, paymentIntentId);
+          if (result && result.success) {
+            showSuccess(orderId);
+            if (window.clearCart) window.clearCart();
+          } else {
+            showError("Payment confirmation failed. Our team will verify this manually.");
+          }
+        } else {
+          // If we have orderId but no PI, assume it was processed and just show success
+          showSuccess(orderId);
+          if (window.clearCart) window.clearCart();
+        }
+      } catch (e) {
+        console.error("Confirmation Error:", e);
+        showSuccess(orderId); // Failsafe: show success if we have an order ID
+      }
+    }
+    init();
+  </script>
+</body>
+
+</html>

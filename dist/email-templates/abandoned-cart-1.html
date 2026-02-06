@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #eee;
+        }
+
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            max-width: 120px;
+        }
+
+        .content {
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            padding-top: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #000;
+            color: #fff !important;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .cart-items {
+            text-align: left;
+            margin: 20px 0;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://customisemeuk.com/icon.png" alt="Creative Merch UK" class="logo">
+        </div>
+        <div class="content">
+            <h2>You left something behind!</h2>
+            <p>We noticed you added some items to your cart but didn't finish checkout. They're still waiting for you!
+            </p>
+
+            <div class="cart-items">
+                {{#items}}
+                <div class="cart-item">
+                    <img src="{{imageUrl}}" width="60" height="60" style="object-fit: cover;">
+                    <div>
+                        <strong>{{name}}</strong><br>
+                        £{{price}}
+                    </div>
+                </div>
+                {{/items}}
+            </div>
+
+            <p>Free UK Delivery on orders over £100!</p>
+
+            <p style="margin-top: 20px;">
+                <a href="https://customisemeuk.com/checkout.html" class="btn">Return to Checkout</a>
+            </p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2026 Creative Merch UK. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+
+</html>

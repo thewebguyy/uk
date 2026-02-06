@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" type="image/png" href="icon.png">
+  <title>FAQ - CustomiseMe UK</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Frequently asked questions about CustomiseMe UK products, services, shipping, and more.">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Navigation Component -->
+  <div id="navigation" data-component="components/nav.html"></div>
+
+  <!-- Cart Component -->
+  <div id="cart-container" data-component="components/cart.html"></div>
+
+  <!-- Page Header -->
+  <section class="section" style="background: var(--color-grey-light); padding: 3rem 0;">
+    <div class="container text-center">
+      <h1>FREQUENTLY ASKED QUESTIONS</h1>
+      <p class="text-grey-dark" style="max-width: 600px; margin: 0 auto;">
+        Find answers to common questions about our products, services, and policies.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ Content -->
+  <section class="section">
+    <div class="container">
+      <!-- Category Tabs -->
+      <div class="text-center mb-5">
+        <div class="d-flex gap-2 justify-content-center flex-wrap">
+          <button class="btn btn-outline active" data-category="all">All Questions</button>
+          <button class="btn btn-outline" data-category="orders">Orders & Shipping</button>
+          <button class="btn btn-outline" data-category="products">Products</button>
+          <button class="btn btn-outline" data-category="design">Design Services</button>
+          <button class="btn btn-outline" data-category="returns">Returns & Refunds</button>
+        </div>
+      </div>
+
+      <!-- FAQ Accordion -->
+      <div class="faq-accordion">
+        <!-- Orders & Shipping -->
+        <div class="faq-item" data-category="orders">
+          <button class="faq-question">How long does shipping take?</button>
+          <div class="faq-answer">
+            <p>Standard UK delivery takes 3-5 business days. Express delivery (1-2 business days) is available for an
+              additional fee. International shipping typically takes 7-14 business days depending on the destination.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="orders">
+          <button class="faq-question">Is there free delivery?</button>
+          <div class="faq-answer">
+            <p>Yes, we offer free standard UK delivery on all orders over £100. For orders under £100, standard delivery
+              is £4.99.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="orders">
+          <button class="faq-question">How can I track my order?</button>
+          <div class="faq-answer">
+            <p>Once your order is dispatched, you'll receive an email with tracking information. You can also log into
+              your account to view order status and tracking details.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="orders">
+          <button class="faq-question">Do you ship internationally?</button>
+          <div class="faq-answer">
+            <p>Yes, we ship to most countries worldwide. International shipping costs vary by destination and will be
+              calculated at checkout. Please note that customs fees may apply for orders outside the UK.</p>
+          </div>
+        </div>
+
+        <!-- Products -->
+        <div class="faq-item" data-category="products">
+          <button class="faq-question">What materials do you use for printing?</button>
+          <div class="faq-answer">
+            <p>We use premium materials including high-quality cotton for apparel, durable vinyl for stickers and
+              decals, and eco-friendly inks for all our printing. Our products are designed to last and maintain their
+              quality after multiple washes.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="products">
+          <button class="faq-question">What sizes are available?</button>
+          <div class="faq-answer">
+            <p>Our apparel ranges from XS to 5XL for most items. Each product page includes a detailed size guide with
+              measurements. If you need help choosing the right size, feel free to contact us!</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="products">
+          <button class="faq-question">How should I care for my printed items?</button>
+          <div class="faq-answer">
+            <p>For best results, wash printed apparel inside out in cold water and avoid tumble drying. For stickers and
+              decals, apply to clean, dry surfaces for optimal adhesion.</p>
+          </div>
+        </div>
+
+        <!-- Design Services -->
+        <div class="faq-item" data-category="design">
+          <button class="faq-question">Can you create custom designs for me?</button>
+          <div class="faq-answer">
+            <p>Absolutely! Our professional design team can create custom artwork based on your specifications. Visit
+              our Design Studio page to learn more about our custom design services and request a quote.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="design">
+          <button class="faq-question">What file formats do you accept for artwork?</button>
+          <div class="faq-answer">
+            <p>We accept high-resolution files in PNG, PDF, AI, EPS, and SVG formats. For best results, submit vector
+              files or images at 300 DPI minimum. Our team can help optimize your artwork if needed.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="design">
+          <button class="faq-question">How long does custom design work take?</button>
+          <div class="faq-answer">
+            <p>Initial concepts are typically ready within 3-5 business days. The total timeline depends on the
+              complexity of the project and number of revisions. Rush services are available for urgent projects.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="design">
+          <button class="faq-question">Do you offer mockup previews?</button>
+          <div class="faq-answer">
+            <p>Yes! We provide photorealistic mockups of your design before production begins. This allows you to see
+              exactly how your finished product will look and request any changes before printing.</p>
+          </div>
+        </div>
+
+        <!-- Returns & Refunds -->
+        <div class="faq-item" data-category="returns">
+          <button class="faq-question">What is your return policy?</button>
+          <div class="faq-answer">
+            <p>We accept returns within 30 days of delivery for non-customized items in their original condition. Custom
+              or personalized items cannot be returned unless there's a defect in quality.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="returns">
+          <button class="faq-question">How do I request a refund?</button>
+          <div class="faq-answer">
+            <p>To request a refund, contact our customer service team with your order number and reason for return. Once
+              approved, you'll receive return instructions. Refunds are processed within 5-7 business days after we
+              receive the returned item.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="returns">
+          <button class="faq-question">What if my order arrives damaged?</button>
+          <div class="faq-answer">
+            <p>If your order arrives damaged, please contact us within 48 hours with photos of the damage. We'll arrange
+              a replacement or refund at no extra cost to you.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact CTA -->
+      <div class="text-center mt-5 p-4" style="background: var(--color-grey-light);">
+        <h3>Still have questions?</h3>
+        <p class="text-grey-dark mb-4">Our team is here to help. Get in touch and we'll respond within 24 hours.</p>
+        <a href="contact.html" class="btn btn-primary">CONTACT US</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Component -->
+  <div id="footer-container" data-component="components/footer.html"></div>
+
+  <!-- Scripts -->
+  <script src="js/components.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/cart.js"></script>
+  <script type="module" src="js/api-integration.js"></script>
+
+  <script>
+    // FAQ Accordion Functionality
+    document.querySelectorAll('.faq-question').forEach(button => {
+      button.addEventListener('click', () => {
+        const item = button.parentElement;
+        const isActive = item.classList.contains('active');
+
+        // Close all items
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+
+        // Open clicked item if it wasn't active
+        if (!isActive) {
+          item.classList.add('active');
+        }
+      });
+    });
+
+    // Category Filter
+    document.querySelectorAll('[data-category]').forEach(btn => {
+      if (btn.classList.contains('btn')) {
+        btn.addEventListener('click', () => {
+          const category = btn.dataset.category;
+
+          // Update active button
+          document.querySelectorAll('.btn[data-category]').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          // Filter FAQ items
+          document.querySelectorAll('.faq-item').forEach(item => {
+            if (category === 'all' || item.dataset.category === category) {
+              item.style.display = 'block';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+      }
+    });
+
+    // Update cart display on load
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof updateCartDisplay === 'function') {
+        updateCartDisplay();
+      }
+    });
+  </script>
+</body>
+
+</html>

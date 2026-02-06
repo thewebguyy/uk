@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #eee;
+        }
+
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #000;
+        }
+
+        .logo {
+            max-width: 150px;
+        }
+
+        .content {
+            padding: 20px 0;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #000;
+            color: #fff !important;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .tracking-box {
+            background: #f9f9f9;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            border: 1px dashed #ccc;
+        }
+
+        .tracking-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            display: block;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://customisemeuk.com/icon.png" alt="Creative Merch UK" class="logo">
+            <h1>Your order has shipped!</h1>
+        </div>
+        <div class="content">
+            <p>Hi there,</p>
+            <p>Great news! Your order <strong>#{{order_id}}</strong> is on its way to you.</p>
+
+            <div class="tracking-box">
+                <p>Tracking Number:</p>
+                <span class="tracking-number">{{tracking_number}}</span>
+                <a href="{{tracking_link}}" class="btn">Track on Courier Website</a>
+            </div>
+
+            <p>Estimated Delivery: <strong>{{est_delivery}}</strong></p>
+
+            <p style="text-align: center; margin-top: 30px;">
+                <a href="https://customisemeuk.com/order-tracking.html?order={{order_id}}" class="btn">View Order
+                    Progress</a>
+            </p>
+        </div>
+        <div class="footer">
+            <p>Questions? Contact us at info@customisemeuk.com</p>
+            <p>&copy; 2026 Creative Merch UK. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+
+</html>

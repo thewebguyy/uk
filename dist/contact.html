@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" type="image/png" href="icon.png">
+  <title>Contact Us - CustomiseMe UK</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Get in touch with CustomiseMe UK for custom design inquiries, installation services, or general support.">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Navigation Component -->
+  <div id="navigation" data-component="components/nav.html"></div>
+
+  <!-- Cart Component -->
+  <div id="cart-container" data-component="components/cart.html"></div>
+
+  <!-- Contact Header -->
+  <section class="section" style="background: var(--color-grey-light); padding: 3rem 0;">
+    <div class="container text-center">
+      <h1 id="form-title">Get in Touch</h1>
+      <p class="text-grey-dark" id="form-subtitle">We'd love to hear from you</p>
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <section class="section">
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-7">
+          <form id="contact-form" onsubmit="handleSubmit(event)">
+            <div class="mb-3">
+              <label for="name" class="form-label">Name *</label>
+              <input type="text" class="form-control" id="name" required>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email *</label>
+              <input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Phone</label>
+              <input type="tel" class="form-control" id="phone">
+            </div>
+            <div class="mb-3">
+              <label for="service" class="form-label">Service *</label>
+              <select class="form-control" id="service" required>
+                <option value="">Select a service</option>
+                <option value="design">Design Studio</option>
+                <option value="installation">Installation Services</option>
+                <option value="workshop">Workshop Booking</option>
+                <option value="subscribe-monthly">Monthly Subscription</option>
+                <option value="business">Business Package</option>
+                <option value="custom">Custom Request</option>
+                <option value="general">General Inquiry</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="message" class="form-label">Message *</label>
+              <textarea class="form-control" id="message" rows="5" required></textarea>
+            </div>
+
+            <!-- Error/Success messages -->
+            <div id="form-error" class="alert alert-danger" style="display: none;"></div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100" id="submit-btn">
+              <span id="submit-text">Send Message</span>
+              <div id="submit-spinner" class="spinner-border spinner-border-sm" style="display: none;" role="status">
+                <span class="visually-hidden">Sending...</span>
+              </div>
+            </button>
+          </form>
+
+          <div id="success-message" style="display: none;" class="mt-4 p-4 text-center"
+            style="background: var(--color-grey-light);">
+            <h5>Thank you for your message!</h5>
+            <p class="text-grey-dark">We'll get back to you within 24 hours.</p>
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="p-4" style="background: var(--color-grey-light); height: 100%;">
+            <h3 class="mb-4">Contact Information</h3>
+            <div class="mb-4">
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <svg class="icon">
+                  <use xlink:href="#icon-mail" />
+                </svg>
+                <strong>Email</strong>
+              </div>
+              <p class="text-grey-dark mb-0">
+                <a href="mailto:hello@customisemeuk.com">hello@customisemeuk.com</a>
+              </p>
+            </div>
+            <div class="mb-4">
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <svg class="icon">
+                  <use xlink:href="#icon-instagram" />
+                </svg>
+                <strong>Instagram</strong>
+              </div>
+              <p class="text-grey-dark mb-0">
+                <a href="https://www.instagram.com/customisemeuk" target="_blank">@customisemeuk</a>
+              </p>
+            </div>
+            <div class="mb-4">
+              <h5>Business Hours</h5>
+              <p class="text-grey-dark mb-1">Monday - Friday: 9:00 AM - 6:00 PM</p>
+              <p class="text-grey-dark mb-0">Saturday - Sunday: Closed</p>
+            </div>
+            <div>
+              <h5 class="mb-3">What to Expect</h5>
+              <ul class="text-grey-dark">
+                <li>Response within 24 hours</li>
+                <li>Free consultation for custom projects</li>
+                <li>Detailed quotes provided</li>
+                <li>Friendly, professional service</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Component -->
+  <div id="footer-container" data-component="components/footer.html"></div>
+
+  <!-- Scripts -->
+  <script src="js/components.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/cart.js"></script>
+  <script type="module" src="js/api-integration.js"></script>
+
+  <script>
+    const API_URL = 'http://localhost:5000/api';
+
+    // Check for service parameter in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const serviceParam = urlParams.get('service');
+
+    if (serviceParam) {
+      if (serviceParam === 'workshop') {
+        window.location.href = 'workshop.html';
+      }
+      document.getElementById('service').value = serviceParam;
+      const titles = {
+        'design': 'Start Your Design Project',
+        'installation': 'Request Installation Quote',
+        'workshop': 'Book a Workshop',
+        'subscribe-monthly': 'Subscribe to Monthly Plan',
+        'business': 'Business Package Inquiry',
+        'custom': 'Custom Design Request'
+      };
+      if (titles[serviceParam]) {
+        document.getElementById('form-title').textContent = titles[serviceParam];
+        document.getElementById('form-subtitle').textContent = 'Fill out the form below and we\'ll get back to you soon';
+      }
+    }
+
+    async function handleSubmit(event) {
+      event.preventDefault();
+
+      const submitBtn = document.getElementById('submit-btn');
+      const submitText = document.getElementById('submit-text');
+      const submitSpinner = document.getElementById('submit-spinner');
+      const errorDiv = document.getElementById('form-error');
+
+      // Get form data
+      const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        service: document.getElementById('service').value,
+        message: document.getElementById('message').value
+      };
+
+      // Show loading state
+      submitBtn.disabled = true;
+      submitText.style.display = 'none';
+      submitSpinner.style.display = 'inline-block';
+      errorDiv.style.display = 'none';
+
+      try {
+        // Send to API
+        const response = await fetch(`${API_URL}/contact/submit`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          // Show success message
+          document.getElementById('contact-form').style.display = 'none';
+          document.getElementById('success-message').style.display = 'block';
+        } else {
+          // Show error
+          errorDiv.textContent = data.message || 'Failed to send message. Please try again.';
+          errorDiv.style.display = 'block';
+
+          // Reset button
+          submitBtn.disabled = false;
+          submitText.style.display = 'inline';
+          submitSpinner.style.display = 'none';
+        }
+      } catch (error) {
+        console.error('Contact form error:', error);
+        errorDiv.textContent = 'Connection error. Please try again later.';
+        errorDiv.style.display = 'block';
+
+        // Reset button
+        submitBtn.disabled = false;
+        submitText.style.display = 'inline';
+        submitSpinner.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+
+</html>

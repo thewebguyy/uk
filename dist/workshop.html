@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" type="image/png" href="icon.png">
+    <title>Workshops - CustomiseMe UK</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Join our creative workshops! Learn iron-on techniques, custom printing, and DIY design skills in our hands-on sessions at Creative Merch UK.">
+
+    <!-- GA4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .step-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .step-card {
+            background: var(--color-white);
+            border: 2px solid var(--color-grey-light);
+            border-radius: var(--radius-lg);
+            padding: 3rem;
+            margin-bottom: 2rem;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .step-card.active {
+            border-color: var(--color-black);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-card.completed {
+            border-color: var(--color-grey-medium);
+            opacity: 0.7;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--color-black);
+            color: var(--color-white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            position: absolute;
+            top: -30px;
+            left: 3rem;
+        }
+
+        .step-card.completed .step-number {
+            background: var(--color-grey-dark);
+        }
+
+        .step-progress {
+            height: 6px;
+            background: var(--color-grey-light);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 3rem 0;
+        }
+
+        .step-progress-bar {
+            height: 100%;
+            background: var(--color-black);
+            transition: width 0.5s ease;
+        }
+
+        .step-content {
+            display: none;
+        }
+
+        .step-content.active {
+            display: block;
+        }
+
+        /* Workshop Selection Styles */
+        .workshop-option {
+            border: 2px solid var(--color-grey-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            height: 100%;
+        }
+
+        .workshop-option:hover {
+            border-color: var(--color-black);
+            background: #fafafa;
+        }
+
+        .workshop-option.selected {
+            border-color: var(--color-black);
+            background: #f0f0f0;
+        }
+
+        .price-tag {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--color-red);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Component -->
+    <div id="navigation" data-component="components/nav.html"></div>
+
+    <!-- Cart Component -->
+    <div id="cart-container" data-component="components/cart.html"></div>
+
+    <section class="section py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h1 class="display-4 fw-bold">Workshop Booking</h1>
+                <p class="text-grey-dark lead">Master the craft of custom printing in our hands-on creative sessions</p>
+            </div>
+
+            <!-- Multi-Step Booking Process -->
+            <div class="step-container">
+                <!-- Progress Bar -->
+                <div class="step-progress">
+                    <div class="step-progress-bar" id="progress-bar" style="width: 0%;"></div>
+                </div>
+
+                <!-- Step 1: Choose Experience -->
+                <div class="step-card active" id="step-1-card">
+                    <div class="step-number">1</div>
+                    <div class="step-content active" id="step-1">
+                        <h3 class="mb-4">Select Your Experience</h3>
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <div class="workshop-option" onclick="selectWorkshop('group', 35)">
+                                    <h4 class="h5 fw-bold">Group Workshop</h4>
+                                    <p class="small text-grey-dark mb-3">Perfect for hen parties, birthdays & teams.
+                                        Minimum 4 people.</p>
+                                    <div class="price-tag">£35.00 <span class="text-muted" style="font-size: 0.8rem;">/
+                                            pp</span></div>
+                                    <ul class="list-unstyled mt-3 small text-grey-dark">
+                                        <li>✓ 2.5 Hour Session</li>
+                                        <li>✓ Expert Instruction</li>
+                                        <li>✓ All Materials Included</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="workshop-option" onclick="selectWorkshop('private', 75)">
+                                    <h4 class="h5 fw-bold">Private Experience</h4>
+                                    <p class="small text-grey-dark mb-3">One-on-one session tailored to your skill level
+                                        and goals.</p>
+                                    <div class="price-tag">£75.00 <span class="text-muted" style="font-size: 0.8rem;">/
+                                            pp</span></div>
+                                    <ul class="list-unstyled mt-3 small text-grey-dark">
+                                        <li>✓ 2 Hour Deep Dive</li>
+                                        <li>✓ Advanced Techniques</li>
+                                        <li>✓ Business Consultation</li>
+                                        <li>✓ Professional Starter Guide</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-lg w-100" id="btn-next-1" disabled onclick="goToStep(2)">
+                            Next: Select Date & Participants →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Session Details -->
+                <div class="step-card" id="step-2-card">
+                    <div class="step-number">2</div>
+                    <div class="step-content" id="step-2">
+                        <h3 class="mb-4">Session Details</h3>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small text-uppercase">Preferred Date *</label>
+                                <input type="date" class="form-control" id="booking-date" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small text-uppercase">Number of Participants *</label>
+                                <input type="number" class="form-control" id="booking-count" min="1" value="1" required>
+                            </div>
+                            <div class="col-12">
+                                <p class="text-muted small">Note: We'll do our best to accommodate your preferred date.
+                                    If unavailable, we'll offer the closest alternative.</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-lg w-100" onclick="goToStep(3)">
+                            Next: Contact Details →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Contact Info -->
+                <div class="step-card" id="step-3-card">
+                    <div class="step-number">3</div>
+                    <div class="step-content" id="step-3">
+                        <h3 class="mb-4">Contact Information</h3>
+                        <form id="workshop-final-form">
+                            <div class="row g-3 mb-4">
+                                <div class="col-12">
+                                    <label class="form-label fw-bold small text-uppercase">Full Name *</label>
+                                    <input type="text" class="form-control" id="user-name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-uppercase">Email Address *</label>
+                                    <input type="email" class="form-control" id="user-email" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-uppercase">Phone Number *</label>
+                                    <input type="tel" class="form-control" id="user-phone" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-bold small text-uppercase">Special Requirements</label>
+                                    <textarea class="form-control" id="user-notes" rows="3"
+                                        placeholder="Dietary requirements, accessibility, etc."></textarea>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg w-100" id="submit-booking">
+                                Submit Booking Request →
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Step 4: Confirmation -->
+                <div class="step-card" id="step-4-card">
+                    <div class="step-number">4</div>
+                    <div class="step-content" id="step-4">
+                        <div class="text-center">
+                            <div class="mb-4">
+                                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--color-black)"
+                                    stroke-width="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M9 12l2 2 4-4" />
+                                </svg>
+                            </div>
+                            <h3 class="mb-3">Booking Request Sent</h3>
+                            <p class="text-grey-dark mb-4">Thank you! We've received your workshop request. Our team
+                                will review the details and contact you within 24 hours to confirm the date and handle
+                                payment.</p>
+                            <div class="d-grid gap-2">
+                                <a href="index.html" class="btn btn-primary">Return to Homepage</a>
+                                <a href="shop.html" class="btn btn-secondary">Continue Shopping</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Component -->
+    <div id="footer-container" data-component="components/footer.html"></div>
+
+    <!-- Scripts -->
+    <script src="js/components.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/cart.js"></script>
+    <script type="module" src="js/api-integration.js"></script>
+
+    <script>
+        let currentStep = 1;
+        let selectedType = '';
+        let selectedPrice = 0;
+
+        function selectWorkshop(type, price) {
+            selectedType = type;
+            selectedPrice = price;
+
+            // Update UI
+            document.querySelectorAll('.workshop-option').forEach(el => el.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+
+            // Enable next button
+            document.getElementById('btn-next-1').disabled = false;
+        }
+
+        function goToStep(step) {
+            // Mark previous step as completed
+            if (currentStep < step) {
+                document.getElementById(`step-${currentStep}-card`).classList.remove('active');
+                document.getElementById(`step-${currentStep}-card`).classList.add('completed');
+                document.getElementById(`step-${currentStep}`).classList.remove('active');
+            }
+
+            // Activate new step
+            currentStep = step;
+            document.getElementById(`step-${step}-card`).classList.add('active');
+            document.getElementById(`step-${step}`).classList.add('active');
+
+            // Update progress bar
+            const progress = (step - 1) * 33.33;
+            document.getElementById('progress-bar').style.width = progress + '%';
+
+            // Scroll to step
+            document.getElementById(`step-${step}-card`).scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        document.getElementById('workshop-final-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const btn = document.getElementById('submit-booking');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
+
+            // Collect all data
+            const bookingData = {
+                type: selectedType,
+                price: selectedPrice,
+                date: document.getElementById('booking-date').value,
+                participants: document.getElementById('booking-count').value,
+                name: document.getElementById('user-name').value,
+                email: document.getElementById('user-email').value,
+                phone: document.getElementById('user-phone').value,
+                notes: document.getElementById('user-notes').value
+            };
+
+            console.log('Booking submitted:', bookingData);
+
+            // Simulate API call
+            setTimeout(() => {
+                goToStep(4);
+            }, 1500);
+        });
+
+        // Update cart
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof updateCartDisplay === 'function') updateCartDisplay();
+        });
+    </script>
+</body>
+
+</html>

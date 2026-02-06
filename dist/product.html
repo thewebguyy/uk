@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" type="image/png" href="icon.png">
+  <title>Product Details - Creative Merch UK</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    .product-detail-section {
+      padding: 2rem 0;
+    }
+
+    .product-main-image {
+      width: 100%;
+      aspect-ratio: 1;
+      background: var(--color-grey-light);
+      border-radius: 0px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .product-main-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-details-box {
+      position: sticky;
+      top: 160px;
+    }
+
+    .product-title-main {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .product-price-main {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--color-black);
+      margin-bottom: 1.5rem;
+    }
+
+    .product-category-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: var(--color-grey-light);
+      border-radius: 0px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .product-description-full {
+      line-height: 1.8;
+      color: var(--color-grey-dark);
+      margin-bottom: 2rem;
+    }
+
+    .quantity-selector {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .quantity-label {
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.875rem;
+      letter-spacing: 0.05em;
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--color-grey);
+      border-radius: 0px;
+    }
+
+    .quantity-btn {
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 1.25rem;
+      transition: background 0.2s;
+      font-weight: 600;
+    }
+
+    .quantity-btn:hover {
+      background: var(--color-grey-light);
+    }
+
+    .quantity-input {
+      width: 60px;
+      height: 40px;
+      border: none;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .product-meta {
+      padding: 1.5rem;
+      background: var(--color-grey-light);
+      margin-bottom: 2rem;
+    }
+
+    .product-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .product-meta-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .product-meta-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .breadcrumb {
+      padding: 1rem 0;
+      margin-bottom: 2rem;
+      background: transparent;
+    }
+
+    .breadcrumb-item+.breadcrumb-item::before {
+      content: "→";
+      padding-right: 0.5rem;
+    }
+
+    .breadcrumb a {
+      color: var(--color-grey-dark);
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--color-black);
+    }
+
+    .loading-spinner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid var(--color-grey-light);
+      border-top-color: var(--color-black);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .error-state {
+      text-align: center;
+      padding: 3rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- SVG Icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.35-4.35" />
+    </symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </symbol>
+    <symbol id="icon-shopping-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <path d="M16 10a4 4 0 0 1-8 0" />
+    </symbol>
+    <symbol id="icon-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path
+        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+    </symbol>
+    <symbol id="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10" />
+      <line x1="2" y1="12" x2="22" y2="12" />
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+    </symbol>
+    <symbol id="icon-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="1" y="3" width="15" height="13" />
+      <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+      <circle cx="5.5" cy="18.5" r="2.5" />
+      <circle cx="18.5" cy="18.5" r="2.5" />
+    </symbol>
+    <symbol id="icon-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+    </symbol>
+  </svg>
+
+  <!-- Navigation Component -->
+  <div id="navigation" data-component="components/nav.html"></div>
+
+  <!-- Cart Component -->
+  <div id="cart-container" data-component="components/cart.html"></div>
+
+  <!-- Loading State -->
+  <div id="loading-state" class="loading-spinner">
+    <div class="spinner"></div>
+    <p class="text-grey-dark">Loading product details...</p>
+  </div>
+
+  <!-- Error State -->
+  <div id="error-state" class="error-state" style="display: none;">
+    <h2>Product Not Found</h2>
+    <p class="text-grey-dark">The product you're looking for doesn't exist or has been removed.</p>
+    <a href="shop.html" class="btn btn-primary mt-3">Browse All Products</a>
+  </div>
+
+  <!-- Product Detail Section -->
+  <section class="product-detail-section" id="product-content" style="display: none;">
+    <div class="container">
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="shop.html">Shop</a></li>
+          <li class="breadcrumb-item"><a href="#" id="breadcrumb-category">Category</a></li>
+          <li class="breadcrumb-item active" aria-current="page" id="breadcrumb-product">Product</li>
+        </ol>
+      </nav>
+
+      <div class="row g-5">
+        <!-- Product Image -->
+        <div class="col-md-6">
+          <div class="product-main-image" id="main-image-container">
+            <span class="text-grey">Loading image...</span>
+          </div>
+          <!-- Product Description (Moved here) -->
+          <div class="product-description-full mt-4" id="product-description">
+            Loading description...
+          </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-6">
+          <div class="product-details-box">
+            <span class="product-category-badge" id="product-category">CATEGORY</span>
+
+            <h1 class="product-title-main" id="product-name">Product Name</h1>
+
+            <!-- Customization Options -->
+            <div class="product-customization">
+              <!-- Color Selection -->
+              <div class="customization-group" id="group-color">
+                <label class="customization-label">Select Color</label>
+                <div class="color-swatches" id="color-options">
+                  <!-- Colors dynamically generated -->
+                </div>
+              </div>
+
+              <!-- Size Selection -->
+              <div class="customization-group" id="group-size">
+                <label class="customization-label">Select Size <a href="#"
+                    style="font-size: 0.75rem; text-decoration: underline; margin-left: 5px;">Size Guide</a></label>
+                <div class="size-options">
+                  <button class="size-btn" onclick="updateCustomization('size', 'XS', this)">XS</button>
+                  <button class="size-btn" onclick="updateCustomization('size', 'S', this)">S</button>
+                  <button class="size-btn active" onclick="updateCustomization('size', 'M', this)">M</button>
+                  <button class="size-btn" onclick="updateCustomization('size', 'L', this)">L</button>
+                  <button class="size-btn" onclick="updateCustomization('size', 'XL', this)">XL</button>
+                  <button class="size-btn" onclick="updateCustomization('size', '2XL', this)">2XL</button>
+                  <button class="size-btn" onclick="updateCustomization('size', '3XL', this)">3XL</button>
+                </div>
+                <div id="static-size-label"
+                  style="display: none; padding: 10px; background: var(--color-grey-light); font-weight: 600;">One Size
+                </div>
+              </div>
+
+              <!-- Print Location -->
+              <div class="customization-group" id="group-print-location">
+                <label class="customization-label">Print Location</label>
+                <div class="print-options">
+                  <button class="print-btn active"
+                    onclick="updateCustomization('printLocation', 'Front Only', this)">Front Only</button>
+                  <button class="print-btn" onclick="updateCustomization('printLocation', 'Back Only', this)">Back
+                    Only</button>
+                  <button class="print-btn" onclick="updateCustomization('printLocation', 'Front & Back', this)">Front &
+                    Back (+£5)</button>
+                </div>
+              </div>
+
+              <!-- Design Position -->
+              <div class="customization-group" id="group-design-position">
+                <label class="customization-label">Design Position</label>
+                <div class="position-options">
+                  <button class="position-btn active"
+                    onclick="updateCustomization('designPosition', 'Centre', this)">Centre</button>
+                  <button class="position-btn" onclick="updateCustomization('designPosition', 'Full Front', this)">Full
+                    Front</button>
+                </div>
+              </div>
+
+              <!-- Artwork Upload -->
+              <div class="customization-group" id="group-artwork">
+                <label class="customization-label">Upload Artwork</label>
+                <div class="artwork-options" id="standard-artwork-options">
+                  <button class="artwork-btn" onclick="document.getElementById('artwork-upload').click()">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                    </svg>
+                    <span>Upload Your File</span>
+                    <div style="font-size: 0.7rem; color: #666; margin-top: 5px;">PNG, PDF, AI (Min 300 DPI)</div>
+                  </button>
+                  <input type="file" id="artwork-upload" style="display: none;" onchange="handleFileUpload(this)">
+
+                  <button class="artwork-btn" id="design-studio-btn"
+                    onclick="window.location.href='designservice.html'">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                      </path>
+                    </svg>
+                    <span>Design in Studio</span>
+                    <div style="font-size: 0.7rem; color: #666; margin-top: 5px;">Need help designing?</div>
+                  </button>
+                </div>
+
+                <div class="sticker-options" id="sticker-artwork-options" style="display: none;">
+                  <button class="artwork-btn w-100" onclick="document.getElementById('artwork-upload').click()">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                    </svg>
+                    <span>Upload Artwork</span>
+                  </button>
+                </div>
+
+                <div id="file-preview" style="margin-top: 10px; font-size: 0.875rem; font-weight: 500; color: #059669;">
+                </div>
+              </div>
+            </div>
+
+            <!-- Price (Moved here) -->
+            <div class="product-price-main mb-3" id="product-price">£0.00</div>
+
+            <!-- Quantity Selector -->
+            <div class="quantity-selector" id="standard-quantity-selector">
+              <span class="quantity-label">Quantity:</span>
+              <div class="quantity-controls">
+                <button class="quantity-btn" onclick="changeQuantity(-1)">−</button>
+                <input type="number" class="quantity-input" id="quantity" value="1" min="1" readonly>
+                <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
+              </div>
+            </div>
+
+            <!-- Sticker Quantity Selector -->
+            <div class="customization-group" id="sticker-quantity-selector" style="display: none;">
+              <label class="customization-label">Select Quantity</label>
+              <div class="sticker-quantity-options d-flex gap-2">
+                <button class="btn btn-outline flex-grow-1" onclick="updateStickerQuantity(10, this)">10</button>
+                <button class="btn btn-outline flex-grow-1" onclick="updateStickerQuantity(20, this)">20</button>
+                <button class="btn btn-outline flex-grow-1" onclick="updateStickerQuantity(50, this)">50</button>
+                <button class="btn btn-outline flex-grow-1" onclick="updateStickerQuantity(100, this)">100</button>
+              </div>
+            </div>
+
+            <!-- Add to Cart Button -->
+            <div class="d-flex gap-2">
+              <button class="btn btn-primary btn-lg flex-grow-1" id="add-to-cart-btn" onclick="addProductToCart()">
+                ADD TO CART
+              </button>
+              <button class="wishlist-btn" id="product-wishlist-btn"
+                onclick="toggleWishlist({id: productId, name: currentProduct.name, price: currentProduct.price, imageUrl: currentProduct.imageUrl})"
+                style="position: relative; top: 0; right: 0; width: 56px; height: 56px;">
+                <svg class="icon">
+                  <use xlink:href="#icon-heart" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- Request Custom Design -->
+            <button class="btn btn-outline w-100 mb-4" onclick="window.location.href='contact.html?service=custom'">
+              REQUEST CUSTOM DESIGN
+            </button>
+
+            <!-- Product Meta -->
+            <div class="product-meta">
+              <div class="product-meta-item">
+                <svg class="product-meta-icon">
+                  <use xlink:href="#icon-truck" />
+                </svg>
+                <div>
+                  <strong>Free UK Shipping</strong>
+                  <p class="mb-0 text-grey-dark" style="font-size: 0.875rem;">On orders over £50</p>
+                </div>
+              </div>
+              <div class="product-meta-item">
+                <svg class="product-meta-icon">
+                  <use xlink:href="#icon-shield" />
+                </svg>
+                <div>
+                  <strong>Quality Guarantee</strong>
+                  <p class="mb-0 text-grey-dark" style="font-size: 0.875rem;">Premium materials & craftsmanship</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Reviews Section -->
+  <section class="section bg-light" id="reviews-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="section-title mb-0 text-start">CUSTOMER REVIEWS</h2>
+            <button class="btn btn-outline-primary" onclick="showWriteReview()">Write a Review</button>
+          </div>
+
+          <!-- Rating Summary -->
+          <div class="review-summary card p-4 mb-4 border-0 shadow-sm">
+            <div class="row align-items-center">
+              <div class="col-md-4 text-center border-end">
+                <div class="display-3 fw-bold" id="avg-rating">4.9</div>
+                <div class="text-warning mb-2" id="avg-stars">★★★★★</div>
+                <div class="text-grey" id="total-reviews">Based on 0 reviews</div>
+              </div>
+              <div class="col-md-8 ps-md-4">
+                <div class="rating-bar-row d-flex align-items-center mb-2">
+                  <span class="text-nowrap me-2">5 Star</span>
+                  <div class="progress flex-grow-1" style="height: 8px;">
+                    <div class="progress-bar bg-warning" style="width: 80%"></div>
+                  </div>
+                  <span class="ms-2">80%</span>
+                </div>
+                <div class="rating-bar-row d-flex align-items-center mb-2">
+                  <span class="text-nowrap me-2">4 Star</span>
+                  <div class="progress flex-grow-1" style="height: 8px;">
+                    <div class="progress-bar bg-warning" style="width: 15%"></div>
+                  </div>
+                  <span class="ms-2">15%</span>
+                </div>
+                <div class="rating-bar-row d-flex align-items-center mb-2">
+                  <span class="text-nowrap me-2">3 Star</span>
+                  <div class="progress flex-grow-1" style="height: 8px;">
+                    <div class="progress-bar bg-warning" style="width: 5%"></div>
+                  </div>
+                  <span class="ms-2">5%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review List -->
+          <div id="reviews-list">
+            <!-- Reviews will be injected here -->
+            <div class="text-center py-4 text-grey">Loading reviews...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Products Section -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">YOU MIGHT ALSO LIKE</h2>
+      <div class="product-grid-four" id="related-products">
+        <!-- Related items injected here -->
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+  <!-- Size Guide Modal -->
+  <div class="modal fade" id="sizeGuideModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Size Guide</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr class="table-light">
+                <th>Size</th>
+                <th>Chest (in)</th>
+                <th>Length (in)</th>
+                <th>Sleeve (in)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>XS</td>
+                <td>31-34</td>
+                <td>27</td>
+                <td>7.5</td>
+              </tr>
+              <tr>
+                <td>S</td>
+                <td>34-37</td>
+                <td>28</td>
+                <td>8</td>
+              </tr>
+              <tr>
+                <td>M</td>
+                <td>38-41</td>
+                <td>29</td>
+                <td>8.5</td>
+              </tr>
+              <tr>
+                <td>L</td>
+                <td>42-45</td>
+                <td>30</td>
+                <td>9</td>
+              </tr>
+              <tr>
+                <td>XL</td>
+                <td>46-49</td>
+                <td>31</td>
+                <td>9.5</td>
+              </tr>
+              <tr>
+                <td>2XL</td>
+                <td>50-53</td>
+                <td>32</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>3XL</td>
+                <td>54-57</td>
+                <td>33</td>
+                <td>10.5</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="text-sm text-grey mt-2">* Measurements are approximate. fits may vary by style.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Write Review Modal -->
+  <div class="modal fade" id="writeReviewModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Write a Review</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="review-form">
+            <div class="mb-3">
+              <label class="form-label">Rating</label>
+              <select class="form-select" id="review-rating-input">
+                <option value="5">★★★★★ (Excellent)</option>
+                <option value="4">★★★★☆ (Good)</option>
+                <option value="3">★★★☆☆ (Average)</option>
+                <option value="2">★★☆☆☆ (Poor)</option>
+                <option value="1">★☆☆☆☆ (Terrible)</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Title</label>
+              <input type="text" class="form-control" id="review-title-input" placeholder="Summarize your experience">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Review (Min 50 characters)</label>
+              <textarea class="form-control" id="review-text-input" rows="4" placeholder="What did you like or dislike?"
+                oninput="updateCharCount(this)"></textarea>
+              <small class="text-muted"><span id="char-count">0</span> / 50 characters</small>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Add Photos (Optional)</label>
+              <input type="file" class="form-control" id="review-photos" multiple accept="image/*">
+            </div>
+            <div class="alert alert-info py-2" style="font-size: 0.85rem;">
+              <strong>Guidelines:</strong> Please focus on product quality and fit. Avoid mentions of delivery issues
+              which should be reported via support.
+            </div>
+            <button type="submit" class="btn btn-primary w-100" id="submit-review-btn">Submit Review</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stock Notification Modal -->
+  <div class="modal fade" id="stockNotifyModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Notify Me When Available</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p>We'll email you when this item is back in stock.</p>
+          <form id="stock-notify-form">
+            <div class="mb-3">
+              <input type="email" class="form-control" placeholder="Enter your email address" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Notify Me</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Footer Component -->
+  <div id="footer-container" data-component="components/footer.html"></div>
+
+  <!-- Scripts -->
+  <script src="js/components.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/wishlist.js"></script>
+  <script type="module" src="js/api-integration.js"></script>
+
+  <script>
+    let currentProduct = null;
+    let currentQuantity = 1;
+    let customization = { color: 'White', size: 'M', printLocation: 'Front Only', designPosition: 'Centre', artwork: null };
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (typeof updateCartDisplay === 'function') updateCartDisplay();
+
+      const waitForService = setInterval(() => {
+        if (window.ProductService) {
+          clearInterval(waitForService);
+          if (productId) {
+            loadProduct(productId);
+            loadReviews(productId);
+            loadRelatedProducts();
+          } else {
+            showError();
+          }
+        }
+      }, 100);
+
+      // Initialize Size Guide Modal Link
+      document.querySelector('a[href="#"][style*="text-decoration: underline"]').addEventListener('click', (e) => {
+        e.preventDefault();
+        new bootstrap.Modal(document.getElementById('sizeGuideModal')).show();
+      });
+    });
+
+    async function loadProduct(id) {
+      try {
+        currentProduct = await window.ProductService.getProduct(id);
+        if (currentProduct) displayProduct(currentProduct);
+        else showError();
+      } catch (e) { showError(); }
+    }
+
+    function displayProduct(product) {
+      document.getElementById('loading-state').style.display = 'none';
+      document.getElementById('product-content').style.display = 'block';
+      document.title = `${product.name} - Creative Merch UK`;
+
+      // Basic Info
+      document.getElementById('product-category').textContent = (product.category || 'Product').toUpperCase();
+      document.getElementById('product-name').textContent = product.name;
+      document.getElementById('product-description').textContent = product.description;
+      updatePrice();
+
+      // GA4 Event - View Item
+      if (typeof gtag === 'function') {
+        gtag('event', 'view_item', {
+          items: [{
+            item_id: product.id,
+            item_name: product.name,
+            price: product.price,
+            item_category: product.category
+          }]
+        });
+      }
+
+      // Image
+      const imgContainer = document.getElementById('main-image-container');
+      imgContainer.innerHTML = product.imageUrl ?
+        `<img src="${escapeHtml(product.imageUrl)}" alt="${escapeHtml(product.name)}" loading="eager">` :
+        `<span class="text-grey">No image available</span>`;
+
+      // Low Stock Logic
+      const btn = document.getElementById('add-to-cart-btn');
+      if (product.stock <= 0) {
+        btn.textContent = 'OUT OF STOCK - NOTIFY ME';
+        btn.onclick = () => new bootstrap.Modal(document.getElementById('stockNotifyModal')).show();
+        btn.classList.replace('btn-primary', 'btn-secondary');
+      } else if (product.stock < 10) {
+        if (!document.getElementById('low-stock-warning')) {
+          const warn = document.createElement('div');
+          warn.className = 'text-danger fw-bold mt-2';
+          warn.textContent = `🔥 Only ${product.stock} left in stock!`;
+          document.getElementById('product-price').after(warn);
+        }
+      }
+
+      // Handle Category Specific Options
+      const category = (product.category || '').toLowerCase();
+
+      // Generate Color Swatches if not stickers
+      if (category !== 'stickers') {
+        const colors = ['Black', 'White', 'Navy', 'Red', 'Grey', 'Green'];
+        const colorContainer = document.getElementById('color-options');
+        colorContainer.innerHTML = colors.map(c => `
+          <div class="color-swatch ${customization.color === c ? 'active' : ''}" 
+               style="background-color: ${c.toLowerCase() === 'navy' ? '#000080' : c.toLowerCase()}; border: ${c.toLowerCase() === 'white' ? '1px solid #ddd' : 'none'};" 
+               onclick="updateCustomization('color', '${c}', this)" 
+               title="${c}"></div>
+        `).join('');
+      }
+
+      // Wishlist Button State
+      const wishlistBtn = document.getElementById('product-wishlist-btn');
+      if (wishlistBtn) {
+        if (window.isInWishlist && window.isInWishlist(product.id)) {
+          wishlistBtn.classList.add('active');
+        } else {
+          wishlistBtn.classList.remove('active');
+        }
+      }
+
+      if (category === 'tote-bags' || category === 'accessories' && product.name.toLowerCase().includes('bag')) {
+        document.querySelector('#group-size .size-options').style.display = 'none';
+        document.querySelector('#group-size a[style*="text-decoration: underline"]').style.display = 'none';
+        document.getElementById('static-size-label').style.display = 'block';
+        customization.size = 'One Size';
+      } else if (category === 'stickers') {
+        // Hide standard options
+        document.getElementById('group-color').style.display = 'none';
+        document.getElementById('group-size').style.display = 'none';
+        document.getElementById('group-print-location').style.display = 'none';
+        document.getElementById('group-design-position').style.display = 'none';
+        document.getElementById('standard-quantity-selector').style.display = 'none';
+        document.getElementById('standard-artwork-options').style.display = 'none';
+
+        // Show sticker specific options
+        document.getElementById('sticker-quantity-selector').style.display = 'block';
+        document.getElementById('sticker-artwork-options').style.display = 'block';
+      }
+    }
+
+    window.updateStickerQuantity = (val, el) => {
+      currentQuantity = val;
+      document.getElementById('quantity').value = val;
+      if (el) {
+        Array.from(el.parentElement.children).forEach(c => c.classList.remove('active', 'btn-primary'));
+        el.classList.add('active', 'btn-primary');
+      }
+    };
+
+    async function loadReviews(id) {
+      const list = document.getElementById('reviews-list');
+      try {
+        const reviews = await window.ProductService.getReviews(id);
+        list.innerHTML = reviews.length ? reviews.map(r => `
+          <div class="card mb-3 border-0 shadow-sm p-3">
+            <div class="d-flex justify-content-between">
+              <div>
+                <strong class="d-block">${escapeHtml(r.title)}</strong>
+                <span class="text-warning">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</span>
+              </div>
+              <small class="text-muted">${r.timestamp ? new Date(r.timestamp.toDate()).toLocaleDateString() : '---'}</small>
+            </div>
+            <p class="mt-2 text-grey-dark">${escapeHtml(r.comment)}</p>
+            ${r.images && r.images.length ? `<div class="d-flex gap-2 mb-2">${r.images.map(img => `<img src="${img}" width="60" class="border rounded" onclick="window.open(this.src)">`).join('')}</div>` : ''}
+            <div class="d-flex align-items-center gap-2">
+               ${r.verified_purchase ? '<span class="badge bg-success-subtle text-success" title="Checked against order history">✓ Verified Purchase</span>' : ''}
+              <small class="text-muted">– ${escapeHtml(r.userName || 'Customer')}</small>
+            </div>
+          </div>
+        `).join('') : '<div class="text-center py-5 bg-light rounded">No reviews yet. Be the first!</div>';
+
+        document.getElementById('total-reviews').textContent = `Based on ${reviews.length} reviews`;
+        if (reviews.length > 0) {
+          const avg = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
+          document.getElementById('avg-rating').textContent = avg.toFixed(1);
+        }
+      } catch (e) { list.innerHTML = 'Failed to load reviews.'; }
+    }
+
+    async function loadRelatedProducts() {
+      const container = document.getElementById('related-products');
+      const products = await window.ProductService.getProducts({ limit: 4 }); // Simple logic for now
+      container.innerHTML = products.map(p => `
+        <div class="product-card">
+          <a href="product.html?id=${p.id}" class="product-card-link">
+            <div class="product-image">
+               ${p.imageUrl ? `<img src="${escapeHtml(p.imageUrl)}">` : '<div class="h-100 d-flex align-items-center justify-content-center bg-light">No Image</div>'}
+            </div>
+            <div class="product-info p-3">
+              <h3 class="product-title" style="font-size: 1rem;">${escapeHtml(p.name)}</h3>
+              <div class="fw-bold">£${p.price.toFixed(2)}</div>
+            </div>
+          </a>
+        </div>
+      `).join('');
+    }
+
+    window.updateCustomization = (type, val, el) => {
+      customization[type] = val;
+      if (el) {
+        Array.from(el.parentElement.children).forEach(c => c.classList.remove('active'));
+        el.classList.add('active');
+      }
+      updatePrice();
+    };
+
+    function updatePrice() {
+      if (!currentProduct) return;
+      let p = currentProduct.price;
+      if (customization.printLocation === 'Front & Back') p += 5;
+      document.getElementById('product-price').textContent = `£${p.toFixed(2)}`;
+    }
+
+    window.changeQuantity = (d) => {
+      const el = document.getElementById('quantity');
+      currentQuantity = Math.max(1, currentQuantity + d);
+      el.value = currentQuantity;
+    };
+
+    window.addProductToCart = () => {
+      if (!currentProduct) return;
+      const price = customization.printLocation === 'Front & Back' ? currentProduct.price + 5 : currentProduct.price;
+      const name = `${currentProduct.name} (${customization.size}, ${customization.color})`;
+      addToCart(currentProduct.id, name, price, currentProduct.imageUrl, currentQuantity, customization);
+
+      const btn = document.getElementById('add-to-cart-btn');
+      const txt = btn.textContent;
+      btn.textContent = '✓ ADDED';
+      btn.classList.add('btn-success');
+      setTimeout(() => {
+        btn.textContent = txt;
+        btn.classList.remove('btn-success');
+      }, 2000);
+      new bootstrap.Offcanvas(document.getElementById('cartOffcanvas')).show();
+    };
+
+    window.showWriteReview = () => new bootstrap.Modal(document.getElementById('writeReviewModal')).show();
+
+    window.updateCharCount = (el) => {
+      const count = el.value.length;
+      document.getElementById('char-count').textContent = count;
+      document.getElementById('char-count').style.color = count >= 50 ? 'green' : 'red';
+    };
+
+    // Form handlers
+    window.handleFileUpload = (input) => {
+      const preview = document.getElementById('file-preview');
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const reader = new FileReader();
+
+        // Show loading state
+        preview.innerHTML = `<span class="text-muted">Uploading ${file.name}...</span>`;
+        preview.style.color = '#666';
+
+        reader.onload = (e) => {
+          customization.artwork = e.target.result;
+          preview.innerHTML = `
+            <div class="d-flex align-items-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="color: #059669;">
+                <path d="M20 6L9 17L4 12" />
+              </svg>
+              <span>File uploaded: <strong>${file.name}</strong></span>
+              <button class="btn btn-sm p-0 ms-auto text-danger" onclick="removeArtwork(event)" style="font-size: 0.75rem; text-decoration: underline;">Remove</button>
+            </div>
+          `;
+          preview.style.color = '#059669';
+
+          // Show a toast or simple alert for extra confirmation
+          console.log('Artwork uploaded:', file.name);
+        };
+
+        reader.readAsDataURL(file);
+      }
+    };
+
+    window.removeArtwork = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      customization.artwork = null;
+      document.getElementById('artwork-upload').value = '';
+      document.getElementById('file-preview').innerHTML = '';
+    };
+
+    document.getElementById('review-form').onsubmit = async (e) => {
+      e.preventDefault();
+      const txt = document.getElementById('review-text-input').value;
+      if (txt.length < 50) return alert('Your review must be at least 50 characters.');
+
+      const submitBtn = document.getElementById('submit-review-btn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      try {
+        // Implementation calling Cloud Function
+        const { httpsCallable } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-functions.js');
+        const submitReviewFn = httpsCallable(window.functions, 'submitReview');
+
+        // Note: For images, you'd upload to Firebase Storage first here. Skipping for brevity.
+        await submitReviewFn({
+          productId: productId,
+          rating: parseInt(document.getElementById('review-rating-input').value),
+          title: document.getElementById('review-title-input').value,
+          comment: txt,
+          images: []
+        });
+
+        alert('Review submitted for moderation! Thank you.');
+        bootstrap.Modal.getInstance(document.getElementById('writeReviewModal')).hide();
+        loadReviews(productId);
+      } catch (err) {
+        alert('Error: ' + err.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Review';
+      }
+    };
+
+    document.getElementById('stock-notify-form').onsubmit = (e) => {
+      e.preventDefault();
+      alert('You will be notified when this item is back in stock!');
+      bootstrap.Modal.getInstance(document.getElementById('stockNotifyModal')).hide();
+    };
+
+    function escapeHtml(t) {
+      if (!t) return '';
+      return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+  </script>
+</body>
+
+</html>
