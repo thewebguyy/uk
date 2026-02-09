@@ -102,9 +102,12 @@
         await signInWithEmailAndPassword(auth, email, password);
         console.log('Firebase login successful');
 
-        // 2. Sign in with Backend API
+
+        // Backend API integration disabled - Firebase handles all authentication
+        // If you need backend sync in the future, uncomment and update the URL below:
+        /*
         try {
-          const response = await fetch('http://localhost:5000/api/auth/login', {
+          const response = await fetch('YOUR_BACKEND_URL/api/auth/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -116,20 +119,14 @@
 
           if (data.success) {
             console.log('Backend login successful');
-            // Store backend token
             localStorage.setItem('authToken', data.data.token);
-            // Also store user info if needed
             localStorage.setItem('user', JSON.stringify(data.data.user));
-          } else {
-            console.warn('Backend login failed:', data.message);
-            // Optional: Decouple backend login failure if you want to allow Firebase-only access
-            // But for "Sync" to work, we need the token. 
-            // We will proceed but alert the user or log it.
-            // For now, we proceed to dashboard, but Sync features might fail.
           }
         } catch (backendError) {
           console.error('Backend connection error:', backendError);
         }
+        */
+
 
         // Success - redirect will happen via onAuthStateChanged
 

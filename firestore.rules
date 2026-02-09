@@ -21,10 +21,10 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
-    // Orders: Read own, write admin only
+    // Orders: Read by email match, create by anyone (Cloud Functions), update/delete admin only
     match /orders/{orderId} {
-      allow read: if isOwner(resource.data.userId) || isAdmin();
-      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow read: if isSignedIn() && (resource.data.email == request.auth.token.email || isAdmin());
+      allow create: if true; // Allow Cloud Functions to create orders
       allow update, delete: if isAdmin();
     }
 
