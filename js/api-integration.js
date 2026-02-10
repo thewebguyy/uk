@@ -274,26 +274,22 @@ class ProductService {
 // ============================================
 
 class CheckoutService {
-  static async createPaymentIntent(orderData) {
-    console.log('Sending to Cloud Function:', orderData);
+  /**
+   * Creates a Stripe Checkout Session and returns the hosted URL
+   * @param {Object} orderData { items, email, shippingAddress }
+   */
+  static async createCheckoutSession(orderData) {
     try {
-      const createPaymentIntentFn = httpsCallable(functions, 'createPaymentIntent');
-      const result = await createPaymentIntentFn(orderData);
-      return result.data; // { clientSecret, orderId, amounts }
+      const createCheckoutSessionFn = httpsCallable(functions, 'createCheckoutSession');
+      const result = await createCheckoutSessionFn({
+        ...orderData,
+        successUrl: window.location.origin + '/order-confirmation.html',
+        cancelUrl: window.location.origin + '/checkout.html'
+      });
+      return result.data; // Expected { url }
     } catch (error) {
-      console.error('Payment intent error:', error);
+      console.error('Checkout session error:', error);
       throw error;
-    }
-  }
-
-  static async confirmOrder(orderId, paymentIntentId) {
-    try {
-      const confirmOrderFn = httpsCallable(functions, 'confirmOrder');
-      const result = await confirmOrderFn({ orderId, paymentIntentId });
-      return result.data; // { success: true, orderNumber }
-    } catch (error) {
-      console.error('Order confirmation error:', error);
-      return { success: false };
     }
   }
 }

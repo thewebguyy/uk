@@ -541,15 +541,9 @@
           </div>
         </div>
 
-        <!-- Stripe Payment Element (Hidden until step 2) -->
-        <div id="payment-element-container" class="payment-form-container">
-          <h2 class="mb-4" style="font-size: 1.5rem; font-weight: 700;">Secure Payment</h2>
-          <div id="payment-element"></div>
-          <div id="payment-message" class="alert alert-danger mt-3" style="display: none;"></div>
-          <button id="submit-payment" class="btn-primary-checkout mt-4">
-            <span id="button-text">Complete Purchase</span>
-            <div id="spinner" class="spinner-border spinner-border-sm ms-2" style="display: none;"></div>
-          </button>
+        <!-- Stripe Payment Element (Removed - now using Redirect) -->
+        <div id="payment-redirect-notice" class="alert alert-info mt-4" style="display: none;">
+          <p class="mb-0">You will be redirected to Stripe's secure checkout page to complete your payment.</p>
         </div>
       </div>
 
@@ -599,17 +593,12 @@
             1. Enter Shipping
           </button>
 
-          <!-- Step 2: Calculate and Load Stripe -->
-          <button class="btn-primary-checkout" id="review-order-btn" style="display: none;">
-            2. Review & Calculate
-            <div id="review-spinner" class="spinner-border spinner-border-sm ms-2" style="display: none;"></div>
+          <!-- Step 2: Redirect to Stripe Checkout -->
+          <button class="btn-primary-checkout" id="checkout-redirect-btn" style="display: none; background: #635bff;">
+            2. Proceed to Payment
+            <div id="redirect-spinner" class="spinner-border spinner-border-sm ms-2" style="display: none;"></div>
           </button>
-          <div id="review-error" class="alert alert-danger mt-3" style="display: none;"></div>
-
-          <!-- Step 3: Complete (This is a mirror/jump to the bottom button for UX) -->
-          <button class="btn-stripe-checkout" id="goto-payment-btn" style="display: none; background: #000;">
-            3. Finalise Payment
-          </button>
+          <div id="checkout-error" class="alert alert-danger mt-3" style="display: none;"></div>
 
 
 
@@ -765,15 +754,15 @@
       document.getElementById('shipping-form-container').style.display = 'block';
       document.getElementById('shipping-form-container').scrollIntoView({ behavior: 'smooth' });
       document.getElementById('proceed-to-checkout').style.display = 'none';
-      document.getElementById('review-order-btn').style.display = 'flex';
+      document.getElementById('checkout-redirect-btn').style.display = 'flex';
     });
 
-    // STEP 2: REVIEW ORDER & INITIALIZE STRIPE
-    let isReviewing = false;
-    document.getElementById('review-order-btn').addEventListener('click', async () => {
-      if (isReviewing) return;
+    // STEP 2: CREATE CHECKOUT SESSION & REDIRECT
+    let isRedirecting = false;
+    document.getElementById('checkout-redirect-btn').addEventListener('click', async () => {
+      if (isRedirecting) return;
 
-      const errorEl = document.getElementById('review-error');
+      const errorEl = document.getElementById('checkout-error');
       errorEl.style.display = 'none';
 
       // Validate form
@@ -789,106 +778,47 @@
         return;
       }
 
-      isReviewing = true;
-      setReviewLoading(true);
+      isRedirecting = true;
+      setRedirectLoading(true);
 
       try {
         const cart = window.getCart();
         const items = cart.map(item => ({
-          productId: item.productId,
+          productId: item.productId || item.id,
           name: item.name,
           price: item.price,
           quantity: item.quantity,
           imageUrl: item.imageUrl
         }));
 
-        // Call Firebase Function
-        const result = await window.CheckoutService.createPaymentIntent({
+        // Call Firebase Function to get Stripe Session URL
+        const result = await window.CheckoutService.createCheckoutSession({
           items,
           email,
-          shippingAddress: { name, address, city, postcode },
-          cartId: 'cart-' + Date.now()
+          shippingAddress: { name, address, city, postcode }
         });
 
-        const { clientSecret, orderId } = result;
-
-        // Initialize Stripe Elements
-        stripe = await window.initializeStripe();
-        if (!stripe) {
-          throw new Error("Stripe failed to initialize. Please check if the Publishable Key is set correctly in js/api-integration.js");
+        if (result && result.url) {
+          // Redirect to Stripe Hosted Checkout
+          window.location.href = result.url;
+        } else {
+          throw new Error("Failed to generate checkout session.");
         }
-        elements = stripe.elements({ clientSecret });
-
-        const paymentElementOptions = { layout: "tabs" };
-        const paymentElement = elements.create("payment", paymentElementOptions);
-        paymentElement.mount("#payment-element");
-
-        // UI Transition
-        document.getElementById('payment-element-container').style.display = 'block';
-        document.getElementById('payment-element-container').scrollIntoView({ behavior: 'smooth' });
-        document.getElementById('review-order-btn').style.display = 'none';
-        document.getElementById('goto-payment-btn').style.display = 'flex';
-
-        // Store orderId for confirmation
-        window.currentOrderId = orderId;
 
       } catch (error) {
-        console.error("Step 2 Error:", error);
-        errorEl.textContent = "Error: " + error.message;
+        console.error("Checkout Error:", error);
+        errorEl.textContent = "Checkout Error: " + error.message;
         errorEl.style.display = 'block';
-      } finally {
-        isReviewing = false;
-        setReviewLoading(false);
+        isRedirecting = false;
+        setRedirectLoading(false);
       }
     });
 
-    // STEP 3: SUBMIT PAYMENT
-    let isSubmitting = false;
-    document.getElementById('submit-payment').addEventListener('click', async () => {
-      if (isSubmitting) return;
-      isSubmitting = true;
-      setPaymentLoading(true);
-
-      try {
-        const { error } = await stripe.confirmPayment({
-          elements,
-          confirmParams: {
-            return_url: window.location.origin + "/order-confirmation.html?orderId=" + window.currentOrderId,
-          },
-        });
-
-        if (error) {
-          const messageContainer = document.getElementById("payment-message");
-          messageContainer.style.display = "block";
-          messageContainer.textContent = error.message;
-        }
-      } catch (error) {
-        console.error("Payment Error:", error);
-      } finally {
-        isSubmitting = false;
-        setPaymentLoading(false);
-      }
-    });
-
-    // UX: Scroll to bottom
-    document.getElementById('goto-payment-btn')?.addEventListener('click', () => {
-      document.getElementById('payment-element-container').scrollIntoView({ behavior: 'smooth' });
-    });
-
-    function setReviewLoading(isLoading) {
-      const btn = document.getElementById('review-order-btn');
-      const spinner = document.getElementById('review-spinner');
+    function setRedirectLoading(isLoading) {
+      const btn = document.getElementById('checkout-redirect-btn');
+      const spinner = document.getElementById('redirect-spinner');
       btn.disabled = isLoading;
-      spinner.style.display = isLoading ? 'inline-block' : 'none';
-    }
-
-    function setPaymentLoading(isLoading) {
-      const btn = document.getElementById('submit-payment');
-      const spinner = document.getElementById('spinner');
-      const txt = document.getElementById('button-text');
-      btn.disabled = isLoading;
-      spinner.style.display = isLoading ? 'inline-block' : 'none';
-      txt.style.display = isLoading ? 'none' : 'inline';
+      if (spinner) spinner.style.display = isLoading ? 'inline-block' : 'none';
     }
 
     init();

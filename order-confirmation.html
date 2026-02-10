@@ -165,33 +165,59 @@
     async function init() {
       const urlParams = new URLSearchParams(window.location.search);
       const orderId = urlParams.get('orderId');
-      const paymentIntentId = urlParams.get('payment_intent');
 
       if (!orderId) {
         showError("Invalid Order Reference");
         return;
       }
 
-      // If no payment intent is passed, we might be coming from a guest flow or direct link
-      // For now, let's try to confirm with what we have
       try {
-        if (paymentIntentId) {
-          // Verify with Firebase Cloud Function
-          const result = await window.CheckoutService.confirmOrder(orderId, paymentIntentId);
-          if (result && result.success) {
-            showSuccess(orderId);
-            if (window.clearCart) window.clearCart();
-          } else {
-            showError("Payment confirmation failed. Our team will verify this manually.");
+        // Import Firestore functions
+        const { doc, getDoc } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+
+        // Polling logic: Wait for the webhook to update status to 'paid'
+        let attempts = 0;
+        const maxAttempts = 10;
+        const checkStatus = async () => {
+          const orderRef = doc(window.db, 'orders', orderId);
+          const snap = await getDoc(orderRef);
+
+          if (snap.exists()) {
+            const data = snap.data();
+            if (data.status === 'paid') {
+              showSuccess(orderId);
+              if (window.clearCart) window.clearCart();
+              return true;
+            }
           }
-        } else {
-          // If we have orderId but no PI, assume it was processed and just show success
-          showSuccess(orderId);
-          if (window.clearCart) window.clearCart();
-        }
+          return false;
+        };
+
+        const poll = async () => {
+          const isPaid = await checkStatus();
+          if (isPaid) return;
+
+          attempts++;
+          if (attempts < maxAttempts) {
+            setTimeout(poll, 2000); // Check every 2 seconds
+          } else {
+            // Fallback: Show success if the order exists at all, even if webhook is slow
+            const orderRef = doc(window.db, 'orders', orderId);
+            const snap = await getDoc(orderRef);
+            if (snap.exists()) {
+              showSuccess(orderId);
+              if (window.clearCart) window.clearCart();
+            } else {
+              showError("We found your order reference but couldn't verify payment status yet. Please check your email.");
+            }
+          }
+        };
+
+        poll();
+
       } catch (e) {
         console.error("Confirmation Error:", e);
-        showSuccess(orderId); // Failsafe: show success if we have an order ID
+        showError("An error occurred while confirming your order.");
       }
     }
     init();
