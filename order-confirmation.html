@@ -181,6 +181,9 @@
         return;
       }
 
+      // Clear the cart immediately - the order has been processed by Stripe
+      if (window.clearCart) window.clearCart();
+
       try {
         // Import Firestore functions
         const { doc, getDoc } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
@@ -196,7 +199,6 @@
             const data = snap.data();
             if (data.status === 'paid') {
               showSuccess(orderId);
-              if (window.clearCart) window.clearCart();
               return true;
             }
           }
@@ -216,7 +218,6 @@
             const snap = await getDoc(orderRef);
             if (snap.exists()) {
               showSuccess(orderId);
-              if (window.clearCart) window.clearCart();
             } else {
               showError("We found your order reference but couldn't verify payment status yet. Please check your email.");
             }
