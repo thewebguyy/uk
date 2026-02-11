@@ -339,15 +339,20 @@ class OrderService {
       const ordersRef = collection(db, 'orders');
       const q = query(
         ordersRef,
-        where('email', '==', email),
-        orderBy('createdAt', 'desc')
+        where('email', '==', email)
       );
       const querySnapshot = await getDocs(q);
       const orders = [];
       querySnapshot.forEach((doc) => {
         orders.push({ id: doc.id, ...doc.data() });
       });
-      return orders;
+
+      // Sort by date descending in JS to avoid needing a composite index in Firestore
+      return orders.sort((a, b) => {
+        const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : 0;
+        const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : 0;
+        return dateB - dateA;
+      });
     } catch (error) {
       console.error('Error fetching orders:', error);
       return [];
