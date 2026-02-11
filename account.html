@@ -496,10 +496,10 @@
             <div class="row g-4">
               <div class="col-md-6">
                 <h5 class="mb-3">Personal Information</h5>
-                <form>
+                <form id="profile-form" onsubmit="window.handleUpdateProfile(event)">
                   <div class="mb-3">
                     <label class="form-label">Full Name</label>
-                    <input type="text" class="form-control" id="profile-name" value="User Name">
+                    <input type="text" class="form-control" id="profile-name" value="User Name" required>
                   </div>
                   <div class="mb-3">
                     <label class="form-label">Email Address</label>
@@ -509,22 +509,33 @@
                   </div>
                   <div class="mb-3">
                     <label class="form-label">Phone Number</label>
-                    <input type="tel" class="form-control" placeholder="+44 7123 456789">
+                    <input type="tel" class="form-control" id="profile-phone" placeholder="+44 7123 456789">
                   </div>
-                  <button type="submit" class="btn btn-primary">UPDATE PROFILE</button>
+                  <div class="mb-3">
+                    <label class="form-label">Shipping Address</label>
+                    <input type="text" class="form-control mb-2" id="profile-address" placeholder="123 High Street">
+                    <div class="row g-2">
+                      <div class="col-6">
+                        <input type="text" class="form-control" id="profile-city" placeholder="City">
+                      </div>
+                      <div class="col-6">
+                        <input type="text" class="form-control" id="profile-postcode" placeholder="Postcode">
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-dark w-100" id="profile-update-btn">UPDATE PROFILE</button>
                 </form>
               </div>
 
               <div class="col-md-6">
-                <h5 class="mb-3">Shipping Address</h5>
-                <div class="p-3 bg-light rounded mb-3">
-                  <strong>Default Address</strong><br>
-                  123 High Street<br>
-                  London, UK<br>
-                  SW1A 1AA
+                <h5 class="mb-3">Security & Account</h5>
+                <div class="p-4 bg-light rounded-3 mb-4">
+                  <p class="small text-muted mb-3">Keep your account secure by using a strong password.</p>
+                  <button class="btn btn-outline-dark btn-sm w-100 mb-2" onclick="showTab('settings')">NOTIFICATION
+                    SETTINGS</button>
+                  <button class="btn btn-outline-danger btn-sm w-100" onclick="window.AuthService.logout()">SIGN
+                    OUT</button>
                 </div>
-                <button class="btn btn-outline-dark btn-sm">EDIT ADDRESS</button>
-                <button class="btn btn-outline-dark btn-sm ms-2">ADD NEW ADDRESS</button>
               </div>
             </div>
 
@@ -618,6 +629,23 @@
       document.getElementById('user-initial').textContent = (user.name || 'U').charAt(0).toUpperCase();
       document.getElementById('profile-name').value = user.name || '';
       document.getElementById('profile-email').value = user.email || '';
+
+      // Load extended profile from Firestore
+      if (window.UserService) {
+        const profile = await window.UserService.getUserProfile(user.uid);
+        if (profile) {
+          if (profile.phone) document.getElementById('profile-phone').value = profile.phone;
+          if (profile.address) document.getElementById('profile-address').value = profile.address;
+          if (profile.city) document.getElementById('profile-city').value = profile.city;
+          if (profile.postcode) document.getElementById('profile-postcode').value = profile.postcode;
+
+          if (profile.name) {
+            document.getElementById('user-name').textContent = profile.name;
+            document.getElementById('profile-name').value = profile.name;
+            document.getElementById('user-initial').textContent = profile.name.charAt(0).toUpperCase();
+          }
+        }
+      }
 
       const navTextEl = document.querySelector('.nav-text');
       if (navTextEl) {
@@ -734,6 +762,39 @@
       }
       const res = await window.AuthService.sendPasswordReset(email);
       alert(res.message);
+    };
+
+    window.handleUpdateProfile = async function (e) {
+      e.preventDefault();
+      const user = window.AuthService.getCurrentUser_Sync();
+      if (!user) return;
+
+      const btn = document.getElementById('profile-update-btn');
+      const originalText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'UPDATING...';
+
+      const data = {
+        name: document.getElementById('profile-name').value,
+        phone: document.getElementById('profile-phone').value,
+        address: document.getElementById('profile-address').value,
+        city: document.getElementById('profile-city').value,
+        postcode: document.getElementById('profile-postcode').value
+      };
+
+      const res = await window.UserService.updateUserProfile(user.uid, data);
+
+      btn.disabled = false;
+      btn.textContent = originalText;
+
+      if (res.success) {
+        alert('Profile updated successfully!');
+        // Update the header display
+        document.getElementById('user-name').textContent = data.name;
+        document.getElementById('user-initial').textContent = data.name.charAt(0).toUpperCase();
+      } else {
+        alert('Error updating profile: ' + res.message);
+      }
     };
 
     window.toggleAuthMode = function (mode) {

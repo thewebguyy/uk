@@ -168,6 +168,33 @@ class AuthService {
   }
 }
 
+class UserService {
+  static async getUserProfile(uid) {
+    try {
+      const docRef = doc(db, 'users', uid);
+      const docSnap = await getDoc(docRef);
+      return docSnap.exists() ? docSnap.data() : null;
+    } catch (error) {
+      console.error('Error getting profile:', error);
+      return null;
+    }
+  }
+
+  static async updateUserProfile(uid, data) {
+    try {
+      const docRef = doc(db, 'users', uid);
+      await setDoc(docRef, {
+        ...data,
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+      return { success: true };
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      return { success: false, message: error.message };
+    }
+  }
+}
+
 // ============================================
 // PRODUCTS (FIRESTORE)
 // ============================================
@@ -381,6 +408,7 @@ window.CheckoutService = CheckoutService;
 window.NewsletterService = NewsletterService;
 window.ContactService = ContactService;
 window.OrderService = OrderService;
+window.UserService = UserService;
 window.initializeStripe = initializeStripe;
 window.db = db; // Export db for index.html hero loading
 

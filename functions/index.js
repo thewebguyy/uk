@@ -79,7 +79,21 @@ exports.createCheckoutSession = onCall({ secrets: [stripeSecret] }, async (reque
         const tax = subtotal * 0.20;
         const shippingCost = subtotal >= 100 ? 0 : 4.99;
 
-        const orderId = `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+        // Generate sequential order ID: CMUK_001, CMUK_002, etc.
+        const counterRef = admin.firestore().collection('metadata').doc('order_counter');
+        const orderId = await admin.firestore().runTransaction(async (transaction) => {
+            const counterDoc = await transaction.get(counterRef);
+            let nextCount = 1;
+
+            if (counterDoc.exists) {
+                nextCount = (counterDoc.data().count || 0) + 1;
+            }
+
+            transaction.set(counterRef, { count: nextCount }, { merge: true });
+
+            // Format as CMUK_001 (padded to 3 digits)
+            return `CMUK_${nextCount.toString().padStart(3, '0')}`;
+        });
 
         const line_items = items.map(item => ({
             price_data: {
