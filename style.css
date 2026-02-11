@@ -2325,8 +2325,10 @@ footer {
   /* Based on specification, it should be below floating announcement or similar */
 
   .main-nav {
-    display: none;
-    /* Hide desktop nav bar on mobile - use hamburger instead */
+    display: block;
+    top: 190px;
+    border-bottom: none;
+    /* Allow the hamburger menu to visible when toggled */
   }
 
   /* Ensure the announcement banner stays above everything */
