@@ -148,6 +148,53 @@ exports.createCheckoutSession = onCall({ secrets: [stripeSecret] }, async (reque
 });
 
 /**
+ * Submit Contact Form
+ */
+exports.submitContact = onCall({
+    secrets: [emailUser, emailPass, emailFrom, adminEmail]
+}, async (request) => {
+    const data = request.data;
+    const { name, email, service, message } = data;
+
+    if (!name || !email || !service || !message) {
+        throw new HttpsError('invalid-argument', 'Missing required fields.');
+    }
+
+    try {
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: emailUser.value(),
+                pass: emailPass.value()
+            }
+        });
+
+        const html = getContactEmailHTML(data);
+
+        // Notify Admin
+        await transporter.sendMail({
+            from: emailFrom.value(),
+            to: adminEmail.value(),
+            subject: `New Inquiry: ${service} from ${name}`,
+            html: html
+        });
+
+        // Auto-reply to customer
+        await transporter.sendMail({
+            from: emailFrom.value(),
+            to: email,
+            subject: "We received your message - Customise Me UK",
+            html: `<p>Hi ${name},</p><p>Thank you for contacting Customise Me UK. We've received your inquiry regarding <strong>${service}</strong> and will get back to you within 24 hours.</p><p>Best regards,<br>The CMUK Team</p>`
+        });
+
+        return { success: true };
+    } catch (error) {
+        logger.error("Contact form processing failed:", error);
+        throw new HttpsError('internal', 'Failed to send message.');
+    }
+});
+
+/**
  * Stripe Webhook Handler
  * Processes checkout.session.completed to update order status
  */

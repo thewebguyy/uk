@@ -188,34 +188,19 @@
       errorDiv.style.display = 'none';
 
       try {
-        // Send to API
-        const response = await fetch(`${API_URL}/contact/submit`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData)
-        });
+        // Send to Firebase Function via ContactService
+        const result = await window.ContactService.submit(formData);
 
-        const data = await response.json();
-
-        if (data.success) {
+        if (result && result.success) {
           // Show success message
           document.getElementById('contact-form').style.display = 'none';
           document.getElementById('success-message').style.display = 'block';
         } else {
-          // Show error
-          errorDiv.textContent = data.message || 'Failed to send message. Please try again.';
-          errorDiv.style.display = 'block';
-
-          // Reset button
-          submitBtn.disabled = false;
-          submitText.style.display = 'inline';
-          submitSpinner.style.display = 'none';
+          throw new Error('Failed to send message.');
         }
       } catch (error) {
         console.error('Contact form error:', error);
-        errorDiv.textContent = 'Connection error. Please try again later.';
+        errorDiv.textContent = error.message || 'Failed to send message. Please try again.';
         errorDiv.style.display = 'block';
 
         // Reset button

@@ -319,6 +319,19 @@ class NewsletterService {
   }
 }
 
+class ContactService {
+  static async submit(formData) {
+    try {
+      const submitContactFn = httpsCallable(functions, 'submitContact');
+      const result = await submitContactFn(formData);
+      return result.data;
+    } catch (error) {
+      console.error('Contact submit error:', error);
+      throw error;
+    }
+  }
+}
+
 // ============================================
 // UTILS
 // ============================================
@@ -338,6 +351,7 @@ window.AuthService = AuthService;
 window.ProductService = ProductService;
 window.CheckoutService = CheckoutService;
 window.NewsletterService = NewsletterService;
+window.ContactService = ContactService;
 window.initializeStripe = initializeStripe;
 window.db = db; // Export db for index.html hero loading
 

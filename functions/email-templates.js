@@ -94,4 +94,19 @@ const getOrderConfirmationHTML = (order, orderId) => {
     `;
 };
 
-module.exports = { getOrderConfirmationHTML };
+const getContactEmailHTML = (data) => {
+    return `
+    <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee;">
+        <h2>New Contact Inquiry</h2>
+        <p><strong>Name:</strong> ${data.name}</p>
+        <p><strong>Email:</strong> ${data.email}</p>
+        <p><strong>Phone:</strong> ${data.phone || 'N/A'}</p>
+        <p><strong>Service:</strong> ${data.service}</p>
+        <hr>
+        <p><strong>Message:</strong></p>
+        <p style="white-space: pre-wrap;">${data.message}</p>
+    </div>
+    `;
+};
+
+module.exports = { getOrderConfirmationHTML, getContactEmailHTML };
