@@ -113,8 +113,8 @@
 
         <div class="top-bar-content">
             <!-- Mobile Toggle (Hamburger) - Left on mobile -->
-            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                style="order: 1;">
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#mobileMenu" aria-controls="mobileMenu" style="order: 1;">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -173,106 +173,114 @@
     <div class="container">
 
 
-        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-            <ul class="navbar-nav">
-                <!-- Shop Mega Menu -->
-                <li class="nav-item dropdown mega-menu">
-                    <a class="nav-link dropdown-toggle" href="shop.html" id="shopDropdown" role="button"
-                        aria-expanded="false">
-                        SHOP
-                    </a>
-                    <div class="dropdown-menu mega-dropdown">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <h6 class="mega-title">CATEGORIES</h6>
-                                    <a class="dropdown-item" href="shop.html">ALL PRODUCTS</a>
-                                    <a class="dropdown-item" href="shop.html?category=apparel">APPAREL</a>
-                                    <a class="dropdown-item" href="shop.html?category=party-decor">DECORATIONS</a>
-                                    <a class="dropdown-item" href="shop.html?category=stickers">PRINTS</a>
-                                    <a class="dropdown-item" href="shop.html?category=accessories">ACCESSORIES</a>
-                                </div>
-                                <div class="col-md-3">
-                                    <h6 class="mega-title">APPAREL</h6>
-                                    <a class="dropdown-item" href="shop.html?category=apparel">T-SHIRTS</a>
-                                    <a class="dropdown-item" href="shop.html?category=apparel">HOODIES</a>
-                                    <a class="dropdown-item" href="shop.html?category=apparel">BAGS</a>
-                                </div>
-                                <div class="col-md-3">
-                                    <h6 class="mega-title">PARTY ESSENTIALS</h6>
-                                    <a class="dropdown-item" href="shop.html?category=party-decor">VINYL BANNERS</a>
-                                    <a class="dropdown-item" href="shop.html?category=party-decor">PLATES, CUPS,
-                                        UTENSILS</a>
-                                    <a class="dropdown-item" href="shop.html?category=party-decor">TABLE DECOR</a>
-                                    <a class="dropdown-item" href="shop.html?category=party-decor">PARTY PACKS</a>
-                                    <a class="dropdown-item" href="shop.html?category=party-decor">CAKE DECOR</a>
-                                </div>
-                                <div class="col-md-3">
-                                    <h6 class="mega-title">STICKERS & LABELS</h6>
-                                    <a class="dropdown-item" href="shop.html?category=stickers">VINYL STICKERS</a>
-                                    <a class="dropdown-item" href="shop.html?category=stickers">CUSTOM LABELS</a>
-                                    <a class="dropdown-item" href="shop.html?category=stickers">WALL DECALS</a>
-                                    <a class="dropdown-item" href="shop.html?category=stickers">STICKER PACKS</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
-                <!-- Design Studio Mega Menu -->
-                <li class="nav-item dropdown mega-menu">
-                    <a class="nav-link dropdown-toggle" href="designstudio.html" id="studioDropdown" role="button"
-                        aria-expanded="false">
-                        DESIGN STUDIO
-                    </a>
-                    <div class="dropdown-menu mega-dropdown">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h6 class="mega-title">SERVICES</h6>
-                                    <a class="dropdown-item" href="designservice.html">DESIGN SERVICES</a>
-
-                                </div>
-                                <div class="col-md-6">
-                                    <h6 class="mega-title">RESOURCES</h6>
-                                    <a class="dropdown-item" href="designstudio.html#resources">DESIGN TEMPLATES</a>
-                                    <a class="dropdown-item" href="designstudio.html#resources">STYLE GUIDE</a>
-                                    <a class="dropdown-item" href="designstudio.html#resources">FAQs</a>
+        <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="mobileMenuLabel">MENU</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#mobileMenu"
+                    aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-center flex-grow-1">
+                    <!-- Shop Mega Menu -->
+                    <li class="nav-item dropdown mega-menu">
+                        <a class="nav-link dropdown-toggle" href="shop.html" id="shopDropdown" role="button"
+                            aria-expanded="false">
+                            SHOP
+                        </a>
+                        <div class="dropdown-menu mega-dropdown">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <h6 class="mega-title">CATEGORIES</h6>
+                                        <a class="dropdown-item" href="shop.html">ALL PRODUCTS</a>
+                                        <a class="dropdown-item" href="shop.html?category=apparel">APPAREL</a>
+                                        <a class="dropdown-item" href="shop.html?category=party-decor">DECORATIONS</a>
+                                        <a class="dropdown-item" href="shop.html?category=stickers">PRINTS</a>
+                                        <a class="dropdown-item" href="shop.html?category=accessories">ACCESSORIES</a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h6 class="mega-title">APPAREL</h6>
+                                        <a class="dropdown-item" href="shop.html?category=apparel">T-SHIRTS</a>
+                                        <a class="dropdown-item" href="shop.html?category=apparel">HOODIES</a>
+                                        <a class="dropdown-item" href="shop.html?category=apparel">BAGS</a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h6 class="mega-title">PARTY ESSENTIALS</h6>
+                                        <a class="dropdown-item" href="shop.html?category=party-decor">VINYL BANNERS</a>
+                                        <a class="dropdown-item" href="shop.html?category=party-decor">PLATES, CUPS,
+                                            UTENSILS</a>
+                                        <a class="dropdown-item" href="shop.html?category=party-decor">TABLE DECOR</a>
+                                        <a class="dropdown-item" href="shop.html?category=party-decor">PARTY PACKS</a>
+                                        <a class="dropdown-item" href="shop.html?category=party-decor">CAKE DECOR</a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h6 class="mega-title">STICKERS & LABELS</h6>
+                                        <a class="dropdown-item" href="shop.html?category=stickers">VINYL STICKERS</a>
+                                        <a class="dropdown-item" href="shop.html?category=stickers">CUSTOM LABELS</a>
+                                        <a class="dropdown-item" href="shop.html?category=stickers">WALL DECALS</a>
+                                        <a class="dropdown-item" href="shop.html?category=stickers">STICKER PACKS</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </li>
+                    </li>
 
-                <!-- Premium Services Mega Menu -->
-                <li class="nav-item dropdown mega-menu">
-                    <a class="nav-link dropdown-toggle" href="premiumservices.html" id="servicesDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        PREMIUM SERVICES
-                    </a>
-                    <div class="dropdown-menu mega-dropdown">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <h6 class="mega-title">SERVICES</h6>
-                                    <a class="dropdown-item" href="senditems.html">SEND ITEMS IN</a>
-                                    <a class="dropdown-item" href="subscriptions.html">SUBSCRIPTIONS</a>
-                                </div>
-                                <div class="col-md-4">
-                                    <h6 class="mega-title">INSTALLATION</h6>
-                                    <a class="dropdown-item" href="installation.html">VINYL INSTALLATION</a>
-                                    <a class="dropdown-item" href="premiumservices.html#event-setup">SETUP AT EVENT</a>
-                                </div>
-                                <div class="col-md-4">
-                                    <h6 class="mega-title">WORKSHOPS</h6>
-                                    <a class="dropdown-item" href="workshop.html">GROUP WORKSHOP</a>
-                                    <a class="dropdown-item" href="workshop.html">STATION EXPERIENCE</a>
+                    <!-- Design Studio Mega Menu -->
+                    <li class="nav-item dropdown mega-menu">
+                        <a class="nav-link dropdown-toggle" href="designstudio.html" id="studioDropdown" role="button"
+                            aria-expanded="false">
+                            DESIGN STUDIO
+                        </a>
+                        <div class="dropdown-menu mega-dropdown">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6 class="mega-title">SERVICES</h6>
+                                        <a class="dropdown-item" href="designservice.html">DESIGN SERVICES</a>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6 class="mega-title">RESOURCES</h6>
+                                        <a class="dropdown-item" href="designstudio.html#resources">DESIGN TEMPLATES</a>
+                                        <a class="dropdown-item" href="designstudio.html#resources">STYLE GUIDE</a>
+                                        <a class="dropdown-item" href="designstudio.html#resources">FAQs</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </li>
-            </ul>
+                    </li>
+
+                    <!-- Premium Services Mega Menu -->
+                    <li class="nav-item dropdown mega-menu">
+                        <a class="nav-link dropdown-toggle" href="premiumservices.html" id="servicesDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            PREMIUM SERVICES
+                        </a>
+                        <div class="dropdown-menu mega-dropdown">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <h6 class="mega-title">SERVICES</h6>
+                                        <a class="dropdown-item" href="senditems.html">SEND ITEMS IN</a>
+                                        <a class="dropdown-item" href="subscriptions.html">SUBSCRIPTIONS</a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h6 class="mega-title">INSTALLATION</h6>
+                                        <a class="dropdown-item" href="installation.html">VINYL INSTALLATION</a>
+                                        <a class="dropdown-item" href="premiumservices.html#event-setup">SETUP AT
+                                            EVENT</a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h6 class="mega-title">WORKSHOPS</h6>
+                                        <a class="dropdown-item" href="workshop.html">GROUP WORKSHOP</a>
+                                        <a class="dropdown-item" href="workshop.html">STATION EXPERIENCE</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </nav>
