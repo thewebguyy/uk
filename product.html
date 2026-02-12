@@ -451,59 +451,8 @@
     </div>
   </section>
 
-  <!-- Product Reviews Section -->
-  <section class="section bg-light" id="reviews-section">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 mx-auto">
-          <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="section-title mb-0 text-start">CUSTOMER REVIEWS</h2>
-            <button class="btn btn-outline-primary" onclick="showWriteReview()">Write a Review</button>
-          </div>
-
-          <!-- Rating Summary -->
-          <div class="review-summary card p-4 mb-4 border-0 shadow-sm">
-            <div class="row align-items-center">
-              <div class="col-md-4 text-center border-end">
-                <div class="display-3 fw-bold" id="avg-rating">4.9</div>
-                <div class="text-warning mb-2" id="avg-stars">★★★★★</div>
-                <div class="text-grey" id="total-reviews">Based on 0 reviews</div>
-              </div>
-              <div class="col-md-8 ps-md-4">
-                <div class="rating-bar-row d-flex align-items-center mb-2">
-                  <span class="text-nowrap me-2">5 Star</span>
-                  <div class="progress flex-grow-1" style="height: 8px;">
-                    <div class="progress-bar bg-warning" style="width: 80%"></div>
-                  </div>
-                  <span class="ms-2">80%</span>
-                </div>
-                <div class="rating-bar-row d-flex align-items-center mb-2">
-                  <span class="text-nowrap me-2">4 Star</span>
-                  <div class="progress flex-grow-1" style="height: 8px;">
-                    <div class="progress-bar bg-warning" style="width: 15%"></div>
-                  </div>
-                  <span class="ms-2">15%</span>
-                </div>
-                <div class="rating-bar-row d-flex align-items-center mb-2">
-                  <span class="text-nowrap me-2">3 Star</span>
-                  <div class="progress flex-grow-1" style="height: 8px;">
-                    <div class="progress-bar bg-warning" style="width: 5%"></div>
-                  </div>
-                  <span class="ms-2">5%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Review List -->
-          <div id="reviews-list">
-            <!-- Reviews will be injected here -->
-            <div class="text-center py-4 text-grey">Loading reviews...</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Product Reviews Section Removed -->
+  <!-- <section class="section bg-light" id="reviews-section"></section> -->
 
   <!-- Related Products Section -->
   <section class="section">
@@ -588,50 +537,7 @@
     </div>
   </div>
 
-  <!-- Write Review Modal -->
-  <div class="modal fade" id="writeReviewModal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Write a Review</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <form id="review-form">
-            <div class="mb-3">
-              <label class="form-label">Rating</label>
-              <select class="form-select" id="review-rating-input">
-                <option value="5">★★★★★ (Excellent)</option>
-                <option value="4">★★★★☆ (Good)</option>
-                <option value="3">★★★☆☆ (Average)</option>
-                <option value="2">★★☆☆☆ (Poor)</option>
-                <option value="1">★☆☆☆☆ (Terrible)</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Title</label>
-              <input type="text" class="form-control" id="review-title-input" placeholder="Summarize your experience">
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Review (Min 50 characters)</label>
-              <textarea class="form-control" id="review-text-input" rows="4" placeholder="What did you like or dislike?"
-                oninput="updateCharCount(this)"></textarea>
-              <small class="text-muted"><span id="char-count">0</span> / 50 characters</small>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Add Photos (Optional)</label>
-              <input type="file" class="form-control" id="review-photos" multiple accept="image/*">
-            </div>
-            <div class="alert alert-info py-2" style="font-size: 0.85rem;">
-              <strong>Guidelines:</strong> Please focus on product quality and fit. Avoid mentions of delivery issues
-              which should be reported via support.
-            </div>
-            <button type="submit" class="btn btn-primary w-100" id="submit-review-btn">Submit Review</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- Write Review Modal Removed -->
 
   <!-- Stock Notification Modal -->
   <div class="modal fade" id="stockNotifyModal" tabindex="-1">
@@ -678,7 +584,7 @@
           clearInterval(waitForService);
           if (productId) {
             loadProduct(productId);
-            loadReviews(productId);
+            // loadReviews(productId);
             loadRelatedProducts();
           } else {
             showError();

@@ -490,6 +490,22 @@
   <div class="checkout-container">
     <div class="checkout-row">
 
+      <!-- Mobile Top: Free Shipping Progress -->
+      <div class="col-12 d-lg-none mb-3">
+        <div class="shipping-progress-card">
+          <span class="progress-text shipping-progress-msg">Spend £0 more for Free Shipping!</span>
+          <div class="progress-container">
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill shipping-fill"></div>
+              <!-- Markers -->
+              <div class="marker" style="left: 20%;"><span class="marker-label">£120</span></div>
+              <div class="marker" style="left: 50%;"><span class="marker-label">£300</span></div>
+              <div class="marker" style="left: 100%;"><span class="marker-label">£600</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Left Column: Basket Items -->
       <div class="checkout-left">
         <div class="basket-header">
@@ -550,12 +566,12 @@
       <!-- Right Column: Summary & Progress -->
       <div class="checkout-right">
 
-        <!-- Free Shipping Progress -->
-        <div class="shipping-progress-card">
-          <span class="progress-text" id="shipping-progress-msg">Spend £0 more for Free Shipping!</span>
+        <!-- Free Shipping Progress (Desktop) -->
+        <div class="shipping-progress-card d-none d-lg-block">
+          <span class="progress-text shipping-progress-msg">Spend £0 more for Free Shipping!</span>
           <div class="progress-container">
             <div class="progress-bar-bg">
-              <div class="progress-bar-fill" id="shipping-fill"></div>
+              <div class="progress-bar-fill shipping-fill"></div>
 
               <!-- Markers -->
               <div class="marker" style="left: 20%;"><span class="marker-label">£120</span></div>
@@ -731,10 +747,14 @@
       const freeShippingThreshold = 100;
       const barMax = 600;
       const percentage = Math.min((subtotal / barMax) * 100, 100);
-      const fill = document.getElementById('shipping-fill');
-      if (fill) fill.style.width = `${percentage}%`;
-      const msg = document.getElementById('shipping-progress-msg');
-      if (msg) {
+
+      const fills = document.querySelectorAll('.shipping-fill');
+      fills.forEach(fill => {
+        fill.style.width = `${percentage}%`;
+      });
+
+      const msgs = document.querySelectorAll('.shipping-progress-msg');
+      msgs.forEach(msg => {
         if (subtotal < freeShippingThreshold) {
           const diff = (freeShippingThreshold - subtotal).toFixed(2);
           msg.textContent = `Spend £${diff} more for Free Shipping!`;
@@ -743,7 +763,7 @@
           msg.textContent = `You've unlocked FREE Shipping!`;
           msg.classList.add('text-success');
         }
-      }
+      });
     }
 
     window.addEventListener('cartUpdated', init);

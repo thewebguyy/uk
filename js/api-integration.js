@@ -504,4 +504,31 @@ AuthService.initAuthListener((user) => {
   });
 });
 
+// ============================================
+// GLOBAL UI HANDLERS
+// ============================================
+
+window.handleGlobalSearch = function (event) {
+  event.preventDefault();
+  const form = event.target;
+  const input = form.querySelector('input[type="search"]');
+  if (input && input.value.trim()) {
+    const term = encodeURIComponent(input.value.trim());
+    window.location.href = `shop.html?search=${term}`;
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Region/Currency Selector Logic
+  document.body.addEventListener('click', (e) => {
+    if (e.target.closest('.region-dropdown .dropdown-item')) {
+      e.preventDefault();
+      const item = e.target.closest('.dropdown-item');
+      const text = item.textContent.trim();
+      alert(`Switched region to: ${text}`);
+      // In a real app, you would reload or update currency symbols here
+    }
+  });
+});
+
 console.log('API Integration (Firebase + Functions + Storage) Loaded');

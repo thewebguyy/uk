@@ -473,7 +473,8 @@ p {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding: 0;
-  height: 50px;
+  min-height: 50px;
+  height: auto;
   position: fixed;
   top: 104px;
   /* 40 + 64 */
@@ -835,6 +836,13 @@ p {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
+}
+
+@media (max-width: 576px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.5rem !important;
+  }
 }
 
 .product-card {
