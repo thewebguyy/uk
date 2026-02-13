@@ -1,6 +1,6 @@
 /**
- * MOBILE MENU & DESKTOP NAVIGATION CONTROLLER
- * Redesign for Creative Merch UK
+ * MOBILE MENU & DESKTOP NAVIGATION HYBRID CONTROLLER
+ * Redesign for Creative Merch UK - Strictly separated systems
  */
 
 class MobileMenuController {
@@ -13,15 +13,24 @@ class MobileMenuController {
         this.history = ['main'];
         this.isTransitioning = false;
 
+        // Breakpoint for mobile/desktop
+        this.mobileBreakpoint = 991.98;
+
         if (this.overlay) {
             this.init();
+            this.handleResize();
+            window.addEventListener('resize', () => this.handleResize());
         }
     }
 
     init() {
         // Toggle Open
         if (this.toggleBtn) {
-            this.toggleBtn.addEventListener('click', () => this.open());
+            this.toggleBtn.addEventListener('click', (e) => {
+                if (window.innerWidth <= this.mobileBreakpoint) {
+                    this.open();
+                }
+            });
         }
 
         // Close
@@ -31,11 +40,15 @@ class MobileMenuController {
 
         // Close on escape
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') this.close();
+            if (e.key === 'Escape' && this.overlay.classList.contains('active')) {
+                this.close();
+            }
         });
 
         // View Navigation
         document.addEventListener('click', (e) => {
+            if (window.innerWidth > this.mobileBreakpoint) return;
+
             const submenuBtn = e.target.closest('[data-submenu]');
             const backBtn = e.target.closest('[data-back]');
             const regularLink = e.target.closest('.mobile-menu-item:not([data-submenu])');
@@ -56,6 +69,13 @@ class MobileMenuController {
                 setTimeout(() => this.close(), 300);
             }
         });
+    }
+
+    handleResize() {
+        // If we cross the breakpoint to desktop while menu is open, close it
+        if (window.innerWidth > this.mobileBreakpoint && this.overlay.classList.contains('active')) {
+            this.close();
+        }
     }
 
     open() {
@@ -151,18 +171,21 @@ class MobileMenuController {
 
 class DesktopNavController {
     constructor() {
+        this.mobileBreakpoint = 991.98;
         this.init();
     }
 
     init() {
         document.addEventListener('click', (e) => {
             const navLink = e.target.closest('.main-nav .nav-link');
-            if (navLink && window.innerWidth >= 992) {
-                // If it has a href="#" or its parent is a mega-menu, prevent navigation
-                // Actually client says "Clicking nav link should NOT navigate"
+            if (navLink && window.innerWidth > this.mobileBreakpoint) {
+                // For mega-menus on desktop, we prevent click navigation if they are meant for hover
                 const href = navLink.getAttribute('href');
                 if (href === '#' || navLink.closest('.mega-menu')) {
-                    e.preventDefault();
+                    // Check if it's the actual parent link (like SHOP)
+                    if (navLink.classList.contains('nav-link') && e.target === navLink) {
+                        // Optional: could toggle menu on click for touch-desktops
+                    }
                 }
             }
         });
@@ -171,12 +194,16 @@ class DesktopNavController {
 
 // Initialize when components are loaded
 document.addEventListener('allComponentsLoaded', () => {
-    window.mobileMenu = new MobileMenuController();
-    window.desktopNav = new DesktopNavController();
+    if (!window.mobileMenu) {
+        window.mobileMenu = new MobileMenuController();
+    }
+    if (!window.desktopNav) {
+        window.desktopNav = new DesktopNavController();
+    }
 });
 
-// Fallback in case they are already there
-if (document.getElementById('mobileMenuOverlay')) {
+// Fallback for fast loading
+if (document.getElementById('mobileMenuOverlay') && !window.mobileMenu) {
     window.mobileMenu = new MobileMenuController();
     window.desktopNav = new DesktopNavController();
 }

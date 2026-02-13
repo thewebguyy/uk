@@ -143,16 +143,17 @@ function updateCartDisplay() {
   const cartCountBadge = document.getElementById('cart-count');
   const cartSubtotalElement = document.getElementById('cart-subtotal');
 
-  // Update cart count badge
+  // Update all cart count badges (mobile and desktop)
   const count = getCartCount();
-  if (cartCountBadge) {
-    cartCountBadge.textContent = count;
+  const badges = document.querySelectorAll('.badge-cart');
+  badges.forEach(badge => {
+    badge.textContent = count;
     if (count > 0) {
-      cartCountBadge.classList.add('has-items');
+      badge.classList.add('has-items');
     } else {
-      cartCountBadge.classList.remove('has-items');
+      badge.classList.remove('has-items');
     }
-  }
+  });
 
   // If cart is empty
   if (cart.length === 0) {

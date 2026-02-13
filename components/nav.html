@@ -155,17 +155,28 @@
                         <li><a class="dropdown-item" href="#"><span class="flag">🇺🇸</span> AMERICA</a></li>
                     </ul>
                 </div>
+                <!-- Wishlist -->
                 <a href="wishlist.html" class="nav-icon">
                     <svg class="icon">
                         <use xlink:href="#icon-heart" />
                     </svg>
                     <span class="badge-wishlist" id="wishlist-count" style="display: none;">0</span>
                 </a>
-                <a href="#cart" class="nav-icon" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+
+                <!-- Cart (Mobile - Offcanvas) -->
+                <a href="#cart" class="nav-icon d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
                     <svg class="icon">
                         <use xlink:href="#icon-shopping-bag" />
                     </svg>
-                    <span class="badge-cart" id="cart-count"></span>
+                    <span class="badge-cart" id="cart-count-mobile"></span>
+                </a>
+
+                <!-- Cart (Desktop - Direct Link) -->
+                <a href="checkout.html" class="nav-icon d-none d-lg-flex">
+                    <svg class="icon">
+                        <use xlink:href="#icon-shopping-bag" />
+                    </svg>
+                    <span class="badge-cart" id="cart-count-desktop"></span>
                 </a>
                 <a href="account.html" class="nav-icon nav-icon-text">
                     <svg class="icon">
@@ -235,7 +246,6 @@
                             <div class="col-md-6">
                                 <h6 class="mega-title">RESOURCES</h6>
                                 <a class="dropdown-item" href="designstudio.html#resources">DESIGN TEMPLATES</a>
-                                <a class="dropdown-item" href="designstudio.html#resources">STYLE GUIDE</a>
                                 <a class="dropdown-item" href="designstudio.html#resources">FAQs</a>
                             </div>
                         </div>
@@ -335,10 +345,12 @@
                 </button>
                 <ul class="mobile-menu-list">
                     <li><a href="shop.html" class="mobile-menu-item"><span>ALL PRODUCTS</span></a></li>
-                    <li><a href="shop.html?category=apparel" class="mobile-menu-item"><span>APPAREL</span></a></li>
-                    <li><a href="shop.html?category=party-decor" class="mobile-menu-item"><span>DECORATIONS</span></a>
-                    </li>
-                    <li><a href="shop.html?category=stickers" class="mobile-menu-item"><span>PRINTS</span></a></li>
+                    <li><a href="shop.html?category=apparel" class="mobile-menu-item"><span>APPAREL (T-SHIRTS, HOODIES,
+                                BAGS)</span></a></li>
+                    <li><a href="shop.html?category=party-decor" class="mobile-menu-item"><span>DECORATIONS (BANNERS,
+                                TABLE DECOR)</span></a></li>
+                    <li><a href="shop.html?category=stickers" class="mobile-menu-item"><span>PRINTS (VINYL STICKERS,
+                                LABELS)</span></a></li>
                     <li><a href="shop.html?category=accessories" class="mobile-menu-item"><span>ACCESSORIES</span></a>
                     </li>
                 </ul>
@@ -356,7 +368,6 @@
                     <li><a href="designservice.html" class="mobile-menu-item"><span>DESIGN SERVICES</span></a></li>
                     <li><a href="designstudio.html#resources" class="mobile-menu-item"><span>DESIGN TEMPLATES</span></a>
                     </li>
-                    <li><a href="designstudio.html#resources" class="mobile-menu-item"><span>STYLE GUIDE</span></a></li>
                     <li><a href="designstudio.html#resources" class="mobile-menu-item"><span>FAQs</span></a></li>
                 </ul>
             </div>
