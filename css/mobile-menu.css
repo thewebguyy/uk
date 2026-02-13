@@ -308,11 +308,10 @@
     .mega-dropdown {
         position: absolute;
         top: 100%;
-        left: 0;
-        right: 0;
+        left: 50%;
+        transform: translateX(-50%);
         width: 100%;
         max-width: 1400px;
-        margin: 0 auto;
         background: rgba(255, 255, 255, 0.98);
         backdrop-filter: blur(10px);
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
@@ -320,7 +319,7 @@
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
-        transition: opacity 0.3s ease, visibility 0s 0.3s;
+        transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s;
         z-index: 10000;
         border-top: 1px solid rgba(0, 0, 0, 0.05);
     }
