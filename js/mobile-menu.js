@@ -85,6 +85,9 @@ class MobileMenuController {
         this.overlay.classList.add('active');
         document.body.classList.add('mobile-menu-open');
         this.resetToMain();
+
+        // Dispatch event for other listeners (e.g., auth state update)
+        document.dispatchEvent(new CustomEvent('mobileMenuOpened'));
     }
 
     close() {
