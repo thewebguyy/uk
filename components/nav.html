@@ -39,6 +39,16 @@
         <path
             d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
     </symbol>
+    <symbol id="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="9 18 15 12 9 6" />
+    </symbol>
+    <symbol id="icon-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="15 18 9 12 15 6" />
+    </symbol>
+    <symbol id="icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+    </symbol>
     <symbol id="icon-scissors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <circle cx="6" cy="6" r="3" />
         <circle cx="6" cy="18" r="3" />
@@ -112,26 +122,26 @@
         </div>
 
         <div class="top-bar-content">
-            <!-- Mobile Toggle (Hamburger) - Left on mobile -->
-            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#mobileMenu" aria-controls="mobileMenu" style="order: 1;">
+            <!-- Mobile Toggle (Hamburger) -->
+            <button class="navbar-toggler d-lg-none" type="button" id="mobileMenuToggle" style="order: 1;">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!-- Logo - Centered on mobile -->
+            <!-- Logo -->
             <a class="navbar-brand" href="index.html" style="order: 2;">
                 <img src="icon.png" alt="Creative Merch UK" class="logo-image">
             </a>
 
-            <!-- Search Bar - Full width below header on mobile -->
-            <form class="search-bar-form-compact" style="order: 4;" onsubmit="window.handleGlobalSearch(event)">
+            <!-- Search Bar (Desktop) -->
+            <form class="search-bar-form-compact d-none d-lg-flex" style="order: 4;"
+                onsubmit="window.handleGlobalSearch(event)">
                 <svg class="search-icon">
                     <use xlink:href="#icon-search" />
                 </svg>
                 <input type="search" class="search-input" placeholder="Search products...">
             </form>
 
-            <!-- Right Icons - Right on mobile (Heart, Bag, Account) -->
+            <!-- Right Icons -->
             <div class="d-flex align-items-center gap-1 gap-md-3 nav-header-icons" style="order: 3;">
                 <div class="dropdown d-none d-md-block">
                     <a href="#" class="nav-icon" data-bs-toggle="dropdown" aria-expanded="false">
@@ -168,138 +178,226 @@
     </div>
 </div>
 
-<!-- Main Navigation -->
-<nav class="navbar navbar-expand-lg main-nav">
+<!-- Desktop Main Navigation -->
+<nav class="main-nav d-none d-lg-block">
     <div class="container">
-
-
-        <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="mobileMenuLabel">MENU</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#mobileMenu"
-                    aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <!-- Persistent Search Bar -->
-                <div class="mobile-menu-search d-lg-none">
-                    <form class="search-bar-form-compact w-100" onsubmit="window.handleGlobalSearch(event)">
-                        <div class="d-flex align-items-center border px-2 py-1" style="border-radius: 0;">
-                            <svg class="search-icon me-2">
-                                <use xlink:href="#icon-search" />
-                            </svg>
-                            <input type="search" class="search-input" placeholder="Search products..."
-                                style="width: 100%;">
+        <ul class="navbar-nav mx-auto">
+            <!-- SHOP MEGA MENU -->
+            <li class="nav-item mega-menu">
+                <a class="nav-link" href="shop.html">SHOP</a>
+                <div class="mega-dropdown">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h6 class="mega-title">CATEGORIES</h6>
+                                <a class="dropdown-item" href="shop.html">ALL PRODUCTS</a>
+                                <a class="dropdown-item" href="shop.html?category=apparel">APPAREL</a>
+                                <a class="dropdown-item" href="shop.html?category=party-decor">DECORATIONS</a>
+                                <a class="dropdown-item" href="shop.html?category=stickers">PRINTS</a>
+                                <a class="dropdown-item" href="shop.html?category=accessories">ACCESSORIES</a>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="mega-title">APPAREL</h6>
+                                <a class="dropdown-item" href="shop.html?category=apparel">T-SHIRTS</a>
+                                <a class="dropdown-item" href="shop.html?category=apparel">HOODIES</a>
+                                <a class="dropdown-item" href="shop.html?category=apparel">BAGS</a>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="mega-title">PARTY ESSENTIALS</h6>
+                                <a class="dropdown-item" href="shop.html?category=party-decor">VINYL BANNERS</a>
+                                <a class="dropdown-item" href="shop.html?category=party-decor">PLATES, CUPS,
+                                    UTENSILS</a>
+                                <a class="dropdown-item" href="shop.html?category=party-decor">TABLE DECOR</a>
+                                <a class="dropdown-item" href="shop.html?category=party-decor">PARTY PACKS</a>
+                                <a class="dropdown-item" href="shop.html?category=party-decor">CAKE DECOR</a>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="mega-title">STICKERS & LABELS</h6>
+                                <a class="dropdown-item" href="shop.html?category=stickers">VINYL STICKERS</a>
+                                <a class="dropdown-item" href="shop.html?category=stickers">CUSTOM LABELS</a>
+                                <a class="dropdown-item" href="shop.html?category=stickers">WALL DECALS</a>
+                                <a class="dropdown-item" href="shop.html?category=stickers">STICKER PACKS</a>
+                            </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
-
-                <ul class="navbar-nav justify-content-center flex-grow-1" id="mobile-nav-list">
-                    <!-- Shop Mega Menu -->
-                    <!-- Shop Mega Menu -->
-                    <li class="nav-item dropdown mega-menu">
-                        <a class="nav-link dropdown-toggle" href="#" onclick="openSubMenu(event, 'shop-menu')">
-                            SHOP
-                        </a>
-                        <div class="dropdown-menu mega-dropdown" id="shop-menu">
-                            <div class="mobile-menu-back" onclick="closeSubMenu('shop-menu')">
-                                <span>‹ BACK TO MAIN</span>
+            </li>
+            <!-- DESIGN STUDIO MEGA MENU -->
+            <li class="nav-item mega-menu">
+                <a class="nav-link" href="designservice.html">DESIGN STUDIO</a>
+                <div class="mega-dropdown">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="mega-title">SERVICES</h6>
+                                <a class="dropdown-item" href="designservice.html">DESIGN SERVICES</a>
                             </div>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <h6 class="mega-title">CATEGORIES</h6>
-                                        <a class="dropdown-item" href="shop.html">ALL PRODUCTS</a>
-                                        <a class="dropdown-item" href="shop.html?category=apparel">APPAREL</a>
-                                        <a class="dropdown-item" href="shop.html?category=party-decor">DECORATIONS</a>
-                                        <a class="dropdown-item" href="shop.html?category=stickers">PRINTS</a>
-                                        <a class="dropdown-item" href="shop.html?category=accessories">ACCESSORIES</a>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <h6 class="mega-title">APPAREL</h6>
-                                        <a class="dropdown-item" href="shop.html?category=apparel">T-SHIRTS</a>
-                                        <a class="dropdown-item" href="shop.html?category=apparel">HOODIES</a>
-                                        <a class="dropdown-item" href="shop.html?category=apparel">BAGS</a>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <h6 class="mega-title">PARTY ESSENTIALS</h6>
-                                        <a class="dropdown-item" href="shop.html?category=party-decor">VINYL BANNERS</a>
-                                        <a class="dropdown-item" href="shop.html?category=party-decor">PLATES, CUPS,
-                                            UTENSILS</a>
-                                        <a class="dropdown-item" href="shop.html?category=party-decor">TABLE DECOR</a>
-                                        <a class="dropdown-item" href="shop.html?category=party-decor">PARTY PACKS</a>
-                                        <a class="dropdown-item" href="shop.html?category=party-decor">CAKE DECOR</a>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <h6 class="mega-title">STICKERS & LABELS</h6>
-                                        <a class="dropdown-item" href="shop.html?category=stickers">VINYL STICKERS</a>
-                                        <a class="dropdown-item" href="shop.html?category=stickers">CUSTOM LABELS</a>
-                                        <a class="dropdown-item" href="shop.html?category=stickers">WALL DECALS</a>
-                                        <a class="dropdown-item" href="shop.html?category=stickers">STICKER PACKS</a>
-                                    </div>
-                                </div>
+                            <div class="col-md-6">
+                                <h6 class="mega-title">RESOURCES</h6>
+                                <a class="dropdown-item" href="designstudio.html#resources">DESIGN TEMPLATES</a>
+                                <a class="dropdown-item" href="designstudio.html#resources">STYLE GUIDE</a>
+                                <a class="dropdown-item" href="designstudio.html#resources">FAQs</a>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </li>
+            <!-- PREMIUM SERVICES MEGA MENU -->
+            <li class="nav-item mega-menu">
+                <a class="nav-link" href="premiumservices.html">PREMIUM SERVICES</a>
+                <div class="mega-dropdown">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h6 class="mega-title">SERVICES</h6>
+                                <a class="dropdown-item" href="senditems.html">SEND ITEMS IN</a>
+                                <a class="dropdown-item" href="subscriptions.html">SUBSCRIPTIONS</a>
+                            </div>
+                            <div class="col-md-4">
+                                <h6 class="mega-title">INSTALLATION</h6>
+                                <a class="dropdown-item" href="installation.html">VINYL INSTALLATION</a>
+                                <a class="dropdown-item" href="premiumservices.html#event-setup">SETUP AT EVENT</a>
+                            </div>
+                            <div class="col-md-4">
+                                <h6 class="mega-title">WORKSHOPS</h6>
+                                <a class="dropdown-item" href="workshop.html">GROUP WORKSHOP</a>
+                                <a class="dropdown-item" href="workshop.html">STATION EXPERIENCE</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay">
+    <div class="mobile-menu-container">
+        <div class="mobile-menu-header">
+            <a href="index.html" class="mobile-menu-logo">
+                <img src="icon.png" alt="Creative Merch UK">
+            </a>
+            <button class="mobile-menu-close" id="mobileMenuClose">
+                <svg>
+                    <use xlink:href="#icon-x" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="mobile-menu-search">
+            <form class="mobile-search-form" onsubmit="window.handleGlobalSearch(event)">
+                <svg>
+                    <use xlink:href="#icon-search" />
+                </svg>
+                <input type="search" placeholder="Search products...">
+            </form>
+        </div>
+
+        <div class="mobile-menu-content">
+            <!-- Main View -->
+            <div class="mobile-menu-view active" data-view="main">
+                <ul class="mobile-menu-list">
+                    <li>
+                        <a href="#" class="mobile-menu-item" data-submenu="shop">
+                            <span>SHOP</span>
+                            <svg class="icon-chevron">
+                                <use xlink:href="#icon-chevron-right" />
+                            </svg>
+                        </a>
                     </li>
-
-                    <!-- Design Studio Mega Menu -->
-                    <li class="nav-item dropdown mega-menu">
-                        <a class="nav-link dropdown-toggle" href="#" onclick="openSubMenu(event, 'design-menu')">
-                            DESIGN STUDIO
+                    <li>
+                        <a href="#" class="mobile-menu-item" data-submenu="design">
+                            <span>DESIGN STUDIO</span>
+                            <svg class="icon-chevron">
+                                <use xlink:href="#icon-chevron-right" />
+                            </svg>
                         </a>
-                        <div class="dropdown-menu mega-dropdown" id="design-menu">
-                            <div class="mobile-menu-back" onclick="closeSubMenu('design-menu')">
-                                <span>‹ BACK TO MAIN</span>
-                            </div>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <h6 class="mega-title">SERVICES</h6>
-                                        <a class="dropdown-item" href="designservice.html">DESIGN SERVICES</a>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <h6 class="mega-title">RESOURCES</h6>
-                                        <a class="dropdown-item" href="designstudio.html#resources">DESIGN TEMPLATES</a>
-                                        <a class="dropdown-item" href="designstudio.html#resources">STYLE GUIDE</a>
-                                        <a class="dropdown-item" href="designstudio.html#resources">FAQs</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </li>
-
-                    <!-- Premium Services Mega Menu -->
-                    <li class="nav-item dropdown mega-menu">
-                        <a class="nav-link dropdown-toggle" href="#" onclick="openSubMenu(event, 'premium-menu')">
-                            PREMIUM SERVICES
+                    <li>
+                        <a href="#" class="mobile-menu-item" data-submenu="premium">
+                            <span>PREMIUM SERVICES</span>
+                            <svg class="icon-chevron">
+                                <use xlink:href="#icon-chevron-right" />
+                            </svg>
                         </a>
-                        <div class="dropdown-menu mega-dropdown" id="premium-menu">
-                            <div class="mobile-menu-back" onclick="closeSubMenu('premium-menu')">
-                                <span>‹ BACK TO MAIN</span>
-                            </div>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <h6 class="mega-title">SERVICES</h6>
-                                        <a class="dropdown-item" href="senditems.html">SEND ITEMS IN</a>
-                                        <a class="dropdown-item" href="subscriptions.html">SUBSCRIPTIONS</a>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <h6 class="mega-title">INSTALLATION</h6>
-                                        <a class="dropdown-item" href="installation.html">VINYL INSTALLATION</a>
-                                        <a class="dropdown-item" href="premiumservices.html#event-setup">SETUP AT
-                                            EVENT</a>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <h6 class="mega-title">WORKSHOPS</h6>
-                                        <a class="dropdown-item" href="workshop.html">GROUP WORKSHOP</a>
-                                        <a class="dropdown-item" href="workshop.html">STATION EXPERIENCE</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </li>
                 </ul>
             </div>
+
+            <!-- Shop Submenu -->
+            <div class="mobile-menu-view" data-view="shop">
+                <button class="mobile-menu-back" data-back="main">
+                    <svg>
+                        <use xlink:href="#icon-chevron-left" />
+                    </svg>
+                    <span>SHOP</span>
+                </button>
+                <ul class="mobile-menu-list">
+                    <li><a href="shop.html" class="mobile-menu-item"><span>ALL PRODUCTS</span></a></li>
+                    <li><a href="shop.html?category=apparel" class="mobile-menu-item"><span>APPAREL</span></a></li>
+                    <li><a href="shop.html?category=party-decor" class="mobile-menu-item"><span>DECORATIONS</span></a>
+                    </li>
+                    <li><a href="shop.html?category=stickers" class="mobile-menu-item"><span>PRINTS</span></a></li>
+                    <li><a href="shop.html?category=accessories" class="mobile-menu-item"><span>ACCESSORIES</span></a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Design Submenu -->
+            <div class="mobile-menu-view" data-view="design">
+                <button class="mobile-menu-back" data-back="main">
+                    <svg>
+                        <use xlink:href="#icon-chevron-left" />
+                    </svg>
+                    <span>DESIGN STUDIO</span>
+                </button>
+                <ul class="mobile-menu-list">
+                    <li><a href="designservice.html" class="mobile-menu-item"><span>DESIGN SERVICES</span></a></li>
+                    <li><a href="designstudio.html#resources" class="mobile-menu-item"><span>DESIGN TEMPLATES</span></a>
+                    </li>
+                    <li><a href="designstudio.html#resources" class="mobile-menu-item"><span>STYLE GUIDE</span></a></li>
+                    <li><a href="designstudio.html#resources" class="mobile-menu-item"><span>FAQs</span></a></li>
+                </ul>
+            </div>
+
+            <!-- Premium Submenu -->
+            <div class="mobile-menu-view" data-view="premium">
+                <button class="mobile-menu-back" data-back="main">
+                    <svg>
+                        <use xlink:href="#icon-chevron-left" />
+                    </svg>
+                    <span>PREMIUM SERVICES</span>
+                </button>
+                <ul class="mobile-menu-list">
+                    <li><a href="senditems.html" class="mobile-menu-item"><span>SEND ITEMS IN</span></a></li>
+                    <li><a href="subscriptions.html" class="mobile-menu-item"><span>SUBSCRIPTIONS</span></a></li>
+                    <li><a href="installation.html" class="mobile-menu-item"><span>VINYL INSTALLATION</span></a></li>
+                    <li><a href="premiumservices.html#event-setup" class="mobile-menu-item"><span>SETUP AT
+                                EVENT</span></a></li>
+                    <li><a href="workshop.html" class="mobile-menu-item"><span>GROUP WORKSHOP</span></a></li>
+                    <li><a href="workshop.html" class="mobile-menu-item"><span>STATION EXPERIENCE</span></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mobile-menu-footer">
+            <a href="account.html" class="mobile-menu-footer-item">
+                <svg>
+                    <use xlink:href="#icon-user" />
+                </svg>
+                <span>LOG IN</span>
+            </a>
+            <a href="contact.html" class="mobile-menu-footer-item">
+                <svg>
+                    <use xlink:href="#icon-instagram" />
+                </svg>
+                <span>CONTACT US</span>
+            </a>
+            <div class="mobile-menu-footer-item">
+                <span style="font-size: 1.2rem;">🇬🇧</span>
+                <span>GBP £</span>
+            </div>
         </div>
     </div>
-</nav>
+</div>
