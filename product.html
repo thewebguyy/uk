@@ -774,12 +774,29 @@
       updatePrice();
     };
 
+    function getStickerPrice(quantity) {
+      if (quantity === 10) return 5.00;
+      if (quantity === 20) return 10.00;
+      if (quantity === 50) return 20.00;
+      if (quantity === 100) return 50.00;
+      return 0.50 * quantity; // Fallback default
+    }
+
     function updatePrice() {
       if (!currentProduct) return;
-      let unitPrice = currentProduct.price;
-      if (customization.printLocation === 'Front & Back') unitPrice += 5;
 
-      const totalPrice = unitPrice * currentQuantity;
+      let totalPrice = 0;
+      const category = (currentProduct.category || '').toLowerCase();
+
+      if (category === 'stickers') {
+        const price = getStickerPrice(currentQuantity);
+        totalPrice = price > 0 ? price : (currentProduct.price * currentQuantity);
+      } else {
+        let unitPrice = currentProduct.price;
+        if (customization.printLocation === 'Front & Back') unitPrice += 5;
+        totalPrice = unitPrice * currentQuantity;
+      }
+
       document.getElementById('product-price').textContent = `£${totalPrice.toFixed(2)}`;
     }
 
@@ -792,11 +809,21 @@
 
     window.addProductToCart = () => {
       if (!currentProduct) return;
-      let unitPrice = currentProduct.price;
-      if (customization.printLocation === 'Front & Back') unitPrice += 5;
+
+      let unitPrice;
+      const category = (currentProduct.category || '').toLowerCase();
+
+      if (category === 'stickers') {
+        const total = getStickerPrice(currentQuantity);
+        unitPrice = total / currentQuantity;
+      } else {
+        unitPrice = currentProduct.price;
+        if (customization.printLocation === 'Front & Back') unitPrice += 5;
+      }
 
       const name = `${currentProduct.name} (${customization.size}, ${customization.color})`;
       addToCart(currentProduct.id, name, unitPrice, currentProduct.imageUrl, currentQuantity, customization);
+
 
       const btn = document.getElementById('add-to-cart-btn');
       const txt = btn.textContent;

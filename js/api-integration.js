@@ -203,6 +203,7 @@ class UserService {
 
 class ProductService {
   static async getProducts(filters = {}) {
+    console.log('[ProductService] Fetching products with filters:', filters);
     try {
       let productsRef = collection(db, 'products');
       let q = query(productsRef);
@@ -212,13 +213,12 @@ class ProductService {
       }
 
       // Order by generic field or default
-      // Note: Firestore requires composite indexes for complex sorting + filtering
-      // We will do basic filtering here and advanced sorting client-side if needed for small catalog
-
       const limitCount = filters.limit || 50;
       q = query(q, limit(limitCount));
 
       const querySnapshot = await getDocs(q);
+      console.log('[ProductService] Fetched docs count:', querySnapshot.size);
+
       let products = [];
 
       querySnapshot.forEach((doc) => {
@@ -233,9 +233,10 @@ class ProductService {
         products = products.filter(p => p.name.toLowerCase().includes(term));
       }
 
+      console.log('[ProductService] Final filtered products:', products.length);
       return products;
     } catch (error) {
-      console.error('Get products error:', error);
+      console.error('[ProductService] Get products error:', error);
       return [];
     }
   }

@@ -345,22 +345,38 @@
           if (window.ProductService) {
             clearInterval(checkService);
             try {
-              allProducts = await window.ProductService.getProducts({ limit: 100 });
+              // Add race condition timeout for the actual fetch
+              const timeoutPromise = new Promise((_, reject) =>
+                setTimeout(() => reject(new Error('Product fetch timeout')), 8000)
+              );
+
+              const fetchPromise = window.ProductService.getProducts({ limit: 100 });
+
+              allProducts = await Promise.race([fetchPromise, timeoutPromise]);
+
               isLoading = false;
               displayedProducts = [...allProducts];
-              initFilters();
+
+              // If no products, ensure we show empty state correctly
+              if (!allProducts || allProducts.length === 0) {
+                console.warn('[Shop] No products returned or empty array');
+                productsContainer.innerHTML = `<div class="empty-products"><p>No products found in database.</p></div>`;
+                document.getElementById('product-count').textContent = 'No products found';
+              } else {
+                initFilters();
+              }
             } catch (err) {
-              console.error("Data fetch error:", err);
+              console.error("[Shop] Data fetch error:", err);
               isLoading = false;
-              productsContainer.innerHTML = `<div class="empty-products"><p>Error fetching products. Please try again.</p></div>`;
+              productsContainer.innerHTML = `<div class="empty-products"><p>Error fetching products: ${err.message}. Please refresh.</p></div>`;
             }
           } else if (attempts >= maxAttempts) {
             clearInterval(checkService);
             isLoading = false;
             console.error("ProductService not found (Timeout)");
             productsContainer.innerHTML = `<div class="empty-products">
-                <p>Unable to load products. API Connection Failed.</p>
-                <small class="text-danger">If you are opening this file directly, please use a local server (e.g., Live Server) because modules are blocked on file:// protocol.</small>
+                <p>Unable to connect to product service.</p>
+                <small class="text-muted">Please check your internet connection.</small>
             </div>`;
           }
         }, 100);
