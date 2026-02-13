@@ -29,6 +29,8 @@ const db = getFirestore(app);
 const functions = getFunctions(app); // Defaults to us-central1
 const storage = getStorage(app);
 
+console.log('[Firebase] Connection initialized for project:', firebaseConfig.projectId);
+
 const CONFIG = {
   // Stripe Live Publishable Key
   STRIPE_PUBLIC_KEY: 'pk_live_51Qr2StKg0noSfYuQGP6qNLoemAXaMiwaZZfcDfuAtcrq4h5RUlpuzkBE7HbdNa5XnqXaS44C6tiEvVtht9eBiLH500uVeNF7Je'
@@ -203,8 +205,12 @@ class UserService {
 
 class ProductService {
   static async getProducts(filters = {}) {
-    console.log('[ProductService] Fetching products with filters:', filters);
+    console.log('[ProductService] getProducts() initiating fetch...', { filters, dbInitialized: !!db });
     try {
+      if (!db) {
+        throw new Error('Firestore database not initialized');
+      }
+
       let productsRef = collection(db, 'products');
       let q = query(productsRef);
 
@@ -216,8 +222,13 @@ class ProductService {
       const limitCount = filters.limit || 50;
       q = query(q, limit(limitCount));
 
+      console.log('[ProductService] Executing Firestore query...');
       const querySnapshot = await getDocs(q);
-      console.log('[ProductService] Fetched docs count:', querySnapshot.size);
+      console.log('[ProductService] Query complete. Docs found:', querySnapshot.size);
+
+      if (querySnapshot.empty) {
+        console.warn('[ProductService] No documents found in "products" collection.');
+      }
 
       let products = [];
 
@@ -233,10 +244,11 @@ class ProductService {
         products = products.filter(p => p.name.toLowerCase().includes(term));
       }
 
-      console.log('[ProductService] Final filtered products:', products.length);
+      console.log('[ProductService] Returning processed products:', products.length);
       return products;
     } catch (error) {
-      console.error('[ProductService] Get products error:', error);
+      console.error('[ProductService] CRITICAL: getProducts error:', error);
+      // Return empty array but the log above will show the real error (like index missing or permission denied)
       return [];
     }
   }

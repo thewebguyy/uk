@@ -683,17 +683,44 @@
         if (sizeLink) sizeLink.style.display = 'none';
         document.getElementById('static-size-label').style.display = 'block';
         customization.size = 'One Size';
-      } else if (category === 'stickers') {
-        // Hide standard options
+      }
+
+      // NEW: Dynamic Bulk Pricing Check
+      if (product.hasBulkPricing && product.bulkPricing && product.bulkPricing.length > 0) {
+        // Hide standard options if needed, but primarily hide standard qty
+        document.getElementById('standard-quantity-selector').style.display = 'none';
+
+        // Show bulk qty selector
+        const stickerQtyGroup = document.getElementById('sticker-quantity-selector');
+        stickerQtyGroup.style.display = 'block';
+
+        // Update label and render dynamic buttons
+        stickerQtyGroup.querySelector('.customization-label').textContent = 'SELECT QUANTITY';
+        const optionsContainer = stickerQtyGroup.querySelector('.sticker-quantity-options');
+
+        optionsContainer.innerHTML = product.bulkPricing.map((tier, idx) => `
+          <button class="btn btn-outline flex-grow-1 ${idx === 0 ? 'active btn-primary' : ''}" 
+                  onclick="updateStickerQuantity(${tier.quantity}, this)">
+            ${tier.quantity}
+          </button>
+        `).join('');
+
+        // Set initial quantity to first tier
+        currentQuantity = product.bulkPricing[0].quantity;
+        document.getElementById('quantity').value = currentQuantity;
+      } else {
+        // Ensure standard selector is visible for non-bulk products
+        document.getElementById('standard-quantity-selector').style.display = 'block';
+        document.getElementById('sticker-quantity-selector').style.display = 'none';
+      }
+
+      // Keep specific sticker artwork options if category is stickers
+      if (category === 'stickers') {
         document.getElementById('group-color').style.display = 'none';
         document.getElementById('group-size').style.display = 'none';
         document.getElementById('group-print-location').style.display = 'none';
         document.getElementById('group-design-position').style.display = 'none';
-        document.getElementById('standard-quantity-selector').style.display = 'none';
         document.getElementById('standard-artwork-options').style.display = 'none';
-
-        // Show sticker specific options
-        document.getElementById('sticker-quantity-selector').style.display = 'block';
         document.getElementById('sticker-artwork-options').style.display = 'block';
       }
     }
@@ -774,29 +801,37 @@
       updatePrice();
     };
 
-    function getStickerPrice(quantity) {
-      if (quantity === 10) return 5.00;
-      if (quantity === 20) return 10.00;
-      if (quantity === 50) return 20.00;
-      if (quantity === 100) return 50.00;
-      return 0.50 * quantity; // Fallback default
+    function calculateTotalPrice(product, quantity) {
+      if (!product) return 0;
+
+      // Handle Bulk Pricing
+      if (product.hasBulkPricing && product.bulkPricing && product.bulkPricing.length > 0) {
+        // Sort tiers by quantity just in case they are out of order
+        const tiers = [...product.bulkPricing].sort((a, b) => b.quantity - a.quantity);
+
+        // Find the highest applicable tier
+        const applicableTier = tiers.find(tier => quantity >= tier.quantity);
+
+        if (applicableTier) {
+          return applicableTier.price;
+        }
+      }
+
+      // Standard Pricing: Unit Price * Quantity
+      let unitPrice = product.price || 0;
+
+      // Factor in customizations if applicable (e.g. print location)
+      if (customization.printLocation === 'Front & Back') {
+        unitPrice += 5;
+      }
+
+      return unitPrice * quantity;
     }
 
     function updatePrice() {
       if (!currentProduct) return;
 
-      let totalPrice = 0;
-      const category = (currentProduct.category || '').toLowerCase();
-
-      if (category === 'stickers') {
-        const price = getStickerPrice(currentQuantity);
-        totalPrice = price > 0 ? price : (currentProduct.price * currentQuantity);
-      } else {
-        let unitPrice = currentProduct.price;
-        if (customization.printLocation === 'Front & Back') unitPrice += 5;
-        totalPrice = unitPrice * currentQuantity;
-      }
-
+      const totalPrice = calculateTotalPrice(currentProduct, currentQuantity);
       document.getElementById('product-price').textContent = `£${totalPrice.toFixed(2)}`;
     }
 
@@ -810,16 +845,8 @@
     window.addProductToCart = () => {
       if (!currentProduct) return;
 
-      let unitPrice;
-      const category = (currentProduct.category || '').toLowerCase();
-
-      if (category === 'stickers') {
-        const total = getStickerPrice(currentQuantity);
-        unitPrice = total / currentQuantity;
-      } else {
-        unitPrice = currentProduct.price;
-        if (customization.printLocation === 'Front & Back') unitPrice += 5;
-      }
+      const totalPrice = calculateTotalPrice(currentProduct, currentQuantity);
+      const unitPrice = currentQuantity > 0 ? (totalPrice / currentQuantity) : currentProduct.price;
 
       const name = `${currentProduct.name} (${customization.size}, ${customization.color})`;
       addToCart(currentProduct.id, name, unitPrice, currentProduct.imageUrl, currentQuantity, customization);

@@ -523,7 +523,7 @@
 
       displayedProducts = filtered;
       currentPage = 1; // Reset to page 1
-      sortProducts(false); // Sort but don't re-display yet, let sort call display
+      sortProducts(true); // Must be true to trigger displayProducts and remove spinner
     };
 
     window.sortProducts = function (shouldDisplay = true) {
